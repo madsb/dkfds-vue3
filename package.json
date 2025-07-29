@@ -4,12 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "pnpm --filter example dev",
+    "build": "pnpm run build:utils && pnpm run build:core && pnpm run build:extra && pnpm run build:lib",
+    "build:core": "pnpm --filter dkfds-vue3-core build",
+    "build:extra": "pnpm --filter dkfds-vue3-extra build",
+    "build:utils": "pnpm --filter dkfds-vue3-utils build",
+    "build:lib": "pnpm --filter dkfds-vue3 build",
+    "build:demo": "pnpm --filter example build",
+    "preview": "pnpm --filter example preview",
+    "type-check": "pnpm -r run type-check",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx eslint packages/** examples/**",
     "lint:fix": "npm run lint -- --fix",
     "prettier": "npx prettier packages/** examples/** --check",
     "prettier:fix": "npm run prettier -- --write",
-    "format": "npm run prettier:fix && npm run lint:fix"
+    "format": "npm run prettier:fix && npm run lint:fix",
+    "clean": "pnpm -r run clean",
+    "init": "pnpm install && pnpm run build"
   },
   "keywords": [],
   "author": "",
@@ -24,7 +35,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "^9.7.0",
     "prettier": "^2.8.1",
-    "vite": "^3.2.5",
+    "vite": "^5.3.0",
     "vite-plugin-eslint": "^1.8.1",
     "vue-eslint-parser": "^9.1.0"
   }

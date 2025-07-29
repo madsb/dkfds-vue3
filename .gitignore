@@ -2,6 +2,16 @@
 node_modules
 dist/
 
+# Build artifacts in main package
+packages/dkfds-vue3/**/dkfds-vue3-*.mjs
+packages/dkfds-vue3/**/dkfds-vue3-*.umd.js
+packages/dkfds-vue3/**/components/*.d.ts
+packages/dkfds-vue3/**/index.d.ts
+packages/dkfds-vue3/**/style.css
+
+# Keep the source re-export files
+!packages/dkfds-vue3/*/index.mjs
+
 
 # local env files
 .env.local

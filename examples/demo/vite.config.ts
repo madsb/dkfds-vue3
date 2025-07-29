@@ -10,4 +10,15 @@ export default defineConfig({
     },
     dedupe: ['vue'],
   },
+  css: {
+    devSourcemap: false,
+    preprocessorOptions: {
+      scss: {
+        // Use modern Sass API
+        api: 'modern-compiler',
+        // Silence deprecation warnings
+        silenceDeprecations: ['import', 'global-builtin', 'color-functions'],
+      },
+    },
+  },
 });

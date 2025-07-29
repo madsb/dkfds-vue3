@@ -231,13 +231,17 @@
 <script setup lang="ts"></script>
 
 <style lang="scss">
-$font-path: 'dkfds/src/fonts/IBMPlexSans/';
-$image-path: 'dkfds/src/img';
-$site-image-path: 'dkfds/src/img';
-$icons-folder-path: 'dkfds/src/img/svg-icons';
+// Configure DKFDS paths
+$font-path: '/node_modules/dkfds/dist/fonts/IBMPlexSans/';
+$image-path: '/node_modules/dkfds/dist/img';
+$site-image-path: '/node_modules/dkfds/dist/img';
+$icons-folder-path: '/node_modules/dkfds/dist/img/svg-icons';
 
+// Import DKFDS base styles
 @import '../node_modules/dkfds/src/stylesheets/dkfds-virkdk';
-@import '../node_modules/dkfds-vue3/core/assets/bgs.scss';
-@import '../node_modules/dkfds-vue3/core/assets/main.scss';
-@import 'assets/main.scss';
+
+// Import Vue component styles
+@import '../node_modules/dkfds-vue3/core/assets/_bgs';
+@import '../node_modules/dkfds-vue3/core/assets/main';
+@import 'assets/main';
 </style>

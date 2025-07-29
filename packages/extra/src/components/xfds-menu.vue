@@ -1,6 +1,6 @@
 <template>
   <ul
-    class="sidenav-list mb-6"
+    class="sidemenu mb-6"
     role="menu">
     <fds-menu-item
       v-for="(item, index) of tabsList"

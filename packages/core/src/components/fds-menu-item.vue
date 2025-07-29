@@ -5,7 +5,7 @@
     <a
       :href="`${href ? href : '#'}`"
       role="menuitem"
-      class="d-block menuitem hand"
+      class="nav-link"
       @click="navigate($event, id)"
     >
       <span v-if="index !== null">

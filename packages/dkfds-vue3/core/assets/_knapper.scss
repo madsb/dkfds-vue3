@@ -1,25 +1,25 @@
 .button-warning {
   color: #ffffff;
-  background-color: darken($color-warning, 10%);
-  border-color: darken($color-warning, 20%);
+  background-color: #d9a300; // darken($color-warning, 10%)
+  border-color: #b38900; // darken($color-warning, 20%)
 }
 
 .button-error {
   color: #ffffff;
   background-color: $color-error;
-  border-color: darken($color-error, 20%);
+  border-color: #990000; // darken($color-error, 20%)
 }
 
 .button-info {
   color: #ffffff;
   background-color: $color-info;
-  border-color: darken($color-info, 20%);
+  border-color: #125a85; // darken($color-info, 20%)
 }
 
 .button-success {
   color: #ffffff;
   background-color: $color-success;
-  border-color: darken($color-success, 20%);
+  border-color: #1a4000; // darken($color-success, 20%)
 }
 
 // spinner button
