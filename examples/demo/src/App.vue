@@ -232,9 +232,9 @@
 
 <style lang="scss">
 $font-path: '../node_modules/dkfds/src/fonts/IBMPlexSans/';
-$image-path: '../node_modules/dkfds/src/img';
-$site-image-path: '../node_modules/dkfds/src/img';
-$icons-folder-path: '../node_modules/dkfds/src/img/svg-icons';
+$image-path: '../node_modules/dkfds/src/img/';
+$site-image-path: '../node_modules/dkfds/src/img/';
+$icons-folder-path: '../node_modules/dkfds/src/img/svg-icons/';
 
 @import '../node_modules/dkfds/src/stylesheets/dkfds-virkdk';
 @import '../../../packages/core/src/assets/bgs.scss';
