@@ -71,7 +71,7 @@ export default class DKFDSDropdown {
               }
             } else {
               // button is not visible
-              // eslint-disable-next-line no-lonely-if
+               
               if ($module.getAttribute('aria-hidden') === 'true') {
                 $module.setAttribute('aria-hidden', 'false');
               }

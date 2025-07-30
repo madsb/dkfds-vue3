@@ -231,13 +231,13 @@
 <script setup lang="ts"></script>
 
 <style lang="scss">
-$font-path: 'dkfds/src/fonts/IBMPlexSans/';
-$image-path: 'dkfds/src/img';
-$site-image-path: 'dkfds/src/img';
-$icons-folder-path: 'dkfds/src/img/svg-icons';
+$font-path: '../node_modules/dkfds/src/fonts/IBMPlexSans/';
+$image-path: '../node_modules/dkfds/src/img';
+$site-image-path: '../node_modules/dkfds/src/img';
+$icons-folder-path: '../node_modules/dkfds/src/img/svg-icons';
 
 @import '../node_modules/dkfds/src/stylesheets/dkfds-virkdk';
-@import '../node_modules/dkfds-vue3/core/assets/bgs.scss';
-@import '../node_modules/dkfds-vue3/core/assets/main.scss';
+@import '../../../packages/core/src/assets/bgs.scss';
+@import '../../../packages/core/src/assets/main.scss';
 @import 'assets/main.scss';
 </style>

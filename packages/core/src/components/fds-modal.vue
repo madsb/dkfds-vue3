@@ -64,7 +64,7 @@
  * */
 
 // måske backdrop clik
-// eslint-disable-next-line max-len
+ 
 // https://stackoverflow.com/questions/25864259/how-to-close-the-new-html-dialog-tag-by-clicking-on-its-backdrop
 
 import { generateId } from 'dkfds-vue3-utils';

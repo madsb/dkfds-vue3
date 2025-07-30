@@ -131,7 +131,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { navigation } from 'dkfds-vue3/utils';
 

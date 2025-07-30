@@ -38,7 +38,7 @@ const props = defineProps({
     default: true,
   },
   validations: {
-    type: Array as () => Array<(x?: unknown) => string | null>,
+    type: Array as () => Array<(_?: unknown) => string | null>,
     default: () => [
       (input: unknown) => {
         if (!input) {

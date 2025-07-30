@@ -45,7 +45,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['dirty']);
-const injGroupEmit = inject<(x: string) => void>('provideGroupEmit');
+const injGroupEmit = inject<(_: string) => void>('provideGroupEmit');
 const injGroupValue = inject<string | null>('provideGroupValue');
 const { formid } = formId(props.id);
 const indexId = generateId(props.index);

@@ -48,7 +48,7 @@ export function validCVR(x: string): string | null {
 }
 
 export function validCPR(x: string): string | null {
-  // eslint-disable-next-line max-len
+   
   const CPR_REGEXP =
     /((?:(?:31(?:0[13578]|1[02])|(?:30|29)(?:0[13-9]|1[0-2])|(?:0[1-9]|1[0-9]|2[0-8])(?:0[1-9]|1[0-2]))[0-9]{2}|2902(?:[02468][048]|[13579][26])))-?[0-9]{4}/;
   const isValid = CPR_REGEXP.test(x);

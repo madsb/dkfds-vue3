@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { FdsNavigationItem } from 'dkfds-vue3/utils';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 
 const codeExtra = `
 <xfds-trinindikator
@@ -86,14 +86,4 @@ const trin = ref<FdsNavigationItem[]>([
     disabled: true,
   },
 ] as unknown as FdsNavigationItem[]);
-
-const changeActive = () => {
-  trin.value = trin.value.map((m) => {
-    m.active = false;
-    if (m.key === 'kod') {
-      m.active = true;
-    }
-    return m;
-  });
-};
 </script>

@@ -12,7 +12,7 @@ import { navigationService } from 'dkfds-vue3/extra';
 import { useRoute, useRouter } from 'vue-router';
 import { sort } from 'fast-sort';
 
-const props = defineProps({
+defineProps({
   header: {
     type: String,
     default: '',

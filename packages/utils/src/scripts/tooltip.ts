@@ -1,4 +1,4 @@
-/* eslint-disable no-param-reassign */
+ 
 
 /**
  * Set tooltip on element
@@ -199,24 +199,24 @@ export default class DKFSTooltip {
     }
 
     if (window.innerWidth < left + tooltipWidth) {
-      // eslint-disable-next-line no-param-reassign
+       
       tooltip.style.right = `${dist}px`;
       const endPositionOnPage = triggerPosition.right - trigger.offsetWidth / 2;
       const tooltipArrowHalfWidth = 8;
-      // eslint-disable-next-line max-len
+       
       const arrowRightPosition =
         window.innerWidth - endPositionOnPage - dist - tooltipArrowHalfWidth;
-      // eslint-disable-next-line no-param-reassign
+       
       (
         tooltip.getElementsByClassName('tooltip-arrow')[0] as HTMLElement
       ).style.right = `${arrowRightPosition}px`;
-      // eslint-disable-next-line no-param-reassign
+       
       (tooltip.getElementsByClassName('tooltip-arrow')[0] as HTMLElement).style.left = 'auto';
     } else {
-      // eslint-disable-next-line no-param-reassign
+       
       tooltip.style.left = `${left}px`;
     }
-    // eslint-disable-next-line no-param-reassign, no-restricted-globals
+     
     tooltip.style.top = `${top + pageYOffset}px`;
     tooltip.getElementsByClassName('tooltip-arrow')[0].classList.add(arrowDirection);
   }
