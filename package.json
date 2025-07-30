@@ -13,7 +13,9 @@
     "build:demo": "pnpm --filter example build",
     "preview": "pnpm --filter example preview",
     "type-check": "pnpm -r run type-check",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
     "lint": "npx eslint packages/** examples/**",
     "lint:fix": "npm run lint -- --fix",
     "prettier": "npx prettier packages/** examples/** --check",
@@ -28,15 +30,22 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.42.1",
+    "@vitejs/plugin-vue": "^4.6.2",
+    "@vitest/coverage-v8": "^2.0.0",
+    "@vitest/ui": "^2.0.0",
     "@vue/eslint-config-typescript": "^11.0.2",
+    "@vue/test-utils": "^2.4.6",
     "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "^9.7.0",
+    "happy-dom": "^15.0.0",
     "prettier": "^2.8.1",
     "vite": "^5.3.0",
     "vite-plugin-eslint": "^1.8.1",
+    "vitest": "^2.0.0",
+    "vue": "^3.2.44",
     "vue-eslint-parser": "^9.1.0"
   }
 }
