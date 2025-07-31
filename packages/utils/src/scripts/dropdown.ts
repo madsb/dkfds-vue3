@@ -174,7 +174,7 @@ export default class DKFDSDropdown {
         const eventClose = new Event('fds.dropdown.close');
         triggerEl.dispatchEvent(eventClose);
       } else {
-        if (!document.getElementsByTagName('body')[0].classList.contains('mobile_nav-active')) {
+        if (!document.getElementsByTagName('body')[0].classList.contains('mobile-nav-active')) {
           this.closeAll();
         }
         // open
@@ -225,9 +225,9 @@ export default class DKFDSDropdown {
   }
 
   outsideClose(evt: Event) {
-    if (!document.getElementsByTagName('body')[0].classList.contains('mobile_nav-active')) {
+    if (!document.getElementsByTagName('body')[0].classList.contains('mobile-nav-active')) {
       if (
-        document.querySelector('body.mobile_nav-active') === null &&
+        document.querySelector('body.mobile-nav-active') === null &&
         !(<Element>evt.target)?.classList.contains('button-menu-close')
       ) {
         const openDropdowns = document.querySelectorAll(

@@ -37,24 +37,6 @@
           </li>
         </ul>
         <!-- Slut: Hovedmenu -->
-
-        <div class="portal-info-mobile">
-          <p class="user">Christian Emil Vestergaard Christensen</p>
-          <p>Københavns Urmager og Værksted v/Martin Elsig</p>
-          <a href="#" class="button button-secondary alert-leave" role="button"> Log af </a>
-        </div>
-
-        <div class="solution-info-mobile">
-          <p class="h5 authority-name">Myndighedsnavn</p>
-          <p>
-            Support: 12 34 56 78 ·
-            <a href="#" class="icon-link function-link alert-leave"
-              >Kontakt<svg class="icon-svg" aria-hidden="true" focusable="false">
-                <use xlink:href="#open-in-new"></use>
-              </svg>
-            </a>
-          </p>
-        </div>
       </nav>
     </div>
   </div>
@@ -63,7 +45,6 @@
 
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
-import { navigation } from 'dkfds-vue3/utils';
 
 const route = useRoute();
 const router = useRouter();
@@ -81,6 +62,4 @@ const isPartOfMenu = (name: string): boolean => {
 
   return false;
 };
-
-new navigation().init();
 </script>

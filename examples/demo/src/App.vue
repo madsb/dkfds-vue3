@@ -75,113 +75,35 @@
 
       <nav class="navigation-menu-mobile" aria-label="Hovedmenu">
         <ul class="mainmenu">
-          <li>
-            <div class="submenu">
-              <button
-                class="button-mobile-menu js-menudropdown"
-                data-js-target="mobilemenu-1"
-                aria-expanded="false"
-                aria-controls="mobilemenu-1"
-              >
-                <span>Første menupunkt</span>
-              </button>
-              <div id="mobilemenu-1" class="overflow-menu-inner collapsed">
-                <ul class="overflow-list">
-                  <li>
-                    <a href="#" class="nav-link">
-                      <span>Undermenu</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="nav-link">
-                      <span>Undermenu</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="nav-link">
-                      <span>Undermenu</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="nav-link">
-                      <span>Undermenu</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </li>
-          <li>
-            <a href="#" class="nav-link">
-              <span>Andet menupunkt</span>
+          <li :class="[{ current: isPartOfMenu('forside') }]">
+            <a href="#" class="nav-link" @click.prevent="navigateTo('forside')">
+              <span>Forside</span>
             </a>
           </li>
-          <li class="active">
-            <div class="submenu">
-              <button
-                class="button-mobile-menu js-menudropdown"
-                data-js-target="mobilemenu-3"
-                aria-expanded="true"
-                aria-controls="mobilemenu-3"
-              >
-                <span>Tredje menupunkt</span>
-              </button>
-              <div id="mobilemenu-3" class="overflow-menu-inner">
-                <ul class="overflow-list">
-                  <li>
-                    <a href="#" class="nav-link">
-                      <span>Undermenu</span>
-                    </a>
-                  </li>
-                  <li class="active current">
-                    <a href="#" class="nav-link" aria-current="page">
-                      <span>Undermenu</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="nav-link">
-                      <span>Undermenu</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </li>
-          <li>
-            <a href="#" class="nav-link">
-              <span>Fjerde menupunkt</span>
+          <li :class="[{ current: isPartOfMenu('komponenter') }]">
+            <a href="#" class="nav-link" @click.prevent="navigateTo('komponenter')">
+              <span>Komponenter</span>
             </a>
           </li>
-          <li>
-            <div class="submenu">
-              <button
-                class="button-mobile-menu js-menudropdown"
-                data-js-target="mobilemenu-5"
-                aria-expanded="false"
-                aria-controls="mobilemenu-5"
-              >
-                <span>Femte menupunkt</span>
-              </button>
-              <div id="mobilemenu-5" class="overflow-menu-inner collapsed">
-                <ul class="overflow-list">
-                  <li>
-                    <a href="#" class="nav-link">
-                      <span>Undermenu</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="nav-link">
-                      <span>Undermenu</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="nav-link">
-                      <span>Undermenu</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <li :class="[{ current: isPartOfMenu('ekstrakomponenter') }]">
+            <a href="#" class="nav-link" @click.prevent="navigateTo('ekstrakomponenter')">
+              <span>Ekstra Komponenter</span>
+            </a>
+          </li>
+          <li :class="[{ current: isPartOfMenu('boblere') }]">
+            <a href="#" class="nav-link" @click.prevent="navigateTo('boblere')">
+              <span>Boblere</span>
+            </a>
+          </li>
+          <li :class="[{ current: isPartOfMenu('anbefalinger') }]">
+            <a href="#" class="nav-link" @click.prevent="navigateTo('anbefalinger')">
+              <span>Anbefalinger</span>
+            </a>
+          </li>
+          <li :class="[{ current: isPartOfMenu('about') }]">
+            <a href="#" class="nav-link" @click.prevent="navigateTo('about')">
+              <span>Fællesskab</span>
+            </a>
           </li>
         </ul>
       </nav>
@@ -310,7 +232,41 @@
   </footer>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRoute, useRouter } from 'vue-router';
+import { onMounted } from 'vue';
+import { navigation } from 'dkfds-vue3/utils';
+
+const route = useRoute();
+const router = useRouter();
+
+// Initialize navigation on mount
+onMounted(() => {
+  new navigation().init();
+});
+
+// Check if current route matches menu item
+const isPartOfMenu = (name: string): boolean => {
+  if (route) {
+    const [parent] = route.matched;
+
+    if (parent && parent.name === name) {
+      return true;
+    }
+    if (route.name) {
+      return route.name === name;
+    }
+  }
+
+  return false;
+};
+
+// Navigate to route and close mobile menu
+const navigateTo = (name: string) => {
+  router.push({ name });
+  // The navigation script will automatically close the menu when a link is clicked
+};
+</script>
 
 <style lang="scss">
 $font-path: '../node_modules/dkfds/src/fonts/IBMPlexSans/';

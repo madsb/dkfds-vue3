@@ -1,25 +1,40 @@
-const NAV = '.nav';
-const NAV_LINKS = `${NAV} a`;
+import DKFDSDropdown from './dropdown';
+
+const MOBILE_DRAWER = '.mobile-drawer';
+const NAV_LINKS = '.navigation-menu-mobile a';
+const MODALS = '[data-module="modal"]';
 const OPENERS = '.js-menu-open';
 const CLOSE_BUTTON = '.js-menu-close';
 const OVERLAY = '.overlay';
 const CLOSERS = `${CLOSE_BUTTON}, .overlay`;
-const TOGGLES = [NAV, OVERLAY].join(', ');
+const TOGGLES = [MOBILE_DRAWER, OVERLAY].join(', ');
 
-const ACTIVE_CLASS = 'mobile_nav-active';
+const ACTIVE_CLASS = 'mobile-nav-active';
 const VISIBLE_CLASS = 'is-visible';
+
+// Utility functions
+const forEach = <T extends Node>(arr: NodeListOf<T> | T[], fn: (item: T, index: number) => void) => {
+  Array.prototype.forEach.call(arr, fn);
+};
+
+const select = (selector: string, context: Element | Document = document): HTMLElement[] => {
+  if (typeof selector !== 'string') return [];
+  const selection = context.querySelectorAll<HTMLElement>(selector);
+  return Array.from(selection);
+};
+
 let focusTrap: {
   enable(): void;
   release(): void;
 };
+
 /**
  * Add mobile menu functionality
  */
 class Navigation {
-  static selectStuff = (selector: string) => {
-    const sel = window.document.querySelectorAll(selector);
-    return [...(sel as unknown as any[])];
-  };
+  private observer: MutationObserver | null = null;
+  private resizeHandler: (() => void) | null = null;
+  private mobileMenuHandler: (() => void) | null = null;
 
   /**
    * Check if mobile menu is active
@@ -68,7 +83,6 @@ class Navigation {
 
       // ESCAPE
       if (e.key === 'Escape') {
-        // toggleNav.call(e, false);
         Navigation.toggleNav(false);
       }
     }
@@ -94,7 +108,9 @@ class Navigation {
 
     body.classList.toggle(ACTIVE_CLASS, active);
 
-    Navigation.selectStuff(TOGGLES).forEach((el) => el.classList.toggle(VISIBLE_CLASS, active));
+    forEach(select(TOGGLES), (el) => {
+      el.classList.toggle(VISIBLE_CLASS, active);
+    });
 
     if (active) {
       focusTrap.enable();
@@ -109,7 +125,7 @@ class Navigation {
       // The mobile nav was just activated, so focus on the close button,
       // which is just before all the nav elements in the tab order.
       closeButton.focus();
-    } else if (!active && document.activeElement === closeButton && menuButton) {
+    } else if (!active && menuButton) {
       // The mobile nav was just deactivated, and focus was on the close
       // button, which is no longer visible. We don't want the focus to
       // disappear into the void, so focus on the menu button if it's
@@ -126,6 +142,8 @@ class Navigation {
    */
   mobileMenu() {
     let mobile = false;
+    
+    // Find all menu buttons on page and add toggleNav function
     const openers = document.querySelectorAll<HTMLElement>(OPENERS);
     for (let o = 0; o < openers.length; o += 1) {
       if (window.getComputedStyle(openers[o], null).display !== 'none') {
@@ -136,29 +154,33 @@ class Navigation {
 
     // if mobile
     if (mobile) {
+      // Add click listeners to all close elements (e.g. close button and overlay)
       const closers = document.querySelectorAll<HTMLElement>(CLOSERS);
       for (let c = 0; c < closers.length; c += 1) {
         closers[c].addEventListener('click', Navigation.toggleNav);
       }
 
       const navLinks = document.querySelectorAll(NAV_LINKS);
-      navLinks.forEach((nav, i) => {
-        navLinks[i].addEventListener('click', () => {
-          // A navigation link has been clicked! We want to collapse any
-          // hierarchical navigation UI it's a part of, so that the user
-          // can focus on whatever they've just selected.
-
-          // Some navigation links are inside dropdowns; when they're
-          // clicked, we want to collapse those dropdowns.
-
-          // If the mobile navigation menu is active, we want to hide it.
+      for (let n = 0; n < navLinks.length; n += 1) {
+        navLinks[n].addEventListener('click', () => {
+          // If a navigation link is clicked inside the mobile menu, ensure that the menu gets hidden
           if (Navigation.isActive()) {
             Navigation.toggleNav(false);
           }
         });
-      });
+      }
 
-      const trapContainers = document.querySelectorAll<HTMLElement>(NAV);
+      const modals = document.querySelectorAll(MODALS);
+      for (let m = 0; m < modals.length; m += 1) {
+        // All modals should close the mobile menu
+        modals[m].addEventListener('click', () => {
+          if (Navigation.isActive()) {
+            Navigation.toggleNav(false);
+          }
+        });
+      }
+
+      const trapContainers = document.querySelectorAll<HTMLElement>(MOBILE_DRAWER);
       for (let i = 0; i < trapContainers.length; i += 1) {
         focusTrap = Navigation.focusTrapInit(trapContainers[i]);
       }
@@ -179,15 +201,192 @@ class Navigation {
    * Set events
    */
   init() {
-    window.addEventListener('resize', this.mobileMenu, false);
+    this.mobileMenuHandler = () => this.mobileMenu();
+    window.addEventListener('resize', this.mobileMenuHandler, false);
     this.mobileMenu();
+
+    if (document.querySelectorAll('.navigation-menu .mainmenu').length > 0) {
+      /* Add an invisible more button to the main menu navigation on desktop */
+      this.createMoreMenu();
+
+      /* Sometimes, it's possible to correctly calculate the width of the menu items
+         very early during page load - if it fails, all widths are the same. If possible,
+         update the more menu as soon as possible for a better user experience. */
+      const widths: number[] = [];
+      const mainMenuItems = document.querySelectorAll<HTMLElement>('.navigation-menu .mainmenu > li');
+      for (let i = 0; i < mainMenuItems.length - 1; i += 1) {
+        const w = this.getVisibleWidth(mainMenuItems[i]);
+        widths.push(w);
+      }
+      const allWidthsEqual = new Set(widths).size === 1; // The same value can't appear twice in a Set. If the size is 1, all widths in the array were equal.
+      if (!allWidthsEqual) {
+        this.updateMoreMenu();
+      }
+
+      /* Update more menu on window resize */
+      this.resizeHandler = () => this.updateMoreMenu();
+      window.addEventListener('resize', this.resizeHandler, false);
+
+      // Observe DOM changes to the main menu
+      const config = {
+        attributes: false,
+        attributeOldValue: false,
+        characterData: false,
+        characterDataOldValue: false,
+        childList: true,
+        subtree: false,
+      };
+      const observerTarget = document.querySelector('.navigation-menu .mainmenu');
+      if (observerTarget) {
+        const callback = () => {
+          this.updateMoreMenu();
+        };
+        this.observer = new MutationObserver(callback);
+        this.observer.observe(observerTarget, config);
+      }
+
+      /* Ensure the more menu is correctly displayed when all resources have loaded */
+      window.addEventListener('load', () => {
+        this.updateMoreMenu();
+      });
+
+      // If the document is already loaded, fire updateMoreMenu
+      if (document.readyState === 'complete') {
+        this.updateMoreMenu();
+      }
+    }
   }
 
   /**
    * Remove events
    */
   teardown() {
-    window.removeEventListener('resize', this.mobileMenu, false);
+    if (this.mobileMenuHandler) {
+      window.removeEventListener('resize', this.mobileMenuHandler, false);
+    }
+
+    if (document.getElementsByClassName('mainmenu').length > 0) {
+      const moreOption = document.querySelector('.navigation-menu .more-option');
+      if (moreOption) {
+        moreOption.remove();
+      }
+      if (this.resizeHandler) {
+        window.removeEventListener('resize', this.resizeHandler, false);
+      }
+      if (this.observer) {
+        this.observer.disconnect();
+        this.observer = null;
+      }
+    }
+  }
+
+  private createMoreMenu() {
+    const mainMenu = document.querySelector('.navigation-menu .mainmenu');
+    if (!mainMenu) return;
+
+    const moreMenu = document.createElement('li');
+    moreMenu.classList.add('more-option');
+    moreMenu.classList.add('d-none');
+    moreMenu.innerHTML = '<div class="submenu"><button class="more-button button-overflow-menu js-dropdown" data-js-target="fds-more-menu" aria-expanded="false" aria-controls="fds-more-menu"><span>Mere</span></button><div class="overflow-menu-inner collapsed" id="fds-more-menu"><ul class="overflow-list"></ul></div></div>';
+    mainMenu.append(moreMenu);
+    
+    const moreButton = document.querySelector('.more-button') as HTMLElement;
+    if (moreButton) {
+      new DKFDSDropdown(moreButton).init();
+    }
+  }
+
+  private updateMoreMenu() {
+    const mainMenuItems = document.querySelectorAll<HTMLElement>('.navigation-menu .mainmenu > li');
+    const moreMenu = mainMenuItems[mainMenuItems.length - 1];
+    const moreMenuList = document.querySelector('.navigation-menu .more-option .overflow-list');
+    
+    if (!moreMenuList) return;
+
+    /* Calculate available space for main menu items */
+    const navigationMenuInner = document.querySelector<HTMLElement>('.navigation-menu .navigation-menu-inner');
+    if (!navigationMenuInner) return;
+    
+    const menuWidth = Math.floor(navigationMenuInner.getBoundingClientRect().width);
+    let searchWidth = 0;
+    let paddingMoreMenu = 0;
+    const searchElement = document.querySelector<HTMLElement>('.navigation-menu .search');
+    if (document.querySelectorAll('.navigation-menu.contains-search').length > 0 && searchElement) {
+      searchWidth = this.getVisibleWidth(searchElement);
+    } else {
+      const moreButton = document.querySelector<HTMLElement>('.navigation-menu .more-option .more-button');
+      if (moreButton) {
+        paddingMoreMenu = parseInt(window.getComputedStyle(moreButton).paddingRight, 10);
+      }
+    }
+    const containerPadding = parseInt(window.getComputedStyle(navigationMenuInner).paddingRight, 10);
+    const availableSpace = menuWidth - searchWidth - containerPadding + paddingMoreMenu;
+
+    /* Find the max amount of main menu items, it is possible to show */
+    let widthNeeded = 0;
+    for (let i = 0; i < mainMenuItems.length - 1; i += 1) {
+      widthNeeded += this.getVisibleWidth(mainMenuItems[i]);
+      if (widthNeeded >= availableSpace) {
+        break;
+      }
+    }
+
+    if (widthNeeded < availableSpace) {
+      /* More menu not needed */
+      for (let l = 0; l < mainMenuItems.length - 1; l += 1) {
+        mainMenuItems[l].classList.remove('d-none');
+      }
+      moreMenu.classList.add('d-none');
+    } else {
+      let widthNeededWithMoreMenu = this.getVisibleWidth(moreMenu);
+      moreMenuList.innerHTML = '';
+      for (let j = 0; j < mainMenuItems.length - 1; j += 1) {
+        widthNeededWithMoreMenu += this.getVisibleWidth(mainMenuItems[j]);
+        if (widthNeededWithMoreMenu >= availableSpace) {
+          mainMenuItems[j].classList.remove('d-none'); // Make visible temporarily for cloning to the more menu
+          if (mainMenuItems[j].getElementsByClassName('submenu').length > 0) {
+            /* The menu items contains subitems */
+            const subMenu = document.createElement('li');
+            if (mainMenuItems[j].getElementsByClassName('active').length > 0) {
+              subMenu.classList.add('active');
+            }
+            const buttonOverflowMenu = mainMenuItems[j].querySelector('.button-overflow-menu');
+            const subMenuTextElement = buttonOverflowMenu?.querySelector('span');
+            const subMenuText = subMenuTextElement?.innerText || '';
+            subMenu.innerHTML = `<span class="sub-title" aria-hidden="true">${subMenuText}</span><ul aria-label="${subMenuText}"></ul>`;
+            const subElements = mainMenuItems[j].getElementsByTagName('li');
+            const subMenuUl = subMenu.querySelector('ul');
+            if (subMenuUl) {
+              for (let k = 0; k < subElements.length; k += 1) {
+                subMenuUl.append(subElements[k].cloneNode(true));
+              }
+            }
+            moreMenuList.append(subMenu);
+          } else {
+            /* No subitems - cloning can be done without any issues */
+            moreMenuList.append(mainMenuItems[j].cloneNode(true));
+          }
+          mainMenuItems[j].classList.add('d-none'); // Hide once cloning is done
+        } else {
+          /* There's room for the main menu item - ensure it is visible */
+          mainMenuItems[j].classList.remove('d-none');
+        }
+      }
+      moreMenu.classList.remove('d-none');
+    }
+  }
+
+  /* Get the width of an element, even if the element isn't visible */
+  private getVisibleWidth(element: HTMLElement): number {
+    let width = 0;
+    if (element.classList.contains('d-none')) {
+      element.classList.remove('d-none');
+      width = element.getBoundingClientRect().width;
+      element.classList.add('d-none');
+    } else {
+      width = element.getBoundingClientRect().width;
+    }
+    return Math.ceil(width);
   }
 }
 
