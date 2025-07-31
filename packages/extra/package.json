@@ -8,8 +8,8 @@
     "typings": "vue-tsc --declaration --emitDeclarationOnly"
   },
   "dependencies": {
-    "dkfds-vue3-core": "0.4.9",
-    "dkfds-vue3-utils": "0.4.9"
+    "dkfds-vue3-core": "workspace:*",
+    "dkfds-vue3-utils": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",

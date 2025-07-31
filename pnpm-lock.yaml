@@ -57,8 +57,8 @@ importers:
         specifier: ^11.0.1
         version: 11.0.1
       dkfds-vue3:
-        specifier: 0.4.9
-        version: 0.4.9
+        specifier: workspace:*
+        version: link:../../packages/dkfds-vue3
       fast-sort:
         specifier: ^3.4.1
         version: 3.4.1
@@ -109,8 +109,8 @@ importers:
         specifier: ^11.0.1
         version: 11.0.1
       dkfds-vue3-utils:
-        specifier: 0.4.9
-        version: 0.4.9
+        specifier: workspace:*
+        version: link:../utils
     devDependencies:
       '@types/node':
         specifier: ^22.14.1
@@ -158,14 +158,14 @@ importers:
         specifier: ^11.0.1
         version: 11.0.1
       dkfds-vue3-core:
-        specifier: 0.4.9
-        version: 0.4.9
+        specifier: workspace:*
+        version: link:../core
       dkfds-vue3-extra:
-        specifier: 0.4.9
-        version: 0.4.9
+        specifier: workspace:*
+        version: link:../extra
       dkfds-vue3-utils:
-        specifier: 0.4.9
-        version: 0.4.9
+        specifier: workspace:*
+        version: link:../utils
     devDependencies:
       '@types/node':
         specifier: ^22.14.1
@@ -216,11 +216,11 @@ importers:
   packages/extra:
     dependencies:
       dkfds-vue3-core:
-        specifier: 0.4.9
-        version: 0.4.9
+        specifier: workspace:*
+        version: link:../core
       dkfds-vue3-utils:
-        specifier: 0.4.9
-        version: 0.4.9
+        specifier: workspace:*
+        version: link:../utils
     devDependencies:
       '@types/node':
         specifier: ^22.14.1
@@ -1220,24 +1220,8 @@ packages:
     engines: {node: '>=0.10'}
     hasBin: true
 
-  dkfds-vue3-core@0.4.9:
-    resolution: {integrity: sha512-Sah3BjFuJIvuGSs6TM04nbtbyVlPR0L4dwZk3luihUPsOIcibgT/vLug8RJkaGeX+F2a9JCtyyVezCd8z5LGkA==}
-
-  dkfds-vue3-extra@0.4.9:
-    resolution: {integrity: sha512-4FV+FZvLo/CmPxT+pzL/ZbtMvIi3idJiTDqpGucNVlCUIfachKFGkY8m01R4WKDCmCAxThfp0dc7UbOborrsxg==}
-
-  dkfds-vue3-utils@0.4.9:
-    resolution: {integrity: sha512-0bswWZ6rm1EoGubU7DVQvSO9lPpEr5tTsnjasf7+Z5GsGwafSouIKLeWX32SdiTm4G/GiBCQoOv00N3Ix9IKqw==}
-
-  dkfds-vue3@0.4.9:
-    resolution: {integrity: sha512-OqHny98ACD+Uzx+iQ7otGNXXuQT4l61mEMzepJ6ipecmSPyK5i7hhjGvVe1gSLiV87FMtmF8IOsjYFubdokmyA==}
-
   dkfds@11.0.1:
     resolution: {integrity: sha512-xmEZrXsEenT1Nb47YB6F106rPW3mlmnVhnwy3Vjr5U8rGr2LHcZ9KdXKvX045YSQrIXguISwJyPOQZjUIqlz7A==}
-    engines: {node: '>= 4'}
-
-  dkfds@8.2.1:
-    resolution: {integrity: sha512-g7y4i5cvyvHxxj4Fdpb5EdO+Q9Z3LAPmWZCaUIbZt3KppdsThMfxGNL9UamRQsLz5x+2ZapvIKdXOefPi+50xA==}
     engines: {node: '>= 4'}
 
   doctrine@2.1.0:
@@ -3423,28 +3407,7 @@ snapshots:
   detect-libc@1.0.3:
     optional: true
 
-  dkfds-vue3-core@0.4.9:
-    dependencies:
-      dkfds: 8.2.1
-      dkfds-vue3-utils: 0.4.9
-
-  dkfds-vue3-extra@0.4.9:
-    dependencies:
-      dkfds-vue3-core: 0.4.9
-      dkfds-vue3-utils: 0.4.9
-
-  dkfds-vue3-utils@0.4.9: {}
-
-  dkfds-vue3@0.4.9:
-    dependencies:
-      dkfds: 8.2.1
-      dkfds-vue3-core: 0.4.9
-      dkfds-vue3-extra: 0.4.9
-      dkfds-vue3-utils: 0.4.9
-
   dkfds@11.0.1: {}
-
-  dkfds@8.2.1: {}
 
   doctrine@2.1.0:
     dependencies:
