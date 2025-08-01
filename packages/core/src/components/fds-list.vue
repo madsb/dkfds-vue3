@@ -19,26 +19,17 @@
  * */
 import { computed } from 'vue';
 
-const props = defineProps({
-  /**
-    bordered-list
-    unstyled-list
-    nobullet-list
-    overflow-list
-  * */
-
+const {
   /**
    * Type af liste
-   * */
-  variant: {
-    type: String as () => 'bordered' | 'unstyled' | 'nobullet',
-    default: null,
-  },
-  ordered: {
-    type: Boolean,
-    default: false,
-  },
-});
+   * bordered-list, unstyled-list, nobullet-list, overflow-list
+   */
+  variant = null,
+  ordered = false,
+} = defineProps<{
+  variant?: 'bordered' | 'unstyled' | 'nobullet' | null;
+  ordered?: boolean;
+}>();
 
-const getListClass = computed(() => (props.variant ? `${props.variant}-list` : ''));
+const getListClass = computed(() => (variant ? `${variant}-list` : ''));
 </script>

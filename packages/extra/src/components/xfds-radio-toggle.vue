@@ -46,54 +46,43 @@ import { computed } from 'vue';
 import { FdsOptionItem } from 'dkfds-vue3-utils';
 import { formId } from 'dkfds-vue3-utils';
 
-const props = defineProps({
-  modelValue: {
-    type: Boolean as () => boolean | undefined | null,
-    default: undefined,
-  },
-  trueLabel: {
-    type: String,
-    default: 'Ja',
-  },
-  falseLabel: {
-    type: String,
-    default: 'Nej',
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  id: {
-    type: String,
-    default: null,
-  },
-  label: {
-    type: String,
-    required: true,
-    validator(value: string) {
-      return value?.length > 0;
-    },
-  },
-});
+const {
+  modelValue = undefined,
+  trueLabel = 'Ja',
+  falseLabel = 'Nej',
+  disabled = false,
+  id = null,
+  label,
+} = defineProps<{
+  modelValue?: boolean | undefined | null;
+  trueLabel?: string;
+  falseLabel?: string;
+  disabled?: boolean;
+  id?: string | null;
+  label: string;
+}>();
 
 const choices: Array<FdsOptionItem> = [
   {
-    title: props.trueLabel,
+    title: trueLabel,
     value: 'true',
-    disabled: props.disabled,
+    disabled: disabled,
   },
   {
-    title: props.falseLabel,
+    title: falseLabel,
     value: 'false',
-    disabled: props.disabled,
+    disabled: disabled,
   },
 ];
 
-const emit = defineEmits(['update:modelValue', 'dirty']);
+const emit = defineEmits<{
+  'update:modelValue': [value: boolean];
+  dirty: [value: boolean];
+}>();
 
-const { formid } = formId(props.id, true);
+const { formid } = formId(id, true);
 
-const isValueSet = computed(() => props.modelValue !== undefined && props.modelValue !== null);
+const isValueSet = computed(() => modelValue !== undefined && modelValue !== null);
 
 const handleInput = (event: Event) =>
   emit('update:modelValue', (event?.target as HTMLInputElement).value === 'true');

@@ -10,14 +10,13 @@
 import { formId } from 'dkfds-vue3-utils';
 
 
-const props = defineProps({
-  forId: {
-    type: String,
-    default: null,
-  },
-});
+const {
+  forId = null,
+} = defineProps<{
+  forId?: string | null;
+}>();
 
-const { formid } = formId(props.forId);
+const { formid } = formId(forId);
 </script>
 
 <style scoped lang="scss"></style>

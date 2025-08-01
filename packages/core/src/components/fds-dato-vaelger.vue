@@ -13,19 +13,22 @@
 import { ref } from 'vue';
 import { formId } from 'dkfds-vue3-utils';
 
-const props = defineProps({
-  id: {
-    type: String,
-    default: null,
-  },
-  modelValue: {
-    type: String, // JSON Date
-    default: '',
-  },
-});
-const emit = defineEmits(['update:modelValue', 'dirty', 'valid']);
-const { formid } = formId(props.id);
-const refValue = ref(props.modelValue);
+const {
+  id = null,
+  modelValue = '',
+} = defineProps<{
+  id?: string | null;
+  /** JSON Date */
+  modelValue?: string;
+}>();
+
+const emit = defineEmits<{
+  'update:modelValue': [value: string];
+  dirty: [value: boolean];
+  valid: [isValid: boolean];
+}>();
+const { formid } = formId(id);
+const refValue = ref(modelValue);
 
 const isDateValid = (dateString: string) => {
   const date = Date.parse(dateString);

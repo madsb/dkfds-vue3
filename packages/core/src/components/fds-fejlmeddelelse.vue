@@ -11,19 +11,18 @@
 <script setup lang="ts">
 import { computed, inject, ref, useSlots } from 'vue';
 
-const props = defineProps({
-  auto: {
-    type: Boolean,
-    default: true,
-  },
-});
+const {
+  auto = true,
+} = defineProps<{
+  auto?: boolean;
+}>();
 
 const slots = useSlots();
 
 const injErrorMessage = ref<string | null>(inject('provideErrorMessage', null));
 const injIsValid = ref<boolean>(inject('provideIsValid', true));
 const compErrorMessage = computed(() => {
-  if (!props.auto) {
+  if (!auto) {
     return null;
   }
   return !injIsValid.value ? injErrorMessage.value : null;

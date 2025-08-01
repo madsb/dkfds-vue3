@@ -46,29 +46,15 @@
  * https://designsystem.dk/komponenter/cards/
  *
  * */
-import { PropType } from 'vue';
-
-defineProps({
-  /**
-   * Overskrift
-   * */
-  header: {
-    type: String,
-    default: null,
-  },
-  headerTag: {
-    type: String as PropType<'h2' | 'h3' | 'h4' | 'h5' | 'h6'>,
-    default: 'h2',
-    validator(value: string) {
-      return ['h2', 'h3', 'h4', 'h5', 'h6'].includes(value);
-    },
-  },
-  /**
-   * Under overskrift
-   * */
-  subheader: {
-    type: String,
-    default: null,
-  },
-});
+const {
+  /** Overskrift */
+  header = null,
+  headerTag = 'h2',
+  /** Under overskrift */
+  subheader = null,
+} = defineProps<{
+  header?: string | null;
+  headerTag?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  subheader?: string | null;
+}>();
 </script>

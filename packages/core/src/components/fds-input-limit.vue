@@ -48,18 +48,15 @@
  * */
 
 
-defineProps({
-  modelValue: {
-    type: String,
-    default: null,
-  },
-  limit: {
-    type: Number,
-    default: 0,
-  },
+const {
+  modelValue = null,
+  limit = 0,
+} = defineProps<{
+  modelValue?: string | null;
+  limit?: number;
   // TODO: Reverse ? - eg. du mangler 20 tegner
   // TODO: Hvad med - Du har snart nået grænsen - eg 4000 char på textarea
-});
+}>();
 </script>
 
 <style lang="scss">

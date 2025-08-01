@@ -3,7 +3,7 @@
     class="sidenav-sub_list"
     role="menu">
     <li
-      v-for="child of props.modelValue"
+      v-for="child of modelValue"
       :key="child.key"
       role="none"
       :class="[{ active: child.active }, { disabled: child.disabled }]"
@@ -30,24 +30,26 @@
 import { FdsNavigationItem } from 'dkfds-vue3-utils';
 import navigationService from './../service/navigation.service';
 
-const props = defineProps({
-  modelValue: {
-    type: Array as () => Array<FdsNavigationItem>,
-    required: true,
-  },
-});
+const {
+  modelValue,
+} = defineProps<{
+  modelValue: Array<FdsNavigationItem>;
+}>();
 
-const emit = defineEmits(['update:modelValue', 'navigate']);
+const emit = defineEmits<{
+  'update:modelValue': [value: Array<FdsNavigationItem>];
+  navigate: [key: string];
+}>();
 
 const navigateup = (key: string) => {
-  emit('navigate', navigationService.resolveKey(key, props.modelValue));
+  emit('navigate', navigationService.resolveKey(key, modelValue));
 };
 
 const navigate = (item: FdsNavigationItem) => {
   if (item.disabled) {
     return;
   }
-  const list = props.modelValue.map((f) => ({ ...f, active: f.key === item.key }));
+  const list = modelValue.map((f) => ({ ...f, active: f.key === item.key }));
   emit('update:modelValue', list);
   emit('navigate', item.key);
 };

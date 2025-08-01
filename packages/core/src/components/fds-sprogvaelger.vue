@@ -26,27 +26,26 @@
 
 <script setup lang="ts">
 import { FdsLanguageItem } from 'dkfds-vue3-utils';
-import { ref, PropType } from 'vue';
+import { ref } from 'vue';
 
-const props = defineProps({
-  modelValue: {
-    type: Array as PropType<Array<FdsLanguageItem>>,
-    required: true,
-    default: () => [],
-  },
-  autoSetLang: {
-    type: Boolean,
-    default: false,
-  },
-});
+const {
+  modelValue,
+  autoSetLang = false,
+} = defineProps<{
+  modelValue: FdsLanguageItem[];
+  autoSetLang?: boolean;
+}>();
 
-const emit = defineEmits(['update:modelValue', 'lang']);
+const emit = defineEmits<{
+  'update:modelValue': [value: FdsLanguageItem[]];
+  lang: [lang: string];
+}>();
 
-const value = ref(props.modelValue);
+const value = ref(modelValue);
 
 const handleUpdateLang = (langauge: FdsLanguageItem) => {
   value.value = value.value.map((m) => ({ ...m, active: langauge.lang === m.lang }));
-  if (props.autoSetLang) {
+  if (autoSetLang) {
     document.documentElement.setAttribute('lang', langauge.lang);
   }
   emit('lang', langauge.lang);

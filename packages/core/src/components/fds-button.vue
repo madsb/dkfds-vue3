@@ -13,18 +13,14 @@
  * https://designsystem.dk/komponenter/knapper/
  *
  * */
-import { PropType } from 'vue';
 import { FdsVariantEnum } from 'dkfds-vue3-utils';
 
-defineProps({
-  /**
-   * Visnings variant
-   * */
-  variant: {
-    type: String as PropType<FdsVariantEnum | string>,
-    default: () => FdsVariantEnum.primary,
-  },
-});
+const { 
+  /** Visnings variant */
+  variant = FdsVariantEnum.primary,
+} = defineProps<{
+  variant?: FdsVariantEnum | string;
+}>();
 </script>
 
 <style scoped lang="scss"></style>

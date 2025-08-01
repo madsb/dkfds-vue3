@@ -20,26 +20,21 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-const props = defineProps({
-  procent: {
-    type: [Number, String],
-    default: 0,
-  },
-  variant: {
-    type: String,
-    default: 'primary',
-  },
-  showProgress: {
-    type: Boolean,
-    default: true,
-  },
-});
+const {
+  procent = 0,
+  variant = 'primary',
+  showProgress = true,
+} = defineProps<{
+  procent?: number | string;
+  variant?: string;
+  showProgress?: boolean;
+}>();
 
 const progress = computed(() => {
-  if (typeof props.procent === 'string') {
+  if (typeof procent === 'string') {
     return 0;
   }
-  const val = Math.floor(Math.abs(props.procent));
+  const val = Math.floor(Math.abs(procent));
   return val > 100 ? 100 : val;
 });
 </script>

@@ -24,20 +24,19 @@
 
 import { formId } from 'dkfds-vue3-utils';
 
-const props = defineProps({
-  icon: {
-    type: String,
-    default: null,
-  },
-  id: {
-    type: String,
-    default: null,
-  },
-});
+const {
+  icon = null,
+  id = null,
+} = defineProps<{
+  icon?: string | null;
+  id?: string | null;
+}>();
 
-const emit = defineEmits(['iconClick']);
+const emit = defineEmits<{
+  iconClick: [formId: string];
+}>();
 
-const { formid } = formId(props.id, true);
+const { formid } = formId(id, true);
 
 const handleIconClick = () => {
   emit('iconClick', formid.value);

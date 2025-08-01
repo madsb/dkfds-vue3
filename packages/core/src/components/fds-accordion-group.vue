@@ -19,22 +19,15 @@
 <script setup lang="ts">
 import { ref, provide, computed } from 'vue';
 
-defineProps({
-  /**
-   * Tekst ved Lukket tilstand - Åbn alle
-   * */
-  collapsedText: {
-    type: String,
-    default: 'Åbn alle',
-  },
-  /**
-   * Tekst ved Åben tilstand - Luk alle
-   * */
-  expandedText: {
-    type: String,
-    default: 'Luk alle',
-  },
-});
+const {
+  /** Tekst ved Lukket tilstand - Åbn alle */
+  collapsedText = 'Åbn alle',
+  /** Tekst ved Åben tilstand - Luk alle */
+  expandedText = 'Luk alle',
+} = defineProps<{
+  collapsedText?: string;
+  expandedText?: string;
+}>();
 
 // TODO: Overvej single select (collapse andre) og multiselect (multi default) ?
 // TODO: Group expand/

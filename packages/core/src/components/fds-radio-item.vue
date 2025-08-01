@@ -29,26 +29,23 @@ import { formId } from 'dkfds-vue3-utils';
 
 import { generateId } from 'dkfds-vue3-utils';
 
-const props = defineProps({
-  value: {
-    type: String,
-    required: true,
-  },
-  index: {
-    type: String,
-    default: null,
-  },
-  id: {
-    type: String,
-    default: null,
-  },
-});
+const {
+  value,
+  index = null,
+  id = null,
+} = defineProps<{
+  value: string;
+  index?: string | null;
+  id?: string | null;
+}>();
 
-const emit = defineEmits(['dirty']);
+const emit = defineEmits<{
+  dirty: [value: boolean];
+}>();
 const injGroupEmit = inject<(_: string) => void>('provideGroupEmit');
 const injGroupValue = inject<string | null>('provideGroupValue');
-const { formid } = formId(props.id);
-const indexId = generateId(props.index);
+const { formid } = formId(id);
+const indexId = generateId(index);
 
 const handleInput = (event: Event) => {
   emit('dirty', true);

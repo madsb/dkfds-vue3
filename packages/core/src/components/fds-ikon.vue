@@ -9,13 +9,10 @@
 
 <script setup lang="ts">
 
-defineProps({
-  /**
-   * Ikon som string
-   * */
-  icon: {
-    type: String,
-    default: 'home',
-  },
-});
+const {
+  /** Ikon som string */
+  icon = 'home',
+} = defineProps<{
+  icon?: string;
+}>();
 </script>

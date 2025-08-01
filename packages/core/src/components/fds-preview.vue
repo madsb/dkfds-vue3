@@ -18,20 +18,15 @@
 <script setup lang="ts">
 
 
-defineProps({
-  header: {
-    type: String,
-    default: null,
-  },
-  href: {
-    type: String,
-    default: null,
-  },
-  linkText: {
-    type: String,
-    default: 'Design System',
-  },
-});
+const {
+  header = null,
+  href = null,
+  linkText = 'Design System',
+} = defineProps<{
+  header?: string | null;
+  href?: string | null;
+  linkText?: string;
+}>();
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

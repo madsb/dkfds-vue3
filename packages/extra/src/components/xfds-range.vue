@@ -25,39 +25,35 @@
  * */
 import { ref, watch, computed } from 'vue';
 import { formId } from 'dkfds-vue3-utils';
-const props = defineProps({
-  id: {
-    type: String,
-    default: null,
-  },
-  modelValue: {
-    type: [Number, String],
-    default: 0,
-  },
-  min: {
-    type: Number,
-    default: 0,
-  },
-  max: {
-    type: Number,
-    default: 100,
-  },
-  step: {
-    type: Number,
-    default: 1,
-  },
-});
-const emit = defineEmits(['update:modelValue', 'dirty', 'input']);
-const { formid } = formId(props.id, true);
-const value = ref(Number.isNaN(props.modelValue) ? 0 : Number(props.modelValue));
+const {
+  id = null,
+  modelValue = 0,
+  min = 0,
+  max = 100,
+  step = 1,
+} = defineProps<{
+  id?: string | null;
+  modelValue?: number | string;
+  min?: number;
+  max?: number;
+  step?: number;
+}>();
+
+const emit = defineEmits<{
+  'update:modelValue': [value: number];
+  dirty: [isDirty: boolean];
+  input: [event: Event];
+}>();
+const { formid } = formId(id, true);
+const value = ref(Number.isNaN(modelValue) ? 0 : Number(modelValue));
 const percent = computed(
-  () => `${((value.value - props.min) * 100) / (props.max - props.min)}% 100%`,
+  () => `${((value.value - min) * 100) / (max - min)}% 100%`,
 );
 const handleInput = () => emit('update:modelValue', value.value);
 watch(
-  () => [props.modelValue],
+  () => [modelValue],
   () => {
-    value.value = Number.isNaN(props.modelValue) ? 0 : Number(props.modelValue);
+    value.value = Number.isNaN(modelValue) ? 0 : Number(modelValue);
   },
   {
     immediate: true,

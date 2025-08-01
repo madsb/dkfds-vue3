@@ -41,37 +41,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref, PropType } from 'vue';
+import { ref } from 'vue';
 import { FdsOptionItem } from 'dkfds-vue3-utils';
 import { formId } from 'dkfds-vue3-utils';
 
-const props = defineProps({
-  modelValue: {
-    type: String,
-    default: null,
-  },
-  list: {
-    type: Array as PropType<Array<FdsOptionItem>>,
-    required: true,
-    default: () => [],
-  },
-  id: {
-    type: String,
-    default: null,
-  },
-  label: {
-    type: String,
-    required: true,
-    validator(value: string) {
-      return value?.length > 0;
-    },
-  },
-});
+const {
+  modelValue = null,
+  list,
+  id = null,
+  label,
+} = defineProps<{
+  modelValue?: string | null;
+  list: Array<FdsOptionItem>;
+  id?: string | null;
+  label: string;
+}>();
 
-const emit = defineEmits(['update:modelValue', 'dirty']);
+const emit = defineEmits<{
+  'update:modelValue': [value: string];
+  dirty: [value: boolean];
+}>();
 
-const { formid } = formId(props.id);
-const value = ref(props.modelValue);
+const { formid } = formId(id);
+const value = ref(modelValue);
 
 const handleInput = (event: Event) =>
   emit('update:modelValue', (event?.target as HTMLInputElement).value);

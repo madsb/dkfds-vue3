@@ -44,32 +44,22 @@ import { computed, onMounted } from 'vue';
 
 import { formId, dropdown } from 'dkfds-vue3-utils';
 
-const props = defineProps({
-  header: {
-    type: String,
-    default: 'Trin', // TODO: overvej interpolation
-  },
-  id: {
-    type: String,
-    default: null,
-  },
-  icon: {
-    type: String,
-    default: 'arrow-drop-down',
-  },
-  size: {
-    type: String,
-    default: 'large',
-    validator(value: string) {
-      return ['small', 'large'].includes(value);
-    },
-  },
-});
+const {
+  header = 'Trin', // TODO: overvej interpolation
+  id = null,
+  icon = 'arrow-drop-down',
+  size = 'large',
+} = defineProps<{
+  header?: string;
+  id?: string | null;
+  icon?: string;
+  size?: 'small' | 'large';
+}>();
 
-const { formid } = formId(props.id, true);
+const { formid } = formId(id, true);
 
 const lgNoResponsive = computed(() =>
-  props.size === 'large' ? 'overflow-menu--lg-no-responsive' : '',
+  size === 'large' ? 'overflow-menu--lg-no-responsive' : '',
 );
 
 onMounted(async () => {

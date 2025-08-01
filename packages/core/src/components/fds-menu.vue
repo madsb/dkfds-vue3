@@ -9,15 +9,14 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-const props = defineProps({
-  variant: {
-    type: String as () => 'venstremenu' | 'trin' | 'submenu',
-    default: null,
-  },
-});
+const {
+  variant = null,
+} = defineProps<{
+  variant?: 'venstremenu' | 'trin' | 'submenu' | null;
+}>();
 
 const cssClass = computed(() => {
-  if (props.variant === 'submenu') {
+  if (variant === 'submenu') {
     return 'sidenav-sub_list';
   }
   return 'sidenav-list';

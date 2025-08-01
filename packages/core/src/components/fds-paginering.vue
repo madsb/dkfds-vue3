@@ -112,32 +112,28 @@
 import { FdsPaging } from 'dkfds-vue3-utils';
 import { computed, ref, watch } from 'vue';
 
-const props = defineProps({
-  list: {
-    type: Array,
-    default: () => [],
-  },
-  skip: {
-    type: Number,
-    default: 0,
-  },
-  pageSize: {
-    type: Number,
-    default: 10,
-  },
-  maxElements: {
-    type: Number,
-    default: 7,
-  },
-});
+const {
+  list = [],
+  skip = 0,
+  pageSize = 10,
+  maxElements = 7,
+} = defineProps<{
+  list?: any[];
+  skip?: number;
+  pageSize?: number;
+  maxElements?: number;
+}>();
 
-const emit = defineEmits(['filteredPage', 'skip']);
+const emit = defineEmits<{
+  filteredPage: [items: any[]];
+  skip: [skip: number];
+}>();
 
 const currentPage = ref(1);
 const show = ref(true);
 
 const getTotalPages = computed((): Array<number> => {
-  const totalPages = Math.abs(Math.ceil(props.list.length / props.pageSize));
+  const totalPages = Math.abs(Math.ceil(list.length / pageSize));
   return Array.from({ length: totalPages }, (value, key) => key + 1);
 });
 
@@ -145,22 +141,22 @@ const lastPage = computed((): number => {
   return getTotalPages.value.length;
 });
 
-const emitList = (skip = 0) => {
-  emit('filteredPage', props.list.length > 0 ? props.list.slice(skip, skip + props.pageSize) : []);
-  emit('skip', props.skip > 0 ? props.skip : skip);
+const emitList = (skipValue = 0) => {
+  emit('filteredPage', list.length > 0 ? list.slice(skipValue, skipValue + pageSize) : []);
+  emit('skip', skip > 0 ? skip : skipValue);
 };
 
 const handlePageChange = (event: Event, newPage: number) => {
   event.preventDefault();
-  const skip = props.pageSize * (newPage - 1);
-  emitList(skip);
+  const skipValue = pageSize * (newPage - 1);
+  emitList(skipValue);
   currentPage.value = newPage;
 };
 
 const generatePages = (): FdsPaging[] => {
   const tmpPages = getTotalPages.value;
   const pages: FdsPaging[] = [];
-  const centerDiff = Math.ceil(props.maxElements / 2) + 1;
+  const centerDiff = Math.ceil(maxElements / 2) + 1;
 
   tmpPages.forEach((f) => {
     if (f === 1 || f === lastPage.value || f === currentPage.value) {
@@ -199,14 +195,14 @@ const generatePages = (): FdsPaging[] => {
 };
 
 watch(
-  () => props.skip,
+  () => skip,
   () => {
-    if (props.skip > 0) {
-      currentPage.value = props.skip / props.pageSize + 1;
+    if (skip > 0) {
+      currentPage.value = skip / pageSize + 1;
     } else {
       currentPage.value = 1;
     }
-    show.value = props.list && props.list.length > props.pageSize;
+    show.value = list && list.length > pageSize;
     emitList();
   },
   {

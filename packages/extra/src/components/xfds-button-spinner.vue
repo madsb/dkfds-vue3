@@ -37,54 +37,32 @@
  * https://designsystem.dk/komponenter/knapper/
  *
  * */
-import { PropType } from 'vue';
 import { FdsVariantEnum } from 'dkfds-vue3-utils';
 
-defineProps({
-  /**
-   * Visnings variant
-   * */
-  variant: {
-    type: String as PropType<FdsVariantEnum | string>,
-    default: () => FdsVariantEnum.secondary,
-  },
+const {
+  /** Visnings variant */
+  variant = FdsVariantEnum.secondary,
+  /** Vis spinner */
+  showSpinner = false,
+  disabled = false,
+  /** Spinner tekst - erstatter alm tekst */
+  spinnerText = null,
+  /** Ikon som string */
+  icon = null,
+  /** Tilføjer overlay når showSpinner, ikke muligt at klikke andre steder imens */
+  useoverlay = false,
+} = defineProps<{
+  variant?: FdsVariantEnum | string;
+  showSpinner?: boolean;
+  disabled?: boolean;
+  spinnerText?: string | null;
+  icon?: string | null;
+  useoverlay?: boolean;
+}>();
 
-  /**
-   * Vis spinner
-   * */
-  showSpinner: {
-    type: Boolean,
-    default: false,
-  },
-
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-
-  /**
-   * Spinner tekst - erstatter alm tekst
-   * */
-  spinnerText: {
-    type: String,
-    default: null,
-  },
-  /**
-   * Ikon som string
-   * */
-  icon: {
-    type: String,
-    default: null,
-  },
-  /**
-   * Tilføjer overlay når showSpinner, ikke muligt at klikke andre steder imens
-   * */
-  useoverlay: {
-    type: Boolean,
-    default: false,
-  },
-});
-const emit = defineEmits(['click']);
+const emit = defineEmits<{
+  click: [event: MouseEvent];
+}>();
 </script>
 
 <style lang="scss"></style>

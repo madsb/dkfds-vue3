@@ -7,16 +7,13 @@
 <script setup lang="ts">
 
 
-defineProps({
-  id: {
-    type: String,
-    default: 'main-toaster',
-  },
-  position: {
-    type: String,
-    default: 'top-right',
-  },
-});
+const {
+  id = 'main-toaster',
+  position = 'top-right',
+} = defineProps<{
+  id?: string;
+  position?: string;
+}>();
 </script>
 
 <style scoped lang="scss"></style>

@@ -28,51 +28,38 @@ import { ref, useAttrs } from 'vue';
 import { FdsInputNumber } from 'dkfds-vue3-core';
 const attrs = useAttrs();
 
-const props = defineProps({
-  id: {
-    type: String,
-    default: null,
-  },
-  label: {
-    type: String,
-    default: '',
-  },
-  hint: {
-    type: String,
-    default: '',
-  },
-  tooltip: {
-    type: String,
-    default: null,
-  },
-  isValid: {
-    type: Boolean,
-    default: true,
-  },
-  errorMessage: {
-    type: String,
-    default: null,
-  },
-  readonly: {
-    type: Boolean,
-    default: false,
-  },
-  modelValue: {
-    type: [Number, String],
-    default: 0,
-  },
-  suffix: {
-    type: String,
-    default: null,
-  },
-  prefix: {
-    type: String,
-    default: null,
-  },
-});
-const emit = defineEmits(['update:modelValue', 'dirty', 'valid', 'input']);
+const {
+  id = null, // eslint-disable-line no-unused-vars
+  label = '',
+  hint = '',
+  tooltip = null,
+  isValid = true,
+  errorMessage = null,
+  readonly = false,
+  modelValue = 0,
+  suffix = null,
+  prefix = null,
+} = defineProps<{
+  id?: string | null;
+  label?: string;
+  hint?: string;
+  tooltip?: string | null;
+  isValid?: boolean;
+  errorMessage?: string | null;
+  readonly?: boolean;
+  modelValue?: number | string;
+  suffix?: string | null;
+  prefix?: string | null;
+}>();
 
-const value = ref(props.modelValue);
+const emit = defineEmits<{
+  'update:modelValue': [value: number | string];
+  dirty: [value: boolean];
+  valid: [value: boolean];
+  input: [value: number | string];
+}>();
+
+const value = ref(modelValue);
 const dirty = ref(false);
 
 const touchedEvent = () => {

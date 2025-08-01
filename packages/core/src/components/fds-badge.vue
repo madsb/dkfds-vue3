@@ -13,24 +13,19 @@
  * https://designsystem.dk/komponenter/badges/
  *
  * */
-import { computed, PropType } from 'vue';
+import { computed } from 'vue';
 
-const props = defineProps({
-  size: {
-    type: String as PropType<'small' | 'large'>,
-    default: 'large',
-  },
-  /**
-   * Variant 'success' | 'info' | 'warning' | 'error'
-   * */
-  variant: {
-    type: String as PropType<'success' | 'info' | 'warning' | 'error'>,
-    default: null,
-  },
-});
+const {
+  size = 'large',
+  /** Variant 'success' | 'info' | 'warning' | 'error' */
+  variant = null,
+} = defineProps<{
+  size?: 'small' | 'large';
+  variant?: 'success' | 'info' | 'warning' | 'error' | null;
+}>();
 
-const getSizeClass = computed(() => `badge-${props.size}`);
-const getVariantClass = computed(() => (props.variant ? `badge-${props.variant}` : ''));
+const getSizeClass = computed(() => `badge-${size}`);
+const getVariantClass = computed(() => (variant ? `badge-${variant}` : ''));
 </script>
 
 <style scoped lang="scss"></style>

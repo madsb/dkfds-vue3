@@ -37,22 +37,17 @@ import { onMounted } from 'vue';
 
 import { formId, dropdown } from 'dkfds-vue3-utils';
 
-const props = defineProps({
-  header: {
-    type: String,
-    default: null,
-  },
-  id: {
-    type: String,
-    default: null,
-  },
-  icon: {
-    type: String,
-    default: 'more-vert',
-  },
-});
+const {
+  header = null,
+  id = null,
+  icon = 'more-vert',
+} = defineProps<{
+  header?: string | null;
+  id?: string | null;
+  icon?: string;
+}>();
 
-const { formid } = formId(props.id, true);
+const { formid } = formId(id, true);
 
 onMounted(async () => {
   new dropdown(document.getElementById(`button_${formid.value}`)).init();

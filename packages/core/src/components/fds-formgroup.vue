@@ -11,22 +11,19 @@
 import { computed,  inject, provide, ref } from 'vue';
 import { formId } from 'dkfds-vue3-utils';
 
-const props = defineProps({
-  id: {
-    type: String,
-    default: null,
-  },
-  isValid: {
-    type: Boolean,
-    default: true,
-  },
-});
+const {
+  id = null,
+  isValid = true,
+} = defineProps<{
+  id?: string | null;
+  isValid?: boolean;
+}>();
 
 /**
  * Form id der bruges i slots
  * eg. label for input element
  */
-const { formid } = formId(props.id, true);
+const { formid } = formId(id, true);
 /**
  * Provide for underliggende elementer
  * eg. label for input element
@@ -35,7 +32,7 @@ provide('formid', formid);
 
 const injIsValid = ref<boolean | null>(inject('provideIsValid', null));
 
-const compValid = computed(() => injIsValid.value ?? props.isValid);
+const compValid = computed(() => injIsValid.value ?? isValid);
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

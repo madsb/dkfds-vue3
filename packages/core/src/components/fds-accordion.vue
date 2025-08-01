@@ -45,56 +45,30 @@
 
 <script setup lang="ts">
 import { formId } from 'dkfds-vue3-utils';
-import { ref, computed, PropType } from 'vue';
+import { ref, computed } from 'vue';
 
-const props = defineProps({
-  /**
-   * Overskrift
-   * */
-  header: {
-    type: String,
-    default: null,
-  },
-  /**
-   * Hjælpetekst
-   * */
-  hint: {
-    type: String,
-    default: '',
-  },
-  /**
-   * Er Accordion Åben = aktiv
-   * */
-  expanded: {
-    type: Boolean,
-    default: false,
-  },
+const {
+  /** Overskrift */
+  header = null,
+  /** Hjælpetekst */
+  hint: _hint = '',
+  /** Er Accordion Åben = aktiv */
+  expanded = false,
+  headerTag = 'h2',
+  /** Variant - ikon der vises til højre */
+  variant = null,
+  /** Tilhørende tekst til varianten */
+  variantText = '',
+} = defineProps<{
+  header?: string | null;
+  hint?: string;
+  expanded?: boolean;
+  headerTag?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  variant?: 'success' | 'warning' | 'error' | null;
+  variantText?: string;
+}>();
 
-  headerTag: {
-    type: String as PropType<'h2' | 'h3' | 'h4' | 'h5' | 'h6'>,
-    default: 'h2',
-    validator(value: string) {
-      return ['h2', 'h3', 'h4', 'h5', 'h6'].includes(value);
-    },
-  },
-
-  /**
-   * Variant - ikon der vises til højre
-   * */
-  variant: {
-    type: String as PropType<'success' | 'warning' | 'error'>,
-    default: null,
-  },
-  /**
-   * Tilhørende tekst til varianten
-   * */
-  variantText: {
-    type: String,
-    default: '',
-  },
-});
-
-const refExpanded = ref(props.expanded);
+const refExpanded = ref(expanded);
 
 const { formid } = formId(undefined, true);
 
@@ -110,7 +84,7 @@ const defaultVariantText = {
   error: 'Fejl',
 };
 
-const getVariantClass = computed(() => (props.variant ? `accordion-${props.variant}` : ''));
-const getIcon = computed(() => icons[props.variant as keyof typeof icons]);
-const getIconText = computed(() => defaultVariantText[props.variant as keyof typeof icons]);
+const getVariantClass = computed(() => (variant ? `accordion-${variant}` : ''));
+const getIcon = computed(() => icons[variant as keyof typeof icons]);
+const getIconText = computed(() => defaultVariantText[variant as keyof typeof icons]);
 </script>

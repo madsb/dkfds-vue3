@@ -29,41 +29,37 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, PropType, useAttrs } from 'vue';
+import { ref, watch, useAttrs } from 'vue';
 import { formId } from 'dkfds-vue3-utils';
 
 const attrs = useAttrs();
 
-const props = defineProps({
-  id: {
-    type: String,
-    default: null,
-  },
-  modelValue: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * Vis som lille checkbox
-   * */
-  size: {
-    type: String as PropType<'small' | 'large'>,
-    default: 'large',
-  },
-});
+const {
+  id = null,
+  modelValue = false,
+  /** Vis som lille checkbox */
+  size = 'large',
+} = defineProps<{
+  id?: string | null;
+  modelValue?: boolean;
+  size?: 'small' | 'large';
+}>();
 
-const emit = defineEmits(['update:modelValue', 'dirty']);
+const emit = defineEmits<{
+  'update:modelValue': [checked: boolean];
+  dirty: [isDirty: boolean];
+}>();
 
-const { formid } = formId(props.id, true);
-const refValue = ref(props.modelValue);
+const { formid } = formId(id, true);
+const refValue = ref(modelValue);
 
 const onInput = (event: Event) =>
   emit('update:modelValue', (event?.target as HTMLInputElement).checked);
 
 watch(
-  () => [props.modelValue],
+  () => [modelValue],
   () => {
-    refValue.value = props.modelValue;
+    refValue.value = modelValue;
   },
   {
     immediate: true,

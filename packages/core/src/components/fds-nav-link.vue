@@ -18,12 +18,11 @@
 
 <script setup lang="ts">
 
-defineProps({
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-});
+const {
+  disabled = false,
+} = defineProps<{
+  disabled?: boolean;
+}>();
 </script>
 
 <style scoped lang="scss"></style>

@@ -17,31 +17,24 @@
 import { provide, computed } from 'vue';
 import { formId } from 'dkfds-vue3-utils';
 
-const props = defineProps({
-  modelValue: {
-    type: String,
-    default: null,
-  },
+const {
+  modelValue = null,
+  id = null,
+  label,
+} = defineProps<{
+  modelValue?: string | null;
+  id?: string | null;
+  label: string;
+}>();
 
-  id: {
-    type: String,
-    default: null,
-  },
+const emit = defineEmits<{
+  'update:modelValue': [value: string];
+  dirty: [isDirty: boolean];
+}>();
 
-  label: {
-    type: String,
-    required: true,
-    validator(value: string) {
-      return value?.length > 0;
-    },
-  },
-});
+const { formid } = formId(id);
 
-const emit = defineEmits(['update:modelValue', 'dirty']);
-
-const { formid } = formId(props.id);
-
-const value = computed(() => props.modelValue);
+const value = computed(() => modelValue);
 
 const exposeEmit = (newValue: string) => {
   emit('update:modelValue', newValue);

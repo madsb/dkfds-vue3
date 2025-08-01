@@ -13,14 +13,13 @@
  * https://designsystem.dk/komponenter/cards/
  *
  * */
-import { computed, PropType } from 'vue';
+import { computed } from 'vue';
 
-const props = defineProps({
-  type: {
-    type: String as PropType<'deck' | 'columns'>,
-    default: null,
-  },
-});
+const {
+  type = null,
+} = defineProps<{
+  type?: 'deck' | 'columns' | null;
+}>();
 
-const getClass = computed(() => props.type ?? 'normal');
+const getClass = computed(() => type ?? 'normal');
 </script>

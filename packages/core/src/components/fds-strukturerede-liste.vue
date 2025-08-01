@@ -26,21 +26,18 @@
 import { provide } from 'vue';
 import { formId } from 'dkfds-vue3-utils';
 
-const props = defineProps({
-  header: {
-    type: String,
-    default: null,
-  },
-  id: {
-    type: String,
-    default: null,
-  },
-});
+const {
+  header = null,
+  id = null,
+} = defineProps<{
+  header?: string | null;
+  id?: string | null;
+}>();
 /**
  * Form id der bruges i slots
  * eg. label for input element
  */
-const { formid } = formId(props.id, true);
+const { formid } = formId(id, true);
 /**
  * Provide for underliggende elementer
  * eg. label for input element

@@ -27,37 +27,32 @@ import { ref, watch } from 'vue';
 import { FdsOptionItem } from 'dkfds-vue3-utils';
 import { formId } from 'dkfds-vue3-utils';
 
-const props = defineProps({
-  id: {
-    type: String,
-    default: null,
-  },
-  modelValue: {
-    type: String,
-    required: false,
-    default: '',
-  },
+const {
+  id = null,
+  modelValue = '',
   /**
    * Første option - default: Vælg
    * */
-  optionHeader: {
-    type: String,
-    default: 'Vælg',
-  },
-
+  optionHeader = 'Vælg',
   /**
    * Dropdown options / valgmuligheder
    * */
-  options: {
-    type: Array as () => Array<FdsOptionItem>,
-    default: () => [],
-  },
-});
+  options = [],
+} = defineProps<{
+  id?: string | null;
+  modelValue?: string;
+  optionHeader?: string;
+  options?: Array<FdsOptionItem>;
+}>();
 
-const emit = defineEmits(['update:modelValue', 'dirty', 'change']);
+const emit = defineEmits<{
+  'update:modelValue': [value: string];
+  dirty: [value: boolean];
+  change: [value: string];
+}>();
 
-const refValue = ref(props.modelValue);
-const { formid } = formId(props.id, true);
+const refValue = ref(modelValue);
+const { formid } = formId(id, true);
 
 const onDirty = () => {
   emit('dirty', true);
@@ -67,9 +62,9 @@ const onInput = (event: Event) =>
   emit('update:modelValue', (event?.target as HTMLInputElement).value);
 
 watch(
-  () => [props.modelValue],
+  () => [modelValue],
   () => {
-    refValue.value = props.modelValue;
+    refValue.value = modelValue;
   },
   {
     immediate: true,

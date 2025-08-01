@@ -30,34 +30,31 @@ import { computed, useAttrs } from 'vue';
 import { formId } from 'dkfds-vue3-utils';
 
 const attrs = useAttrs();
-const props = defineProps({
-  id: {
-    type: String,
-    default: null,
-  },
-  modelValue: {
-    type: [Number, String],
-    default: 0,
-  },
-  suffix: {
-    type: String,
-    default: null,
-  },
-  prefix: {
-    type: String,
-    default: null,
-  },
-});
+const {
+  id = null,
+  modelValue = 0,
+  suffix = null,
+  prefix = null,
+} = defineProps<{
+  id?: string | null;
+  modelValue?: number | string;
+  suffix?: string | null;
+  prefix?: string | null;
+}>();
 
-const emit = defineEmits(['update:modelValue', 'dirty', 'input']);
+const emit = defineEmits<{
+  'update:modelValue': [value: number | string];
+  dirty: [value: boolean];
+  input: [event: Event];
+}>();
 
-const { formid } = formId(props.id, true);
+const { formid } = formId(id, true);
 
 const cssClass = computed((): string => {
-  if (props.suffix) {
+  if (suffix) {
     return 'form-input-wrapper form-input-wrapper--suffix';
   }
-  if (props.prefix) {
+  if (prefix) {
     return 'form-input-wrapper form-input-wrapper--prefix';
   }
   return 'flex-items-center';
@@ -65,7 +62,7 @@ const cssClass = computed((): string => {
 
 const inputValue = computed({
   get() {
-    return Number.isNaN(props.modelValue) ? 0 : props.modelValue;
+    return Number.isNaN(modelValue) ? 0 : modelValue;
   },
   set(newValue) {
     emit('update:modelValue', newValue);

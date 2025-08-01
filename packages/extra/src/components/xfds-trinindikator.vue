@@ -37,41 +37,30 @@ import { FdsNavigationItem } from 'dkfds-vue3-utils';
 import { ref,  computed, watch } from 'vue';
 import navigationService from './../service/navigation.service';
 
-const props = defineProps({
-  modelValue: {
-    type: Array as () => Array<FdsNavigationItem>,
-    default: () => [],
-    required: true,
-  },
-  showIndex: {
-    type: Boolean,
-    default: false,
-  },
-  navigateFirst: {
-    type: Boolean,
-    default: false,
-  },
-  header: {
-    type: String,
-    default: 'Trin', // TODO: overvej interpolation
-  },
-  id: {
-    type: String,
-    default: null,
-  },
-  icon: {
-    type: String,
-    default: 'arrow-drop-down',
-  },
-  size: {
-    type: String,
-    default: 'small',
-  },
-});
+const {
+  modelValue,
+  showIndex = false, // eslint-disable-line no-unused-vars
+  navigateFirst = false, // eslint-disable-line no-unused-vars
+  header = 'Trin', // TODO: overvej interpolation
+  id = null,
+  icon = 'arrow-drop-down',
+  size = 'small',
+} = defineProps<{
+  modelValue: Array<FdsNavigationItem>;
+  showIndex?: boolean;
+  navigateFirst?: boolean;
+  header?: string;
+  id?: string | null;
+  icon?: string;
+  size?: string;
+}>();
 
-const emit = defineEmits(['update:modelValue', 'navigate']);
+const emit = defineEmits<{
+  'update:modelValue': [value: Array<FdsNavigationItem>];
+  navigate: [key: string];
+}>();
 
-const mVal = computed(() => props.modelValue ?? []);
+const mVal = computed(() => modelValue ?? []);
 const currentKey = ref('');
 const tabsList = ref<Array<FdsNavigationItem>>(mVal.value.filter((f) => !f.ignore));
 
@@ -88,10 +77,10 @@ const navigate = (item: FdsNavigationItem) => {
 };
 
 const currentStep = computed(() => tabsList.value.findIndex((f) => f.active));
-const currentActiveKey = computed(() => props.modelValue.find((f) => f.active).key);
+const currentActiveKey = computed(() => modelValue.find((f) => f.active).key);
 
 watch(
-  () => [props.modelValue],
+  () => [modelValue],
   () => {
     emit('navigate', currentActiveKey.value);
   },

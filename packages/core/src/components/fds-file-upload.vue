@@ -16,24 +16,23 @@ import { removeBrowserFileContentHeaders } from 'dkfds-vue3-utils';
 import { FdsFileInputModel } from 'dkfds-vue3-utils';
 import { formId } from 'dkfds-vue3-utils';
 
-const props = defineProps({
-  id: {
-    type: String,
-    default: null,
-  },
-  contenttypes: {
-    type: Array as () => Array<string>,
-    default: () => ['image/png', 'image/jpg', 'image/jpeg', '.pdf', '.doc', '.docx', '.odt'],
-  },
-  removeContentHeaders: {
-    type: Boolean,
-    default: false,
-  },
-});
+const {
+  id = null,
+  contenttypes = ['image/png', 'image/jpg', 'image/jpeg', '.pdf', '.doc', '.docx', '.odt'],
+  removeContentHeaders = false,
+} = defineProps<{
+  id?: string | null;
+  contenttypes?: string[];
+  removeContentHeaders?: boolean;
+}>();
 
-const emit = defineEmits(['dirty', 'upload', 'error']);
+const emit = defineEmits<{
+  dirty: [value: boolean];
+  upload: [file: FdsFileInputModel];
+  error: [error: any];
+}>();
 
-const { formid } = formId(props.id);
+const { formid } = formId(id);
 const file = ref<File | null>();
 
 const onDirty = () => emit('dirty', true);
@@ -57,7 +56,7 @@ const onFileChange = ($event: Event) => {
   const reader = new FileReader();
   reader.readAsDataURL(file.value);
   reader.onload = async () => {
-    const data = props.removeContentHeaders
+    const data = removeContentHeaders
       ? removeBrowserFileContentHeaders(reader.result?.toString() ?? '')
       : reader.result?.toString();
 

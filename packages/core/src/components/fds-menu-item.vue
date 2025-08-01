@@ -36,34 +36,26 @@
 <script setup lang="ts">
 
 
-defineProps({
-  id: {
-    type: String,
-    required: true,
-  },
-  active: {
-    type: Boolean,
-    default: false,
-  },
-  icon: {
-    type: String,
-    default: null,
-  },
-  hint: {
-    type: String,
-    default: null,
-  },
-  href: {
-    type: String,
-    default: null,
-  },
-  index: {
-    type: Number,
-    default: null,
-  },
-});
+const {
+  id,
+  active = false,
+  icon = null,
+  hint = null,
+  href = null,
+  index = null,
+} = defineProps<{
+  id: string;
+  active?: boolean;
+  icon?: string | null;
+  hint?: string | null;
+  href?: string | null;
+  index?: number | null;
+}>();
 
-const emit = defineEmits(['update:modelValue', 'navigate']);
+const emit = defineEmits<{
+  'update:modelValue': [value: any];
+  navigate: [key: string];
+}>();
 
 const navigate = (event: Event, key: string) => {
   event.preventDefault();

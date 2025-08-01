@@ -15,12 +15,11 @@
 
 <script setup lang="ts">
 
-defineProps({
-  icon: {
-    type: String,
-    default: '',
-  },
-});
+const {
+  icon = '',
+} = defineProps<{
+  icon?: string;
+}>();
 </script>
 
 <style scoped lang="scss"></style>

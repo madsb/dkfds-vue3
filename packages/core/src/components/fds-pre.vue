@@ -30,20 +30,15 @@
 <script setup lang="ts">
 
 
-defineProps({
-  json: {
-    type: Object,
-    default: null,
-  },
-  code: {
-    type: String,
-    default: null,
-  },
-  header: {
-    type: String,
-    default: 'Kode eksempel',
-  },
-});
+const {
+  json = null,
+  code = null,
+  header = 'Kode eksempel',
+} = defineProps<{
+  json?: object | null;
+  code?: string | null;
+  header?: string;
+}>();
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

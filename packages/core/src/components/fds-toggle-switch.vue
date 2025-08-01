@@ -29,35 +29,29 @@
 
 import { formId } from 'dkfds-vue3-utils';
 
-const props = defineProps({
-  id: {
-    type: String,
-    default: null,
-  },
-  modelValue: {
-    type: Boolean,
-    default: false,
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  offText: {
-    type: String,
-    default: 'Fra',
-  },
-  onText: {
-    type: String,
-    default: 'Til',
-  },
-});
+const {
+  id = null,
+  modelValue = false,
+  disabled = false,
+  offText = 'Fra',
+  onText = 'Til',
+} = defineProps<{
+  id?: string | null;
+  modelValue?: boolean;
+  disabled?: boolean;
+  offText?: string;
+  onText?: string;
+}>();
 
-const emit = defineEmits(['update:modelValue', 'input']);
+const emit = defineEmits<{
+  'update:modelValue': [value: boolean];
+  input: [event: Event];
+}>();
 
 const handleInput = (event: Event) =>
   emit('update:modelValue', (event?.target as HTMLInputElement).checked);
 
-const { formid } = formId(props.id, true);
+const { formid } = formId(id, true);
 
 // onMounted(() => {
 //   const toggle = new DKFDSToggle(document.getElementById(formid.value));

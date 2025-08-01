@@ -43,37 +43,30 @@
 
 <script setup lang="ts">
 import { FdsCheckboxItem, formId } from 'dkfds-vue3-utils';
-import { PropType, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 
-const props = defineProps({
-  modelValue: {
-    type: Array as PropType<Array<FdsCheckboxItem>>,
-    required: true,
-    default: () => [],
-  },
-  label: {
-    type: String,
-    default: '',
-  },
-  hint: {
-    type: String,
-    default: '',
-  },
-  tooltip: {
-    type: String,
-    default: null,
-  },
-  isValid: {
-    type: Boolean,
-    default: true,
-  },
-  errorMessage: {
-    type: String,
-    default: null,
-  },
-});
+const {
+  modelValue,
+  label = '',
+  hint = '',
+  tooltip = null,
+  isValid = true,
+  errorMessage = null,
+} = defineProps<{
+  modelValue: Array<FdsCheckboxItem>;
+  label?: string;
+  hint?: string;
+  tooltip?: string | null;
+  isValid?: boolean;
+  errorMessage?: string | null;
+}>();
 
-const emit = defineEmits(['update:modelValue', 'dirty', 'valid', 'input']);
+const emit = defineEmits<{
+  'update:modelValue': [value: Array<FdsCheckboxItem>];
+  dirty: [value: boolean];
+  valid: [value: boolean];
+  input: [value: Array<FdsCheckboxItem>];
+}>();
 
 const dirty = ref(false);
 
@@ -82,7 +75,7 @@ const touchedEvent = () => {
   emit('dirty', true);
 };
 
-const value = ref(props.modelValue);
+const value = ref(modelValue);
 const { formid } = formId(undefined, true);
 
 const handleInput = () => {
@@ -90,9 +83,9 @@ const handleInput = () => {
 };
 
 watch(
-  () => [props.modelValue],
+  () => [modelValue],
   () => {
-    value.value = props.modelValue;
+    value.value = modelValue;
   },
   {
     immediate: true,

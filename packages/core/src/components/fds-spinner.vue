@@ -14,12 +14,11 @@
 import { useAttrs } from 'vue';
 
 const attrs = useAttrs();
-defineProps({
-  variant: {
-    type: String,
-    default: null,
-  },
-});
+const {
+  variant = null,
+} = defineProps<{
+  variant?: string | null;
+}>();
 </script>
 
 <style scoped lang="scss"></style>

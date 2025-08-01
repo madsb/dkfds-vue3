@@ -25,53 +25,38 @@ import { ref, useAttrs, watch } from 'vue';
 import { FdsTextarea } from 'dkfds-vue3-core'
 const attrs = useAttrs();
 
-const props = defineProps({
-  modelValue: {
-    type: String,
-    default: '',
-    required: true,
-  },
-  id: {
-    type: String,
-    default: null,
-  },
-  rows: {
-    type: Number,
-    default: 5,
-  },
-  rowlength: {
-    type: Number,
-    default: 80,
-  },
-  maxlength: {
-    type: Number,
-    default: 4000,
-  },
-  label: {
-    type: String,
-    default: '',
-  },
-  hint: {
-    type: String,
-    default: '',
-  },
-  tooltip: {
-    type: String,
-    default: null,
-  },
-  isValid: {
-    type: Boolean,
-    default: true,
-  },
-  errorMessage: {
-    type: String,
-    default: null,
-  },
-});
+const {
+  modelValue,
+  id = null, // eslint-disable-line no-unused-vars
+  rows = 5,
+  rowlength = 80,
+  maxlength = 4000,
+  label = '',
+  hint = '',
+  tooltip = null,
+  isValid = true,
+  errorMessage = null,
+} = defineProps<{
+  modelValue: string;
+  id?: string | null;
+  rows?: number;
+  rowlength?: number;
+  maxlength?: number;
+  label?: string;
+  hint?: string;
+  tooltip?: string | null;
+  isValid?: boolean;
+  errorMessage?: string | null;
+}>();
 
-const emit = defineEmits(['update:modelValue', 'dirty', 'valid', 'input']);
+const emit = defineEmits<{
+  'update:modelValue': [value: string];
+  dirty: [value: boolean];
+  valid: [value: boolean];
+  input: [value: string];
+}>();
 
-const value = ref(props.modelValue);
+const value = ref(modelValue);
 const dirty = ref(false);
 
 const touchedEvent = () => {
@@ -81,9 +66,9 @@ const touchedEvent = () => {
 const handleInput = () => emit('update:modelValue', value.value);
 
 watch(
-  () => [props.modelValue],
+  () => [modelValue],
   () => {
-    value.value = props.modelValue;
+    value.value = modelValue;
   },
   {
     immediate: true,

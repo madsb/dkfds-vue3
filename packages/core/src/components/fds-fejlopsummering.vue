@@ -21,12 +21,11 @@
 <script setup lang="ts">
 import FdsAlert from './fds-alert.vue';
 
-defineProps({
-  header: {
-    type: String,
-    default: 'Fejlopsummering',
-  },
-});
+const {
+  header = 'Fejlopsummering',
+} = defineProps<{
+  header?: string;
+}>();
 </script>
 
 <style scoped lang="scss"></style>

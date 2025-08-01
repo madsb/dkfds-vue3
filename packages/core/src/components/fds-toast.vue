@@ -28,12 +28,11 @@
  * */
 
 
-defineProps({
-  target: {
-    type: String,
-    default: 'main-toaster',
-  },
-});
+const {
+  target = 'main-toaster',
+} = defineProps<{
+  target?: string;
+}>();
 </script>
 
 <style scoped lang="scss"></style>

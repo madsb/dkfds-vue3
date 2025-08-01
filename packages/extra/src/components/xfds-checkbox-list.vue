@@ -33,26 +33,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref, PropType } from 'vue';
+import { ref } from 'vue';
 import { formId, FdsCheckboxItem } from 'dkfds-vue3-utils';
 
-const props = defineProps({
-  id: {
-    type: String,
-    default: null,
-  },
-  modelValue: {
-     
-    type: Array as PropType<Array<FdsCheckboxItem>>,
-    required: true,
-    default: () => [],
-  },
-});
+const {
+  id = null,
+  modelValue,
+} = defineProps<{
+  id?: string | null;
+  modelValue: Array<FdsCheckboxItem>;
+}>();
 
-const emit = defineEmits(['update:modelValue', 'dirty']);
+const emit = defineEmits<{
+  'update:modelValue': [value: Array<FdsCheckboxItem>];
+  dirty: [value: boolean];
+}>();
 
-const value = ref(props.modelValue);
-const { formid } = formId(props.id, true);
+const value = ref(modelValue);
+const { formid } = formId(id, true);
 
 const handleDirty = () => {
   emit('dirty', true);

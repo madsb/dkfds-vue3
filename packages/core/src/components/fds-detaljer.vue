@@ -13,13 +13,10 @@
 <script setup lang="ts">
 
 
-defineProps({
-  /**
-   * Overskrift
-   * */
-  header: {
-    type: String,
-    default: 'Mere information',
-  },
-});
+const {
+  /** Overskrift */
+  header = 'Mere information',
+} = defineProps<{
+  header?: string;
+}>();
 </script>

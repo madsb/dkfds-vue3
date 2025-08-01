@@ -79,18 +79,20 @@ const day = ref<HTMLInputElement | null>(null);
 const month = ref<HTMLInputElement | null>(null);
 const year = ref<HTMLInputElement | null>(null);
 
-const props = defineProps({
-  id: {
-    type: String,
-    default: null,
-  },
-  modelValue: {
-    type: String, // JSON Date
-    default: '',
-  },
-});
+const {
+  id = null,
+  /** JSON Date */
+  modelValue = '',
+} = defineProps<{
+  id?: string | null;
+  modelValue?: string;
+}>();
 
-const emit = defineEmits(['update:modelValue', 'dirty', 'valid']);
+const emit = defineEmits<{
+  'update:modelValue': [value: string];
+  dirty: [value: boolean];
+  valid: [isValid: boolean];
+}>();
 
 const isDateValid = (dateString: string) => {
   const date = Date.parse(dateString);
@@ -98,7 +100,7 @@ const isDateValid = (dateString: string) => {
 };
 
 const getModelDate = (dateString: string) => {
-  if (isDateValid(props.modelValue)) {
+  if (isDateValid(modelValue)) {
     const date = new Date(dateString);
     return {
       day: date.getDate().toString(),
@@ -109,8 +111,8 @@ const getModelDate = (dateString: string) => {
   return { day: '', month: '', year: '' };
 };
 
-const { formid } = formId(props.id, true);
-const dateObj = ref<{ day: string; month: string; year: string }>(getModelDate(props.modelValue));
+const { formid } = formId(id, true);
+const dateObj = ref<{ day: string; month: string; year: string }>(getModelDate(modelValue));
 
 const onInput = () =>
   emit('update:modelValue', [dateObj.value.year, dateObj.value.month, dateObj.value.day].join('-'));

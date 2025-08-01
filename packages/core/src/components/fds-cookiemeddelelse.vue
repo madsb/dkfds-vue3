@@ -58,15 +58,15 @@
  * */
 
 
-defineProps({
-  /**
-   * Overskrift
-   * */
-  header: {
-    type: String,
-    default: 'Fortæl os om du accepterer cookies',
-  },
-});
+const {
+  /** Overskrift */
+  header = 'Fortæl os om du accepterer cookies',
+} = defineProps<{
+  header?: string;
+}>();
 
-defineEmits(['accept', 'cancel']);
+defineEmits<{
+  accept: [value: boolean];
+  cancel: [value: boolean];
+}>();
 </script>

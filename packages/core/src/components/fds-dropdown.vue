@@ -17,21 +17,21 @@ import { formId } from 'dkfds-vue3-utils';
 
 import { ref, onMounted } from 'vue';
 
-const props = defineProps({
-  id: {
-    type: String,
-    default: null,
-  },
-  modelValue: {
-    type: String,
-    required: false,
-    default: '',
-  },
-});
+const {
+  id = null,
+  modelValue: _modelValue = '',
+} = defineProps<{
+  id?: string | null;
+  modelValue?: string;
+}>();
 
-const emit = defineEmits(['update:modelValue', 'dirty', 'change']);
+const emit = defineEmits<{
+  'update:modelValue': [value: string];
+  dirty: [isDirty: boolean];
+  change: [event: Event];
+}>();
 
-const { formid } = formId(props.id, true);
+const { formid } = formId(id, true);
 const refElement = ref(null);
 const dirty = ref(false);
 

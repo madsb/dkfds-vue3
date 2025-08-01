@@ -30,35 +30,35 @@
 import { ref } from 'vue';
 import { uuid } from 'dkfds-vue3-utils';
 
-const props = defineProps({
-  /**
-   * Faneknap aktiv
-   * */
-  selected: {
-    type: Boolean,
-    default: false,
-  },
-  id: {
-    type: String,
-    required: true,
-  },
-  /**
-   * Faneknap overskrift
-   * */
-  header: {
-    type: String,
-    default: 'Fane',
-  },
-});
+/**
+ * Faneknap aktiv
+ */
+/**
+ * Faneknap overskrift
+ */
+const {
+  /** Faneknap aktiv */
+  selected = false,
+  id,
+  /** Faneknap overskrift */
+  header = 'Fane',
+} = defineProps<{
+  selected?: boolean;
+  id: string;
+  header?: string;
+}>();
 
-const emit = defineEmits(['click', 'navigate']);
+const emit = defineEmits<{
+  click: [id: string];
+  navigate: [id: string];
+}>();
 
 const onFanButtonClick = () => {
-  emit('click', props.id);
-  emit('navigate', props.id);
+  emit('click', id);
+  emit('navigate', id);
 };
 
-const formId = ref(props.id ?? uuid());
+const formId = ref(id ?? uuid());
 </script>
 
 <style scoped lang="scss"></style>

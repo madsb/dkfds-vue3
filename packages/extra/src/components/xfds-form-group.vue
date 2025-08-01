@@ -29,32 +29,23 @@
 import { computed,  inject, ref } from 'vue';
 import { FdsFormgroup, FdsLabel, FdsFejlmeddelelse, FdsTooltip, FdsHint } from 'dkfds-vue3-core'
 
-const props = defineProps({
-  label: {
-    type: String,
-    default: '',
-  },
-  hint: {
-    type: String,
-    default: '',
-  },
-  tooltip: {
-    type: String,
-    default: null,
-  },
-  isValid: {
-    type: Boolean,
-    default: true,
-  },
-  errorMessage: {
-    type: String,
-    default: null,
-  },
-});
+const {
+  label = '',
+  hint = '',
+  tooltip = null,
+  isValid = true,
+  errorMessage = null,
+} = defineProps<{
+  label?: string;
+  hint?: string;
+  tooltip?: string | null;
+  isValid?: boolean;
+  errorMessage?: string | null;
+}>();
 
 const injIsValid = ref<boolean | null>(inject('provideIsValid', null));
 const injErrorMessage = ref<string | null>(inject('provideErrorMessage', null));
 
-const compValid = computed(() => injIsValid.value ?? props.isValid);
-const compErrorMessage = computed(() => injErrorMessage.value ?? props.errorMessage);
+const compValid = computed(() => injIsValid.value ?? isValid);
+const compErrorMessage = computed(() => injErrorMessage.value ?? errorMessage);
 </script>

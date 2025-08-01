@@ -43,44 +43,31 @@
  * https://designsystem.dk/komponenter/beskeder/
  *
  * */
-import { ref, PropType, computed } from 'vue';
+import { ref, computed } from 'vue';
 
-const props = defineProps({
-  /**
-   *  Overskrift
-   * */
-  header: {
-    type: String,
-    default: null,
-  },
-  /**
-   * Type af besked
-   * */
-  variant: {
-    type: String as PropType<'success' | 'info' | 'warning' | 'error'>,
-    default: 'info',
-  },
-  /**
-   * Vis venstrestillet ikon
-   * */
-  showIcon: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   *  Klik for at lukke/fjerne besked
-   * */
-  closeable: {
-    type: Boolean,
-    default: false,
-  },
-});
+const {
+  /** Overskrift */
+  header = null,
+  /** Type af besked */
+  variant = 'info',
+  /** Vis venstrestillet ikon */
+  showIcon = false,
+  /** Klik for at lukke/fjerne besked */
+  closeable = false,
+} = defineProps<{
+  header?: string | null;
+  variant?: 'success' | 'info' | 'warning' | 'error';
+  showIcon?: boolean;
+  closeable?: boolean;
+}>();
 
-const emit = defineEmits(['close']);
+const emit = defineEmits<{
+  close: [closed: boolean];
+}>();
 
 const showAlert = ref(true);
 
-const compAlert = computed(() => ['warning', 'error'].includes(props.variant));
+const compAlert = computed(() => ['warning', 'error'].includes(variant));
 
 const onClose = () => {
   showAlert.value = !showAlert.value;

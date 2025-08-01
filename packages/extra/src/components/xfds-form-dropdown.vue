@@ -19,49 +19,39 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, ref, useAttrs, watch } from 'vue';
+import { ref, useAttrs, watch } from 'vue';
 import { FdsOptionItem } from 'dkfds-vue3-utils';
 
 const attrs = useAttrs();
 
-const props = defineProps({
-  id: {
-    type: String,
-    default: null,
-  },
-  label: {
-    type: String,
-    default: '',
-  },
-  hint: {
-    type: String,
-    default: '',
-  },
-  tooltip: {
-    type: String,
-    default: null,
-  },
-  isValid: {
-    type: Boolean,
-    default: true,
-  },
-  errorMessage: {
-    type: String,
-    default: null,
-  },
-  modelValue: {
-    type: String,
-    default: '',
-  },
-  options: {
-    type: Array as PropType<FdsOptionItem[]>,
-    default: () => [],
-  },
-});
+const {
+  id = null, // eslint-disable-line no-unused-vars
+  label = '',
+  hint = '',
+  tooltip = null,
+  isValid = true,
+  errorMessage = null,
+  modelValue = '',
+  options = [],
+} = defineProps<{
+  id?: string | null;
+  label?: string;
+  hint?: string;
+  tooltip?: string | null;
+  isValid?: boolean;
+  errorMessage?: string | null;
+  modelValue?: string;
+  options?: FdsOptionItem[];
+}>();
 
-const emit = defineEmits(['update:modelValue', 'dirty', 'valid', 'input']);
+const emit = defineEmits<{
+  'update:modelValue': [value: string];
+  dirty: [value: boolean];
+  valid: [value: boolean];
+  input: [value: string];
+}>();
 
-const value = ref(props.modelValue);
+const value = ref(modelValue);
 const dirty = ref(false);
 
 const touchedEvent = () => {
@@ -72,9 +62,9 @@ const touchedEvent = () => {
 const handleInput = () => emit('update:modelValue', value.value);
 
 watch(
-  () => [props.modelValue],
+  () => [modelValue],
   () => {
-    value.value = props.modelValue;
+    value.value = modelValue;
   },
   {
     immediate: true,

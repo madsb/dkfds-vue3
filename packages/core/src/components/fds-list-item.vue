@@ -14,30 +14,20 @@
  * */
 import { computed } from 'vue';
 
-const props = defineProps({
-  /**
-   * Mulige hjælpe css class
-    current
-    active
-    disabled
-
-    class="d-flex justify-content-between"
-
-    role="none"
-  * */
-
+const {
   /**
    * Type af liste
-   * */
-  variant: {
-    type: String as () => 'bordered' | 'unstyled' | 'nobullet',
-    default: null,
-  },
-  ordered: {
-    type: Boolean,
-    default: false,
-  },
-});
+   * Mulige hjælpe css class:
+   * current, active, disabled
+   * class="d-flex justify-content-between"
+   * role="none"
+   */
+  variant = null,
+  ordered = false,
+} = defineProps<{
+  variant?: 'bordered' | 'unstyled' | 'nobullet' | null;
+  ordered?: boolean;
+}>();
 
-const getListClass = computed(() => (props.variant ? `${props.variant}-list` : ''));
+const getListClass = computed(() => (variant ? `${variant}-list` : ''));
 </script>

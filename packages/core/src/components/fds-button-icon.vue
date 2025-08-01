@@ -29,31 +29,19 @@
  * */
 
 import { FdsVariantEnum } from 'dkfds-vue3-utils';
-import { PropType } from 'vue';
 
-defineProps({
-  /**
-   * Visnings variant
-   * */
-  variant: {
-    type: String as PropType<FdsVariantEnum | string>,
-    default: 'secondary',
-  },
-  /**
-   * Ikon som string
-   * */
-  icon: {
-    type: String,
-    default: 'pencil',
-  },
-  /**
-   * Højre stillet ikon
-   * */
-  right: {
-    type: Boolean,
-    default: false,
-  },
-});
+const {
+  /** Visnings variant */
+  variant = 'secondary',
+  /** Ikon som string */
+  icon = 'pencil',
+  /** Højre stillet ikon */
+  right = false,
+} = defineProps<{
+  variant?: FdsVariantEnum | string;
+  icon?: string;
+  right?: boolean;
+}>();
 </script>
 
 <style scoped lang="scss"></style>

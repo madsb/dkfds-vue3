@@ -31,29 +31,26 @@ import { FdsNavigationItem } from 'dkfds-vue3-utils';
 import { computed,   onMounted, ref, watch } from 'vue';
 import navigationService from './../service/navigation.service';
 
-const props = defineProps({
-  modelValue: {
-    type: Array as () => Array<FdsNavigationItem>,
-    default: () => [],
-    required: true,
-  },
-  showIndex: {
-    type: Boolean,
-    default: false,
-  },
-  navigateFirst: {
-    type: Boolean,
-    default: false,
-  },
-});
+const {
+  modelValue,
+  showIndex = false,
+  navigateFirst = false,
+} = defineProps<{
+  modelValue: Array<FdsNavigationItem>;
+  showIndex?: boolean;
+  navigateFirst?: boolean;
+}>();
 
-const emit = defineEmits(['update:modelValue', 'navigate']);
-const filteredList = computed(() => props.modelValue.filter((f) => !f.ignore));
+const emit = defineEmits<{
+  'update:modelValue': [value: Array<FdsNavigationItem>];
+  navigate: [key: string];
+}>();
+const filteredList = computed(() => modelValue.filter((f) => !f.ignore));
 const currentKey = ref('');
 const tabsList = ref<Array<FdsNavigationItem>>(filteredList.value);
 
 const subnavigation = (key: string) => {
-  emit('navigate', navigationService.resolveKey(key, props.modelValue));
+  emit('navigate', navigationService.resolveKey(key, modelValue));
 };
 
 const navigate = (item: FdsNavigationItem) => {
@@ -69,14 +66,14 @@ const navigate = (item: FdsNavigationItem) => {
 };
 
 onMounted(() => {
-  const item = navigationService.findFirstActiveItem(tabsList.value, props.navigateFirst);
+  const item = navigationService.findFirstActiveItem(tabsList.value, navigateFirst);
   if (item) {
     navigate(item);
   }
 });
 
 watch(
-  () => [props.modelValue],
+  () => [modelValue],
   () => {
     tabsList.value = filteredList.value;
   },

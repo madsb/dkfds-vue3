@@ -11,10 +11,9 @@
 
 <script setup lang="ts">
 
-defineProps({
-  header: {
-    type: String,
-    default: null,
-  },
-});
+const {
+  header = null,
+} = defineProps<{
+  header?: string | null;
+}>();
 </script>

@@ -70,33 +70,28 @@
 import { generateId } from 'dkfds-vue3-utils';
 import { computed, ref, onMounted } from 'vue';
 
-const props = defineProps({
-  header: {
-    type: String,
-    default: null,
-  },
-  id: {
-    type: String,
-    default: null,
-  },
-  closeable: {
-    type: Boolean,
-    default: true,
-  },
-  acceptText: {
-    type: String,
-    default: 'Godkend',
-  },
-  cancelText: {
-    type: String,
-    default: 'Annuller',
-  },
-});
+const {
+  header = null,
+  id = null,
+  closeable = true,
+  acceptText = 'Godkend',
+  cancelText = 'Annuller',
+} = defineProps<{
+  header?: string | null;
+  id?: string | null;
+  closeable?: boolean;
+  acceptText?: string;
+  cancelText?: string;
+}>();
 
-const emit = defineEmits(['close', 'accept', 'cancel']);
+const emit = defineEmits<{
+  close: [];
+  accept: [];
+  cancel: [];
+}>();
 
 const refDialog = ref(null);
-const dialogId = generateId(props.id);
+const dialogId = generateId(id);
 const htmlDialog = computed(() => refDialog.value as unknown as HTMLDialogElement);
 
 const showModal = () => {
@@ -113,7 +108,7 @@ defineExpose({
 });
 
 onMounted(() => {
-  if (props.closeable) {
+  if (closeable) {
     // cancel is exposed by HTMLDialogElement
     htmlDialog.value.addEventListener('cancel', () => {
       hideModal();
