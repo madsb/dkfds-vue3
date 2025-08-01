@@ -1,43 +1,25 @@
 <template>
   <section>
-    <fds-preview
-      header="Søg knap"
-      href="https://designsystem.dk/komponenter/search/">
+    <fds-preview header="Søg knap" href="https://designsystem.dk/komponenter/search/">
       <fds-preview-item>
         <fds-formgroup>
-          <fds-label id="searchtxt">
-            Input med knap ikon
-          </fds-label>
-          <fds-input
-            id="searchtxt"
-            v-model="txtSearch"
-            placeholder="Søg efter...">
+          <fds-label id="searchtxt"> Input med knap ikon </fds-label>
+          <fds-input id="searchtxt" v-model="txtSearch" placeholder="Søg efter...">
             <template #button>
               <button class="button button-search">
-                <svg
-                  class="icon-svg m-0"
-                  aria-hidden="true">
-                  <use xlink:href="#search"></use></svg
-                ><span class="sr-only">
-                  Søg
-                </span>
+                <svg class="icon-svg m-0" aria-hidden="true">
+                  <use href="#search"></use></svg
+                ><span class="sr-only"> Søg </span>
               </button>
             </template>
           </fds-input>
         </fds-formgroup>
 
         <fds-formgroup>
-          <fds-label id="searchbtn">
-            Input med knap tekst
-          </fds-label>
-          <fds-input
-            id="searchbtn"
-            v-model="txtSearch"
-            placeholder="Søg efter...">
+          <fds-label id="searchbtn"> Input med knap tekst </fds-label>
+          <fds-input id="searchbtn" v-model="txtSearch" placeholder="Søg efter...">
             <template #button>
-              <button class="button button-search">
-                Søg
-              </button>
+              <button class="button button-search">Søg</button>
             </template>
           </fds-input>
         </fds-formgroup>
@@ -59,7 +41,7 @@ const codeInputKnap = `
   <template #button>
     <button class="button button-search">
       <svg class="icon-svg m-0" aria-hidden="true">
-        <use xlink:href="#search"></use></svg
+        <use href="#search"></use></svg
       ><span class="sr-only"> Søg </span>
     </button>
   </template>

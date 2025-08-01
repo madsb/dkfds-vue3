@@ -2,10 +2,7 @@
   <section>
     <fds-preview header="Tekstfelter">
       <fds-preview-item>
-        <xfds-form-input
-          v-model="user.name"
-          label="Navn"
-          placeholder="e.g: Anders Hansen" />
+        <xfds-form-input v-model="user.name" label="Navn" placeholder="e.g: Anders Hansen" />
 
         <xfds-validate
           :model-value="user.adress"
@@ -30,25 +27,17 @@
           suffix="DK"
         />
 
-        <xfds-form-input
-          v-model="user.search"
-          label="Søg">
+        <xfds-form-input v-model="user.search" label="Søg">
           <template #button>
             <button class="button button-search">
-              <svg
-                class="icon-svg m-0"
-                aria-hidden="true">
-                <use xlink:href="#search"></use></svg
-              ><span class="sr-only">
-                Søg
-              </span>
+              <svg class="icon-svg m-0" aria-hidden="true">
+                <use href="#search"></use></svg
+              ><span class="sr-only"> Søg </span>
             </button>
           </template>
         </xfds-form-input>
 
-        <fds-pre
-          header="Object data"
-          :json="user" />
+        <fds-pre header="Object data" :json="user" />
       </fds-preview-item>
 
       <fds-preview-code>
@@ -95,7 +84,7 @@ const code = `
   <template #button>
     <button class="button button-search">
       <svg class="icon-svg m-0" aria-hidden="true">
-        <use xlink:href="#search"></use></svg
+        <use href="#search"></use></svg
       ><span class="sr-only"> Søg </span>
     </button>
   </template>

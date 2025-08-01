@@ -16,7 +16,7 @@
       focusable="false"
       aria-hidden="true"
     >
-      <use :xlink:href="`#${icon}`" />
+      <use :href="`#${icon}`" />
     </svg>
     <slot v-if="showSpinner && !spinnerText" />
     <span v-if="showSpinner && spinnerText">
@@ -24,9 +24,7 @@
     </span>
     <slot v-if="!showSpinner" />
   </button>
-  <div
-    v-if="showSpinner && useoverlay"
-    class="spinneroverlay"></div>
+  <div v-if="showSpinner && useoverlay" class="spinneroverlay"></div>
 </template>
 
 <script setup lang="ts">

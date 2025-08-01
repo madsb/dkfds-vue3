@@ -8,9 +8,7 @@
       :class="[{ 'alert--show-icon': showIcon }, `alert-${variant}`]"
     >
       <div class="alert-body align-text-left">
-        <slot
-          v-if="$slots.header || header"
-          name="header">
+        <slot v-if="$slots.header || header" name="header">
           <p class="alert-heading">
             {{ header }}
           </p>
@@ -18,16 +16,10 @@
         <div class="alert-text">
           <slot />
         </div>
-        <button
-          v-if="closeable"
-          class="alert-close"
-          @click="onClose">
+        <button v-if="closeable" class="alert-close" @click="onClose">
           <slot name="button">
-            <svg
-              class="icon-svg"
-              aria-hidden="true"
-              focusable="false">
-              <use xlink:href="#close"></use></svg
+            <svg class="icon-svg" aria-hidden="true" focusable="false">
+              <use href="#close"></use></svg
             >Luk
           </slot>
         </button>

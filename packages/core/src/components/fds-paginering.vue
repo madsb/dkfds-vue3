@@ -10,14 +10,10 @@
       class="button button-arrow button-first"
       @click="handlePageChange($event, 1)"
     >
-      <svg
-        class="icon-svg"
-        aria-hidden="true">
-        <use xlink:href="#first-page"></use>
+      <svg class="icon-svg" aria-hidden="true">
+        <use href="#first-page"></use>
       </svg>
-      <span class="sr-only">
-        Første side
-      </span></a
+      <span class="sr-only"> Første side </span></a
     >
     <a
       v-if="currentPage > 1"
@@ -26,18 +22,12 @@
       aria-label="Forrige side"
       @click="handlePageChange($event, currentPage - 1)"
     >
-      <svg
-        class="icon-svg"
-        aria-hidden="true">
-        <use xlink:href="#chevron-left"></use>
+      <svg class="icon-svg" aria-hidden="true">
+        <use href="#chevron-left"></use>
       </svg>
-      <span class="pagination-nav-link">
-        Forrige
-      </span>
+      <span class="pagination-nav-link"> Forrige </span>
     </a>
-    <span class="pagination-mobile">
-      Side {{ currentPage }} af {{ lastPage }}
-    </span>
+    <span class="pagination-mobile"> Side {{ currentPage }} af {{ lastPage }} </span>
     <ul class="pagination__items">
       <li
         v-for="page in generatePages()"
@@ -65,9 +55,7 @@
         >
           {{ page.index }}
         </a>
-        <span v-if="page.dotted">
-          ...
-        </span>
+        <span v-if="page.dotted"> ... </span>
       </li>
     </ul>
     <a
@@ -77,27 +65,16 @@
       aria-label="Næste side"
       @click="handlePageChange($event, currentPage + 1)"
     >
-      <span class="pagination-nav-link">
-        Næste
-      </span>
-      <svg
-        class="icon-svg"
-        aria-hidden="true">
-        <use xlink:href="#chevron-right"></use>
+      <span class="pagination-nav-link"> Næste </span>
+      <svg class="icon-svg" aria-hidden="true">
+        <use href="#chevron-right"></use>
       </svg>
     </a>
-    <a
-      href="#"
-      class="button button-arrow button-last"
-      @click="handlePageChange($event, lastPage)">
-      <svg
-        class="icon-svg"
-        aria-hidden="true">
-        <use xlink:href="#last-page"></use>
+    <a href="#" class="button button-arrow button-last" @click="handlePageChange($event, lastPage)">
+      <svg class="icon-svg" aria-hidden="true">
+        <use href="#last-page"></use>
       </svg>
-      <span class="sr-only">
-        Sidste side
-      </span></a
+      <span class="sr-only"> Sidste side </span></a
     >
   </nav>
 </template>

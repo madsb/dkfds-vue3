@@ -15,7 +15,7 @@
                     aria-hidden="true"
                     tabindex="-1"
                   >
-                    <use xlink:href="#open-in-new"></use></svg
+                    <use href="#open-in-new"></use></svg
                 ></a>
               </li>
               <li>
@@ -29,7 +29,7 @@
                     aria-hidden="true"
                     tabindex="-1"
                   >
-                    <use xlink:href="#open-in-new"></use></svg
+                    <use href="#open-in-new"></use></svg
                 ></a>
               </li>
             </ul>

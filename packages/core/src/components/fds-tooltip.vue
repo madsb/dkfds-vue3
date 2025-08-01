@@ -5,14 +5,10 @@
     :data-tooltip="slotContent"
     data-tooltip-trigger="click"
   >
-    <svg
-      class="icon-svg"
-      aria-hidden="true">
-      <use xlink:href="#help"></use>
+    <svg class="icon-svg" aria-hidden="true">
+      <use href="#help"></use>
     </svg>
-    <span
-      ref="slotText"
-      class="sr-only">
+    <span ref="slotText" class="sr-only">
       <slot />
     </span>
   </button>

@@ -51,7 +51,7 @@
               >·
               <a href="#" class="icon-link function-link alert-leave"
                 >Kontakt<svg class="icon-svg" aria-hidden="true" focusable="false">
-                  <use xlink:href="#open-in-new"></use>
+                  <use href="#open-in-new"></use>
                 </svg>
               </a>
             </span>
@@ -197,7 +197,7 @@
                       Eller måske er du interesseret i noget helt andet, som tager mange linjer at
                       forklare
                       <svg class="icon-svg" focusable="&gt;false" aria-hidden="true">
-                        <use xlink:href="#open-in-new"></use>
+                        <use href="#open-in-new"></use>
                       </svg>
                     </a>
                   </li>
@@ -215,7 +215,7 @@
                     <a href="#" class="function-link icon-link">
                       Tilgængelighedserklæring
                       <svg class="icon-svg" focusable="&gt;false" aria-hidden="true">
-                        <use xlink:href="#open-in-new"></use>
+                        <use href="#open-in-new"></use>
                       </svg>
                     </a>
                   </li>

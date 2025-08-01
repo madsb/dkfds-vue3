@@ -1,25 +1,13 @@
 <template>
   <ul class="bordered-list">
-    <li
-      v-for="(file, index) of list"
-      :key="index"
-      class="d-flex justify-content-between">
-      <fds-funktionslink
-        v-if="canDownload"
-        :icon="getFileIcon(file)"
-        @click="onDownloadFile(file)">
+    <li v-for="(file, index) of list" :key="index" class="d-flex justify-content-between">
+      <fds-funktionslink v-if="canDownload" :icon="getFileIcon(file)" @click="onDownloadFile(file)">
         {{ file.filename }}
       </fds-funktionslink>
 
-      <label
-        v-if="!canDownload"
-        for=""
-        class="disabled">
-        <svg
-          class="icon-svg mr-3"
-          focusable="false"
-          aria-hidden="true">
-          <use :xlink:href="`#${getFileIcon(file)}`" />
+      <label v-if="!canDownload" for="" class="disabled">
+        <svg class="icon-svg mr-3" focusable="false" aria-hidden="true">
+          <use :href="`#${getFileIcon(file)}`" />
         </svg>
         <template v-if="file.label">
           {{ file.label }}
@@ -28,14 +16,10 @@
           {{ file.filename }}
         </template>
       </label>
-      <button
-        v-if="canDelete"
-        class="function-link"
-        @click="onDeleteFile(file)">
-        <svg
-          class="icon-svg"
-          aria-hidden="true">
-          <use xlink:href="#trash-can"></use></svg>
+      <button v-if="canDelete" class="function-link" @click="onDeleteFile(file)">
+        <svg class="icon-svg" aria-hidden="true">
+          <use href="#trash-can"></use>
+        </svg>
         Slet
       </button>
     </li>

@@ -1,14 +1,10 @@
 <template>
-  <svg
-    class="icon-svg"
-    focusable="false"
-    aria-hidden="true">
-    <use v-bind="{ 'xlink:href': `#${icon}` }" />
+  <svg class="icon-svg" focusable="false" aria-hidden="true">
+    <use v-bind="{ href: `#${icon}` }" />
   </svg>
 </template>
 
 <script setup lang="ts">
-
 const {
   /** Ikon som string */
   icon = 'home',

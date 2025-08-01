@@ -8,19 +8,13 @@
       :aria-expanded="false"
     >
       <span
-      >{{ header }}
-        <svg
-          class="icon-svg"
-          aria-hidden="true"
-          focusable="false">
-          <use :xlink:href="`#${icon}`"></use>
+        >{{ header }}
+        <svg class="icon-svg" aria-hidden="true" focusable="false">
+          <use :href="`#${icon}`"></use>
         </svg>
       </span>
     </button>
-    <div
-      :id="formid"
-      class="overflow-menu-inner collapsed"
-      :aria-hidden="true">
+    <div :id="formid" class="overflow-menu-inner collapsed" :aria-hidden="true">
       <slot />
     </div>
   </div>

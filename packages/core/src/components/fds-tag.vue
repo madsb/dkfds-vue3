@@ -1,15 +1,8 @@
 <template>
-  <button
-    :id="formid"
-    class="tag"
-    :class="{ 'tag-icon': icon }">
+  <button :id="formid" class="tag" :class="{ 'tag-icon': icon }">
     <slot />
-    <svg
-      v-if="icon"
-      class="icon-svg"
-      aria-hidden="true"
-      @click="handleIconClick">
-      <use :xlink:href="`#${icon}`"></use>
+    <svg v-if="icon" class="icon-svg" aria-hidden="true" @click="handleIconClick">
+      <use :href="`#${icon}`"></use>
     </svg>
   </button>
 </template>
@@ -21,13 +14,9 @@
  *
  * */
 
-
 import { formId } from 'dkfds-vue3-utils';
 
-const {
-  icon = null,
-  id = null,
-} = defineProps<{
+const { icon = null, id = null } = defineProps<{
   icon?: string | null;
   id?: string | null;
 }>();

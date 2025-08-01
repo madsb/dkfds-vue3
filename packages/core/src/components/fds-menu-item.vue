@@ -1,7 +1,5 @@
 <template>
-  <li
-    role="none"
-    :class="[{ 'active current': active }]">
+  <li role="none" :class="[{ 'active current': active }]">
     <a
       :href="`${href ? href : '#'}`"
       role="menuitem"
@@ -14,19 +12,12 @@
         <slot />
       </span>
 
-      <span
-        v-if="icon"
-        class="sidenav-icon">
-        <svg
-          class="icon-svg"
-          focusable="false"
-          aria-hidden="true">
-          <use :xlink:href="`#${icon}`" />
+      <span v-if="icon" class="sidenav-icon">
+        <svg class="icon-svg" focusable="false" aria-hidden="true">
+          <use :href="`#${icon}`" />
         </svg>
       </span>
-      <p
-        v-if="hint && hint.length > 0"
-        class="sidenav-information">
+      <p v-if="hint && hint.length > 0" class="sidenav-information">
         {{ hint }}
       </p>
     </a>
@@ -35,8 +26,6 @@
 </template>
 
 <script setup lang="ts">
-
-
 const {
   id,
   active = false,

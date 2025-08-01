@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="overflow-menu overflow-menu--open-right"
-    :class="lgNoResponsive">
+  <div class="overflow-menu overflow-menu--open-right" :class="lgNoResponsive">
     <button
       :id="`button_${formid}`"
       class="button-overflow-menu js-dropdown"
@@ -12,17 +10,11 @@
       <slot name="header">
         {{ header }}
       </slot>
-      <svg
-        class="icon-svg"
-        aria-hidden="true"
-        focusable="false">
-        <use :xlink:href="`#${icon}`"></use>
+      <svg class="icon-svg" aria-hidden="true" focusable="false">
+        <use :href="`#${icon}`"></use>
       </svg>
     </button>
-    <div
-      :id="formid"
-      class="overflow-menu-inner"
-      aria-hidden="true">
+    <div :id="formid" class="overflow-menu-inner" aria-hidden="true">
       <nav>
         <fds-menu>
           <slot />
@@ -58,9 +50,7 @@ const {
 
 const { formid } = formId(id, true);
 
-const lgNoResponsive = computed(() =>
-  size === 'large' ? 'overflow-menu--lg-no-responsive' : '',
-);
+const lgNoResponsive = computed(() => (size === 'large' ? 'overflow-menu--lg-no-responsive' : ''));
 
 onMounted(async () => {
   new dropdown(document.getElementById(`button_${formid.value}`)).init();

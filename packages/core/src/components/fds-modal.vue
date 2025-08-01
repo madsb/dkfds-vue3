@@ -1,30 +1,15 @@
 <template>
-  <dialog
-    :id="`${dialogId}`"
-    ref="refDialog"
-    :aria-labelledby="`modal_${dialogId}_title`">
-    <div
-      :id="`modal_${dialogId}`"
-      class="fds-modal"
-      aria-hidden="false"
-      aria-modal="true">
+  <dialog :id="`${dialogId}`" ref="refDialog" :aria-labelledby="`modal_${dialogId}_title`">
+    <div :id="`modal_${dialogId}`" class="fds-modal" aria-hidden="false" aria-modal="true">
       <div class="modal-content">
         <div class="modal-header">
           <slot name="header">
-            <h2
-              :id="`modal_${dialogId}_title`"
-              class="modal-title">
+            <h2 :id="`modal_${dialogId}_title`" class="modal-title">
               {{ header }}
             </h2>
-            <button
-              v-if="closeable"
-              class="modal-close function-link"
-              @click="hideModal">
-              <svg
-                class="icon-svg"
-                focusable="false"
-                aria-hidden="true">
-                <use xlink:href="#close"></use></svg
+            <button v-if="closeable" class="modal-close function-link" @click="hideModal">
+              <svg class="icon-svg" focusable="false" aria-hidden="true">
+                <use href="#close"></use></svg
               >Luk
             </button>
           </slot>
@@ -35,14 +20,10 @@
 
         <div class="modal-footer">
           <slot name="footer">
-            <button
-              class="button button-primary"
-              @click="handleAccept">
+            <button class="button button-primary" @click="handleAccept">
               {{ acceptText }}
             </button>
-            <button
-              class="button button-secondary"
-              @click="handleCancel">
+            <button class="button button-secondary" @click="handleCancel">
               {{ cancelText }}
             </button>
           </slot>
@@ -64,7 +45,7 @@
  * */
 
 // måske backdrop clik
- 
+
 // https://stackoverflow.com/questions/25864259/how-to-close-the-new-html-dialog-tag-by-clicking-on-its-backdrop
 
 import { generateId } from 'dkfds-vue3-utils';

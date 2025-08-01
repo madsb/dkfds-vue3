@@ -2,21 +2,15 @@
   <div class="language-switcher">
     <div class="container">
       <ul aria-label="Vælg sprog fra listen ">
-        <li
-          v-for="(langauge, index) of value"
-          :key="index">
+        <li v-for="(langauge, index) of value" :key="index">
           <a
             href="javascript:void(0);"
             :lang="langauge.lang"
             :aria-label="langauge.ariaLabel"
             @click="handleUpdateLang(langauge)"
-          ><svg
-            v-if="langauge.active"
-            class="icon-svg"
-            focusable="false"
-            aria-hidden="true">
-            <use xlink:href="#done"></use></svg
-          >{{ langauge.title }}</a
+            ><svg v-if="langauge.active" class="icon-svg" focusable="false" aria-hidden="true">
+              <use href="#done"></use></svg
+            >{{ langauge.title }}</a
           >
         </li>
       </ul>
@@ -28,10 +22,7 @@
 import { FdsLanguageItem } from 'dkfds-vue3-utils';
 import { ref } from 'vue';
 
-const {
-  modelValue,
-  autoSetLang = false,
-} = defineProps<{
+const { modelValue, autoSetLang = false } = defineProps<{
   modelValue: FdsLanguageItem[];
   autoSetLang?: boolean;
 }>();

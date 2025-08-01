@@ -1,8 +1,5 @@
 <template>
-  <component
-    :is="isInGroup ? 'li' : 'div'"
-    :class="isInGroup ? '' : 'accordion'"
-  >
+  <component :is="isInGroup ? 'li' : 'div'" :class="isInGroup ? '' : 'accordion'">
     <component :is="headerTag">
       <button
         :id="formid"
@@ -18,16 +15,11 @@
             v-if="variant && ['error', 'warning', 'success'].includes(variant)"
             class="accordion-icon"
           >
-            <span
-              v-if="variantText !== null"
-              class="icon_text">
+            <span v-if="variantText !== null" class="icon_text">
               {{ variantText === '' ? getIconText : variantText }}
             </span>
-            <svg
-              class="icon-svg"
-              focusable="false"
-              aria-hidden="true">
-              <use :xlink:href="`#${getIcon}`"></use>
+            <svg class="icon-svg" focusable="false" aria-hidden="true">
+              <use :href="`#${getIcon}`"></use>
             </svg>
           </span>
         </slot>
