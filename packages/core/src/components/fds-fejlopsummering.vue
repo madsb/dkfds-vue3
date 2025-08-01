@@ -19,7 +19,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
 import FdsAlert from './fds-alert.vue';
 
 defineProps({

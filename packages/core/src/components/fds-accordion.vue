@@ -45,7 +45,7 @@
 
 <script setup lang="ts">
 import { formId } from 'dkfds-vue3-utils';
-import { defineProps, ref, computed, PropType } from 'vue';
+import { ref, computed, PropType } from 'vue';
 
 const props = defineProps({
   /**

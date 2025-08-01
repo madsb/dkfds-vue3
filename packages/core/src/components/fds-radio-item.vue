@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, inject } from 'vue';
+import { inject } from 'vue';
 import { formId } from 'dkfds-vue3-utils';
 
 import { generateId } from 'dkfds-vue3-utils';

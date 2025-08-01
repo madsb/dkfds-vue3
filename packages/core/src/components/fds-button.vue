@@ -13,7 +13,7 @@
  * https://designsystem.dk/komponenter/knapper/
  *
  * */
-import { defineProps, PropType } from 'vue';
+import { PropType } from 'vue';
 import { FdsVariantEnum } from 'dkfds-vue3-utils';
 
 defineProps({

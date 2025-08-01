@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
+
 import { FdsNavigationItem } from 'dkfds-vue3-utils';
 import navigationService from './../service/navigation.service';
 

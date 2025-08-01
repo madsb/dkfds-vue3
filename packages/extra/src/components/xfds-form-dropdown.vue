@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits, defineProps, PropType, ref, useAttrs, watch } from 'vue';
+import { PropType, ref, useAttrs, watch } from 'vue';
 import { FdsOptionItem } from 'dkfds-vue3-utils';
 
 const attrs = useAttrs();

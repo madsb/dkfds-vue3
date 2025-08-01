@@ -72,7 +72,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { defineProps, ref, defineEmits } from 'vue';
+import { ref } from 'vue';
 import { formId } from 'dkfds-vue3-utils';
 
 const day = ref<HTMLInputElement | null>(null);

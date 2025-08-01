@@ -34,7 +34,7 @@
  * */
 
 import { FdsNavigationItem } from 'dkfds-vue3-utils';
-import { defineProps, ref, defineEmits, computed, watch } from 'vue';
+import { ref,  computed, watch } from 'vue';
 import navigationService from './../service/navigation.service';
 
 const props = defineProps({

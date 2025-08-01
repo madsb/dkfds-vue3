@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, inject, provide, ref } from 'vue';
+import { computed,  inject, provide, ref } from 'vue';
 import { formId } from 'dkfds-vue3-utils';
 
 const props = defineProps({

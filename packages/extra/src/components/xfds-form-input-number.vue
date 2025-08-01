@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits, defineProps, ref, useAttrs } from 'vue';
+import { ref, useAttrs } from 'vue';
 import { FdsInputNumber } from 'dkfds-vue3-core';
 const attrs = useAttrs();
 

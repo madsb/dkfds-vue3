@@ -29,7 +29,7 @@
  * */
 
 import { FdsVariantEnum } from 'dkfds-vue3-utils';
-import { defineProps, PropType } from 'vue';
+import { PropType } from 'vue';
 
 defineProps({
   /**

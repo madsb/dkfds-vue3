@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import { formId } from 'dkfds-vue3-utils';
 
-import { defineProps, defineEmits, ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const props = defineProps({
   id: {

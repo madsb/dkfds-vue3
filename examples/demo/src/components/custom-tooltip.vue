@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
+
 import { generateId } from 'dkfds-vue3/utils';
 
 const props = defineProps({

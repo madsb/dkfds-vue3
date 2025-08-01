@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, inject, ref } from 'vue';
+import { computed,  inject, ref } from 'vue';
 import { FdsFormgroup, FdsLabel, FdsFejlmeddelelse, FdsTooltip, FdsHint } from 'dkfds-vue3-core'
 
 const props = defineProps({

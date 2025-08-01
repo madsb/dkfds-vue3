@@ -13,7 +13,7 @@
  * https://designsystem.dk/komponenter/cards/
  *
  * */
-import { computed, defineProps, PropType } from 'vue';
+import { computed, PropType } from 'vue';
 
 const props = defineProps({
   type: {

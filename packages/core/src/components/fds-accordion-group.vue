@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, provide, computed } from 'vue';
+import { ref, provide, computed } from 'vue';
 
 defineProps({
   /**

@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, useAttrs } from 'vue';
+import { useAttrs } from 'vue';
 
 const attrs = useAttrs();
 defineProps({

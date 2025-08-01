@@ -17,7 +17,7 @@
  * Komponent til generel brug af lister (UL)
  *
  * */
-import { computed, defineProps } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps({
   /**

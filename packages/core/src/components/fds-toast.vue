@@ -26,7 +26,7 @@
  * Lav toast loader
  *
  * */
-import { defineProps } from 'vue';
+
 
 defineProps({
   target: {

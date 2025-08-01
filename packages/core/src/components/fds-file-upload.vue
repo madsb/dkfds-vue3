@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref } from 'vue';
+import { ref } from 'vue';
 
 import { removeBrowserFileContentHeaders } from 'dkfds-vue3-utils';
 import { FdsFileInputModel } from 'dkfds-vue3-utils';

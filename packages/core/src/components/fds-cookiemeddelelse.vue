@@ -56,7 +56,7 @@
  * https://designsystem.dk/kode/komponenter/cookiemeddelelse/
  *
  * */
-import { defineProps } from 'vue';
+
 
 defineProps({
   /**

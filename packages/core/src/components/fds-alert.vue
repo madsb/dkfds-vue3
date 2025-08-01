@@ -43,7 +43,7 @@
  * https://designsystem.dk/komponenter/beskeder/
  *
  * */
-import { defineProps, ref, defineEmits, PropType, computed } from 'vue';
+import { ref, PropType, computed } from 'vue';
 
 const props = defineProps({
   /**

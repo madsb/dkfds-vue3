@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits, defineProps, ref, useAttrs, watch } from 'vue';
+import { ref, useAttrs, watch } from 'vue';
 import { FdsInput } from 'dkfds-vue3-core';
 const attrs = useAttrs();
 

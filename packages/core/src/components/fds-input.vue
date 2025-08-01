@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, computed, useSlots, useAttrs } from 'vue';
+import { computed, useSlots, useAttrs } from 'vue';
 import { formId } from 'dkfds-vue3-utils';
 
 const attrs = useAttrs();

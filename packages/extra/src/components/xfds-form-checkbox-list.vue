@@ -43,7 +43,7 @@
 
 <script setup lang="ts">
 import { FdsCheckboxItem, formId } from 'dkfds-vue3-utils';
-import { defineEmits, defineProps, PropType, ref, watch } from 'vue';
+import { PropType, ref, watch } from 'vue';
 
 const props = defineProps({
   modelValue: {

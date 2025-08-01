@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, PropType } from 'vue';
+import { PropType } from 'vue';
 import { FdsFunktionslink } from 'dkfds-vue3-core';
 import { FdsFileModel } from 'dkfds-vue3-utils';
 

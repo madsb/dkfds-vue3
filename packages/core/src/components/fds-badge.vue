@@ -13,7 +13,7 @@
  * https://designsystem.dk/komponenter/badges/
  *
  * */
-import { defineProps, computed, PropType } from 'vue';
+import { computed, PropType } from 'vue';
 
 const props = defineProps({
   size: {

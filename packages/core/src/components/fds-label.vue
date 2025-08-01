@@ -9,7 +9,6 @@
 <script setup lang="ts">
 import { formId } from 'dkfds-vue3-utils';
 
-import { defineProps } from 'vue';
 
 const props = defineProps({
   forId: {

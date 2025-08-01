@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, PropType } from 'vue';
+import { ref, PropType } from 'vue';
 import { formId, FdsCheckboxItem } from 'dkfds-vue3-utils';
 
 const props = defineProps({

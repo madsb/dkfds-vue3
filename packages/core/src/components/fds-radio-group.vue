@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, provide, computed } from 'vue';
+import { provide, computed } from 'vue';
 import { formId } from 'dkfds-vue3-utils';
 
 const props = defineProps({

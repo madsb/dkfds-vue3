@@ -33,7 +33,7 @@
  * https://designsystem.dk/komponenter/overflowmenu/
  *
  * */
-import { defineProps, onMounted } from 'vue';
+import { onMounted } from 'vue';
 
 import { formId, dropdown } from 'dkfds-vue3-utils';
 

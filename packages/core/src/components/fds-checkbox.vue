@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, watch, PropType, useAttrs } from 'vue';
+import { ref, watch, PropType, useAttrs } from 'vue';
 import { formId } from 'dkfds-vue3-utils';
 
 const attrs = useAttrs();

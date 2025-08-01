@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 import { FdsLanguageItem } from 'dkfds-vue3-utils';
-import { defineProps, defineEmits, ref, PropType } from 'vue';
+import { ref, PropType } from 'vue';
 
 const props = defineProps({
   modelValue: {

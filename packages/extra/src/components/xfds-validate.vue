@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { generateId, validateAllErrorMessage } from 'dkfds-vue3-utils';
-import { computed, defineEmits, defineProps, onMounted, provide, ref, watch } from 'vue';
+import { computed,   onMounted, provide, ref, watch } from 'vue';
 import { ValidatorItem } from '../service/validator.service';
 
 const props = defineProps({

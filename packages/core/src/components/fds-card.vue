@@ -46,7 +46,7 @@
  * https://designsystem.dk/komponenter/cards/
  *
  * */
-import { defineProps, PropType } from 'vue';
+import { PropType } from 'vue';
 
 defineProps({
   /**

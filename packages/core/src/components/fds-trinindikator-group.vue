@@ -40,7 +40,7 @@
  *
  * */
 
-import { computed, defineProps, onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 
 import { formId, dropdown } from 'dkfds-vue3-utils';
 

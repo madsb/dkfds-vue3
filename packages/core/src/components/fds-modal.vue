@@ -68,7 +68,7 @@
 // https://stackoverflow.com/questions/25864259/how-to-close-the-new-html-dialog-tag-by-clicking-on-its-backdrop
 
 import { generateId } from 'dkfds-vue3-utils';
-import { computed, defineProps, ref, defineEmits, onMounted } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 
 const props = defineProps({
   header: {

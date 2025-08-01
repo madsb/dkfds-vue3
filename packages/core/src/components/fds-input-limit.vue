@@ -46,7 +46,7 @@
  * https://designsystem.dk/komponenter/inputfelter/#karakterbegraensning
  *
  * */
-import { defineProps } from 'vue';
+
 
 defineProps({
   modelValue: {

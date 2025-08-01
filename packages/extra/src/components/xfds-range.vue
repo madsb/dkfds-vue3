@@ -23,7 +23,7 @@
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range
  *
  * */
-import { defineProps, defineEmits, ref, watch, computed } from 'vue';
+import { ref, watch, computed } from 'vue';
 import { formId } from 'dkfds-vue3-utils';
 const props = defineProps({
   id: {

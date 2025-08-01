@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { FdsOptionItem } from 'dkfds-vue3-utils';
 import { formId } from 'dkfds-vue3-utils';
 

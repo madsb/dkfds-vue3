@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { FdsNavigationItem } from 'dkfds-vue3/utils';
-import { defineProps, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { navigationService } from 'dkfds-vue3/extra';
 import { useRoute, useRouter } from 'vue-router';
 import { sort } from 'fast-sort';
