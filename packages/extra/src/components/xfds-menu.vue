@@ -1,28 +1,28 @@
 <template>
-  <ul
-    class="sidenav-list mb-6"
-    role="menu">
-    <fds-menu-item
-      v-for="(item, index) of tabsList"
-      :id="item.key"
-      :key="item.key"
-      :class="[{ disabled: item.disabled }]"
-      :active="item.active"
-      :icon="item.icon"
-      :hint="item.hint"
-      :index="showIndex ? index : null"
-      @navigate="navigate(item)"
-    >
-      {{ item.title }}
-      <template #submenu>
-        <xfds-menu-sub
-          v-if="item.active && item.children && item.children.length > 0"
-          v-model="item.children"
-          @navigate="subnavigation"
-        />
-      </template>
-    </fds-menu-item>
-  </ul>
+  <nav :aria-label="ariaLabel || 'Navigation'">
+    <ul class="sidemenu">
+      <fds-menu-item
+        v-for="(item, index) of tabsList"
+        :id="item.key"
+        :key="item.key"
+        :class="[{ disabled: item.disabled }]"
+        :active="item.active"
+        :icon="item.icon"
+        :hint="item.hint"
+        :index="showIndex ? index : null"
+        @navigate="navigate(item)"
+      >
+        {{ item.title }}
+        <template #submenu>
+          <xfds-menu-sub
+            v-if="item.active && item.children && item.children.length > 0"
+            v-model="item.children"
+            @navigate="subnavigation"
+          />
+        </template>
+      </fds-menu-item>
+    </ul>
+  </nav>
 </template>
 
 <script setup lang="ts">
@@ -35,10 +35,12 @@ const {
   modelValue,
   showIndex = false,
   navigateFirst = false,
+  ariaLabel,
 } = defineProps<{
   modelValue: Array<FdsNavigationItem>;
   showIndex?: boolean;
   navigateFirst?: boolean;
+  ariaLabel?: string;
 }>();
 
 const emit = defineEmits<{

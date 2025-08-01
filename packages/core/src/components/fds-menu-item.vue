@@ -5,13 +5,14 @@
     <a
       :href="`${href ? href : '#'}`"
       role="menuitem"
-      class="d-block menuitem hand"
+      class="nav-link"
+      :aria-current="active ? 'page' : undefined"
       @click="navigate($event, id)"
     >
-      <span v-if="index !== null">
-        {{ `${index}. ` }}
+      <span>
+        <template v-if="index !== null">{{ `${index}. ` }}</template>
+        <slot />
       </span>
-      <slot />
 
       <span
         v-if="icon"

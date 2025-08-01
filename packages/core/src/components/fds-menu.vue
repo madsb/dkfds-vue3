@@ -1,9 +1,9 @@
 <template>
-  <ul
-    :class="cssClass"
-    role="menu">
-    <slot />
-  </ul>
+  <nav :aria-label="ariaLabel || 'Navigation'">
+    <ul :class="cssClass">
+      <slot />
+    </ul>
+  </nav>
 </template>
 
 <script setup lang="ts">
@@ -11,15 +11,17 @@ import { computed } from 'vue';
 
 const {
   variant = null,
+  ariaLabel,
 } = defineProps<{
   variant?: 'venstremenu' | 'trin' | 'submenu' | null;
+  ariaLabel?: string;
 }>();
 
 const cssClass = computed(() => {
   if (variant === 'submenu') {
-    return 'sidenav-sub_list';
+    return 'sidemenu';
   }
-  return 'sidenav-list';
+  return 'sidemenu';
 });
 </script>
 

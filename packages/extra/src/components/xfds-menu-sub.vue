@@ -1,7 +1,5 @@
 <template>
-  <ul
-    class="sidenav-sub_list"
-    role="menu">
+  <ul class="sidemenu">
     <li
       v-for="child of modelValue"
       :key="child.key"
@@ -9,12 +7,14 @@
       :class="[{ active: child.active }, { disabled: child.disabled }]"
     >
       <a
-        :href="`${child.href ? child.href : 'javascript:void(0);'}`"
+        :href="`${child.href ? child.href : '#'}`"
         :title="child.title"
         role="menuitem"
+        class="nav-link"
+        :aria-current="child.active ? 'page' : undefined"
         @click="navigate(child)"
       >
-        {{ child.title }}
+        <span>{{ child.title }}</span>
       </a>
       <xfds-menu-sub
         v-if="child.active && child.children && child.children.length > 0"
