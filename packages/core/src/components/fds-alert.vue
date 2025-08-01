@@ -3,24 +3,39 @@
     <div
       v-if="showAlert"
       :role="compAlert ? 'alert' : ''"
-      :aria-atomic="compAlert"
-      class="alert has-close"
-      :class="[{ 'alert--show-icon': showIcon }, `alert-${variant}`]"
+      class="alert"
+      :class="[
+        `alert-${variant}`,
+        { 'has-close': closeable }
+      ]"
     >
-      <div class="alert-body align-text-left">
+      <svg
+        v-if="showIcon"
+        class="icon-svg alert-icon"
+        :aria-label="iconAriaLabel"
+        focusable="false"
+      >
+        <use :href="`#${variant}`"></use>
+      </svg>
+      <div class="alert-body">
         <slot v-if="$slots.header || header" name="header">
-          <p class="alert-heading">
+          <h2 class="alert-heading">
             {{ header }}
-          </p>
+          </h2>
         </slot>
-        <div class="alert-text">
+        <p class="alert-text">
           <slot />
-        </div>
-        <button v-if="closeable" class="alert-close" @click="onClose">
+        </p>
+        <button
+          v-if="closeable"
+          type="button"
+          class="alert-close"
+          @click="onClose"
+        >
           <slot name="button">
-            <svg class="icon-svg" aria-hidden="true" focusable="false">
-              <use href="#close"></use></svg
-            >Luk
+            <svg class="icon-svg" focusable="false" aria-hidden="true">
+              <use href="#close"></use>
+            </svg>Luk
           </slot>
         </button>
       </div>
@@ -60,6 +75,16 @@ const emit = defineEmits<{
 const showAlert = ref(true);
 
 const compAlert = computed(() => ['warning', 'error'].includes(variant));
+
+const iconAriaLabel = computed(() => {
+  const labels = {
+    info: 'Information',
+    success: 'Succes',
+    warning: 'Advarsel',
+    error: 'Fejl',
+  };
+  return labels[variant];
+});
 
 const onClose = () => {
   showAlert.value = !showAlert.value;
