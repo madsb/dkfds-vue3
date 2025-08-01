@@ -1,5 +1,8 @@
 <template>
-  <div class="accordion-single">
+  <component
+    :is="isInGroup ? 'li' : 'div'"
+    :class="isInGroup ? '' : 'accordion'"
+  >
     <component :is="headerTag">
       <button
         :id="formid"
@@ -7,7 +10,7 @@
         :class="getVariantClass"
         :aria-expanded="`${refExpanded ? 'true' : 'false'}`"
         :aria-controls="`acc_${formid}`"
-        @click="refExpanded = !refExpanded"
+        @click="toggleAccordion"
       >
         <slot name="header">
           {{ header }}
@@ -40,12 +43,12 @@
     >
       <slot />
     </div>
-  </div>
+  </component>
 </template>
 
 <script setup lang="ts">
 import { formId } from 'dkfds-vue3-utils';
-import { ref, computed } from 'vue';
+import { ref, computed, inject, watch } from 'vue';
 
 const {
   /** Overskrift */
@@ -68,9 +71,27 @@ const {
   variantText?: string;
 }>();
 
+const emit = defineEmits<{
+  'accordion-toggle': [expanded: boolean];
+}>();
+
 const refExpanded = ref(expanded);
+const groupExpanded = inject('provideGroupExpanded', null);
+
+// Detect if this accordion is inside a group
+const isInGroup = computed(() => groupExpanded !== null);
 
 const { formid } = formId(undefined, true);
+
+// Watch for group expand/collapse
+if (groupExpanded) {
+  watch(groupExpanded, (newValue) => {
+    if (newValue !== refExpanded.value) {
+      refExpanded.value = newValue;
+      emit('accordion-toggle', refExpanded.value);
+    }
+  });
+}
 
 const icons = {
   success: 'check-circle',
@@ -87,4 +108,9 @@ const defaultVariantText = {
 const getVariantClass = computed(() => (variant ? `accordion-${variant}` : ''));
 const getIcon = computed(() => icons[variant as keyof typeof icons]);
 const getIconText = computed(() => defaultVariantText[variant as keyof typeof icons]);
+
+const toggleAccordion = () => {
+  refExpanded.value = !refExpanded.value;
+  emit('accordion-toggle', refExpanded.value);
+};
 </script>

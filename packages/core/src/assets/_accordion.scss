@@ -1,10 +1,18 @@
-.accordion-group {
-  > div {
+// Accordion group container styles
+ul.accordion {
+  > li {
     margin-bottom: 0.8rem;
   }
 }
 
-.accordion-single {
+// Individual standalone accordion styles
+div.accordion {
+  margin-bottom: 0.8rem;
+}
+
+// Common accordion styles (both standalone and grouped)
+.accordion li,
+div.accordion {
   @for $i from 2 through 6 {
     h#{7 - $i} {
       margin-top: 0px;
