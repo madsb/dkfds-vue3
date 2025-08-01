@@ -150,7 +150,7 @@
                 <ul class="unstyled-list">
                   <li class="">
                     <img
-                      src="https://via.placeholder.com/150x100/0059B3/FFFFFF"
+                      src="https://placehold.co/150x100/0059B3/FFFFFF"
                       class="logo"
                       alt="Logostyrelsen"
                     />
@@ -269,13 +269,5 @@ const navigateTo = (name: string) => {
 </script>
 
 <style lang="scss">
-$font-path: '../node_modules/dkfds/src/fonts/IBMPlexSans/';
-$image-path: '../node_modules/dkfds/src/img/';
-$site-image-path: '../node_modules/dkfds/src/img/';
-$icons-folder-path: '../node_modules/dkfds/src/img/svg-icons/';
-
-@import '../node_modules/dkfds/src/stylesheets/dkfds-virkdk';
-@import '../../../packages/core/src/assets/bgs.scss';
-@import '../../../packages/core/src/assets/main.scss';
-@import 'assets/main.scss';
+@use 'assets/dkfds-integration';
 </style>

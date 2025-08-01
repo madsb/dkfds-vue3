@@ -1,4 +1,4 @@
-@import '_code-color';
+@use 'code-color' as *;
 
 fieldset.code {
   margin-top: 24px;
