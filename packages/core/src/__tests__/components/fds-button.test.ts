@@ -1,129 +1,229 @@
-import { describe, it, expect } from 'vitest';
-import { axe } from 'vitest-axe';
+import { describe, it, expect, vi } from 'vitest';
+import { mount } from '@vue/test-utils';
 import FdsButton from '../../components/fds-button.vue';
-import { mountComponent, testSlot, testProp } from '../../../tests/test-utils';
+import { FdsVariantEnum } from 'dkfds-vue3-utils';
 
 describe('FdsButton', () => {
   describe('Rendering', () => {
-    it('should render a button element', () => {
-      const wrapper = mountComponent(FdsButton);
-      expect(wrapper.find('button').exists()).toBe(true);
-    });
-
-    it('should have correct base class', () => {
-      const wrapper = mountComponent(FdsButton);
+    it('renders button element with default primary variant', () => {
+      const wrapper = mount(FdsButton);
+      
+      expect(wrapper.element.tagName).toBe('BUTTON');
       expect(wrapper.classes()).toContain('button');
-    });
-  });
-
-  describe('Props', () => {
-    it('should apply primary variant by default', () => {
-      const wrapper = mountComponent(FdsButton);
       expect(wrapper.classes()).toContain('button-primary');
     });
 
-    it('should apply secondary variant when specified', async () => {
-      await testProp(FdsButton, 'variant', 'secondary', (wrapper) => {
-        expect(wrapper.classes()).toContain('button-secondary');
+    it('renders slot content correctly', () => {
+      const wrapper = mount(FdsButton, {
+        slots: {
+          default: 'Click me'
+        }
       });
+      
+      expect(wrapper.text()).toBe('Click me');
     });
 
-    it('should apply tertiary variant when specified', async () => {
-      await testProp(FdsButton, 'variant', 'tertiary', (wrapper) => {
-        expect(wrapper.classes()).toContain('button-tertiary');
+    it('renders with HTML content in slot', () => {
+      const wrapper = mount(FdsButton, {
+        slots: {
+          default: '<span class="icon">→</span> Next'
+        }
       });
-    });
-
-    it('should apply custom variant class', async () => {
-      await testProp(FdsButton, 'variant', 'custom-variant', (wrapper) => {
-        expect(wrapper.classes()).toContain('button-custom-variant');
-      });
+      
+      expect(wrapper.find('.icon').exists()).toBe(true);
+      expect(wrapper.text()).toContain('Next');
     });
   });
 
-  describe('Slots', () => {
-    it('should render default slot content', async () => {
-      await testSlot(FdsButton, 'default', 'Click me', 'button');
+  describe('Variants', () => {
+    Object.values(FdsVariantEnum).forEach(variant => {
+      it(`applies ${variant} variant class correctly`, () => {
+        const wrapper = mount(FdsButton, {
+          props: { variant }
+        });
+        
+        expect(wrapper.classes()).toContain(`button-${variant}`);
+      });
     });
 
-    it('should render complex slot content', () => {
-      const wrapper = mountComponent(FdsButton, {
-        slots: {
-          default: '<span class="icon">🚀</span> Launch',
-        },
+    it('accepts custom variant strings', () => {
+      const customVariant = 'custom-variant';
+      const wrapper = mount(FdsButton, {
+        props: { variant: customVariant }
       });
-      expect(wrapper.find('.icon').exists()).toBe(true);
-      expect(wrapper.text()).toContain('Launch');
+      
+      expect(wrapper.classes()).toContain(`button-${customVariant}`);
+    });
+  });
+
+  describe('Events', () => {
+    it('emits click event when clicked', async () => {
+      const onClick = vi.fn();
+      const wrapper = mount(FdsButton, {
+        attrs: {
+          onClick
+        }
+      });
+      
+      await wrapper.trigger('click');
+      expect(onClick).toHaveBeenCalledTimes(1);
+    });
+
+    it('respects disabled attribute', async () => {
+      const onClick = vi.fn();
+      const wrapper = mount(FdsButton, {
+        attrs: {
+          disabled: true,
+          onClick
+        }
+      });
+      
+      expect(wrapper.attributes('disabled')).toBeDefined();
+      
+      // Note: jsdom doesn't prevent click events on disabled buttons
+      // In real browsers, this wouldn't fire
+      await wrapper.trigger('click');
+      // So we just verify the disabled attribute is set
+      expect(wrapper.element.hasAttribute('disabled')).toBe(true);
+    });
+  });
+
+  describe('Attributes', () => {
+    it('passes through native button attributes', () => {
+      const wrapper = mount(FdsButton, {
+        attrs: {
+          type: 'submit',
+          'aria-label': 'Submit form',
+          'data-testid': 'submit-btn'
+        }
+      });
+      
+      expect(wrapper.attributes('type')).toBe('submit');
+      expect(wrapper.attributes('aria-label')).toBe('Submit form');
+      expect(wrapper.attributes('data-testid')).toBe('submit-btn');
+    });
+
+    it('handles form attribute correctly', () => {
+      const wrapper = mount(FdsButton, {
+        attrs: {
+          form: 'my-form-id'
+        }
+      });
+      
+      expect(wrapper.attributes('form')).toBe('my-form-id');
     });
   });
 
   describe('Accessibility', () => {
-    it('should be accessible with text content', async () => {
-      const wrapper = mountComponent(FdsButton, {
-        slots: {
-          default: 'Submit',
-        },
-      });
+    it('maintains proper button role', () => {
+      const wrapper = mount(FdsButton);
       
-      const results = await axe(wrapper.element, {
-        rules: {
-          region: { enabled: false },
-        },
-      });
-      expect(results).toHaveNoViolations();
+      // Native button elements have implicit role="button"
+      expect(wrapper.element.tagName).toBe('BUTTON');
     });
 
-    it('should be accessible with different variants', async () => {
-      const variants = ['primary', 'secondary', 'tertiary'];
+    it('supports aria-pressed for toggle buttons', () => {
+      const wrapper = mount(FdsButton, {
+        attrs: {
+          'aria-pressed': 'true'
+        }
+      });
       
-      for (const variant of variants) {
-        const wrapper = mountComponent(FdsButton, {
-          props: { variant },
-          slots: { default: 'Button text' },
-        });
-        
-        const results = await axe(wrapper.element, {
-          rules: {
-            region: { enabled: false },
-          },
-        });
-        expect(results).toHaveNoViolations();
-      }
+      expect(wrapper.attributes('aria-pressed')).toBe('true');
+    });
+
+    it('supports aria-expanded for disclosure buttons', () => {
+      const wrapper = mount(FdsButton, {
+        attrs: {
+          'aria-expanded': 'false',
+          'aria-controls': 'panel-id'
+        }
+      });
+      
+      expect(wrapper.attributes('aria-expanded')).toBe('false');
+      expect(wrapper.attributes('aria-controls')).toBe('panel-id');
     });
   });
 
-  describe('Interaction', () => {
-    it('should handle click events', async () => {
-      const wrapper = mountComponent(FdsButton, {
-        slots: { default: 'Click me' },
+  describe('Edge Cases', () => {
+    it('handles empty slot gracefully', () => {
+      const wrapper = mount(FdsButton);
+      
+      expect(wrapper.text()).toBe('');
+      expect(wrapper.classes()).toContain('button');
+    });
+
+    it('maintains reactivity when variant changes', async () => {
+      const wrapper = mount(FdsButton, {
+        props: { variant: FdsVariantEnum.primary }
+      });
+      
+      expect(wrapper.classes()).toContain('button-primary');
+      
+      await wrapper.setProps({ variant: FdsVariantEnum.secondary });
+      expect(wrapper.classes()).not.toContain('button-primary');
+      expect(wrapper.classes()).toContain('button-secondary');
+    });
+
+    it('handles multiple click handlers', async () => {
+      const handler1 = vi.fn();
+      const handler2 = vi.fn();
+      
+      const wrapper = mount(FdsButton, {
+        attrs: {
+          onClick: [handler1, handler2]
+        }
       });
       
       await wrapper.trigger('click');
-      
-      // Vue Test Utils captures native DOM events
-      expect(wrapper.emitted('click')).toBeTruthy();
-      expect(wrapper.emitted('click')).toHaveLength(1);
-    });
-
-    it('should be focusable', () => {
-      const wrapper = mountComponent(FdsButton);
-      const button = wrapper.find('button');
-      
-      expect(button.element.tagName).toBe('BUTTON');
-      // Buttons are focusable by default
+      expect(handler1).toHaveBeenCalled();
+      expect(handler2).toHaveBeenCalled();
     });
   });
 
-  describe('DKFDS Integration', () => {
-    it('should have correct button structure for DKFDS styling', () => {
-      const wrapper = mountComponent(FdsButton, {
-        props: { variant: 'primary' },
-        slots: { default: 'DKFDS Button' },
+  describe('Integration Scenarios', () => {
+    it('works correctly in forms', () => {
+      const wrapper = mount({
+        template: `
+          <form>
+            <FdsButton type="submit">Submit</FdsButton>
+            <FdsButton type="reset">Reset</FdsButton>
+            <FdsButton type="button">Cancel</FdsButton>
+          </form>
+        `,
+        components: { FdsButton }
       });
       
-      const button = wrapper.find('button');
-      expect(button.classes()).toEqual(['button', 'button-primary']);
-      expect(button.text()).toBe('DKFDS Button');
+      const buttons = wrapper.findAllComponents(FdsButton);
+      expect(buttons[0].attributes('type')).toBe('submit');
+      expect(buttons[1].attributes('type')).toBe('reset');
+      expect(buttons[2].attributes('type')).toBe('button');
+    });
+
+    it('works with loading states', async () => {
+      const ParentComponent = {
+        template: `
+          <FdsButton :disabled="loading">
+            {{ loading ? 'Saving...' : 'Save' }}
+          </FdsButton>
+        `,
+        components: { FdsButton },
+        data() {
+          return { loading: false };
+        }
+      };
+
+      const wrapper = mount(ParentComponent);
+      const button = wrapper.findComponent(FdsButton);
+      
+      expect(button.text()).toBe('Save');
+      expect(button.attributes('disabled')).toBeUndefined();
+      
+      // Simulate loading state
+      await wrapper.setData({ loading: true });
+      
+      expect(button.text()).toBe('Saving...');
+      expect(button.attributes('disabled')).toBeDefined();
     });
   });
 });

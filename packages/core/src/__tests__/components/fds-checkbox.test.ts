@@ -1,13 +1,13 @@
 import { describe, it, expect, vi } from 'vitest';
+import { mount } from '@vue/test-utils';
 import { axe } from 'vitest-axe';
 import { nextTick } from 'vue';
 import FdsCheckbox from '../../components/fds-checkbox.vue';
-import { mountComponent, testSlot } from '../../../tests/test-utils';
 
 describe('FdsCheckbox', () => {
   describe('Rendering', () => {
     it('should render fieldset with checkbox input and label', () => {
-      const wrapper = mountComponent(FdsCheckbox);
+      const wrapper = mount(FdsCheckbox);
       
       expect(wrapper.find('fieldset').exists()).toBe(true);
       expect(wrapper.find('input[type="checkbox"]').exists()).toBe(true);
@@ -15,14 +15,14 @@ describe('FdsCheckbox', () => {
     });
 
     it('should have correct base classes', () => {
-      const wrapper = mountComponent(FdsCheckbox);
+      const wrapper = mount(FdsCheckbox);
       const input = wrapper.find('input');
       
       expect(input.classes()).toContain('form-checkbox');
     });
 
     it('should generate unique ID when not provided', () => {
-      const wrapper = mountComponent(FdsCheckbox);
+      const wrapper = mount(FdsCheckbox);
       const input = wrapper.find('input');
       const label = wrapper.find('label');
       
@@ -33,7 +33,7 @@ describe('FdsCheckbox', () => {
 
     it('should use provided ID', () => {
       const customId = 'my-checkbox';
-      const wrapper = mountComponent(FdsCheckbox, {
+      const wrapper = mount(FdsCheckbox, {
         props: { id: customId },
       });
       
@@ -47,14 +47,14 @@ describe('FdsCheckbox', () => {
 
   describe('Props', () => {
     it('should apply large size by default', () => {
-      const wrapper = mountComponent(FdsCheckbox);
+      const wrapper = mount(FdsCheckbox);
       const input = wrapper.find('input');
       
       expect(input.classes()).toContain('checkbox-large');
     });
 
     it('should apply small size when specified', () => {
-      const wrapper = mountComponent(FdsCheckbox, {
+      const wrapper = mount(FdsCheckbox, {
         props: { size: 'small' },
       });
       const input = wrapper.find('input');
@@ -63,7 +63,7 @@ describe('FdsCheckbox', () => {
     });
 
     it('should bind modelValue to checked state', async () => {
-      const wrapper = mountComponent(FdsCheckbox, {
+      const wrapper = mount(FdsCheckbox, {
         props: { modelValue: true },
       });
       const input = wrapper.find('input');
@@ -72,7 +72,7 @@ describe('FdsCheckbox', () => {
     });
 
     it('should update checked state when modelValue changes', async () => {
-      const wrapper = mountComponent(FdsCheckbox, {
+      const wrapper = mount(FdsCheckbox, {
         props: { modelValue: false },
       });
       const input = wrapper.find('input');
@@ -88,7 +88,7 @@ describe('FdsCheckbox', () => {
 
   describe('Events', () => {
     it('should emit update:modelValue when checkbox is checked', async () => {
-      const wrapper = mountComponent(FdsCheckbox, {
+      const wrapper = mount(FdsCheckbox, {
         props: { modelValue: false },
       });
       const input = wrapper.find('input');
@@ -100,7 +100,7 @@ describe('FdsCheckbox', () => {
     });
 
     it('should emit update:modelValue when checkbox is unchecked', async () => {
-      const wrapper = mountComponent(FdsCheckbox, {
+      const wrapper = mount(FdsCheckbox, {
         props: { modelValue: true },
       });
       const input = wrapper.find('input');
@@ -112,7 +112,7 @@ describe('FdsCheckbox', () => {
     });
 
     it('should emit dirty on blur', async () => {
-      const wrapper = mountComponent(FdsCheckbox);
+      const wrapper = mount(FdsCheckbox);
       const input = wrapper.find('input');
       
       await input.trigger('blur');
@@ -123,12 +123,17 @@ describe('FdsCheckbox', () => {
   });
 
   describe('Slots', () => {
-    it('should render default slot as label content', async () => {
-      await testSlot(FdsCheckbox, 'default', 'Accept terms', 'label');
+    it('should render default slot as label content', () => {
+      const wrapper = mount(FdsCheckbox, {
+        slots: {
+          default: 'Accept terms'
+        }
+      });
+      expect(wrapper.find('label').text()).toContain('Accept terms');
     });
 
     it('should render content slot when checkbox is checked', async () => {
-      const wrapper = mountComponent(FdsCheckbox, {
+      const wrapper = mount(FdsCheckbox, {
         props: { modelValue: true },
         slots: {
           content: '<div class="terms">Terms and conditions details</div>',
@@ -142,7 +147,7 @@ describe('FdsCheckbox', () => {
     });
 
     it('should hide content slot when checkbox is unchecked', async () => {
-      const wrapper = mountComponent(FdsCheckbox, {
+      const wrapper = mount(FdsCheckbox, {
         props: { modelValue: false },
         slots: {
           content: '<div class="terms">Terms and conditions details</div>',
@@ -154,7 +159,7 @@ describe('FdsCheckbox', () => {
     });
 
     it('should toggle content visibility based on checkbox state', async () => {
-      const wrapper = mountComponent(FdsCheckbox, {
+      const wrapper = mount(FdsCheckbox, {
         props: { modelValue: false },
         slots: {
           content: 'Additional content',
@@ -173,7 +178,7 @@ describe('FdsCheckbox', () => {
 
   describe('Attributes', () => {
     it('should pass through HTML attributes', () => {
-      const wrapper = mountComponent(FdsCheckbox, {
+      const wrapper = mount(FdsCheckbox, {
         attrs: {
           disabled: true,
           'data-testid': 'my-checkbox',
@@ -190,7 +195,7 @@ describe('FdsCheckbox', () => {
 
   describe('Accessibility', () => {
     it('should be accessible with label', async () => {
-      const wrapper = mountComponent(FdsCheckbox, {
+      const wrapper = mount(FdsCheckbox, {
         slots: {
           default: 'Subscribe to newsletter',
         },
@@ -206,7 +211,7 @@ describe('FdsCheckbox', () => {
     });
 
     it('should properly associate label with input', () => {
-      const wrapper = mountComponent(FdsCheckbox, {
+      const wrapper = mount(FdsCheckbox, {
         props: { id: 'test-checkbox' },
         slots: { default: 'Test label' },
       });
@@ -219,7 +224,7 @@ describe('FdsCheckbox', () => {
     });
 
     it('should have proper ARIA attributes for content toggle', () => {
-      const wrapper = mountComponent(FdsCheckbox, {
+      const wrapper = mount(FdsCheckbox, {
         props: { modelValue: true },
         slots: {
           content: 'Extra content',
@@ -249,7 +254,7 @@ describe('FdsCheckbox', () => {
         },
       };
       
-      const wrapper = mountComponent(TestComponent);
+      const wrapper = mount(TestComponent);
       const checkbox = wrapper.findComponent(FdsCheckbox);
       const status = wrapper.find('.status');
       

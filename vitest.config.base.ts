@@ -1,6 +1,5 @@
 import { defineConfig } from 'vitest/config';
 import vue from '@vitejs/plugin-vue';
-import { resolve } from 'path';
 
 export default defineConfig({
   plugins: [vue()],
@@ -17,19 +16,16 @@ export default defineConfig({
         '**/*.config.*',
         '**/mockData.ts',
         '**/__tests__/**',
+        '**/test-shared/**',
+        'examples/**',
       ],
       thresholds: {
-        statements: 50,
-        branches: 50,
-        functions: 50,
-        lines: 50,
+        statements: 80,
+        branches: 75,
+        functions: 80,
+        lines: 80,
       },
     },
-    setupFiles: ['./tests/setup.ts'],
-  },
-  resolve: {
-    alias: {
-      '@': resolve(__dirname, './src'),
-    },
+    // Each package should define its own setupFiles and aliases
   },
 });

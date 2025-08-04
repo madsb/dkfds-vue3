@@ -6,7 +6,7 @@ export default mergeConfig(
   baseConfig,
   defineConfig({
     test: {
-      setupFiles: [resolve(__dirname, './tests/setup.ts')],
+      setupFiles: [resolve(__dirname, '../../test-shared/setup-vue.ts')],
     },
     resolve: {
       alias: {
