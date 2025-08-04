@@ -5,7 +5,11 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "vite build && pnpm run typings",
-    "typings": "vue-tsc --declaration --emitDeclarationOnly"
+    "typings": "vue-tsc --declaration --emitDeclarationOnly",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
     "dkfds-vue3-core": "workspace:*",

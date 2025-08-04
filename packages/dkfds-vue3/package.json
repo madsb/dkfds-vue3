@@ -24,7 +24,11 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "typings": "vue-tsc src/index.ts --declaration --emitDeclarationOnly --outDir dist"
+    "typings": "vue-tsc src/index.ts --declaration --emitDeclarationOnly --outDir dist",
+    "test": "echo 'No tests for main package - it only re-exports'",
+    "test:run": "echo 'No tests for main package - it only re-exports'",
+    "test:coverage": "echo 'No tests for main package - it only re-exports'",
+    "test:ui": "echo 'No tests for main package - it only re-exports'"
   },
   "dependencies": {
     "dkfds": "^11.0.1",
