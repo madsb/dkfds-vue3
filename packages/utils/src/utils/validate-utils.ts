@@ -5,7 +5,7 @@ import { FdsCheckboxItem } from '../models/fds.model';
  * @param functions an array of validation methods
  * @returns string = error | null = no errors
  */
-export function validateAllErrorMessage(...functions: Array<(x?: unknown) => string | null>) {
+export function validateAllErrorMessage(...functions: Array<(_x?: unknown) => string | null>) {
   return (x: unknown) => {
     const messages = functions.map((f) => f(x)).filter((msg) => msg !== null) as string[];
 
@@ -16,19 +16,19 @@ export function validateAllErrorMessage(...functions: Array<(x?: unknown) => str
   };
 }
 
-export function numberMax(max: number): (args: number) => string | null {
+export function numberMax(max: number): (_args: number) => string | null {
   return (x: number) => (x <= max ? null : `Feltet må overstige ${max}.`);
 }
-export function numberMin(min: number): (args: number) => string | null {
+export function numberMin(min: number): (_args: number) => string | null {
   return (x: number) => (x > min ? null : `Feltet må ikke være mindre end ${min}.`);
 }
 
-export function charactersMaxLength(length: number): (args: string) => string | null {
+export function charactersMaxLength(length: number): (_args: string) => string | null {
   return (x: string) =>
     x.length <= length ? null : `Feltet må ikke være længere end ${length} tegn.`;
 }
 
-export function charactersMinLength(length: number): (args: string) => string | null {
+export function charactersMinLength(length: number): (_args: string) => string | null {
   return (x: string) =>
     x.length >= length ? null : `Feltet må ikke være kortere end ${length} tegn.`;
 }
@@ -36,7 +36,7 @@ export function charactersMinLength(length: number): (args: string) => string | 
 export function charactersEqualsLength(
   length: number,
   type = 'tegn',
-): (args: string) => string | null {
+): (_args: string) => string | null {
   return (x) => (x.length === length ? null : `Feltet skal være nøjagtigt ${length} ${type}.`);
 }
 
@@ -48,7 +48,6 @@ export function validCVR(x: string): string | null {
 }
 
 export function validCPR(x: string): string | null {
-   
   const CPR_REGEXP =
     /((?:(?:31(?:0[13578]|1[02])|(?:30|29)(?:0[13-9]|1[0-2])|(?:0[1-9]|1[0-9]|2[0-8])(?:0[1-9]|1[0-2]))[0-9]{2}|2902(?:[02468][048]|[13579][26])))-?[0-9]{4}/;
   const isValid = CPR_REGEXP.test(x);

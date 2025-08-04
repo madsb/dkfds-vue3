@@ -11,7 +11,7 @@ export { vi } from 'vitest';
  */
 export function mountComponent<T>(
   component: any,
-  options: MountingOptions<any> = {}
+  options: MountingOptions<any> = {},
 ): VueWrapper<T> {
   return mount(component, {
     ...options,
@@ -34,8 +34,8 @@ export async function testAccessibility(component: any, options?: MountingOption
   const { axe } = await import('vitest-axe');
   const wrapper = mount(component, options);
   const results = await axe(wrapper.element);
-  
+
   expect(results).toHaveNoViolations();
-  
+
   return wrapper;
 }

@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { axe } from 'vitest-axe';
 import { nextTick } from 'vue';
@@ -8,7 +8,7 @@ describe('FdsCheckbox', () => {
   describe('Rendering', () => {
     it('should render fieldset with checkbox input and label', () => {
       const wrapper = mount(FdsCheckbox);
-      
+
       expect(wrapper.find('fieldset').exists()).toBe(true);
       expect(wrapper.find('input[type="checkbox"]').exists()).toBe(true);
       expect(wrapper.find('label').exists()).toBe(true);
@@ -17,7 +17,7 @@ describe('FdsCheckbox', () => {
     it('should have correct base classes', () => {
       const wrapper = mount(FdsCheckbox);
       const input = wrapper.find('input');
-      
+
       expect(input.classes()).toContain('form-checkbox');
     });
 
@@ -25,7 +25,7 @@ describe('FdsCheckbox', () => {
       const wrapper = mount(FdsCheckbox);
       const input = wrapper.find('input');
       const label = wrapper.find('label');
-      
+
       const inputId = input.attributes('id');
       expect(inputId).toMatch(/^fid_[0-9a-f]{32}$/);
       expect(label.attributes('for')).toBe(inputId);
@@ -36,10 +36,10 @@ describe('FdsCheckbox', () => {
       const wrapper = mount(FdsCheckbox, {
         props: { id: customId },
       });
-      
+
       const input = wrapper.find('input');
       const label = wrapper.find('label');
-      
+
       expect(input.attributes('id')).toBe(customId);
       expect(label.attributes('for')).toBe(customId);
     });
@@ -49,7 +49,7 @@ describe('FdsCheckbox', () => {
     it('should apply large size by default', () => {
       const wrapper = mount(FdsCheckbox);
       const input = wrapper.find('input');
-      
+
       expect(input.classes()).toContain('checkbox-large');
     });
 
@@ -58,7 +58,7 @@ describe('FdsCheckbox', () => {
         props: { size: 'small' },
       });
       const input = wrapper.find('input');
-      
+
       expect(input.classes()).not.toContain('checkbox-large');
     });
 
@@ -67,7 +67,7 @@ describe('FdsCheckbox', () => {
         props: { modelValue: true },
       });
       const input = wrapper.find('input');
-      
+
       expect(input.element.checked).toBe(true);
     });
 
@@ -76,12 +76,12 @@ describe('FdsCheckbox', () => {
         props: { modelValue: false },
       });
       const input = wrapper.find('input');
-      
+
       expect(input.element.checked).toBe(false);
-      
+
       await wrapper.setProps({ modelValue: true });
       await nextTick();
-      
+
       expect(input.element.checked).toBe(true);
     });
   });
@@ -92,9 +92,9 @@ describe('FdsCheckbox', () => {
         props: { modelValue: false },
       });
       const input = wrapper.find('input');
-      
+
       await input.setValue(true);
-      
+
       expect(wrapper.emitted('update:modelValue')).toBeTruthy();
       expect(wrapper.emitted('update:modelValue')![0]).toEqual([true]);
     });
@@ -104,9 +104,9 @@ describe('FdsCheckbox', () => {
         props: { modelValue: true },
       });
       const input = wrapper.find('input');
-      
+
       await input.setValue(false);
-      
+
       expect(wrapper.emitted('update:modelValue')).toBeTruthy();
       expect(wrapper.emitted('update:modelValue')![0]).toEqual([false]);
     });
@@ -114,9 +114,9 @@ describe('FdsCheckbox', () => {
     it('should emit dirty on blur', async () => {
       const wrapper = mount(FdsCheckbox);
       const input = wrapper.find('input');
-      
+
       await input.trigger('blur');
-      
+
       expect(wrapper.emitted('dirty')).toBeTruthy();
       expect(wrapper.emitted('dirty')![0]).toEqual([true]);
     });
@@ -126,8 +126,8 @@ describe('FdsCheckbox', () => {
     it('should render default slot as label content', () => {
       const wrapper = mount(FdsCheckbox, {
         slots: {
-          default: 'Accept terms'
-        }
+          default: 'Accept terms',
+        },
       });
       expect(wrapper.find('label').text()).toContain('Accept terms');
     });
@@ -139,7 +139,7 @@ describe('FdsCheckbox', () => {
           content: '<div class="terms">Terms and conditions details</div>',
         },
       });
-      
+
       const content = wrapper.find('.checkbox-content');
       expect(content.exists()).toBe(true);
       expect(content.find('.terms').exists()).toBe(true);
@@ -153,7 +153,7 @@ describe('FdsCheckbox', () => {
           content: '<div class="terms">Terms and conditions details</div>',
         },
       });
-      
+
       const content = wrapper.find('.checkbox-content');
       expect(content.attributes('aria-hidden')).toBe('true');
     });
@@ -165,13 +165,13 @@ describe('FdsCheckbox', () => {
           content: 'Additional content',
         },
       });
-      
+
       const content = wrapper.find('.checkbox-content');
       expect(content.attributes('aria-hidden')).toBe('true');
-      
+
       await wrapper.setProps({ modelValue: true });
       await nextTick();
-      
+
       expect(content.attributes('aria-hidden')).toBe('false');
     });
   });
@@ -185,7 +185,7 @@ describe('FdsCheckbox', () => {
           'aria-describedby': 'help-text',
         },
       });
-      
+
       const input = wrapper.find('input');
       expect(input.attributes('disabled')).toBeDefined();
       expect(input.attributes('data-testid')).toBe('my-checkbox');
@@ -200,7 +200,7 @@ describe('FdsCheckbox', () => {
           default: 'Subscribe to newsletter',
         },
       });
-      
+
       // For component testing, disable page-level rules
       const results = await axe(wrapper.element, {
         rules: {
@@ -215,10 +215,10 @@ describe('FdsCheckbox', () => {
         props: { id: 'test-checkbox' },
         slots: { default: 'Test label' },
       });
-      
+
       const input = wrapper.find('input');
       const label = wrapper.find('label');
-      
+
       expect(input.attributes('id')).toBe('test-checkbox');
       expect(label.attributes('for')).toBe('test-checkbox');
     });
@@ -230,10 +230,10 @@ describe('FdsCheckbox', () => {
           content: 'Extra content',
         },
       });
-      
+
       const content = wrapper.find('.checkbox-content');
       const expectedId = `collapse-${wrapper.find('input').attributes('id')}`;
-      
+
       expect(content.attributes('id')).toBe(expectedId);
       expect(content.attributes('aria-hidden')).toBe('false');
     });
@@ -253,16 +253,16 @@ describe('FdsCheckbox', () => {
           return { checked: false };
         },
       };
-      
+
       const wrapper = mount(TestComponent);
       const checkbox = wrapper.findComponent(FdsCheckbox);
       const status = wrapper.find('.status');
-      
+
       expect(status.text()).toBe('Unchecked');
-      
+
       await checkbox.find('input').setValue(true);
       await nextTick();
-      
+
       expect(status.text()).toBe('Checked');
     });
   });

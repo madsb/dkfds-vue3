@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 export enum FdsVariantEnum {
   primary = 'primary',
   secondary = 'secondary',
@@ -8,6 +9,7 @@ export enum FdsVariantEnum {
   warning = 'warning',
   error = 'error',
 }
+/* eslint-enable no-unused-vars */
 
 /**
  * Used for radio, dropdowns

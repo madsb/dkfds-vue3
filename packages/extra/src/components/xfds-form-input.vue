@@ -20,9 +20,7 @@
       @update:model-value="handleInput"
       @dirty="touchedEvent"
     >
-      <template
-        v-if="$slots.button"
-        #button>
+      <template v-if="$slots.button" #button>
         <slot name="button" />
       </template>
     </fds-input>
@@ -35,7 +33,6 @@ import { FdsInput } from 'dkfds-vue3-core';
 const attrs = useAttrs();
 
 const {
-  id = null,
   label = '',
   hint = '',
   tooltip = null,
@@ -46,7 +43,6 @@ const {
   suffix = null,
   prefix = null,
 } = defineProps<{
-  id?: string | null;
   label?: string;
   hint?: string;
   tooltip?: string | null;

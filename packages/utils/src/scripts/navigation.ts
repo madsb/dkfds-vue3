@@ -13,10 +13,6 @@ const ACTIVE_CLASS = 'mobile-nav-active';
 const VISIBLE_CLASS = 'is-visible';
 
 // Utility functions
-const forEach = <T extends Node>(arr: NodeListOf<T> | T[], fn: (item: T, index: number) => void) => {
-  Array.prototype.forEach.call(arr, fn);
-};
-
 const select = (selector: string, context: Element | Document = document): HTMLElement[] => {
   if (typeof selector !== 'string') return [];
   const selection = context.querySelectorAll<HTMLElement>(selector);
@@ -108,7 +104,7 @@ class Navigation {
 
     body.classList.toggle(ACTIVE_CLASS, active);
 
-    forEach(select(TOGGLES), (el) => {
+    select(TOGGLES).forEach((el) => {
       el.classList.toggle(VISIBLE_CLASS, active);
     });
 
@@ -142,7 +138,7 @@ class Navigation {
    */
   mobileMenu() {
     let mobile = false;
-    
+
     // Find all menu buttons on page and add toggleNav function
     const openers = document.querySelectorAll<HTMLElement>(OPENERS);
     for (let o = 0; o < openers.length; o += 1) {
@@ -213,7 +209,9 @@ class Navigation {
          very early during page load - if it fails, all widths are the same. If possible,
          update the more menu as soon as possible for a better user experience. */
       const widths: number[] = [];
-      const mainMenuItems = document.querySelectorAll<HTMLElement>('.navigation-menu .mainmenu > li');
+      const mainMenuItems = document.querySelectorAll<HTMLElement>(
+        '.navigation-menu .mainmenu > li',
+      );
       for (let i = 0; i < mainMenuItems.length - 1; i += 1) {
         const w = this.getVisibleWidth(mainMenuItems[i]);
         widths.push(w);
@@ -287,9 +285,10 @@ class Navigation {
     const moreMenu = document.createElement('li');
     moreMenu.classList.add('more-option');
     moreMenu.classList.add('d-none');
-    moreMenu.innerHTML = '<div class="submenu"><button class="more-button button-overflow-menu js-dropdown" data-js-target="fds-more-menu" aria-expanded="false" aria-controls="fds-more-menu"><span>Mere</span></button><div class="overflow-menu-inner collapsed" id="fds-more-menu"><ul class="overflow-list"></ul></div></div>';
+    moreMenu.innerHTML =
+      '<div class="submenu"><button class="more-button button-overflow-menu js-dropdown" data-js-target="fds-more-menu" aria-expanded="false" aria-controls="fds-more-menu"><span>Mere</span></button><div class="overflow-menu-inner collapsed" id="fds-more-menu"><ul class="overflow-list"></ul></div></div>';
     mainMenu.append(moreMenu);
-    
+
     const moreButton = document.querySelector('.more-button') as HTMLElement;
     if (moreButton) {
       new DKFDSDropdown(moreButton).init();
@@ -300,13 +299,15 @@ class Navigation {
     const mainMenuItems = document.querySelectorAll<HTMLElement>('.navigation-menu .mainmenu > li');
     const moreMenu = mainMenuItems[mainMenuItems.length - 1];
     const moreMenuList = document.querySelector('.navigation-menu .more-option .overflow-list');
-    
+
     if (!moreMenuList) return;
 
     /* Calculate available space for main menu items */
-    const navigationMenuInner = document.querySelector<HTMLElement>('.navigation-menu .navigation-menu-inner');
+    const navigationMenuInner = document.querySelector<HTMLElement>(
+      '.navigation-menu .navigation-menu-inner',
+    );
     if (!navigationMenuInner) return;
-    
+
     const menuWidth = Math.floor(navigationMenuInner.getBoundingClientRect().width);
     let searchWidth = 0;
     let paddingMoreMenu = 0;
@@ -314,12 +315,17 @@ class Navigation {
     if (document.querySelectorAll('.navigation-menu.contains-search').length > 0 && searchElement) {
       searchWidth = this.getVisibleWidth(searchElement);
     } else {
-      const moreButton = document.querySelector<HTMLElement>('.navigation-menu .more-option .more-button');
+      const moreButton = document.querySelector<HTMLElement>(
+        '.navigation-menu .more-option .more-button',
+      );
       if (moreButton) {
         paddingMoreMenu = parseInt(window.getComputedStyle(moreButton).paddingRight, 10);
       }
     }
-    const containerPadding = parseInt(window.getComputedStyle(navigationMenuInner).paddingRight, 10);
+    const containerPadding = parseInt(
+      window.getComputedStyle(navigationMenuInner).paddingRight,
+      10,
+    );
     const availableSpace = menuWidth - searchWidth - containerPadding + paddingMoreMenu;
 
     /* Find the max amount of main menu items, it is possible to show */
