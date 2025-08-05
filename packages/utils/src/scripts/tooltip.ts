@@ -205,7 +205,6 @@ export default class DKFSTooltip {
 
       ;(tooltip.getElementsByClassName('tooltip-arrow')[0] as HTMLElement).style.right =
         `${arrowRightPosition}px`
-
       ;(tooltip.getElementsByClassName('tooltip-arrow')[0] as HTMLElement).style.left = 'auto'
     } else {
       tooltip.style.left = `${left}px`

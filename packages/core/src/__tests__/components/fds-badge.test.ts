@@ -28,7 +28,7 @@ describe('FdsBadge', () => {
     it('renders without variant class when variant is null', () => {
       const wrapper = mount(FdsBadge)
       const classes = wrapper.classes()
-      
+
       expect(classes).not.toContain('badge-success')
       expect(classes).not.toContain('badge-info')
       expect(classes).not.toContain('badge-warning')
@@ -39,74 +39,74 @@ describe('FdsBadge', () => {
   describe('Props', () => {
     it('renders with small size when specified', () => {
       const wrapper = mount(FdsBadge, {
-        props: { size: 'small' }
+        props: { size: 'small' },
       })
-      
+
       expect(wrapper.classes()).toContain('badge-small')
       expect(wrapper.classes()).not.toContain('badge-large')
     })
 
     it('renders with large size when specified', () => {
       const wrapper = mount(FdsBadge, {
-        props: { size: 'large' }
+        props: { size: 'large' },
       })
-      
+
       expect(wrapper.classes()).toContain('badge-large')
       expect(wrapper.classes()).not.toContain('badge-small')
     })
 
     it('renders all variant types correctly', () => {
       const variants = ['success', 'info', 'warning', 'error'] as const
-      
-      variants.forEach(variant => {
+
+      variants.forEach((variant) => {
         const wrapper = mount(FdsBadge, {
-          props: { variant }
+          props: { variant },
         })
-        
+
         expect(wrapper.classes()).toContain(`badge-${variant}`)
       })
     })
 
     it('renders success variant with correct class', () => {
       const wrapper = mount(FdsBadge, {
-        props: { variant: 'success' }
+        props: { variant: 'success' },
       })
-      
+
       expect(wrapper.classes()).toContain('badge-success')
     })
 
     it('renders info variant with correct class', () => {
       const wrapper = mount(FdsBadge, {
-        props: { variant: 'info' }
+        props: { variant: 'info' },
       })
-      
+
       expect(wrapper.classes()).toContain('badge-info')
     })
 
     it('renders warning variant with correct class', () => {
       const wrapper = mount(FdsBadge, {
-        props: { variant: 'warning' }
+        props: { variant: 'warning' },
       })
-      
+
       expect(wrapper.classes()).toContain('badge-warning')
     })
 
     it('renders error variant with correct class', () => {
       const wrapper = mount(FdsBadge, {
-        props: { variant: 'error' }
+        props: { variant: 'error' },
       })
-      
+
       expect(wrapper.classes()).toContain('badge-error')
     })
 
     it('combines size and variant classes', () => {
       const wrapper = mount(FdsBadge, {
-        props: { 
+        props: {
           size: 'small',
-          variant: 'success'
-        }
+          variant: 'success',
+        },
       })
-      
+
       expect(wrapper.classes()).toContain('badge')
       expect(wrapper.classes()).toContain('badge-small')
       expect(wrapper.classes()).toContain('badge-success')
@@ -114,9 +114,9 @@ describe('FdsBadge', () => {
 
     it('handles null variant prop', () => {
       const wrapper = mount(FdsBadge, {
-        props: { variant: null }
+        props: { variant: null },
       })
-      
+
       const classes = wrapper.classes().join(' ')
       expect(classes).not.toMatch(/badge-(success|info|warning|error)/)
     })
@@ -126,20 +126,20 @@ describe('FdsBadge', () => {
     it('renders default slot content', () => {
       const wrapper = mount(FdsBadge, {
         slots: {
-          default: 'Badge Text'
-        }
+          default: 'Badge Text',
+        },
       })
-      
+
       expect(wrapper.text()).toBe('Badge Text')
     })
 
     it('renders complex slot content', () => {
       const wrapper = mount(FdsBadge, {
         slots: {
-          default: '<strong>Important</strong> <em>Badge</em>'
-        }
+          default: '<strong>Important</strong> <em>Badge</em>',
+        },
       })
-      
+
       expect(wrapper.find('strong').text()).toBe('Important')
       expect(wrapper.find('em').text()).toBe('Badge')
     })
@@ -147,20 +147,20 @@ describe('FdsBadge', () => {
     it('renders number content', () => {
       const wrapper = mount(FdsBadge, {
         slots: {
-          default: '42'
-        }
+          default: '42',
+        },
       })
-      
+
       expect(wrapper.text()).toBe('42')
     })
 
     it('renders with icon in slot', () => {
       const wrapper = mount(FdsBadge, {
         slots: {
-          default: '<svg class="icon"><use href="#check"></use></svg> Complete'
-        }
+          default: '<svg class="icon"><use href="#check"></use></svg> Complete',
+        },
       })
-      
+
       expect(wrapper.find('svg.icon').exists()).toBe(true)
       expect(wrapper.find('use').attributes('href')).toBe('#check')
       expect(wrapper.text()).toContain('Complete')
@@ -175,17 +175,17 @@ describe('FdsBadge', () => {
 
     it('handles undefined size prop (defaults to large)', () => {
       const wrapper = mount(FdsBadge, {
-        props: {}
+        props: {},
       })
-      
+
       expect(wrapper.classes()).toContain('badge-large')
     })
 
     it('handles undefined variant prop', () => {
       const wrapper = mount(FdsBadge, {
-        props: {}
+        props: {},
       })
-      
+
       const classes = wrapper.classes()
       expect(classes).toHaveLength(2) // 'badge' and 'badge-large'
       expect(classes).toContain('badge')
@@ -201,12 +201,12 @@ describe('FdsBadge', () => {
             <FdsBadge size="large" variant="error">Error</FdsBadge>
           </div>
         `,
-        components: { FdsBadge }
+        components: { FdsBadge },
       }
-      
+
       const wrapper = mount(TestWrapper)
       const badges = wrapper.findAllComponents(FdsBadge)
-      
+
       expect(badges).toHaveLength(3)
       expect(badges[0].classes()).toContain('badge-large')
       expect(badges[1].classes()).toContain('badge-small')
@@ -217,17 +217,17 @@ describe('FdsBadge', () => {
 
     it('maintains classes when props change', async () => {
       const wrapper = mount(FdsBadge, {
-        props: { 
+        props: {
           size: 'large',
-          variant: 'info'
-        }
+          variant: 'info',
+        },
       })
-      
+
       expect(wrapper.classes()).toContain('badge-large')
       expect(wrapper.classes()).toContain('badge-info')
-      
+
       await wrapper.setProps({ size: 'small', variant: 'warning' })
-      
+
       expect(wrapper.classes()).toContain('badge-small')
       expect(wrapper.classes()).toContain('badge-warning')
       expect(wrapper.classes()).not.toContain('badge-large')
@@ -238,9 +238,9 @@ describe('FdsBadge', () => {
   describe('Accessibility', () => {
     it('renders semantic span element', () => {
       const wrapper = mount(FdsBadge, {
-        slots: { default: 'Status' }
+        slots: { default: 'Status' },
       })
-      
+
       expect(wrapper.element.tagName).toBe('SPAN')
     })
 
@@ -256,9 +256,9 @@ describe('FdsBadge', () => {
             </p>
           </main>
         `,
-        components: { FdsBadge }
+        components: { FdsBadge },
       }
-      
+
       await testAccessibility(TestWrapper)
     })
 
@@ -270,12 +270,12 @@ describe('FdsBadge', () => {
             <FdsBadge aria-labelledby="label">Active</FdsBadge>
           </div>
         `,
-        components: { FdsBadge }
+        components: { FdsBadge },
       }
-      
+
       const wrapper = mount(ContextWrapper)
       const badge = wrapper.findComponent(FdsBadge)
-      
+
       expect(badge.attributes('aria-labelledby')).toBe('label')
     })
   })
@@ -297,12 +297,12 @@ describe('FdsBadge', () => {
             </tbody>
           </table>
         `,
-        components: { FdsBadge }
+        components: { FdsBadge },
       }
-      
+
       const wrapper = mount(TableWrapper)
       const badges = wrapper.findAllComponents(FdsBadge)
-      
+
       expect(badges).toHaveLength(2)
       expect(badges[0].text()).toBe('Active')
       expect(badges[0].classes()).toContain('badge-success')
@@ -322,12 +322,12 @@ describe('FdsBadge', () => {
             </li>
           </ul>
         `,
-        components: { FdsBadge }
+        components: { FdsBadge },
       }
-      
+
       const wrapper = mount(ListWrapper)
       const badges = wrapper.findAllComponents(FdsBadge)
-      
+
       expect(badges).toHaveLength(2)
       expect(badges[0].text()).toBe('12')
       expect(badges[0].classes()).toContain('badge-info')
@@ -346,19 +346,19 @@ describe('FdsBadge', () => {
         data() {
           return {
             count: 5,
-            status: 'info' as const
+            status: 'info' as const,
           }
-        }
+        },
       }
-      
+
       const wrapper = mount(DynamicWrapper)
       const badge = wrapper.findComponent(FdsBadge)
-      
+
       expect(badge.text()).toBe('5')
       expect(badge.classes()).toContain('badge-info')
-      
+
       await wrapper.setData({ count: 10, status: 'success' })
-      
+
       expect(badge.text()).toBe('10')
       expect(badge.classes()).toContain('badge-success')
       expect(badge.classes()).not.toContain('badge-info')
@@ -379,15 +379,15 @@ describe('FdsBadge', () => {
         components: { FdsBadge },
         data() {
           return { isValid: false }
-        }
+        },
       }
-      
+
       const wrapper = mount(FormWrapper)
       let badge = wrapper.findComponent(FdsBadge)
-      
+
       expect(badge.text()).toBe('Invalid')
       expect(badge.classes()).toContain('badge-error')
-      
+
       wrapper.vm.isValid = true
       wrapper.vm.$nextTick(() => {
         badge = wrapper.findComponent(FdsBadge)

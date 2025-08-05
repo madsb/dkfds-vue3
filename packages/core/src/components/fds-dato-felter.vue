@@ -87,25 +87,23 @@ const isDateValid = (dateString: string) => {
   if (Number.isNaN(Date.parse(dateString))) {
     return false
   }
-  
+
   // Parse the date parts
   const parts = dateString.split('-')
   if (parts.length !== 3) return false
-  
+
   const year = parseInt(parts[0], 10)
   const month = parseInt(parts[1], 10)
   const day = parseInt(parts[2], 10)
-  
+
   // Check if the date components are valid
   if (month < 1 || month > 12) return false
   if (day < 1) return false
-  
+
   // Create a date and check if it matches what we input
   // This catches cases like Nov 31 which JS converts to Dec 1
   const date = new Date(year, month - 1, day)
-  return date.getFullYear() === year && 
-         date.getMonth() === month - 1 && 
-         date.getDate() === day
+  return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day
 }
 
 const getModelDate = (dateString: string) => {
@@ -139,19 +137,19 @@ const onValid = () => {
 
 const onNextTab = (event: Event, source: string) => {
   const inp = event.target as HTMLInputElement
-  
+
   // Mark that user is typing to prevent watch interference
   isUserTyping = true
-  
+
   // Always emit on input change
   onInput()
   onValid()
-  
+
   // Check if we should auto-advance (only when 2 or more digits)
   if (!inp.selectionEnd || inp.selectionEnd < 2) {
     return
   }
-  
+
   if (source === 'day') {
     ;(month.value as HTMLInputElement).focus()
   } else if (source === 'month') {
@@ -163,17 +161,20 @@ const onNextTab = (event: Event, source: string) => {
 let isUserTyping = false
 
 // Watch for modelValue changes from parent
-watch(() => modelValue, (newValue) => {
-  // Don't update while user is typing
-  if (isUserTyping) {
-    isUserTyping = false
-    return
-  }
-  
-  // Only update if the value is significantly different
-  const newDate = getModelDate(newValue)
-  if (JSON.stringify(newDate) !== JSON.stringify(dateObj.value)) {
-    dateObj.value = newDate
-  }
-})
+watch(
+  () => modelValue,
+  (newValue) => {
+    // Don't update while user is typing
+    if (isUserTyping) {
+      isUserTyping = false
+      return
+    }
+
+    // Only update if the value is significantly different
+    const newDate = getModelDate(newValue)
+    if (JSON.stringify(newDate) !== JSON.stringify(dateObj.value)) {
+      dateObj.value = newDate
+    }
+  },
+)
 </script>
