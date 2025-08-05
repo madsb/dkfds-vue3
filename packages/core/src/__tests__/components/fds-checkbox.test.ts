@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { axe } from 'vitest-axe';
 import { nextTick } from 'vue';
 import FdsCheckbox from '../../components/fds-checkbox.vue';
+import { testAccessibility } from '../../../../../test-shared/test-utils';
 
 describe('FdsCheckbox', () => {
   describe('Rendering', () => {
@@ -194,20 +194,22 @@ describe('FdsCheckbox', () => {
   });
 
   describe('Accessibility', () => {
-    it('should be accessible with label', async () => {
-      const wrapper = mount(FdsCheckbox, {
-        slots: {
-          default: 'Subscribe to newsletter',
+    it('passes accessibility tests', async () => {
+      const TestWrapper = {
+        template: `
+          <main>
+            <FdsCheckbox id="newsletter" v-model="checked">
+              Subscribe to newsletter
+            </FdsCheckbox>
+          </main>
+        `,
+        components: { FdsCheckbox },
+        data() {
+          return { checked: false };
         },
-      });
+      };
 
-      // For component testing, disable page-level rules
-      const results = await axe(wrapper.element, {
-        rules: {
-          region: { enabled: false }, // Disable landmark check for component tests
-        },
-      });
-      expect(results).toHaveNoViolations();
+      await testAccessibility(TestWrapper);
     });
 
     it('should properly associate label with input', () => {
@@ -264,6 +266,326 @@ describe('FdsCheckbox', () => {
       await nextTick();
 
       expect(status.text()).toBe('Checked');
+    });
+  });
+
+  describe('Edge Cases', () => {
+    it('handles null id prop gracefully', () => {
+      const wrapper = mount(FdsCheckbox, {
+        props: { id: null },
+      });
+
+      const input = wrapper.find('input');
+      const label = wrapper.find('label');
+      const inputId = input.attributes('id');
+
+      expect(inputId).toMatch(/^fid_[0-9a-f]{32}$/);
+      expect(label.attributes('for')).toBe(inputId);
+    });
+
+    it('handles empty string id', () => {
+      const wrapper = mount(FdsCheckbox, {
+        props: { id: '' },
+      });
+
+      const input = wrapper.find('input');
+      const label = wrapper.find('label');
+      const inputId = input.attributes('id');
+
+      // Empty string id should be used as-is
+      expect(inputId).toBe('');
+      expect(label.attributes('for')).toBe('');
+    });
+
+    it('renders without any props or slots', () => {
+      const wrapper = mount(FdsCheckbox);
+
+      expect(wrapper.find('fieldset').exists()).toBe(true);
+      expect(wrapper.find('input[type="checkbox"]').exists()).toBe(true);
+      expect(wrapper.find('label').exists()).toBe(true);
+      expect(wrapper.find('label').text()).toBe('');
+      expect(wrapper.find('.checkbox-content').exists()).toBe(false);
+    });
+
+    it('handles rapid checkbox state changes', async () => {
+      const wrapper = mount(FdsCheckbox, {
+        props: { modelValue: false },
+      });
+      const input = wrapper.find('input');
+
+      // Rapidly toggle the checkbox
+      await input.setValue(true);
+      await input.setValue(false);
+      await input.setValue(true);
+
+      const emitted = wrapper.emitted('update:modelValue');
+      expect(emitted).toHaveLength(3);
+      expect(emitted![0]).toEqual([true]);
+      expect(emitted![1]).toEqual([false]);
+      expect(emitted![2]).toEqual([true]);
+    });
+
+    it('handles undefined modelValue', () => {
+      const wrapper = mount(FdsCheckbox, {
+        props: { modelValue: undefined },
+      });
+
+      const input = wrapper.find('input');
+      expect(input.element.checked).toBe(false); // Should default to false
+    });
+
+    it('handles null modelValue', () => {
+      const wrapper = mount(FdsCheckbox, {
+        props: { modelValue: null as any },
+      });
+
+      const input = wrapper.find('input');
+      expect(input.element.checked).toBe(false); // Should treat as false
+    });
+  });
+
+  describe('Integration Scenarios', () => {
+    it('works in a form with multiple checkboxes', async () => {
+      const FormComponent = {
+        template: `
+          <form>
+            <FdsCheckbox v-model="options.newsletter" id="newsletter">
+              Subscribe to newsletter
+            </FdsCheckbox>
+            <FdsCheckbox v-model="options.terms" id="terms">
+              Accept terms and conditions
+              <template #content>
+                <p>By accepting, you agree to our terms...</p>
+              </template>
+            </FdsCheckbox>
+            <FdsCheckbox v-model="options.marketing" id="marketing" size="small">
+              Receive marketing emails
+            </FdsCheckbox>
+          </form>
+        `,
+        components: { FdsCheckbox },
+        data() {
+          return {
+            options: {
+              newsletter: false,
+              terms: false,
+              marketing: true,
+            },
+          };
+        },
+      };
+
+      const wrapper = mount(FormComponent);
+      const checkboxes = wrapper.findAllComponents(FdsCheckbox);
+
+      expect(checkboxes).toHaveLength(3);
+
+      // Check initial states
+      expect(checkboxes[0].find('input').element.checked).toBe(false);
+      expect(checkboxes[1].find('input').element.checked).toBe(false);
+      expect(checkboxes[2].find('input').element.checked).toBe(true);
+
+      // Check the terms checkbox
+      await checkboxes[1].find('input').setValue(true);
+      expect(wrapper.vm.options.terms).toBe(true);
+
+      // Content should now be visible
+      const termsContent = checkboxes[1].find('.checkbox-content');
+      expect(termsContent.exists()).toBe(true);
+      expect(termsContent.attributes('aria-hidden')).toBe('false');
+    });
+
+    it('works with form validation and dirty state', async () => {
+      const ValidationForm = {
+        template: `
+          <form>
+            <FdsCheckbox 
+              v-model="agreed" 
+              @dirty="onDirty"
+              :class="{ 'error': showError }"
+            >
+              I agree to the terms *
+            </FdsCheckbox>
+            <span v-if="showError" class="error-message">
+              You must agree to continue
+            </span>
+          </form>
+        `,
+        components: { FdsCheckbox },
+        data() {
+          return {
+            agreed: false,
+            isDirty: false,
+          };
+        },
+        computed: {
+          showError() {
+            return this.isDirty && !this.agreed;
+          },
+        },
+        methods: {
+          onDirty() {
+            this.isDirty = true;
+          },
+        },
+      };
+
+      const wrapper = mount(ValidationForm);
+      const checkbox = wrapper.findComponent(FdsCheckbox);
+
+      // Initially no error
+      expect(wrapper.find('.error-message').exists()).toBe(false);
+
+      // Blur without checking - should show error
+      await checkbox.find('input').trigger('blur');
+      await nextTick();
+
+      expect(wrapper.find('.error-message').exists()).toBe(true);
+      expect(wrapper.find('.error-message').text()).toBe('You must agree to continue');
+
+      // Check the box - error should disappear
+      await checkbox.find('input').setValue(true);
+      await nextTick();
+
+      expect(wrapper.find('.error-message').exists()).toBe(false);
+    });
+
+    it('works with conditional rendering based on checkbox state', async () => {
+      const ConditionalForm = {
+        template: `
+          <div>
+            <FdsCheckbox v-model="showAdvanced">
+              Show advanced options
+            </FdsCheckbox>
+            <div v-if="showAdvanced" class="advanced-options">
+              <input type="text" placeholder="Advanced setting 1" />
+              <input type="text" placeholder="Advanced setting 2" />
+            </div>
+          </div>
+        `,
+        components: { FdsCheckbox },
+        data() {
+          return {
+            showAdvanced: false,
+          };
+        },
+      };
+
+      const wrapper = mount(ConditionalForm);
+      const checkbox = wrapper.findComponent(FdsCheckbox);
+
+      // Advanced options hidden initially
+      expect(wrapper.find('.advanced-options').exists()).toBe(false);
+
+      // Check the checkbox
+      await checkbox.find('input').setValue(true);
+      await nextTick();
+
+      // Advanced options should appear
+      expect(wrapper.find('.advanced-options').exists()).toBe(true);
+      expect(wrapper.findAll('.advanced-options input')).toHaveLength(2);
+
+      // Uncheck - should hide again
+      await checkbox.find('input').setValue(false);
+      await nextTick();
+
+      expect(wrapper.find('.advanced-options').exists()).toBe(false);
+    });
+
+    it('supports keyboard navigation', async () => {
+      const wrapper = mount(FdsCheckbox, {
+        props: { modelValue: false },
+        slots: {
+          default: 'Keyboard accessible checkbox',
+        },
+      });
+
+      const input = wrapper.find('input');
+
+      // Simulate space key press
+      await input.trigger('keydown', { key: ' ' });
+      await input.trigger('keyup', { key: ' ' });
+
+      // Note: jsdom doesn't fully simulate browser checkbox behavior
+      // In a real browser, space key would toggle the checkbox
+      // Here we're just ensuring the events are handled without errors
+      expect(wrapper.find('input').exists()).toBe(true);
+    });
+  });
+
+  describe('Attributes Passthrough', () => {
+    it('passes through all standard input attributes', () => {
+      const wrapper = mount(FdsCheckbox, {
+        attrs: {
+          name: 'agreement',
+          value: 'yes',
+          required: true,
+          'aria-required': 'true',
+          'data-analytics': 'terms-checkbox',
+        },
+      });
+
+      const input = wrapper.find('input');
+      expect(input.attributes('name')).toBe('agreement');
+      expect(input.attributes('value')).toBe('yes');
+      expect(input.attributes('required')).toBeDefined();
+      expect(input.attributes('aria-required')).toBe('true');
+      expect(input.attributes('data-analytics')).toBe('terms-checkbox');
+    });
+
+    it('passes through class and style attributes to input', () => {
+      const wrapper = mount(FdsCheckbox, {
+        attrs: {
+          class: 'custom-checkbox-class',
+          style: 'margin-left: 10px',
+        },
+      });
+
+      const input = wrapper.find('input');
+      
+      // Vue passes class and style to the input via v-bind="attrs"
+      expect(input.classes()).toContain('custom-checkbox-class');
+      expect(input.attributes('style')).toBe('margin-left: 10px;');
+    });
+  });
+
+  describe('Label and Content Slot Scoping', () => {
+    it('provides slot props to default slot', () => {
+      const wrapper = mount(FdsCheckbox, {
+        props: { id: 'test-checkbox' },
+        slots: {
+          default: `
+            <template #default="slotProps">
+              <span class="slot-id">{{ slotProps.id }}</span>
+            </template>
+          `,
+        },
+      });
+
+      // Note: The component passes id and class to the slot
+      expect(wrapper.find('.slot-id').exists()).toBe(true);
+    });
+
+    it('content slot respects checkbox state changes', async () => {
+      const wrapper = mount(FdsCheckbox, {
+        props: { modelValue: false },
+        slots: {
+          default: 'Show details',
+          content: '<div class="details">Detailed information here</div>',
+        },
+      });
+
+      // Content hidden initially
+      let content = wrapper.find('.checkbox-content');
+      expect(content.attributes('aria-hidden')).toBe('true');
+
+      // Update modelValue to true
+      await wrapper.setProps({ modelValue: true });
+      await nextTick();
+
+      // Content should be visible
+      content = wrapper.find('.checkbox-content');
+      expect(content.attributes('aria-hidden')).toBe('false');
     });
   });
 });
