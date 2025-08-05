@@ -1,7 +1,5 @@
 <template>
-  <li
-    v-if="!ordered"
-    :class="getListClass">
+  <li v-if="!ordered" :class="getListClass">
     <slot />
   </li>
 </template>
@@ -12,7 +10,7 @@
  * Komponent til generel brug af lister (UL)
  *
  * */
-import { computed } from 'vue';
+import { computed } from 'vue'
 
 const {
   /**
@@ -25,9 +23,9 @@ const {
   variant = null,
   ordered = false,
 } = defineProps<{
-  variant?: 'bordered' | 'unstyled' | 'nobullet' | null;
-  ordered?: boolean;
-}>();
+  variant?: 'bordered' | 'unstyled' | 'nobullet' | null
+  ordered?: boolean
+}>()
 
-const getListClass = computed(() => (variant ? `${variant}-list` : ''));
+const getListClass = computed(() => (variant ? `${variant}-list` : ''))
 </script>

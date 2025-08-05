@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="card-group"
-    :class="getClass">
+  <div class="card-group" :class="getClass">
     <slot />
   </div>
 </template>
@@ -13,13 +11,11 @@
  * https://designsystem.dk/komponenter/cards/
  *
  * */
-import { computed } from 'vue';
+import { computed } from 'vue'
 
-const {
-  type = null,
-} = defineProps<{
-  type?: 'deck' | 'columns' | null;
-}>();
+const { type = null } = defineProps<{
+  type?: 'deck' | 'columns' | null
+}>()
 
-const getClass = computed(() => type ?? 'normal');
+const getClass = computed(() => type ?? 'normal')
 </script>

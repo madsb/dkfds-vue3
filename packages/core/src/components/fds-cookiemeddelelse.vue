@@ -8,20 +8,14 @@
     <div class="cookie-message">
       <div class="cookie-text">
         <slot name="header">
-          <div
-            id="cookie-message-heading"
-            class="h3 mt-0 mb-3">
+          <div id="cookie-message-heading" class="h3 mt-0 mb-3">
             {{ header }}
           </div>
         </slot>
         <slot>
-          <p
-            id="cookie-message-text"
-            class="mt-0">
+          <p id="cookie-message-text" class="mt-0">
             Vi indsamler statistik ved hjælp af cookies. Alle indsamlede data anonymiseres.
-            <a href="#">
-              Læs mere om vores brug af cookies.
-            </a>
+            <a href="#"> Læs mere om vores brug af cookies. </a>
           </p>
         </slot>
       </div>
@@ -29,16 +23,12 @@
         <slot name="actions">
           <ul class="inline-list">
             <li>
-              <fds-button
-                variant="secondary"
-                @click="$emit('accept', true)">
+              <fds-button variant="secondary" @click="$emit('accept', true)">
                 Accepter cookies
               </fds-button>
             </li>
             <li class="ml-4">
-              <fds-button
-                variant="secondary"
-                @click="$emit('cancel', true)">
+              <fds-button variant="secondary" @click="$emit('cancel', true)">
                 Nej tak til cookies
               </fds-button>
             </li>
@@ -57,16 +47,15 @@
  *
  * */
 
-
 const {
   /** Overskrift */
   header = 'Fortæl os om du accepterer cookies',
 } = defineProps<{
-  header?: string;
-}>();
+  header?: string
+}>()
 
 defineEmits<{
-  accept: [value: boolean];
-  cancel: [value: boolean];
-}>();
+  accept: [value: boolean]
+  cancel: [value: boolean]
+}>()
 </script>

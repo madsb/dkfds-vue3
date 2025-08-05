@@ -9,6 +9,6 @@ const {
   /** Ikon som string */
   icon = 'home',
 } = defineProps<{
-  icon?: string;
-}>();
+  icon?: string
+}>()
 </script>

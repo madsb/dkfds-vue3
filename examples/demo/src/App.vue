@@ -233,39 +233,39 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router';
-import { onMounted } from 'vue';
-import { navigation } from 'dkfds-vue3/utils';
+import { useRoute, useRouter } from 'vue-router'
+import { onMounted } from 'vue'
+import { navigation } from 'dkfds-vue3/utils'
 
-const route = useRoute();
-const router = useRouter();
+const route = useRoute()
+const router = useRouter()
 
 // Initialize navigation on mount
 onMounted(() => {
-  new navigation().init();
-});
+  new navigation().init()
+})
 
 // Check if current route matches menu item
 const isPartOfMenu = (name: string): boolean => {
   if (route) {
-    const [parent] = route.matched;
+    const [parent] = route.matched
 
     if (parent && parent.name === name) {
-      return true;
+      return true
     }
     if (route.name) {
-      return route.name === name;
+      return route.name === name
     }
   }
 
-  return false;
-};
+  return false
+}
 
 // Navigate to route and close mobile menu
 const navigateTo = (name: string) => {
-  router.push({ name });
+  router.push({ name })
   // The navigation script will automatically close the menu when a link is clicked
-};
+}
 </script>
 
 <style lang="scss">

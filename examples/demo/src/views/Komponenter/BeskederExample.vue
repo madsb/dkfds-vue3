@@ -1,38 +1,20 @@
 <template>
   <section>
-    <fds-preview
-      header="Eksempel"
-      href="https://designsystem.dk/komponenter/beskeder/">
+    <fds-preview header="Eksempel" href="https://designsystem.dk/komponenter/beskeder/">
       <fds-preview-item>
-        <fds-alert
-          variant="info"
-          header="Informativ besked"
-          show-icon
-          closeable>
+        <fds-alert variant="info" header="Informativ besked" show-icon closeable>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste possimus voluptatum
           corrupti architecto? Accusantium obcaecati aliquam totam voluptas perspiciatis.
         </fds-alert>
-        <fds-alert
-          variant="success"
-          header="Succesmeddelelse"
-          show-icon
-          closeable>
+        <fds-alert variant="success" header="Succesmeddelelse" show-icon closeable>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste possimus voluptatum
           corrupti architecto? Accusantium obcaecati aliquam totam voluptas perspiciatis.
         </fds-alert>
-        <fds-alert
-          variant="warning"
-          header="Advarsel"
-          show-icon
-          closeable>
+        <fds-alert variant="warning" header="Advarsel" show-icon closeable>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste possimus voluptatum
           corrupti architecto? Accusantium obcaecati aliquam totam voluptas perspiciatis.
         </fds-alert>
-        <fds-alert
-          variant="error"
-          header="Fejlbesked"
-          show-icon
-          closeable>
+        <fds-alert variant="error" header="Fejlbesked" show-icon closeable>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste possimus voluptatum
           corrupti architecto? Accusantium obcaecati aliquam totam voluptas perspiciatis.
         </fds-alert>
@@ -108,5 +90,5 @@ const code = `
   architecto? Accusantium obcaecati aliquam totam voluptas perspiciatis.
 </fds-alert>
 
-`;
+`
 </script>

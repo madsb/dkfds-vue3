@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from 'vue-router';
+import { RouteRecordRaw } from 'vue-router'
 
 const ekstraKomponenterRoutes: Array<RouteRecordRaw> = [
   {
@@ -86,6 +86,6 @@ const ekstraKomponenterRoutes: Array<RouteRecordRaw> = [
       },
     ],
   },
-];
+]
 
-export default ekstraKomponenterRoutes;
+export default ekstraKomponenterRoutes

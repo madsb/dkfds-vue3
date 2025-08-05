@@ -86,8 +86,8 @@
  * https://designsystem.dk/komponenter/badges/
  *
  * */
-import { FdsPaging } from 'dkfds-vue3-utils';
-import { computed, ref, watch } from 'vue';
+import { FdsPaging } from 'dkfds-vue3-utils'
+import { computed, ref, watch } from 'vue'
 
 const {
   list = [],
@@ -95,97 +95,97 @@ const {
   pageSize = 10,
   maxElements = 7,
 } = defineProps<{
-  list?: any[];
-  skip?: number;
-  pageSize?: number;
-  maxElements?: number;
-}>();
+  list?: any[]
+  skip?: number
+  pageSize?: number
+  maxElements?: number
+}>()
 
 const emit = defineEmits<{
-  filteredPage: [items: any[]];
-  skip: [skip: number];
-}>();
+  filteredPage: [items: any[]]
+  skip: [skip: number]
+}>()
 
-const currentPage = ref(1);
-const show = ref(true);
+const currentPage = ref(1)
+const show = ref(true)
 
 const getTotalPages = computed((): Array<number> => {
-  const totalPages = Math.abs(Math.ceil(list.length / pageSize));
-  return Array.from({ length: totalPages }, (value, key) => key + 1);
-});
+  const totalPages = Math.abs(Math.ceil(list.length / pageSize))
+  return Array.from({ length: totalPages }, (value, key) => key + 1)
+})
 
 const lastPage = computed((): number => {
-  return getTotalPages.value.length;
-});
+  return getTotalPages.value.length
+})
 
 const emitList = (skipValue = 0) => {
-  emit('filteredPage', list.length > 0 ? list.slice(skipValue, skipValue + pageSize) : []);
-  emit('skip', skip > 0 ? skip : skipValue);
-};
+  emit('filteredPage', list.length > 0 ? list.slice(skipValue, skipValue + pageSize) : [])
+  emit('skip', skip > 0 ? skip : skipValue)
+}
 
 const handlePageChange = (event: Event, newPage: number) => {
-  event.preventDefault();
-  const skipValue = pageSize * (newPage - 1);
-  emitList(skipValue);
-  currentPage.value = newPage;
-};
+  event.preventDefault()
+  const skipValue = pageSize * (newPage - 1)
+  emitList(skipValue)
+  currentPage.value = newPage
+}
 
 const generatePages = (): FdsPaging[] => {
-  const tmpPages = getTotalPages.value;
-  const pages: FdsPaging[] = [];
-  const centerDiff = Math.ceil(maxElements / 2) + 1;
+  const tmpPages = getTotalPages.value
+  const pages: FdsPaging[] = []
+  const centerDiff = Math.ceil(maxElements / 2) + 1
 
   tmpPages.forEach((f) => {
     if (f === 1 || f === lastPage.value || f === currentPage.value) {
-      pages.push({ index: f, dotted: false });
-      return;
+      pages.push({ index: f, dotted: false })
+      return
     }
 
     // under 5
     if (currentPage.value < centerDiff && f <= centerDiff) {
-      pages.push({ index: f, dotted: false });
-      return;
+      pages.push({ index: f, dotted: false })
+      return
     }
 
     // middle range
     if (currentPage.value - 1 <= f && f <= currentPage.value + 1) {
-      pages.push({ index: f, dotted: false });
-      return;
+      pages.push({ index: f, dotted: false })
+      return
     }
 
     // upper range
     if (lastPage.value - centerDiff < currentPage.value - 1 && lastPage.value - centerDiff < f) {
-      pages.push({ index: f, dotted: false });
-      return;
+      pages.push({ index: f, dotted: false })
+      return
     }
 
-    const dotMe = true;
+    const dotMe = true
 
     if (dotMe && pages.slice(-1)[0].dotted) {
-      return;
+      return
     }
 
-    pages.push({ index: f, dotted: dotMe });
-  });
+    pages.push({ index: f, dotted: dotMe })
+  })
 
-  return pages;
-};
+  return pages
+}
 
 watch(
   () => skip,
   () => {
     if (skip > 0) {
-      currentPage.value = skip / pageSize + 1;
+      currentPage.value = skip / pageSize + 1
     } else {
-      currentPage.value = 1;
+      currentPage.value = 1
     }
-    show.value = list && list.length > pageSize;
-    emitList();
+    show.value = list && list.length > pageSize
+    emitList()
   },
   {
     immediate: true,
   },
-);
+)
 </script>
 
 <style scoped lang="scss"></style>

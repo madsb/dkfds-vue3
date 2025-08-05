@@ -1,8 +1,6 @@
 <template>
   <section>
-    <fds-preview
-      header="Eksempel"
-      href="https://designsystem.dk/komponenter/sprogvaelger/">
+    <fds-preview header="Eksempel" href="https://designsystem.dk/komponenter/sprogvaelger/">
       <fds-preview-item>
         <div class="container page-container">
           <fds-sprogvaelger
@@ -11,9 +9,7 @@
           ></fds-sprogvaelger>
         </div>
 
-        <fds-pre
-          :json="{ selectedLangauge, languages }"
-          header="Valgt sprog" />
+        <fds-pre :json="{ selectedLangauge, languages }" header="Valgt sprog" />
       </fds-preview-item>
       <fds-preview-code>
         <pre v-text="code"></pre>
@@ -23,10 +19,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { FdsLanguageItem } from 'dkfds-vue3/utils';
+import { ref } from 'vue'
+import { FdsLanguageItem } from 'dkfds-vue3/utils'
 
-const selectedLangauge = ref('da');
+const selectedLangauge = ref('da')
 const languages = ref<FdsLanguageItem[]>([
   {
     title: 'Dansk',
@@ -46,12 +42,12 @@ const languages = ref<FdsLanguageItem[]>([
     lang: 'de',
     ariaLabel: 'Gewählte Sprache: Deutsch',
   },
-]);
+])
 
 const code = `
 <footer>
   <fds-sprogvaelger v-model="languages" @lang="selectedLangauge = $event" />
   ...
 </footer>
-`;
+`
 </script>

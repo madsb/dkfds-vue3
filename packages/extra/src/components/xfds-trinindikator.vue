@@ -1,11 +1,6 @@
 <template>
-  <fds-trinindikator-group
-    :id="id"
-    :size="size"
-    :icon="icon">
-    <template #header>
-      {{ header }} {{ currentStep + 1 }} af {{ mVal.length }}
-    </template>
+  <fds-trinindikator-group :id="id" :size="size" :icon="icon">
+    <template #header> {{ header }} {{ currentStep + 1 }} af {{ mVal.length }} </template>
     <fds-trinindikator-item
       v-for="(item, index) of tabsList"
       :id="item.key"
@@ -33,9 +28,9 @@
  *
  * */
 
-import { FdsNavigationItem } from 'dkfds-vue3-utils';
-import { ref,  computed, watch } from 'vue';
-import navigationService from './../service/navigation.service';
+import { FdsNavigationItem } from 'dkfds-vue3-utils'
+import { ref, computed, watch } from 'vue'
+import navigationService from './../service/navigation.service'
 
 const {
   modelValue,
@@ -46,46 +41,46 @@ const {
   icon = 'arrow-drop-down',
   size = 'small',
 } = defineProps<{
-  modelValue: Array<FdsNavigationItem>;
-  showIndex?: boolean;
-  navigateFirst?: boolean;
-  header?: string;
-  id?: string | null;
-  icon?: string;
-  size?: string;
-}>();
+  modelValue: Array<FdsNavigationItem>
+  showIndex?: boolean
+  navigateFirst?: boolean
+  header?: string
+  id?: string | null
+  icon?: string
+  size?: string
+}>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: Array<FdsNavigationItem>];
-  navigate: [key: string];
-}>();
+  'update:modelValue': [value: Array<FdsNavigationItem>]
+  navigate: [key: string]
+}>()
 
-const mVal = computed(() => modelValue ?? []);
-const currentKey = ref('');
-const tabsList = ref<Array<FdsNavigationItem>>(mVal.value.filter((f) => !f.ignore));
+const mVal = computed(() => modelValue ?? [])
+const currentKey = ref('')
+const tabsList = ref<Array<FdsNavigationItem>>(mVal.value.filter((f) => !f.ignore))
 
 const navigate = (item: FdsNavigationItem) => {
   if (item.disabled) {
-    return;
+    return
   }
 
-  tabsList.value = navigationService.setActive(tabsList.value, item.key);
-  currentKey.value = item.key;
+  tabsList.value = navigationService.setActive(tabsList.value, item.key)
+  currentKey.value = item.key
 
-  emit('update:modelValue', tabsList.value);
-  emit('navigate', currentKey.value);
-};
+  emit('update:modelValue', tabsList.value)
+  emit('navigate', currentKey.value)
+}
 
-const currentStep = computed(() => tabsList.value.findIndex((f) => f.active));
-const currentActiveKey = computed(() => modelValue.find((f) => f.active).key);
+const currentStep = computed(() => tabsList.value.findIndex((f) => f.active))
+const currentActiveKey = computed(() => modelValue.find((f) => f.active).key)
 
 watch(
   () => [modelValue],
   () => {
-    emit('navigate', currentActiveKey.value);
+    emit('navigate', currentActiveKey.value)
   },
   {
     immediate: true,
   },
-);
+)
 </script>

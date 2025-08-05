@@ -18,7 +18,7 @@
  *
  * */
 
-import { FdsVariantEnum } from 'dkfds-vue3-utils';
+import { FdsVariantEnum } from 'dkfds-vue3-utils'
 
 const {
   /** Visnings variant */
@@ -28,10 +28,10 @@ const {
   /** Højre stillet ikon */
   right = false,
 } = defineProps<{
-  variant?: FdsVariantEnum | string;
-  icon?: string;
-  right?: boolean;
-}>();
+  variant?: FdsVariantEnum | string
+  icon?: string
+  right?: boolean
+}>()
 </script>
 
 <style scoped lang="scss"></style>

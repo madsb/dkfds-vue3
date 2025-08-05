@@ -7,9 +7,7 @@
     show-icon
     :closeable="false"
   >
-    <slot
-      v-if="$slots.header || header"
-      name="header">
+    <slot v-if="$slots.header || header" name="header">
       <p class="alert-heading">
         {{ header }}
       </p>
@@ -19,13 +17,11 @@
 </template>
 
 <script setup lang="ts">
-import FdsAlert from './fds-alert.vue';
+import FdsAlert from './fds-alert.vue'
 
-const {
-  header = 'Fejlopsummering',
-} = defineProps<{
-  header?: string;
-}>();
+const { header = 'Fejlopsummering' } = defineProps<{
+  header?: string
+}>()
 </script>
 
 <style scoped lang="scss"></style>

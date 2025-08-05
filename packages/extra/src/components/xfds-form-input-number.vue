@@ -24,9 +24,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, useAttrs } from 'vue';
-import { FdsInputNumber } from 'dkfds-vue3-core';
-const attrs = useAttrs();
+import { ref, useAttrs } from 'vue'
+import { FdsInputNumber } from 'dkfds-vue3-core'
+const attrs = useAttrs()
 
 const {
   id = null, // eslint-disable-line no-unused-vars
@@ -40,33 +40,33 @@ const {
   suffix = null,
   prefix = null,
 } = defineProps<{
-  id?: string | null;
-  label?: string;
-  hint?: string;
-  tooltip?: string | null;
-  isValid?: boolean;
-  errorMessage?: string | null;
-  readonly?: boolean;
-  modelValue?: number | string;
-  suffix?: string | null;
-  prefix?: string | null;
-}>();
+  id?: string | null
+  label?: string
+  hint?: string
+  tooltip?: string | null
+  isValid?: boolean
+  errorMessage?: string | null
+  readonly?: boolean
+  modelValue?: number | string
+  suffix?: string | null
+  prefix?: string | null
+}>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: number | string];
-  dirty: [value: boolean];
-  valid: [value: boolean];
-  input: [value: number | string];
-}>();
+  'update:modelValue': [value: number | string]
+  dirty: [value: boolean]
+  valid: [value: boolean]
+  input: [value: number | string]
+}>()
 
-const value = ref(modelValue);
-const dirty = ref(false);
+const value = ref(modelValue)
+const dirty = ref(false)
 
 const touchedEvent = () => {
-  dirty.value = true;
-};
+  dirty.value = true
+}
 
-const handleInput = () => emit('update:modelValue', value.value);
+const handleInput = () => emit('update:modelValue', value.value)
 </script>
 
 <style scoped lang="scss"></style>

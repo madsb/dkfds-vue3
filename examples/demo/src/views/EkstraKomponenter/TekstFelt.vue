@@ -48,15 +48,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { charactersMinLength, hasContent } from 'dkfds-vue3/utils';
+import { ref } from 'vue'
+import { charactersMinLength, hasContent } from 'dkfds-vue3/utils'
 
 const user = ref({
   name: 'Anders',
   adress: '',
   city: '',
   search: '',
-});
+})
 const code = `
 <xfds-form-input label="Navn" placeholder="e.g: Anders Hansen" v-model="user.name" />
 
@@ -89,5 +89,5 @@ const code = `
     </button>
   </template>
 </xfds-form-input>
-`;
+`
 </script>

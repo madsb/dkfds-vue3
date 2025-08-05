@@ -1,17 +1,11 @@
 <template>
   <section>
-    <fds-preview
-      header="Eksempel"
-      href="https://designsystem.dk/komponenter/funktionslink/">
+    <fds-preview header="Eksempel" href="https://designsystem.dk/komponenter/funktionslink/">
       <fds-preview-item>
-        <fds-funktionslink
-          title="Klik for event"
-          @click="handleFunkClick">
+        <fds-funktionslink title="Klik for event" @click="handleFunkClick">
           Funktionslink
         </fds-funktionslink>
-        <fds-pre
-          header="Klik"
-          :json="{ funktionsLinkClick }" />
+        <fds-pre header="Klik" :json="{ funktionsLinkClick }" />
       </fds-preview-item>
 
       <fds-preview-code>
@@ -35,11 +29,7 @@
               <td><code>''</code></td>
               <td>
                 Se standard ikone hos
-                <a
-                  href="https://designsystem.dk/design/ikoner/"
-                  target="dkfds">
-                  DKFDS
-                </a>
+                <a href="https://designsystem.dk/design/ikoner/" target="dkfds"> DKFDS </a>
               </td>
             </tr>
             <tr>
@@ -89,21 +79,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
-const router = useRouter();
+const router = useRouter()
 
-const funktionsLinkClick = ref(0);
+const funktionsLinkClick = ref(0)
 const handleFunkClick = () => {
-  funktionsLinkClick.value += 1;
-};
+  funktionsLinkClick.value += 1
+}
 
 const code = `
 <fds-funktionslink title="Klik for event" @click="handleFunkClick">
   Funktionslink
 </fds-funktionslink>
-`;
+`
 
 const code2 = `
 <fds-funktionslink
@@ -123,5 +113,5 @@ const code2 = `
 >
   Funktionslink med ikon - Om os
 </fds-funktionslink>
-`;
+`
 </script>

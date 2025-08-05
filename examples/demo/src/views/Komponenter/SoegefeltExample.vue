@@ -33,9 +33,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const txtSearch = ref('');
+const txtSearch = ref('')
 const codeInputKnap = `
 <fds-input v-model="txtSearch" placeholder="Søg efter..." id="search">
   <template #button>
@@ -52,5 +52,5 @@ const codeInputKnap = `
     <button class="button button-search">Søg</button>
   </template>
 </fds-input>
-`;
+`
 </script>

@@ -1,7 +1,5 @@
 <template>
-  <button
-    class="button"
-    :class="`button-${variant}`">
+  <button class="button" :class="`button-${variant}`">
     <slot />
   </button>
 </template>
@@ -13,14 +11,14 @@
  * https://designsystem.dk/komponenter/knapper/
  *
  * */
-import { FdsVariantEnum } from 'dkfds-vue3-utils';
+import { FdsVariantEnum } from 'dkfds-vue3-utils'
 
-const { 
+const {
   /** Visnings variant */
   variant = FdsVariantEnum.primary,
 } = defineProps<{
-  variant?: FdsVariantEnum | string;
-}>();
+  variant?: FdsVariantEnum | string
+}>()
 </script>
 
 <style scoped lang="scss"></style>

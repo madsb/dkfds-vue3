@@ -32,9 +32,9 @@
  *
  * */
 
-import { computed, onMounted } from 'vue';
+import { computed, onMounted } from 'vue'
 
-import { formId, dropdown } from 'dkfds-vue3-utils';
+import { formId, dropdown } from 'dkfds-vue3-utils'
 
 const {
   header = 'Trin', // TODO: overvej interpolation
@@ -42,17 +42,17 @@ const {
   icon = 'arrow-drop-down',
   size = 'large',
 } = defineProps<{
-  header?: string;
-  id?: string | null;
-  icon?: string;
-  size?: 'small' | 'large';
-}>();
+  header?: string
+  id?: string | null
+  icon?: string
+  size?: 'small' | 'large'
+}>()
 
-const { formid } = formId(id, true);
+const { formid } = formId(id, true)
 
-const lgNoResponsive = computed(() => (size === 'large' ? 'overflow-menu--lg-no-responsive' : ''));
+const lgNoResponsive = computed(() => (size === 'large' ? 'overflow-menu--lg-no-responsive' : ''))
 
 onMounted(async () => {
-  new dropdown(document.getElementById(`button_${formid.value}`)).init();
-});
+  new dropdown(document.getElementById(`button_${formid.value}`)).init()
+})
 </script>

@@ -1,21 +1,13 @@
 <template>
   <section>
-    <fds-preview
-      header="Eksempel"
-      href="https://designsystem.dk/komponenter/dropdown/">
+    <fds-preview header="Eksempel" href="https://designsystem.dk/komponenter/dropdown/">
       <fds-preview-item>
         <fds-dropdown v-model="dropdownVal">
-          <option value="Manuel">
-            Manuel
-          </option>
-          <option value="Auto">
-            Auto
-          </option>
+          <option value="Manuel">Manuel</option>
+          <option value="Auto">Auto</option>
         </fds-dropdown>
 
-        <fds-pre
-          header="v-model"
-          :json="{ dropdownVal }" />
+        <fds-pre header="v-model" :json="{ dropdownVal }" />
       </fds-preview-item>
 
       <fds-preview-code>
@@ -53,9 +45,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const dropdownVal = ref('');
+const dropdownVal = ref('')
 
 const code = `
 <fds-dropdown v-model="dropdownVal">
@@ -68,5 +60,5 @@ const code = `
 </fds-dropdown>
 
 const dropdownVal = ref('');
-`;
+`
 </script>

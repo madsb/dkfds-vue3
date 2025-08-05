@@ -20,11 +20,7 @@
     </ul>
     <p>
       Hvert eksempel vil også linke til det samme
-      <a
-        href="https://designsystem.dk/komponenter/"
-        target="dkfds">
-        komponent
-      </a> hos
+      <a href="https://designsystem.dk/komponenter/" target="dkfds"> komponent </a> hos
       <link-dkfds /> - så man kan læse mere om hvad komponenten anvendes til og ikke anvendes til.
     </p>
     <p>

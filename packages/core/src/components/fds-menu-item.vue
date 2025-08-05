@@ -34,23 +34,23 @@ const {
   href = null,
   index = null,
 } = defineProps<{
-  id: string;
-  active?: boolean;
-  icon?: string | null;
-  hint?: string | null;
-  href?: string | null;
-  index?: number | null;
-}>();
+  id: string
+  active?: boolean
+  icon?: string | null
+  hint?: string | null
+  href?: string | null
+  index?: number | null
+}>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: any];
-  navigate: [key: string];
-}>();
+  'update:modelValue': [value: any]
+  navigate: [key: string]
+}>()
 
 const navigate = (event: Event, key: string) => {
-  event.preventDefault();
-  emit('navigate', key);
-};
+  event.preventDefault()
+  emit('navigate', key)
+}
 </script>
 
 <style scoped lang="scss"></style>

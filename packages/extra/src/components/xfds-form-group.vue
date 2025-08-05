@@ -6,9 +6,7 @@
       </fds-label>
     </slot>
     <slot name="tooltip">
-      <fds-tooltip
-        v-if="tooltip"
-        class="ml-2">
+      <fds-tooltip v-if="tooltip" class="ml-2">
         {{ tooltip }}
       </fds-tooltip>
     </slot>
@@ -26,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed,  inject, ref } from 'vue';
+import { computed, inject, ref } from 'vue'
 import { FdsFormgroup, FdsLabel, FdsFejlmeddelelse, FdsTooltip, FdsHint } from 'dkfds-vue3-core'
 
 const {
@@ -36,16 +34,16 @@ const {
   isValid = true,
   errorMessage = null,
 } = defineProps<{
-  label?: string;
-  hint?: string;
-  tooltip?: string | null;
-  isValid?: boolean;
-  errorMessage?: string | null;
-}>();
+  label?: string
+  hint?: string
+  tooltip?: string | null
+  isValid?: boolean
+  errorMessage?: string | null
+}>()
 
-const injIsValid = ref<boolean | null>(inject('provideIsValid', null));
-const injErrorMessage = ref<string | null>(inject('provideErrorMessage', null));
+const injIsValid = ref<boolean | null>(inject('provideIsValid', null))
+const injErrorMessage = ref<string | null>(inject('provideErrorMessage', null))
 
-const compValid = computed(() => injIsValid.value ?? isValid);
-const compErrorMessage = computed(() => injErrorMessage.value ?? errorMessage);
+const compValid = computed(() => injIsValid.value ?? isValid)
+const compErrorMessage = computed(() => injErrorMessage.value ?? errorMessage)
 </script>

@@ -1,6 +1,6 @@
-import { defineConfig, mergeConfig } from 'vitest/config';
-import { resolve } from 'path';
-import baseConfig from '../../vitest.config.base';
+import { defineConfig, mergeConfig } from 'vitest/config'
+import { resolve } from 'path'
+import baseConfig from '../../vitest.config.base'
 
 export default mergeConfig(
   baseConfig,
@@ -14,5 +14,5 @@ export default mergeConfig(
         'dkfds-vue3-utils': resolve(__dirname, '../utils/src'),
       },
     },
-  })
-);
+  }),
+)

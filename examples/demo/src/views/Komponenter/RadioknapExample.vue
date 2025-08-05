@@ -1,16 +1,10 @@
 <template>
   <section>
-    <fds-preview
-      header="Eksempel"
-      href="https://designsystem.dk/komponenter/radioknap/">
+    <fds-preview header="Eksempel" href="https://designsystem.dk/komponenter/radioknap/">
       <fds-preview-item>
         <fds-formgroup>
-          <fds-radio-group
-            v-model="radioValueKerne"
-            label="Vælg Genre">
-            <fds-radio-item value="metal">
-              Metal
-            </fds-radio-item>
+          <fds-radio-group v-model="radioValueKerne" label="Vælg Genre">
+            <fds-radio-item value="metal"> Metal </fds-radio-item>
             <fds-radio-item value="pop">
               Pop
               <template #content>
@@ -19,9 +13,7 @@
                 (eng. "popular").
               </template>
             </fds-radio-item>
-            <fds-radio-item value="klassisk">
-              Klassist
-            </fds-radio-item>
+            <fds-radio-item value="klassisk"> Klassist </fds-radio-item>
           </fds-radio-group>
         </fds-formgroup>
 
@@ -132,9 +124,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const radioValueKerne = ref('');
+const radioValueKerne = ref('')
 
 const code = `
 <fds-formgroup>
@@ -153,5 +145,5 @@ const code = `
     <fds-radio-item value="klassisk"> Klassist </fds-radio-item>
   </fds-radio-group>
 </fds-formgroup>
-`;
+`
 </script>

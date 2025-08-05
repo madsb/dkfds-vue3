@@ -48,8 +48,8 @@
 
 // https://stackoverflow.com/questions/25864259/how-to-close-the-new-html-dialog-tag-by-clicking-on-its-backdrop
 
-import { generateId } from 'dkfds-vue3-utils';
-import { computed, ref, onMounted } from 'vue';
+import { generateId } from 'dkfds-vue3-utils'
+import { computed, ref, onMounted } from 'vue'
 
 const {
   header = null,
@@ -58,52 +58,52 @@ const {
   acceptText = 'Godkend',
   cancelText = 'Annuller',
 } = defineProps<{
-  header?: string | null;
-  id?: string | null;
-  closeable?: boolean;
-  acceptText?: string;
-  cancelText?: string;
-}>();
+  header?: string | null
+  id?: string | null
+  closeable?: boolean
+  acceptText?: string
+  cancelText?: string
+}>()
 
 const emit = defineEmits<{
-  close: [];
-  accept: [];
-  cancel: [];
-}>();
+  close: []
+  accept: []
+  cancel: []
+}>()
 
-const refDialog = ref(null);
-const dialogId = generateId(id);
-const htmlDialog = computed(() => refDialog.value as unknown as HTMLDialogElement);
+const refDialog = ref(null)
+const dialogId = generateId(id)
+const htmlDialog = computed(() => refDialog.value as unknown as HTMLDialogElement)
 
 const showModal = () => {
-  htmlDialog.value.showModal();
-};
+  htmlDialog.value.showModal()
+}
 const hideModal = () => {
-  htmlDialog.value.close();
-  emit('close');
-};
+  htmlDialog.value.close()
+  emit('close')
+}
 
 defineExpose({
   hideModal,
   showModal,
-});
+})
 
 onMounted(() => {
   if (closeable) {
     // cancel is exposed by HTMLDialogElement
     htmlDialog.value.addEventListener('cancel', () => {
-      hideModal();
-    });
+      hideModal()
+    })
   }
-});
+})
 
 const handleAccept = () => {
-  emit('accept');
-  hideModal();
-};
+  emit('accept')
+  hideModal()
+}
 
 const handleCancel = () => {
-  hideModal();
-  emit('cancel');
-};
+  hideModal()
+  emit('cancel')
+}
 </script>

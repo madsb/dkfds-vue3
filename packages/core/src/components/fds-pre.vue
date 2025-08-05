@@ -1,21 +1,11 @@
 <template>
   <fieldset class="code">
-    <legend
-      v-if="header"
-      for="">
+    <legend v-if="header" for="">
       {{ header }}
     </legend>
-    <pre
-      v-if="json"
-      class="code"
-      v-text="JSON.stringify(json, undefined, 2)" />
-    <pre
-      v-else-if="code"
-      class="code"
-      v-text="code" />
-    <pre
-      v-else
-      class="code">
+    <pre v-if="json" class="code" v-text="JSON.stringify(json, undefined, 2)" />
+    <pre v-else-if="code" class="code" v-text="code" />
+    <pre v-else class="code">
     <slot />
   </pre>
 
@@ -28,17 +18,15 @@
   </fieldset>
 </template>
 <script setup lang="ts">
-
-
 const {
   json = null,
   code = null,
   header = 'Kode eksempel',
 } = defineProps<{
-  json?: object | null;
-  code?: string | null;
-  header?: string;
-}>();
+  json?: object | null
+  code?: string | null
+  header?: string
+}>()
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

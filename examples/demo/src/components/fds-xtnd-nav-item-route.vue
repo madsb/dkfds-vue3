@@ -1,16 +1,7 @@
 <template>
-  <router-link
-    v-slot="{ href, navigate, isActive }"
-    :to="{ name: toName }"
-    custom>
-    <li
-      role="none"
-      :class="[{ current: isActive || isPartOfMenu(toName) }]">
-      <fds-nav-link
-        :href="href"
-        :title="linkTitle"
-        :disabled="disabled"
-        @click="navigate">
+  <router-link v-slot="{ href, navigate, isActive }" :to="{ name: toName }" custom>
+    <li role="none" :class="[{ current: isActive || isPartOfMenu(toName) }]">
+      <fds-nav-link :href="href" :title="linkTitle" :disabled="disabled" @click="navigate">
         <slot />
       </fds-nav-link>
     </li>
@@ -18,10 +9,9 @@
 </template>
 
 <script setup lang="ts">
+import { useRoute } from 'vue-router'
 
-import { useRoute } from 'vue-router';
-
-const route = useRoute();
+const route = useRoute()
 const props = defineProps({
   toName: {
     type: String,
@@ -43,18 +33,18 @@ const props = defineProps({
     type: String,
     default: null,
   },
-});
+})
 
 const isPartOfMenu = (name: string): boolean => {
   if (route) {
-    const [parent] = route.matched;
+    const [parent] = route.matched
     if (parent && parent.name === name) {
-      return true;
+      return true
     }
   }
   if (props.currentRouteName) {
-    return props.currentRouteName === name;
+    return props.currentRouteName === name
   }
-  return false;
-};
+  return false
+}
 </script>

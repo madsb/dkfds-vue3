@@ -188,18 +188,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const txtFornavn = ref('Anders');
-const txtEfternavn = ref('');
-const txtPre = ref('');
-const txtSuffix = ref('');
-const txtSearch = ref('');
-const noBeloeb = ref(0);
+const txtFornavn = ref('Anders')
+const txtEfternavn = ref('')
+const txtPre = ref('')
+const txtSuffix = ref('')
+const txtSearch = ref('')
+const noBeloeb = ref(0)
 
 const code = `
 <fds-input v-model="txtFornavn" />
-`;
+`
 
 const codeLimit = `
 <fds-formgroup>
@@ -209,14 +209,14 @@ const codeLimit = `
   <fds-input v-model="txtEfternavn"></fds-input>
   <fds-input-limit :modelValue="txtEfternavn" :limit="20" />
 </fds-formgroup>
-`;
+`
 
 const codePrefixSuffix = `
 <fds-input v-model="txtPre" prefix="prefix" id="prefix"></fds-input>
 
 <fds-input v-model="txtSuffix" suffix="suffix" id="txtSuffix"></fds-input>
 
-`;
+`
 
 const codeInputKnap = `
 <fds-input v-model="txtSearch" placeholder="Søg efter..." id="search">
@@ -234,7 +234,7 @@ const codeInputKnap = `
     <button class="button button-search">Søg</button>
   </template>
 </fds-input>
-`;
+`
 
 const readonly = `
 <fds-formgroup>
@@ -242,5 +242,5 @@ const readonly = `
  <fds-input
   v-model="txtFornavn"
   readonly />
-</fds-formgroup>`;
+</fds-formgroup>`
 </script>

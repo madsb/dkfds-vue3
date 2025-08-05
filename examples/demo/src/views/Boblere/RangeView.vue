@@ -4,17 +4,12 @@
       <fds-preview-item>
         <fds-formgroup>
           <fds-label> Range </fds-label>
-          <fds-tooltip class="ml-2">
-            Hjælpende <b>tekst</b>
-          </fds-tooltip>
+          <fds-tooltip class="ml-2"> Hjælpende <b>tekst</b> </fds-tooltip>
           <fds-hint>Indtast Range</fds-hint>
-          <xfds-range v-model="rangeInput">
-          </xfds-range>
+          <xfds-range v-model="rangeInput"> </xfds-range>
         </fds-formgroup>
 
-        <fds-pre
-          header="v-model"
-          :json="{ range: rangeInput }" />
+        <fds-pre header="v-model" :json="{ range: rangeInput }" />
       </fds-preview-item>
 
       <fds-preview-code>
@@ -64,7 +59,7 @@
           <a
             href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range"
             target="mdn"
-          >mdn web docs for Range</a
+            >mdn web docs for Range</a
           >
         </fds-alert>
       </fds-preview-item>
@@ -73,11 +68,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const rangeInput = ref(5);
+const rangeInput = ref(5)
 
 const code = `
 <xfds-range v-model="rangeInput">
-`;
+`
 </script>

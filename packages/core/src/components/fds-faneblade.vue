@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="tabnav"
-    role="tablist">
+  <div class="tabnav" role="tablist">
     <slot />
   </div>
 </template>

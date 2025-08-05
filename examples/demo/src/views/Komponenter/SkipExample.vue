@@ -1,14 +1,9 @@
 <template>
   <section>
-    <fds-preview
-      header="Eksempel"
-      href="https://designsystem.dk/komponenter/skip-link/">
+    <fds-preview header="Eksempel" href="https://designsystem.dk/komponenter/skip-link/">
       <fds-preview-item>
-        <a
-          href="#main-content"
-          class="skipnav"
-          style="position: relative; top: inherit"
-        >Gå til sidens indhold</a
+        <a href="#main-content" class="skipnav" style="position: relative; top: inherit"
+          >Gå til sidens indhold</a
         >
 
         <fds-preview-code>
@@ -22,5 +17,5 @@
 <script setup lang="ts">
 const code = `
   <a href="#main-content" class="skipnav">Gå til sidens indhold</a>
-`;
+`
 </script>

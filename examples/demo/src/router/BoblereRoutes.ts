@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from 'vue-router';
+import { RouteRecordRaw } from 'vue-router'
 
 const boblereRoutes: Array<RouteRecordRaw> = [
   {
@@ -19,6 +19,6 @@ const boblereRoutes: Array<RouteRecordRaw> = [
       },
     ],
   },
-];
+]
 
-export default boblereRoutes;
+export default boblereRoutes

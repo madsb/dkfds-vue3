@@ -8,12 +8,8 @@
       errorMessage,
     }"
   >
-    <ul
-      :id="formid"
-      class="nobullet-list">
-      <li
-        v-for="(checkbox, index) of value"
-        :key="index">
+    <ul :id="formid" class="nobullet-list">
+      <li v-for="(checkbox, index) of value" :key="index">
         <input
           :id="'checkbox-' + formid + '-' + index"
           v-model="checkbox.checked"
@@ -32,9 +28,7 @@
           v-if="$slots[checkbox.value] && checkbox.checked"
           class="checkbox-content mt-2 ml-4 py-4"
         >
-          <slot
-            :name="checkbox.value"
-            :checkboxvalue="value" />
+          <slot :name="checkbox.value" :checkboxvalue="value" />
         </div>
       </li>
     </ul>
@@ -42,8 +36,8 @@
 </template>
 
 <script setup lang="ts">
-import { FdsCheckboxItem, formId } from 'dkfds-vue3-utils';
-import { ref, watch } from 'vue';
+import { FdsCheckboxItem, formId } from 'dkfds-vue3-utils'
+import { ref, watch } from 'vue'
 
 const {
   modelValue,
@@ -53,44 +47,44 @@ const {
   isValid = true,
   errorMessage = null,
 } = defineProps<{
-  modelValue: Array<FdsCheckboxItem>;
-  label?: string;
-  hint?: string;
-  tooltip?: string | null;
-  isValid?: boolean;
-  errorMessage?: string | null;
-}>();
+  modelValue: Array<FdsCheckboxItem>
+  label?: string
+  hint?: string
+  tooltip?: string | null
+  isValid?: boolean
+  errorMessage?: string | null
+}>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: Array<FdsCheckboxItem>];
-  dirty: [value: boolean];
-  valid: [value: boolean];
-  input: [value: Array<FdsCheckboxItem>];
-}>();
+  'update:modelValue': [value: Array<FdsCheckboxItem>]
+  dirty: [value: boolean]
+  valid: [value: boolean]
+  input: [value: Array<FdsCheckboxItem>]
+}>()
 
-const dirty = ref(false);
+const dirty = ref(false)
 
 const touchedEvent = () => {
-  dirty.value = true;
-  emit('dirty', true);
-};
+  dirty.value = true
+  emit('dirty', true)
+}
 
-const value = ref(modelValue);
-const { formid } = formId(undefined, true);
+const value = ref(modelValue)
+const { formid } = formId(undefined, true)
 
 const handleInput = () => {
-  emit('update:modelValue', value.value);
-};
+  emit('update:modelValue', value.value)
+}
 
 watch(
   () => [modelValue],
   () => {
-    value.value = modelValue;
+    value.value = modelValue
   },
   {
     immediate: true,
   },
-);
+)
 </script>
 
 <style scoped lang="scss"></style>

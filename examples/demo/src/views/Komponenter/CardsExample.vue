@@ -402,7 +402,7 @@ const basicCardCode = `<fds-card header="Card overskrift">
     Dette er et grundlæggende card der viser, hvordan man grupperer relateret indhold.
     Cards bruges til at adskille indhold fra den primære sideindhold.
   </p>
-</fds-card>`;
+</fds-card>`
 
 const imageCardCode = `<fds-card header="Digital Post" subheader="Kommunikation">
   <template #image>
@@ -416,7 +416,7 @@ const imageCardCode = `<fds-card header="Digital Post" subheader="Kommunikation"
   <template #actions>
     <a href="#" class="button button-primary">Læs mere</a>
   </template>
-</fds-card>`;
+</fds-card>`
 
 const navigationCardsCode = `<fds-card-group>
   <fds-card
@@ -430,7 +430,7 @@ const navigationCardsCode = `<fds-card-group>
     <p>Find information og selvbetjeningsløsninger for borgere</p>
   </fds-card>
   <!-- Flere navigation cards... -->
-</fds-card-group>`;
+</fds-card-group>`
 
 const actionCardsCode = `<fds-card-group>
   <fds-card header="Ansøg om tilskud" subheader="Boligstøtte">
@@ -446,7 +446,7 @@ const actionCardsCode = `<fds-card-group>
     </template>
   </fds-card>
   <!-- Flere action cards... -->
-</fds-card-group>`;
+</fds-card-group>`
 
 const deckLayoutCode = `<fds-card-group type="deck">
   <fds-card header="NemID bliver til MitID" subheader="Vigtig information">
@@ -463,7 +463,7 @@ const deckLayoutCode = `<fds-card-group type="deck">
     </template>
   </fds-card>
   <!-- Flere deck cards... -->
-</fds-card-group>`;
+</fds-card-group>`
 
 const columnLayoutCode = `<fds-card-group type="columns">
   <fds-card header="Kontakt kommunen" subheader="Hjælp og support">
@@ -476,7 +476,7 @@ const columnLayoutCode = `<fds-card-group type="columns">
     </template>
   </fds-card>
   <!-- Flere column cards... -->
-</fds-card-group>`;
+</fds-card-group>`
 
 const longCardsCode = `<fds-card
   href="#"
@@ -492,5 +492,5 @@ const longCardsCode = `<fds-card
     Få hjælp med pas, kørekort, CPR-forhold og andre services
     ved personlig betjening i borgerservice.
   </p>
-</fds-card>`;
+</fds-card>`
 </script>

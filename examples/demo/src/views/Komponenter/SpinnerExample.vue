@@ -1,8 +1,6 @@
 <template>
   <section>
-    <fds-preview
-      header="Eksempel"
-      href="https://designsystem.dk/komponenter/spinner/">
+    <fds-preview header="Eksempel" href="https://designsystem.dk/komponenter/spinner/">
       <fds-preview-item>
         <div>
           <fds-spinner></fds-spinner>
@@ -36,5 +34,5 @@ const code = `
   <span>Super</span>
   <fds-spinner class="spinner spinner-small d-inline-flex ml-4"></fds-spinner>
 </p>
-`;
+`
 </script>

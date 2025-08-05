@@ -1,11 +1,7 @@
 <template>
   <div class="date-group js-calendar-group mt-3">
     <div class="form-group form-group-day">
-      <label
-        class="form-label"
-        :for="`day_${formid}`">
-        Dag
-      </label>
+      <label class="form-label" :for="`day_${formid}`"> Dag </label>
       <input
         :id="`day_${formid}`"
         ref="day"
@@ -24,11 +20,7 @@
       />
     </div>
     <div class="form-group form-group-month">
-      <label
-        class="form-label"
-        :for="`month_${formid}`">
-        Måned
-      </label>
+      <label class="form-label" :for="`month_${formid}`"> Måned </label>
       <input
         :id="`month_${formid}`"
         ref="month"
@@ -47,11 +39,7 @@
       />
     </div>
     <div class="form-group form-group-year">
-      <label
-        class="form-label"
-        :for="`year_${formid}`">
-        År
-      </label>
+      <label class="form-label" :for="`year_${formid}`"> År </label>
       <input
         :id="`year_${formid}`"
         ref="year"
@@ -72,73 +60,70 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
-import { formId } from 'dkfds-vue3-utils';
+import { ref } from 'vue'
+import { formId } from 'dkfds-vue3-utils'
 
-const day = ref<HTMLInputElement | null>(null);
-const month = ref<HTMLInputElement | null>(null);
-const year = ref<HTMLInputElement | null>(null);
+const day = ref<HTMLInputElement | null>(null)
+const month = ref<HTMLInputElement | null>(null)
+const year = ref<HTMLInputElement | null>(null)
 
 const {
   id = null,
   /** JSON Date */
   modelValue = '',
 } = defineProps<{
-  id?: string | null;
-  modelValue?: string;
-}>();
+  id?: string | null
+  modelValue?: string
+}>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: string];
-  dirty: [value: boolean];
-  valid: [isValid: boolean];
-}>();
+  'update:modelValue': [value: string]
+  dirty: [value: boolean]
+  valid: [isValid: boolean]
+}>()
 
 const isDateValid = (dateString: string) => {
-  const date = Date.parse(dateString);
-  return !Number.isNaN(date);
-};
+  const date = Date.parse(dateString)
+  return !Number.isNaN(date)
+}
 
 const getModelDate = (dateString: string) => {
   if (isDateValid(modelValue)) {
-    const date = new Date(dateString);
+    const date = new Date(dateString)
     return {
       day: date.getDate().toString(),
       month: date.getMonth().toString(),
       year: date.getFullYear().toString(),
-    };
+    }
   }
-  return { day: '', month: '', year: '' };
-};
+  return { day: '', month: '', year: '' }
+}
 
-const { formid } = formId(id, true);
-const dateObj = ref<{ day: string; month: string; year: string }>(getModelDate(modelValue));
+const { formid } = formId(id, true)
+const dateObj = ref<{ day: string; month: string; year: string }>(getModelDate(modelValue))
 
 const onInput = () =>
-  emit('update:modelValue', [dateObj.value.year, dateObj.value.month, dateObj.value.day].join('-'));
+  emit('update:modelValue', [dateObj.value.year, dateObj.value.month, dateObj.value.day].join('-'))
 
 const onValid = () =>
-  emit(
-    'valid',
-    isDateValid([dateObj.value.year, dateObj.value.month, dateObj.value.day].join('-')),
-  );
+  emit('valid', isDateValid([dateObj.value.year, dateObj.value.month, dateObj.value.day].join('-')))
 
 const onNextTab = (event: Event, source: string) => {
-  const inp = event.target as HTMLInputElement;
+  const inp = event.target as HTMLInputElement
   if (!inp.selectionEnd || inp.selectionEnd < 2) {
-    return;
+    return
   }
 
   if (source === 'day') {
     // const regExString: string = day.value?.dataset.inputRegex ?? '';
     // const r = new RegExp(regExString); // TODO: skal den bruges?
-    (month.value as HTMLInputElement).focus();
+    ;(month.value as HTMLInputElement).focus()
   }
 
   if (source === 'month') {
-    (year.value as HTMLInputElement).focus();
+    ;(year.value as HTMLInputElement).focus()
   }
-  onInput();
-  onValid();
-};
+  onInput()
+  onValid()
+}
 </script>

@@ -26,10 +26,10 @@
 </template>
 
 <script setup lang="ts">
-import { FdsMenuItem } from 'dkfds-vue3-core';
-import { FdsNavigationItem } from 'dkfds-vue3-utils';
-import { computed,   onMounted, ref, watch } from 'vue';
-import navigationService from './../service/navigation.service';
+import { FdsMenuItem } from 'dkfds-vue3-core'
+import { FdsNavigationItem } from 'dkfds-vue3-utils'
+import { computed, onMounted, ref, watch } from 'vue'
+import navigationService from './../service/navigation.service'
 
 const {
   modelValue,
@@ -37,52 +37,52 @@ const {
   navigateFirst = false,
   ariaLabel,
 } = defineProps<{
-  modelValue: Array<FdsNavigationItem>;
-  showIndex?: boolean;
-  navigateFirst?: boolean;
-  ariaLabel?: string;
-}>();
+  modelValue: Array<FdsNavigationItem>
+  showIndex?: boolean
+  navigateFirst?: boolean
+  ariaLabel?: string
+}>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: Array<FdsNavigationItem>];
-  navigate: [key: string];
-}>();
-const filteredList = computed(() => modelValue.filter((f) => !f.ignore));
-const currentKey = ref('');
-const tabsList = ref<Array<FdsNavigationItem>>(filteredList.value);
+  'update:modelValue': [value: Array<FdsNavigationItem>]
+  navigate: [key: string]
+}>()
+const filteredList = computed(() => modelValue.filter((f) => !f.ignore))
+const currentKey = ref('')
+const tabsList = ref<Array<FdsNavigationItem>>(filteredList.value)
 
 const subnavigation = (key: string) => {
-  emit('navigate', navigationService.resolveKey(key, modelValue));
-};
+  emit('navigate', navigationService.resolveKey(key, modelValue))
+}
 
 const navigate = (item: FdsNavigationItem) => {
   if (item.disabled) {
-    return;
+    return
   }
 
-  tabsList.value = navigationService.setActive(tabsList.value, item.key);
-  currentKey.value = item.key;
+  tabsList.value = navigationService.setActive(tabsList.value, item.key)
+  currentKey.value = item.key
 
-  emit('update:modelValue', tabsList.value);
-  emit('navigate', currentKey.value);
-};
+  emit('update:modelValue', tabsList.value)
+  emit('navigate', currentKey.value)
+}
 
 onMounted(() => {
-  const item = navigationService.findFirstActiveItem(tabsList.value, navigateFirst);
+  const item = navigationService.findFirstActiveItem(tabsList.value, navigateFirst)
   if (item) {
-    navigate(item);
+    navigate(item)
   }
-});
+})
 
 watch(
   () => [modelValue],
   () => {
-    tabsList.value = filteredList.value;
+    tabsList.value = filteredList.value
   },
   {
     immediate: true,
   },
-);
+)
 </script>
 
 <style scoped lang="scss"></style>

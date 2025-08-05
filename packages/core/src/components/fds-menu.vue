@@ -7,22 +7,19 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 
-const {
-  variant = null,
-  ariaLabel,
-} = defineProps<{
-  variant?: 'venstremenu' | 'trin' | 'submenu' | null;
-  ariaLabel?: string;
-}>();
+const { variant = null, ariaLabel } = defineProps<{
+  variant?: 'venstremenu' | 'trin' | 'submenu' | null
+  ariaLabel?: string
+}>()
 
 const cssClass = computed(() => {
   if (variant === 'submenu') {
-    return 'sidemenu';
+    return 'sidemenu'
   }
-  return 'sidemenu';
-});
+  return 'sidemenu'
+})
 </script>
 
 <style scoped lang="scss"></style>

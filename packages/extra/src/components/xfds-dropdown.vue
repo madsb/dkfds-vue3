@@ -1,13 +1,6 @@
 <template>
-  <select
-    :id="formid"
-    class="form-select"
-    :name="formid"
-    @change="onInput"
-    @blur="onDirty">
-    <option
-      v-if="optionHeader"
-      :value="refValue">
+  <select :id="formid" class="form-select" :name="formid" @change="onInput" @blur="onDirty">
+    <option v-if="optionHeader" :value="refValue">
       {{ optionHeader }}
     </option>
     <option
@@ -23,9 +16,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import { FdsOptionItem } from 'dkfds-vue3-utils';
-import { formId } from 'dkfds-vue3-utils';
+import { ref, watch } from 'vue'
+import { FdsOptionItem } from 'dkfds-vue3-utils'
+import { formId } from 'dkfds-vue3-utils'
 
 const {
   id = null,
@@ -39,37 +32,37 @@ const {
    * */
   options = [],
 } = defineProps<{
-  id?: string | null;
-  modelValue?: string;
-  optionHeader?: string;
-  options?: Array<FdsOptionItem>;
-}>();
+  id?: string | null
+  modelValue?: string
+  optionHeader?: string
+  options?: Array<FdsOptionItem>
+}>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: string];
-  dirty: [value: boolean];
-  change: [value: string];
-}>();
+  'update:modelValue': [value: string]
+  dirty: [value: boolean]
+  change: [value: string]
+}>()
 
-const refValue = ref(modelValue);
-const { formid } = formId(id, true);
+const refValue = ref(modelValue)
+const { formid } = formId(id, true)
 
 const onDirty = () => {
-  emit('dirty', true);
-};
+  emit('dirty', true)
+}
 
 const onInput = (event: Event) =>
-  emit('update:modelValue', (event?.target as HTMLInputElement).value);
+  emit('update:modelValue', (event?.target as HTMLInputElement).value)
 
 watch(
   () => [modelValue],
   () => {
-    refValue.value = modelValue;
+    refValue.value = modelValue
   },
   {
     immediate: true,
   },
-);
+)
 </script>
 
 <style scoped lang="scss"></style>

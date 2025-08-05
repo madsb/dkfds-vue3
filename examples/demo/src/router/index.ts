@@ -1,8 +1,8 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
-import ekstraKomponenterRoutes from './ekstrakomponenterRoutes';
-import komponenterRoutes from './KomponenterRoutes';
-import anbefalingerRoutes from './AnbefalingerRoutes';
-import boblereRoutes from './BoblereRoutes';
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import ekstraKomponenterRoutes from './ekstrakomponenterRoutes'
+import komponenterRoutes from './KomponenterRoutes'
+import anbefalingerRoutes from './AnbefalingerRoutes'
+import boblereRoutes from './BoblereRoutes'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -29,7 +29,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/AboutView.vue'),
   },
   { path: '/:pathMatch(.*)*', redirect: { name: 'forside' } },
-];
+]
 
 const router = createRouter({
   history: createWebHashHistory(
@@ -41,17 +41,17 @@ const router = createRouter({
     if (to.hash) {
       return {
         el: to.hash,
-      };
+      }
     }
-    return { top: 0 };
+    return { top: 0 }
   },
-});
+})
 
-const DEFAULT_TITLE = '';
+const DEFAULT_TITLE = ''
 
 router.beforeEach((to, from, next) => {
-  document.title = `DKFDS-Vue3 ${to.meta?.title ?? DEFAULT_TITLE}`;
-  next();
-});
+  document.title = `DKFDS-Vue3 ${to.meta?.title ?? DEFAULT_TITLE}`
+  next()
+})
 
-export default router;
+export default router

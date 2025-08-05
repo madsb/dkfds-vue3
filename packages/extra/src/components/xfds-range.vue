@@ -23,8 +23,8 @@
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range
  *
  * */
-import { ref, watch, computed } from 'vue';
-import { formId } from 'dkfds-vue3-utils';
+import { ref, watch, computed } from 'vue'
+import { formId } from 'dkfds-vue3-utils'
 const {
   id = null,
   modelValue = 0,
@@ -32,33 +32,31 @@ const {
   max = 100,
   step = 1,
 } = defineProps<{
-  id?: string | null;
-  modelValue?: number | string;
-  min?: number;
-  max?: number;
-  step?: number;
-}>();
+  id?: string | null
+  modelValue?: number | string
+  min?: number
+  max?: number
+  step?: number
+}>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: number];
-  dirty: [isDirty: boolean];
-  input: [event: Event];
-}>();
-const { formid } = formId(id, true);
-const value = ref(Number.isNaN(modelValue) ? 0 : Number(modelValue));
-const percent = computed(
-  () => `${((value.value - min) * 100) / (max - min)}% 100%`,
-);
-const handleInput = () => emit('update:modelValue', value.value);
+  'update:modelValue': [value: number]
+  dirty: [isDirty: boolean]
+  input: [event: Event]
+}>()
+const { formid } = formId(id, true)
+const value = ref(Number.isNaN(modelValue) ? 0 : Number(modelValue))
+const percent = computed(() => `${((value.value - min) * 100) / (max - min)}% 100%`)
+const handleInput = () => emit('update:modelValue', value.value)
 watch(
   () => [modelValue],
   () => {
-    value.value = Number.isNaN(modelValue) ? 0 : Number(modelValue);
+    value.value = Number.isNaN(modelValue) ? 0 : Number(modelValue)
   },
   {
     immediate: true,
   },
-);
+)
 </script>
 
 <style scoped lang="scss"></style>

@@ -24,35 +24,35 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from 'vue';
-import { formId } from 'dkfds-vue3-utils';
+import { inject } from 'vue'
+import { formId } from 'dkfds-vue3-utils'
 
-import { generateId } from 'dkfds-vue3-utils';
+import { generateId } from 'dkfds-vue3-utils'
 
 const {
   value,
   index = null,
   id = null,
 } = defineProps<{
-  value: string;
-  index?: string | null;
-  id?: string | null;
-}>();
+  value: string
+  index?: string | null
+  id?: string | null
+}>()
 
 const emit = defineEmits<{
-  dirty: [value: boolean];
-}>();
-const injGroupEmit = inject<(_: string) => void>('provideGroupEmit');
-const injGroupValue = inject<string | null>('provideGroupValue');
-const { formid } = formId(id);
-const indexId = generateId(index);
+  dirty: [value: boolean]
+}>()
+const injGroupEmit = inject<(_: string) => void>('provideGroupEmit')
+const injGroupValue = inject<string | null>('provideGroupValue')
+const { formid } = formId(id)
+const indexId = generateId(index)
 
 const handleInput = (event: Event) => {
-  emit('dirty', true);
+  emit('dirty', true)
   if (injGroupEmit) {
-    injGroupEmit((event?.target as HTMLInputElement).value);
+    injGroupEmit((event?.target as HTMLInputElement).value)
   }
-};
+}
 </script>
 
 <style scoped lang="scss"></style>

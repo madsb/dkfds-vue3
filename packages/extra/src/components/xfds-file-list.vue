@@ -28,8 +28,8 @@
 
 <script setup lang="ts">
 // PropType no longer needed
-import { FdsFunktionslink } from 'dkfds-vue3-core';
-import { FdsFileModel } from 'dkfds-vue3-utils';
+import { FdsFunktionslink } from 'dkfds-vue3-core'
+import { FdsFileModel } from 'dkfds-vue3-utils'
 
 const {
   list,
@@ -45,30 +45,30 @@ const {
   canDownload = true,
   // TODO: download prop method?
 } = defineProps<{
-  list: Array<FdsFileModel>;
-  icons?: Record<string, string>;
-  defaultIcon?: string;
-  canDelete?: boolean;
-  canDownload?: boolean;
-}>();
+  list: Array<FdsFileModel>
+  icons?: Record<string, string>
+  defaultIcon?: string
+  canDelete?: boolean
+  canDownload?: boolean
+}>()
 
 const emit = defineEmits<{
-  download: [file: FdsFileModel];
-  delete: [file: FdsFileModel];
-}>();
+  download: [file: FdsFileModel]
+  delete: [file: FdsFileModel]
+}>()
 
-const keys = Object.keys(icons) as (keyof typeof icons)[];
+const keys = Object.keys(icons) as (keyof typeof icons)[]
 
-const onDeleteFile = (f: FdsFileModel) => emit('delete', f);
-const onDownloadFile = (f: FdsFileModel) => emit('download', f);
+const onDeleteFile = (f: FdsFileModel) => emit('delete', f)
+const onDownloadFile = (f: FdsFileModel) => emit('download', f)
 
 const getFileIcon = (f: FdsFileModel): string => {
-  const key = keys.find((k) => f.type.includes(k));
+  const key = keys.find((k) => f.type.includes(k))
   if (key) {
-    return icons[key];
+    return icons[key]
   }
-  return defaultIcon;
-};
+  return defaultIcon
+}
 </script>
 
 <style scoped lang="scss">

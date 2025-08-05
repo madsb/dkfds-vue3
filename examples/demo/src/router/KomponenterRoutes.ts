@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from 'vue-router';
+import { RouteRecordRaw } from 'vue-router'
 
 const komponenterRoutes: Array<RouteRecordRaw> = [
   {
@@ -234,6 +234,6 @@ const komponenterRoutes: Array<RouteRecordRaw> = [
       },
     ],
   },
-];
+]
 
-export default komponenterRoutes;
+export default komponenterRoutes

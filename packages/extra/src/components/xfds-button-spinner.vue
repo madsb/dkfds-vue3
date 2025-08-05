@@ -35,7 +35,7 @@
  * https://designsystem.dk/komponenter/knapper/
  *
  * */
-import { FdsVariantEnum } from 'dkfds-vue3-utils';
+import { FdsVariantEnum } from 'dkfds-vue3-utils'
 
 const {
   /** Visnings variant */
@@ -50,17 +50,17 @@ const {
   /** Tilføjer overlay når showSpinner, ikke muligt at klikke andre steder imens */
   useoverlay = false,
 } = defineProps<{
-  variant?: FdsVariantEnum | string;
-  showSpinner?: boolean;
-  disabled?: boolean;
-  spinnerText?: string | null;
-  icon?: string | null;
-  useoverlay?: boolean;
-}>();
+  variant?: FdsVariantEnum | string
+  showSpinner?: boolean
+  disabled?: boolean
+  spinnerText?: string | null
+  icon?: string | null
+  useoverlay?: boolean
+}>()
 
 const emit = defineEmits<{
-  click: [event: MouseEvent];
-}>();
+  click: [event: MouseEvent]
+}>()
 </script>
 
 <style lang="scss"></style>

@@ -1,8 +1,6 @@
 <template>
   <section>
-    <fds-preview
-      header="Eksempel"
-      href="https://designsystem.dk/komponenter/fejlopsummering/">
+    <fds-preview header="Eksempel" href="https://designsystem.dk/komponenter/fejlopsummering/">
       <fds-preview-item>
         <fds-fejlopsummering header="Fejl">
           <ul class="alert-text">
@@ -65,5 +63,5 @@ const codeManuelt = `
     <li>Egen liste</li>
   </ul>
 </fds-fejlopsummering>
-`;
+`
 </script>

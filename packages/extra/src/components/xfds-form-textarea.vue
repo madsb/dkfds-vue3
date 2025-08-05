@@ -21,9 +21,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, useAttrs, watch } from 'vue';
+import { ref, useAttrs, watch } from 'vue'
 import { FdsTextarea } from 'dkfds-vue3-core'
-const attrs = useAttrs();
+const attrs = useAttrs()
 
 const {
   modelValue,
@@ -37,43 +37,43 @@ const {
   isValid = true,
   errorMessage = null,
 } = defineProps<{
-  modelValue: string;
-  id?: string | null;
-  rows?: number;
-  rowlength?: number;
-  maxlength?: number;
-  label?: string;
-  hint?: string;
-  tooltip?: string | null;
-  isValid?: boolean;
-  errorMessage?: string | null;
-}>();
+  modelValue: string
+  id?: string | null
+  rows?: number
+  rowlength?: number
+  maxlength?: number
+  label?: string
+  hint?: string
+  tooltip?: string | null
+  isValid?: boolean
+  errorMessage?: string | null
+}>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: string];
-  dirty: [value: boolean];
-  valid: [value: boolean];
-  input: [value: string];
-}>();
+  'update:modelValue': [value: string]
+  dirty: [value: boolean]
+  valid: [value: boolean]
+  input: [value: string]
+}>()
 
-const value = ref(modelValue);
-const dirty = ref(false);
+const value = ref(modelValue)
+const dirty = ref(false)
 
 const touchedEvent = () => {
-  dirty.value = true;
-};
+  dirty.value = true
+}
 
-const handleInput = () => emit('update:modelValue', value.value);
+const handleInput = () => emit('update:modelValue', value.value)
 
 watch(
   () => [modelValue],
   () => {
-    value.value = modelValue;
+    value.value = modelValue
   },
   {
     immediate: true,
   },
-);
+)
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

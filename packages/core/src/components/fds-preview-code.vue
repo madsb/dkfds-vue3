@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="component-code"
-    aria-hidden="true">
+  <div class="component-code" aria-hidden="true">
     <legend v-if="header">
       {{ header }}
     </legend>
@@ -10,10 +8,7 @@
 </template>
 
 <script setup lang="ts">
-
-const {
-  header = null,
-} = defineProps<{
-  header?: string | null;
-}>();
+const { header = null } = defineProps<{
+  header?: string | null
+}>()
 </script>

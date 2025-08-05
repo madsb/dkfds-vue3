@@ -9,9 +9,7 @@
           label="Lager antal"
         />
 
-        <xfds-validate
-          :model-value="lager.forventetLager"
-          :validations="[numberMin(2)]">
+        <xfds-validate :model-value="lager.forventetLager" :validations="[numberMin(2)]">
           <xfds-form-input-number
             v-model="lager.forventetLager"
             label="Forventet lager"
@@ -28,9 +26,7 @@
           label="Pris"
         />
 
-        <fds-pre
-          header="Object data"
-          :json="lager" />
+        <fds-pre header="Object data" :json="lager" />
       </fds-preview-item>
 
       <fds-preview-code>
@@ -74,11 +70,7 @@
               <td><code>null</code></td>
               <td>
                 Se standard ikone hos
-                <a
-                  href="https://designsystem.dk/design/ikoner/"
-                  target="dkfds">
-                  DKFDS
-                </a>
+                <a href="https://designsystem.dk/design/ikoner/" target="dkfds"> DKFDS </a>
               </td>
             </tr>
             <tr>
@@ -95,8 +87,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { numberMin } from 'dkfds-vue3/utils';
+import { ref } from 'vue'
+import { numberMin } from 'dkfds-vue3/utils'
 
 defineProps({
   test: {
@@ -104,13 +96,13 @@ defineProps({
     default: 'Banana',
     description: 'asdadsads',
   },
-});
+})
 
 const lager = ref({
   lager: '',
   forventetLager: '',
   pris: '',
-});
+})
 
 const code = `
 <xfds-form-input-number
@@ -134,5 +126,5 @@ const code = `
   suffix="kr."
   label="Pris"
   v-model="lager.pris"
-/>`;
+/>`
 </script>

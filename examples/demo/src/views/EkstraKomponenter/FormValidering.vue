@@ -15,19 +15,13 @@
           </fds-formgroup>
         </xfds-validate>
 
-        <fds-pre
-          header="object data"
-          :json="{ navn: user.name }" />
+        <fds-pre header="object data" :json="{ navn: user.name }" />
 
-        <fds-pre
-          header="@validated"
-          :json="{ validatedList: validator.validatorItems }" />
+        <fds-pre header="@validated" :json="{ validatedList: validator.validatorItems }" />
       </fds-preview-item>
       <hr />
       <fds-preview-item>
-        <p class="italic">
-          Komponenten <code>xfds-validate</code> er en valideringswrapper.
-        </p>
+        <p class="italic">Komponenten <code>xfds-validate</code> er en valideringswrapper.</p>
         <p class="italic">
           Kan evt bruge til at lave egne komponenter der wrapper eksempelvis ovenstående i sin egen
           validarings-komponent
@@ -147,9 +141,7 @@
           </table>
         </div>
 
-        <p class="h4">
-          Provide
-        </p>
+        <p class="h4">Provide</p>
         <div class="table--responsive-scroll">
           <table class="table table--compact">
             <thead>
@@ -187,12 +179,8 @@
         <p>Konceptet er at hvis der returneres en fejlbesked <code>string</code> så er der fejl</p>
         <p>returneres der <code>null</code> er modelValue valid</p>
 
-        <fds-pre
-          header="eks på valideringsmetode"
-          :code="codeVal1" />
-        <fds-pre
-          header="eks på valideringsmetode"
-          :code="codeVal2" />
+        <fds-pre header="eks på valideringsmetode" :code="codeVal1" />
+        <fds-pre header="eks på valideringsmetode" :code="codeVal2" />
       </fds-preview-item>
 
       <fds-preview-code header="Andre eksempler">
@@ -203,29 +191,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { charactersMinLength, hasContent } from 'dkfds-vue3/utils';
-import { validatorService } from 'dkfds-vue3/extra';
+import { ref } from 'vue'
+import { charactersMinLength, hasContent } from 'dkfds-vue3/utils'
+import { validatorService } from 'dkfds-vue3/extra'
 
-const validator = ref(new validatorService());
+const validator = ref(new validatorService())
 
 const user = ref({
   name: '',
   adress: '',
   city: '',
   search: '',
-});
+})
 
 const codeVal1 = `
   export function charactersMinLength (length: number): (args: string) => string | null {
     return (x: string) =>
       (x.length >= length ? null : \`Feltet må ikke være kortere end \${length} tegn.\`);
-  }`;
+  }`
 
 const codeVal2 = `
   export function hasContent (x: string): string | null {
     return x !== null && x.replace(/\\s+/g, '').length > 0 ? null : 'Feltet må ikke være tomt.';
-  }`;
+  }`
 
 const code = `
 
@@ -242,7 +230,7 @@ const code = `
   </fds-formgroup>
 </xfds-validate>
 
-`;
+`
 
 const codeAlternatives = `
 <xfds-validate
@@ -283,5 +271,5 @@ const codeAlternatives = `
     <fds-input v-model="user.name" @dirty="dirty = $event"></fds-input>
   </fds-formgroup>
 </xfds-validate>
-`;
+`
 </script>

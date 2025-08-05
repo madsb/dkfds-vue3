@@ -1,8 +1,6 @@
 <template>
   <section>
-    <fds-preview
-      header="Eksempel"
-      href="https://designsystem.dk/design/ikoner/">
+    <fds-preview header="Eksempel" href="https://designsystem.dk/design/ikoner/">
       <fds-preview-item>
         <p><fds-ikon icon="home" /> Hjem</p>
         <p><fds-ikon icon="search" /> Søg</p>
@@ -42,5 +40,5 @@ const code = `
 <p><fds-ikon icon="home" /> Hjem</p>
 <p><fds-ikon icon="search" /> Søg</p>
 <p><fds-ikon icon="visibility" /> Vis</p>
-`;
+`
 </script>

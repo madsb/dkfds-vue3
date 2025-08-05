@@ -1,40 +1,40 @@
-import breakpoints from './breakpoints';
+import breakpoints from './breakpoints'
 
 /**
  * Set tooltip on element
  * @param {HTMLElement} element Element which has tooltip
  */
 export default class DKFDSDropdown {
-  buttonElement: HTMLElement;
+  buttonElement: HTMLElement
 
-  targetEl: HTMLElement;
+  targetEl: HTMLElement
 
-  responsiveListCollapseEnabled = false;
+  responsiveListCollapseEnabled = false
 
-  static BUTTONCLASS = '.button-overflow-menu';
+  static BUTTONCLASS = '.button-overflow-menu'
 
-  static jsDropdownCollapseModifier = 'js-dropdown--responsive-collapse'; // option: make dropdown behave as the collapse component when on small screens (used by submenus in the header and step-dropdown).
+  static jsDropdownCollapseModifier = 'js-dropdown--responsive-collapse' // option: make dropdown behave as the collapse component when on small screens (used by submenus in the header and step-dropdown).
 
-  static TARGET = 'data-js-target';
+  static TARGET = 'data-js-target'
 
   constructor(newButtonElement: HTMLElement | null | undefined) {
     if (!newButtonElement) {
-      throw new Error('Could not find button for overflow menu component.');
+      throw new Error('Could not find button for overflow menu component.')
     }
 
-    this.buttonElement = newButtonElement;
+    this.buttonElement = newButtonElement
 
-    const targetAttr = this.buttonElement.getAttribute(DKFDSDropdown.TARGET);
+    const targetAttr = this.buttonElement.getAttribute(DKFDSDropdown.TARGET)
     if (!targetAttr) {
       throw new Error(
         `Attribute could not be found on overflow menu component: ${DKFDSDropdown.TARGET}`,
-      );
+      )
     }
-    const targetEl = document.getElementById(targetAttr.replace('#', ''));
+    const targetEl = document.getElementById(targetAttr.replace('#', ''))
     if (!targetEl) {
-      throw new Error('Panel for overflow menu component could not be found.');
+      throw new Error('Panel for overflow menu component could not be found.')
     }
-    this.targetEl = targetEl;
+    this.targetEl = targetEl
   }
 
   init() {
@@ -47,19 +47,19 @@ export default class DKFDSDropdown {
           'overflow-menu--lg-no-responsive',
         )
       ) {
-        this.responsiveListCollapseEnabled = true;
+        this.responsiveListCollapseEnabled = true
       }
 
       // Clicked outside dropdown -> close it
-      document.getElementsByTagName('body')[0].removeEventListener('click', this.outsideClose);
-      document.getElementsByTagName('body')[0].addEventListener('click', this.outsideClose);
+      document.getElementsByTagName('body')[0].removeEventListener('click', this.outsideClose)
+      document.getElementsByTagName('body')[0].addEventListener('click', this.outsideClose)
       // Clicked on dropdown open button --> toggle it
-      this.buttonElement.removeEventListener('click', (e) => this.toggleDropdown(e));
-      this.buttonElement.addEventListener('click', (e) => this.toggleDropdown(e));
+      this.buttonElement.removeEventListener('click', (e) => this.toggleDropdown(e))
+      this.buttonElement.addEventListener('click', (e) => this.toggleDropdown(e))
 
-      const $module = this.targetEl;
+      const $module = this.targetEl
       // set aria-hidden correctly for screenreaders (Tringuide responsive)
-      const element = this.buttonElement;
+      const element = this.buttonElement
       if (window.IntersectionObserver) {
         // trigger event when button changes visibility
         const observer = new IntersectionObserver(
@@ -67,144 +67,144 @@ export default class DKFDSDropdown {
             // button is visible
             if (entries[0].intersectionRatio) {
               if (element.getAttribute('aria-expanded') === 'false') {
-                $module.setAttribute('aria-hidden', 'true');
+                $module.setAttribute('aria-hidden', 'true')
               }
             } else {
               // button is not visible
-               
+
               if ($module.getAttribute('aria-hidden') === 'true') {
-                $module.setAttribute('aria-hidden', 'false');
+                $module.setAttribute('aria-hidden', 'false')
               }
             }
           },
           {
             root: document.body,
           },
-        );
-        observer.observe(element);
+        )
+        observer.observe(element)
       }
 
-      document.removeEventListener('keyup', (e) => this.closeOnEscape(e));
-      document.addEventListener('keyup', (e) => this.closeOnEscape(e));
+      document.removeEventListener('keyup', (e) => this.closeOnEscape(e))
+      document.addEventListener('keyup', (e) => this.closeOnEscape(e))
     }
   }
 
   hide() {
-    this.toggle(this.buttonElement);
+    this.toggle(this.buttonElement)
   }
 
   show() {
-    this.toggle(this.buttonElement);
+    this.toggle(this.buttonElement)
   }
 
   closeOnEscape(event: KeyboardEvent) {
     if (event.key === 'Escape') {
-      this.closeAll();
+      this.closeAll()
     }
   }
 
   closeAll(event?: Event) {
-    let changed = false;
+    let changed = false
 
-    const overflowMenuEl = document.getElementsByClassName('overflow-menu');
+    const overflowMenuEl = document.getElementsByClassName('overflow-menu')
     for (let oi = 0; oi < overflowMenuEl.length; oi += 1) {
-      const currentOverflowMenuEL = overflowMenuEl[oi];
+      const currentOverflowMenuEL = overflowMenuEl[oi]
       const triggerEl = currentOverflowMenuEL.querySelector(
         `${DKFDSDropdown.BUTTONCLASS}[aria-expanded="true"]`,
-      );
+      )
       if (triggerEl) {
-        changed = true;
+        changed = true
         const targetEl = currentOverflowMenuEL.querySelector(
           `#${triggerEl.getAttribute(DKFDSDropdown.TARGET)?.replace('#', '')}`,
-        );
+        )
 
         if (targetEl) {
           if (DKFDSDropdown.doResponsiveCollapse(triggerEl)) {
             if (triggerEl.getAttribute('aria-expanded')) {
-              const eventClose = new Event('fds.dropdown.close');
-              triggerEl.dispatchEvent(eventClose);
+              const eventClose = new Event('fds.dropdown.close')
+              triggerEl.dispatchEvent(eventClose)
             }
-            triggerEl.setAttribute('aria-expanded', 'false');
-            targetEl.classList.add('collapsed');
-            targetEl.setAttribute('aria-hidden', 'true');
+            triggerEl.setAttribute('aria-expanded', 'false')
+            targetEl.classList.add('collapsed')
+            targetEl.setAttribute('aria-hidden', 'true')
           }
         }
       }
     }
 
     if (changed && event) {
-      event.stopImmediatePropagation();
+      event.stopImmediatePropagation()
     }
   }
 
   offset(el: HTMLElement) {
-    const rect = el.getBoundingClientRect();
-    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
+    const rect = el.getBoundingClientRect()
+    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+    return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
   }
 
   toggleDropdown(event: Event, forceClose = false) {
-    event.stopPropagation();
-    event.preventDefault();
+    event.stopPropagation()
+    event.preventDefault()
 
-    this.toggle(this.buttonElement, forceClose);
+    this.toggle(this.buttonElement, forceClose)
   }
 
   toggle(button: HTMLElement, forceClose = false) {
-    const triggerEl = button;
-    let targetEl = null;
+    const triggerEl = button
+    let targetEl = null
     if (triggerEl !== null && triggerEl !== undefined) {
-      const targetAttr = triggerEl.getAttribute(DKFDSDropdown.TARGET);
+      const targetAttr = triggerEl.getAttribute(DKFDSDropdown.TARGET)
       if (targetAttr !== null && targetAttr !== undefined) {
-        targetEl = document.getElementById(targetAttr.replace('#', ''));
+        targetEl = document.getElementById(targetAttr.replace('#', ''))
       }
     }
     if (triggerEl && targetEl) {
       // change state
 
-      targetEl.style.left = '';
-      targetEl.style.right = '';
+      targetEl.style.left = ''
+      targetEl.style.right = ''
 
       if (triggerEl.getAttribute('aria-expanded') === 'true' || forceClose) {
         // close
-        triggerEl.setAttribute('aria-expanded', 'false');
-        targetEl.classList.add('collapsed');
-        targetEl.setAttribute('aria-hidden', 'true');
-        const eventClose = new Event('fds.dropdown.close');
-        triggerEl.dispatchEvent(eventClose);
+        triggerEl.setAttribute('aria-expanded', 'false')
+        targetEl.classList.add('collapsed')
+        targetEl.setAttribute('aria-hidden', 'true')
+        const eventClose = new Event('fds.dropdown.close')
+        triggerEl.dispatchEvent(eventClose)
       } else {
         if (!document.getElementsByTagName('body')[0].classList.contains('mobile-nav-active')) {
-          this.closeAll();
+          this.closeAll()
         }
         // open
-        triggerEl.setAttribute('aria-expanded', 'true');
-        targetEl.classList.remove('collapsed');
-        targetEl.setAttribute('aria-hidden', 'false');
-        const eventOpen = new Event('fds.dropdown.open');
-        triggerEl.dispatchEvent(eventOpen);
-        const targetOffset = this.offset(targetEl);
+        triggerEl.setAttribute('aria-expanded', 'true')
+        targetEl.classList.remove('collapsed')
+        targetEl.setAttribute('aria-hidden', 'false')
+        const eventOpen = new Event('fds.dropdown.open')
+        triggerEl.dispatchEvent(eventOpen)
+        const targetOffset = this.offset(targetEl)
 
         if (targetOffset.left < 0) {
-          targetEl.style.left = '0px';
-          targetEl.style.right = 'auto';
+          targetEl.style.left = '0px'
+          targetEl.style.right = 'auto'
         }
-        let right = targetOffset.left + targetEl.offsetWidth;
+        let right = targetOffset.left + targetEl.offsetWidth
         if (right > window.innerWidth) {
-          targetEl.style.left = 'auto';
-          targetEl.style.right = '0px';
+          targetEl.style.left = 'auto'
+          targetEl.style.right = '0px'
         }
 
-        const offsetAgain = this.offset(targetEl);
+        const offsetAgain = this.offset(targetEl)
 
         if (offsetAgain.left < 0) {
-          targetEl.style.left = '0px';
-          targetEl.style.right = 'auto';
+          targetEl.style.left = '0px'
+          targetEl.style.right = 'auto'
         }
-        right = offsetAgain.left + targetEl.offsetWidth;
+        right = offsetAgain.left + targetEl.offsetWidth
         if (right > window.innerWidth) {
-          targetEl.style.left = 'auto';
-          targetEl.style.right = '0px';
+          targetEl.style.left = 'auto'
+          targetEl.style.right = '0px'
         }
       }
     }
@@ -212,16 +212,16 @@ export default class DKFDSDropdown {
 
   hasParent(child: Element, parentTagName: string): boolean {
     if (child.parentElement?.tagName === parentTagName) {
-      return true;
+      return true
     }
     if (
       parentTagName !== 'BODY' &&
       child.parentElement &&
       child.parentElement?.tagName !== 'BODY'
     ) {
-      return this.hasParent(child.parentElement, parentTagName);
+      return this.hasParent(child.parentElement, parentTagName)
     }
-    return false;
+    return false
   }
 
   outsideClose(evt: Event) {
@@ -232,16 +232,16 @@ export default class DKFDSDropdown {
       ) {
         const openDropdowns = document.querySelectorAll(
           `${DKFDSDropdown.BUTTONCLASS}[aria-expanded=true]`,
-        );
+        )
         for (let i = 0; i < openDropdowns.length; i += 1) {
-          const triggerEl = openDropdowns[i];
-          let targetEl = null;
-          let targetAttr = triggerEl.getAttribute(DKFDSDropdown.TARGET);
+          const triggerEl = openDropdowns[i]
+          let targetEl = null
+          let targetAttr = triggerEl.getAttribute(DKFDSDropdown.TARGET)
           if (targetAttr) {
             if (targetAttr.indexOf('#') !== -1) {
-              targetAttr = targetAttr.replace('#', '');
+              targetAttr = targetAttr.replace('#', '')
             }
-            targetEl = document.getElementById(targetAttr);
+            targetEl = document.getElementById(targetAttr)
           }
           if (
             DKFDSDropdown.doResponsiveCollapse(triggerEl) ||
@@ -252,11 +252,11 @@ export default class DKFDSDropdown {
 
             if (<Element>evt.target !== triggerEl) {
               // clicked outside trigger, force close
-              triggerEl.setAttribute('aria-expanded', 'false');
-              targetEl?.classList.add('collapsed');
-              targetEl?.setAttribute('aria-hidden', 'true');
-              const eventClose = new Event('fds.dropdown.close');
-              triggerEl.dispatchEvent(eventClose);
+              triggerEl.setAttribute('aria-expanded', 'false')
+              targetEl?.classList.add('collapsed')
+              targetEl?.setAttribute('aria-hidden', 'true')
+              const eventClose = new Event('fds.dropdown.close')
+              triggerEl.dispatchEvent(eventClose)
             }
           }
         }
@@ -274,21 +274,21 @@ export default class DKFDSDropdown {
         // trinindikator overflow menu
         if (window.innerWidth <= DKFDSDropdown.getTringuideBreakpoint(triggerEl)) {
           // overflow menu på responsiv tringuide aktiveret
-          return true;
+          return true
         }
       } else {
         // normal overflow menu
-        return true;
+        return true
       }
     }
 
-    return false;
+    return false
   }
 
   static getTringuideBreakpoint(button: Element) {
     if (button.parentElement?.classList.contains('overflow-menu--lg-no-responsive')) {
-      return breakpoints.lg;
+      return breakpoints.lg
     }
-    return breakpoints.md;
+    return breakpoints.md
   }
 } // Class end

@@ -44,22 +44,22 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router'
 
-const route = useRoute();
-const router = useRouter();
+const route = useRoute()
+const router = useRouter()
 const isPartOfMenu = (name: string): boolean => {
   if (route) {
-    const [parent] = route.matched;
+    const [parent] = route.matched
 
     if (parent && parent.name === name) {
-      return true;
+      return true
     }
     if (route.name) {
-      return route.name === name;
+      return route.name === name
     }
   }
 
-  return false;
-};
+  return false
+}
 </script>

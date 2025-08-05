@@ -10,9 +10,7 @@
           </xfds-checkbox-list>
         </fds-formgroup>
 
-        <fds-pre
-          header="v-model"
-          :json="checkboxList" />
+        <fds-pre header="v-model" :json="checkboxList" />
       </fds-preview-item>
 
       <fds-preview-code>
@@ -23,17 +21,11 @@
     <hr class="my-6" />
 
     <fds-preview header="Eksempel Formular">
-      <xfds-validate
-        :model-value="checkboxListForm"
-        :validations="[arrayHasItems]">
-        <xfds-form-checkbox-list
-          v-model="checkboxListForm"
-          label="Checkbox form" />
+      <xfds-validate :model-value="checkboxListForm" :validations="[arrayHasItems]">
+        <xfds-form-checkbox-list v-model="checkboxListForm" label="Checkbox form" />
       </xfds-validate>
 
-      <fds-pre
-        header="v-model for checkbox liste"
-        :json="checkboxListForm" />
+      <fds-pre header="v-model for checkbox liste" :json="checkboxListForm" />
 
       <template #description>
         <p class="italic">
@@ -49,9 +41,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { arrayHasItems } from 'dkfds-vue3/utils';
-import { FdsCheckboxItem } from 'dkfds-vue3/utils';
+import { ref } from 'vue'
+import { arrayHasItems } from 'dkfds-vue3/utils'
+import { FdsCheckboxItem } from 'dkfds-vue3/utils'
 
 const checkboxListForm = ref<FdsCheckboxItem[]>([
   {
@@ -71,7 +63,7 @@ const checkboxListForm = ref<FdsCheckboxItem[]>([
     value: 'tomat',
     disabled: true,
   },
-]);
+])
 
 const checkboxList = ref<FdsCheckboxItem[]>([
   {
@@ -86,7 +78,7 @@ const checkboxList = ref<FdsCheckboxItem[]>([
     title: 'Æble',
     value: 'æble',
   },
-]);
+])
 
 const code = `
   <xfds-validate :modelValue="checkboxListForm" :validations="[arrayHasItems]">
@@ -111,7 +103,7 @@ const code = `
       value: 'tomat',
       disabled: true,
     },
-  ]);`;
+  ]);`
 
 const codeList = `
 <fds-checkbox-list v-model="checkboxList">
@@ -119,5 +111,5 @@ const codeList = `
     <p>Det er muligt at benytte tjekboks til mere indhold</p>
   </template>
 </fds-checkbox-list>
-`;
+`
 </script>

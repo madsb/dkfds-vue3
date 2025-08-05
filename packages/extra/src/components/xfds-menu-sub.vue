@@ -26,33 +26,30 @@
 </template>
 
 <script setup lang="ts">
+import { FdsNavigationItem } from 'dkfds-vue3-utils'
+import navigationService from './../service/navigation.service'
 
-import { FdsNavigationItem } from 'dkfds-vue3-utils';
-import navigationService from './../service/navigation.service';
-
-const {
-  modelValue,
-} = defineProps<{
-  modelValue: Array<FdsNavigationItem>;
-}>();
+const { modelValue } = defineProps<{
+  modelValue: Array<FdsNavigationItem>
+}>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: Array<FdsNavigationItem>];
-  navigate: [key: string];
-}>();
+  'update:modelValue': [value: Array<FdsNavigationItem>]
+  navigate: [key: string]
+}>()
 
 const navigateup = (key: string) => {
-  emit('navigate', navigationService.resolveKey(key, modelValue));
-};
+  emit('navigate', navigationService.resolveKey(key, modelValue))
+}
 
 const navigate = (item: FdsNavigationItem) => {
   if (item.disabled) {
-    return;
+    return
   }
-  const list = modelValue.map((f) => ({ ...f, active: f.key === item.key }));
-  emit('update:modelValue', list);
-  emit('navigate', item.key);
-};
+  const list = modelValue.map((f) => ({ ...f, active: f.key === item.key }))
+  emit('update:modelValue', list)
+  emit('navigate', item.key)
+}
 </script>
 
 <style scoped lang="scss"></style>

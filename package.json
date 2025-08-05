@@ -20,7 +20,7 @@
     "lint": "npx eslint packages/** examples/**",
     "lint:fix": "npx eslint packages/** examples/** --fix",
     "prettier": "npx prettier packages/** examples/** --check",
-    "prettier:fix": "pnpm run prettier -- --write",
+    "prettier:fix": "npx prettier packages/** examples/** --write",
     "format": "pnpm run prettier:fix && pnpm run lint:fix"
   },
   "keywords": [],

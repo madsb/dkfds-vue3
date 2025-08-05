@@ -2,12 +2,8 @@
   <section>
     <fds-preview header="Ekstra Eksempel">
       <fds-preview-item>
-        <xfds-trinindikator
-          v-model="trin"
-          @navigate="trinNavKey = $event" />
-        <fds-pre
-          header="v-model"
-          :json="{ trinNavKey }"></fds-pre>
+        <xfds-trinindikator v-model="trin" @navigate="trinNavKey = $event" />
+        <fds-pre header="v-model" :json="{ trinNavKey }"></fds-pre>
       </fds-preview-item>
 
       <fds-preview-code>
@@ -18,8 +14,8 @@
 </template>
 
 <script setup lang="ts">
-import { FdsNavigationItem } from 'dkfds-vue3/utils';
-import { ref } from 'vue';
+import { FdsNavigationItem } from 'dkfds-vue3/utils'
+import { ref } from 'vue'
 
 const codeExtra = `
 <xfds-trinindikator
@@ -55,9 +51,9 @@ const trin = ref<FdsNavigationItem[]>([
     disabled: true,
   },
 ] as unknown as FdsNavigationItem[]);
-`;
+`
 
-const trinNavKey = ref('');
+const trinNavKey = ref('')
 
 const trin = ref<FdsNavigationItem[]>([
   {
@@ -85,5 +81,5 @@ const trin = ref<FdsNavigationItem[]>([
     hint: '',
     disabled: true,
   },
-] as unknown as FdsNavigationItem[]);
+] as unknown as FdsNavigationItem[])
 </script>

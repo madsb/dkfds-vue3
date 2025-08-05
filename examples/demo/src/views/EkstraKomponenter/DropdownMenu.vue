@@ -2,12 +2,8 @@
   <section>
     <fds-preview header="Eksempel">
       <fds-preview-item>
-        <xfds-dropdown
-          v-model="dropdownVal"
-          :options="dropdownOptions" />
-        <fds-pre
-          header="v-model"
-          :json="{ dropdownVal }" />
+        <xfds-dropdown v-model="dropdownVal" :options="dropdownOptions" />
+        <fds-pre header="v-model" :json="{ dropdownVal }" />
       </fds-preview-item>
 
       <fds-preview-code>
@@ -56,9 +52,7 @@
 
     <fds-preview header="Eksempel Formular">
       <fds-preview-item>
-        <xfds-validate
-          :model-value="dropdownValForm"
-          :validations="[hasContent]">
+        <xfds-validate :model-value="dropdownValForm" :validations="[hasContent]">
           <xfds-form-dropdown
             v-model="dropdownValForm"
             label="Dropdown form"
@@ -66,9 +60,7 @@
           />
         </xfds-validate>
 
-        <fds-pre
-          header="v-model for dropdown"
-          :json="{ dropdownValForm }" />
+        <fds-pre header="v-model for dropdown" :json="{ dropdownValForm }" />
       </fds-preview-item>
 
       <fds-preview-code>
@@ -79,11 +71,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { hasContent, FdsOptionItem } from 'dkfds-vue3/utils';
+import { ref } from 'vue'
+import { hasContent, FdsOptionItem } from 'dkfds-vue3/utils'
 
-const dropdownVal = ref('');
-const dropdownValForm = ref('');
+const dropdownVal = ref('')
+const dropdownValForm = ref('')
 const dropdownOptions = ref<FdsOptionItem[]>([
   {
     title: 'Banan',
@@ -97,7 +89,7 @@ const dropdownOptions = ref<FdsOptionItem[]>([
     title: 'Æble',
     value: 'æble',
   },
-]);
+])
 
 const code = `
 <xfds-dropdown :options="dropdownOptions" v-model="dropdownVal" />
@@ -117,7 +109,7 @@ const dropdownOptions = ref<FdsOptionItem[]>([
     value: 'æble',
   },
 ]);
-`;
+`
 
 const codeForm = `
 <xfds-validate :modelValue="dropdownValForm" :validations="[hasContent]">
@@ -127,5 +119,5 @@ const codeForm = `
     v-model="dropdownValForm"
   />
 </xfds-validate>
-  `;
+  `
 </script>

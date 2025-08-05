@@ -2,9 +2,7 @@
   <section>
     <fds-preview header="Fil liste">
       <fds-preview-item>
-        <p class="form-label">
-          Vedhæftet filer
-        </p>
+        <p class="form-label">Vedhæftet filer</p>
 
         <xfds-file-list
           :list="filListe"
@@ -12,12 +10,8 @@
           @delete="filToDelete = $event"
         />
 
-        <fds-pre
-          header="Download JSON"
-          :json="filToDownload" />
-        <fds-pre
-          header="Delete JSON"
-          :json="filToDelete" />
+        <fds-pre header="Download JSON" :json="filToDownload" />
+        <fds-pre header="Delete JSON" :json="filToDelete" />
       </fds-preview-item>
 
       <fds-preview-code>
@@ -106,11 +100,11 @@
 </template>
 
 <script setup lang="ts">
-import { FdsFileModel } from 'dkfds-vue3/utils';
-import { ref } from 'vue';
+import { FdsFileModel } from 'dkfds-vue3/utils'
+import { ref } from 'vue'
 
-const filToDownload = ref<FdsFileModel | null>(null);
-const filToDelete = ref<FdsFileModel | null>(null);
+const filToDownload = ref<FdsFileModel | null>(null)
+const filToDelete = ref<FdsFileModel | null>(null)
 const filListe = ref<FdsFileModel[]>([
   {
     id: 'a',
@@ -132,7 +126,7 @@ const filListe = ref<FdsFileModel[]>([
     filename: 'KodeFil.json',
     type: 'json',
   },
-]);
+])
 
 const codeDownload = `
 <xfds-file-list
@@ -164,5 +158,5 @@ const filListe = ref<FdsFileModel[]>([
   },
 ]);
 
-`;
+`
 </script>

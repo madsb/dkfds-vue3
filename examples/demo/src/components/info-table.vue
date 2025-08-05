@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 
 const props = defineProps({
   header: {
@@ -63,7 +63,7 @@ const props = defineProps({
     type: String,
     default: '',
   },
-});
+})
 
-const compFormatted = computed(() => props.jsonString);
+const compFormatted = computed(() => props.jsonString)
 </script>

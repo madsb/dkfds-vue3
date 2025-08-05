@@ -61,11 +61,7 @@
               <td><code>null</code></td>
               <td>
                 Se standard ikone hos
-                <a
-                  href="https://designsystem.dk/design/ikoner/"
-                  target="dkfds">
-                  DKFDS
-                </a>
+                <a href="https://designsystem.dk/design/ikoner/" target="dkfds"> DKFDS </a>
               </td>
             </tr>
 
@@ -86,22 +82,13 @@
       <fds-preview-item>
         <div class="row">
           <div class="col">
-            <xfds-button-spinner
-              icon="search"
-              variant="primary"
-              spinner-text="Søger">
+            <xfds-button-spinner icon="search" variant="primary" spinner-text="Søger">
               Søg
             </xfds-button-spinner>
-            <xfds-button-spinner
-              icon="search"
-              variant="secondary"
-              spinner-text="Søger">
+            <xfds-button-spinner icon="search" variant="secondary" spinner-text="Søger">
               Søg
             </xfds-button-spinner>
-            <xfds-button-spinner
-              icon="search"
-              variant="tertiary"
-              spinner-text="Søger">
+            <xfds-button-spinner icon="search" variant="tertiary" spinner-text="Søger">
               Søg
             </xfds-button-spinner>
           </div>
@@ -141,16 +128,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const showSpinner = ref(false);
+const showSpinner = ref(false)
 
 const handleButtonEvent = () => {
-  showSpinner.value = true;
+  showSpinner.value = true
   setTimeout(() => {
-    showSpinner.value = false;
-  }, 2000);
-};
+    showSpinner.value = false
+  }, 2000)
+}
 
 const code = `
 <xfds-button-spinner
@@ -162,5 +149,5 @@ const code = `
 >
   Send
 </xfds-button-spinner>
-  `;
+  `
 </script>

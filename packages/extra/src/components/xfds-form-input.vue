@@ -28,9 +28,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, useAttrs, watch } from 'vue';
-import { FdsInput } from 'dkfds-vue3-core';
-const attrs = useAttrs();
+import { ref, useAttrs, watch } from 'vue'
+import { FdsInput } from 'dkfds-vue3-core'
+const attrs = useAttrs()
 
 const {
   label = '',
@@ -43,43 +43,43 @@ const {
   suffix = null,
   prefix = null,
 } = defineProps<{
-  label?: string;
-  hint?: string;
-  tooltip?: string | null;
-  isValid?: boolean;
-  readonly?: boolean;
-  errorMessage?: string | null;
-  modelValue?: string;
-  suffix?: string | null;
-  prefix?: string | null;
-}>();
+  label?: string
+  hint?: string
+  tooltip?: string | null
+  isValid?: boolean
+  readonly?: boolean
+  errorMessage?: string | null
+  modelValue?: string
+  suffix?: string | null
+  prefix?: string | null
+}>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: string];
-  dirty: [isDirty: boolean];
-  valid: [isValid: boolean];
-  input: [event: Event];
-}>();
+  'update:modelValue': [value: string]
+  dirty: [isDirty: boolean]
+  valid: [isValid: boolean]
+  input: [event: Event]
+}>()
 
-const value = ref(modelValue);
-const dirty = ref(false);
+const value = ref(modelValue)
+const dirty = ref(false)
 
 const touchedEvent = () => {
-  dirty.value = true;
-  emit('dirty', true);
-};
+  dirty.value = true
+  emit('dirty', true)
+}
 
-const handleInput = () => emit('update:modelValue', value.value);
+const handleInput = () => emit('update:modelValue', value.value)
 
 watch(
   () => [modelValue],
   () => {
-    value.value = modelValue;
+    value.value = modelValue
   },
   {
     immediate: true,
   },
-);
+)
 </script>
 
 <style scoped lang="scss"></style>

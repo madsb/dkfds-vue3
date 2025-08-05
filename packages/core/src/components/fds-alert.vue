@@ -4,10 +4,7 @@
       v-if="showAlert"
       :role="compAlert ? 'alert' : ''"
       class="alert"
-      :class="[
-        `alert-${variant}`,
-        { 'has-close': closeable }
-      ]"
+      :class="[`alert-${variant}`, { 'has-close': closeable }]"
     >
       <svg
         v-if="showIcon"
@@ -26,16 +23,11 @@
         <p class="alert-text">
           <slot />
         </p>
-        <button
-          v-if="closeable"
-          type="button"
-          class="alert-close"
-          @click="onClose"
-        >
+        <button v-if="closeable" type="button" class="alert-close" @click="onClose">
           <slot name="button">
             <svg class="icon-svg" focusable="false" aria-hidden="true">
-              <use href="#close"></use>
-            </svg>Luk
+              <use href="#close"></use></svg
+            >Luk
           </slot>
         </button>
       </div>
@@ -50,7 +42,7 @@
  * https://designsystem.dk/komponenter/beskeder/
  *
  * */
-import { ref, computed } from 'vue';
+import { ref, computed } from 'vue'
 
 const {
   /** Overskrift */
@@ -62,19 +54,19 @@ const {
   /** Klik for at lukke/fjerne besked */
   closeable = false,
 } = defineProps<{
-  header?: string | null;
-  variant?: 'success' | 'info' | 'warning' | 'error';
-  showIcon?: boolean;
-  closeable?: boolean;
-}>();
+  header?: string | null
+  variant?: 'success' | 'info' | 'warning' | 'error'
+  showIcon?: boolean
+  closeable?: boolean
+}>()
 
 const emit = defineEmits<{
-  close: [closed: boolean];
-}>();
+  close: [closed: boolean]
+}>()
 
-const showAlert = ref(true);
+const showAlert = ref(true)
 
-const compAlert = computed(() => ['warning', 'error'].includes(variant));
+const compAlert = computed(() => ['warning', 'error'].includes(variant))
 
 const iconAriaLabel = computed(() => {
   const labels = {
@@ -82,14 +74,14 @@ const iconAriaLabel = computed(() => {
     success: 'Succes',
     warning: 'Advarsel',
     error: 'Fejl',
-  };
-  return labels[variant];
-});
+  }
+  return labels[variant]
+})
 
 const onClose = () => {
-  showAlert.value = !showAlert.value;
-  emit('close', true);
-};
+  showAlert.value = !showAlert.value
+  emit('close', true)
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

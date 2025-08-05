@@ -1,16 +1,10 @@
 <template>
   <teleport :to="`#${target}`">
-    <div
-      class="toast toast-info show"
-      role="status">
+    <div class="toast toast-info show" role="status">
       <div class="toast-icon"></div>
       <div class="toast-message">
-        <p class="bold">
-          Du har fået en besked
-        </p>
-        <button class="toast-close">
-          Luk
-        </button>
+        <p class="bold">Du har fået en besked</p>
+        <button class="toast-close">Luk</button>
         <p>
           Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
           laudantium.
@@ -27,12 +21,9 @@
  *
  * */
 
-
-const {
-  target = 'main-toaster',
-} = defineProps<{
-  target?: string;
-}>();
+const { target = 'main-toaster' } = defineProps<{
+  target?: string
+}>()
 </script>
 
 <style scoped lang="scss"></style>

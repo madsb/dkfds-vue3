@@ -27,23 +27,23 @@
  * https://designsystem.dk/komponenter/overflowmenu/
  *
  * */
-import { onMounted } from 'vue';
+import { onMounted } from 'vue'
 
-import { formId, dropdown } from 'dkfds-vue3-utils';
+import { formId, dropdown } from 'dkfds-vue3-utils'
 
 const {
   header = null,
   id = null,
   icon = 'more-vert',
 } = defineProps<{
-  header?: string | null;
-  id?: string | null;
-  icon?: string;
-}>();
+  header?: string | null
+  id?: string | null
+  icon?: string
+}>()
 
-const { formid } = formId(id, true);
+const { formid } = formId(id, true)
 
 onMounted(async () => {
-  new dropdown(document.getElementById(`button_${formid.value}`)).init();
-});
+  new dropdown(document.getElementById(`button_${formid.value}`)).init()
+})
 </script>

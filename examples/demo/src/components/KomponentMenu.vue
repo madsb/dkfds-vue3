@@ -1,16 +1,13 @@
 <template>
-  <xfds-menu
-    v-model="navigationList"
-    class="discrete-icon"
-    @navigate="handleNavigation" />
+  <xfds-menu v-model="navigationList" class="discrete-icon" @navigate="handleNavigation" />
 </template>
 
 <script setup lang="ts">
-import { FdsNavigationItem } from 'dkfds-vue3/utils';
-import { ref, watch } from 'vue';
-import { navigationService } from 'dkfds-vue3/extra';
-import { useRoute, useRouter } from 'vue-router';
-import { sort } from 'fast-sort';
+import { FdsNavigationItem } from 'dkfds-vue3/utils'
+import { ref, watch } from 'vue'
+import { navigationService } from 'dkfds-vue3/extra'
+import { useRoute, useRouter } from 'vue-router'
+import { sort } from 'fast-sort'
 
 defineProps({
   header: {
@@ -21,15 +18,15 @@ defineProps({
     type: String,
     default: '',
   },
-});
+})
 
-const route = useRoute();
-const router = useRouter();
+const route = useRoute()
+const router = useRouter()
 
-const currentNavigationKey = ref('');
-const currentItem = ref<FdsNavigationItem | undefined>();
+const currentNavigationKey = ref('')
+const currentItem = ref<FdsNavigationItem | undefined>()
 
-const emits = defineEmits(['currentItem']);
+const emits = defineEmits(['currentItem'])
 
 const navigationList = ref<Array<FdsNavigationItem>>(
   sort([
@@ -213,7 +210,7 @@ const navigationList = ref<Array<FdsNavigationItem>>(
       title: 'Venstremenu',
     },
   ] as FdsNavigationItem[]).asc((a) => a.title),
-);
+)
 
 watch(
   () => route.name,
@@ -221,20 +218,20 @@ watch(
     navigationList.value = navigationService.setActive(
       navigationList.value,
       route.name?.toString() ?? '',
-    );
-    currentNavigationKey.value = currentItem.value?.key ?? '';
-    currentItem.value = navigationService.findFirstActiveItem(navigationList.value);
-    emits('currentItem', currentItem.value);
+    )
+    currentNavigationKey.value = currentItem.value?.key ?? ''
+    currentItem.value = navigationService.findFirstActiveItem(navigationList.value)
+    emits('currentItem', currentItem.value)
   },
   {
     immediate: true,
   },
-);
+)
 
 const handleNavigation = (key: string) => {
-  currentNavigationKey.value = key;
-  router.push({ name: navigationService.resolveActiveKey(key) });
-};
+  currentNavigationKey.value = key
+  router.push({ name: navigationService.resolveActiveKey(key) })
+}
 </script>
 <style lang="scss">
 .sidenav-list {

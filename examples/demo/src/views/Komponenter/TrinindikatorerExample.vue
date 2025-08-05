@@ -1,13 +1,9 @@
 <template>
   <section>
-    <fds-preview
-      header="Eksempel"
-      href="https://designsystem.dk/komponenter/trinindikator/">
+    <fds-preview header="Eksempel" href="https://designsystem.dk/komponenter/trinindikator/">
       <fds-preview-item>
         <fds-trinindikator-group :size="trinSize ? 'large' : 'small'">
-          <template #header>
-            Trin {{ trinNavigationsId }} af 4
-          </template>
+          <template #header> Trin {{ trinNavigationsId }} af 4 </template>
           <fds-trinindikator-item
             id="1"
             :active="trinNavigationsId === '1'"
@@ -152,10 +148,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const trinSize = ref(true);
-const trinNavigationsId = ref('1');
+const trinSize = ref(true)
+const trinNavigationsId = ref('1')
 const code = `
 <fds-trinindikator-group :size="trinSize ? 'large' : 'small'">
   <template #header> Trin {{ trinNavigationsId }} af 4 </template>
@@ -179,5 +175,5 @@ const code = `
     Anden
   </fds-trinindikator-item>
 </fds-trinindikator-group>
-`;
+`
 </script>

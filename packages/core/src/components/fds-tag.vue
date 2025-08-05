@@ -14,22 +14,22 @@
  *
  * */
 
-import { formId } from 'dkfds-vue3-utils';
+import { formId } from 'dkfds-vue3-utils'
 
 const { icon = null, id = null } = defineProps<{
-  icon?: string | null;
-  id?: string | null;
-}>();
+  icon?: string | null
+  id?: string | null
+}>()
 
 const emit = defineEmits<{
-  iconClick: [formId: string];
-}>();
+  iconClick: [formId: string]
+}>()
 
-const { formid } = formId(id, true);
+const { formid } = formId(id, true)
 
 const handleIconClick = () => {
-  emit('iconClick', formid.value);
-};
+  emit('iconClick', formid.value)
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

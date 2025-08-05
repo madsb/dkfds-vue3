@@ -1,38 +1,16 @@
 <template>
   <section>
-    <fds-preview
-      header="Eksempel"
-      href="https://designsystem.dk/komponenter/badges/">
+    <fds-preview header="Eksempel" href="https://designsystem.dk/komponenter/badges/">
       <fds-preview-item>
         <p>
-          <fds-badge class="mr-4">
-            Normal
-          </fds-badge>
-          <fds-badge size="small">
-            small
-          </fds-badge>
+          <fds-badge class="mr-4"> Normal </fds-badge>
+          <fds-badge size="small"> small </fds-badge>
         </p>
         <p>
-          <fds-badge
-            class="mr-4"
-            variant="success">
-            success
-          </fds-badge>
-          <fds-badge
-            class="mx-4"
-            variant="info">
-            success
-          </fds-badge>
-          <fds-badge
-            class="mx-4"
-            variant="warning">
-            warning
-          </fds-badge>
-          <fds-badge
-            class="mx-4"
-            variant="error">
-            error
-          </fds-badge>
+          <fds-badge class="mr-4" variant="success"> success </fds-badge>
+          <fds-badge class="mx-4" variant="info"> success </fds-badge>
+          <fds-badge class="mx-4" variant="warning"> warning </fds-badge>
+          <fds-badge class="mx-4" variant="error"> error </fds-badge>
         </p>
       </fds-preview-item>
 
@@ -80,5 +58,5 @@ const code = `
 <fds-badge variant="info"> success </fds-badge>
 <fds-badge variant="warning"> warning </fds-badge>
 <fds-badge variant="error"> error </fds-badge>
-`;
+`
 </script>

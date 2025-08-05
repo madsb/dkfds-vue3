@@ -6,9 +6,9 @@
 </template>
 
 <script setup lang="ts">
-import { useAttrs } from 'vue';
+import { useAttrs } from 'vue'
 
-const attrs = useAttrs();
+const attrs = useAttrs()
 </script>
 
 <style scoped lang="scss"></style>

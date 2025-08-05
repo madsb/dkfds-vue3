@@ -11,12 +11,10 @@
   </details>
 </template>
 <script setup lang="ts">
-
-
 const {
   /** Overskrift */
   header = 'Mere information',
 } = defineProps<{
-  header?: string;
-}>();
+  header?: string
+}>()
 </script>

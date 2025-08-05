@@ -11,8 +11,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { formId } from 'dkfds-vue3-utils';
+import { computed } from 'vue'
+import { formId } from 'dkfds-vue3-utils'
 
 const {
   modelValue,
@@ -22,45 +22,45 @@ const {
   rowlength = 80,
   maxlength = 4000,
 } = defineProps<{
-  modelValue: string;
-  id?: string | null;
-  rows?: number;
-  maxRows?: number;
-  rowlength?: number;
-  maxlength?: number;
-}>();
+  modelValue: string
+  id?: string | null
+  rows?: number
+  maxRows?: number
+  rowlength?: number
+  maxlength?: number
+}>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: string];
-  dirty: [isDirty: boolean];
-  input: [event: Event];
-}>();
+  'update:modelValue': [value: string]
+  dirty: [isDirty: boolean]
+  input: [event: Event]
+}>()
 
-const { formid } = formId(id, true);
+const { formid } = formId(id, true)
 
 const getRows = computed(() => {
   if (!modelValue) {
-    return rows;
+    return rows
   }
-  const newlineRows = modelValue.split(/\r?\n/).length;
+  const newlineRows = modelValue.split(/\r?\n/).length
 
-  const textLengthRow = Math.floor(modelValue.length / rowlength) + 1;
-  const result = newlineRows > textLengthRow ? newlineRows : textLengthRow;
+  const textLengthRow = Math.floor(modelValue.length / rowlength) + 1
+  const result = newlineRows > textLengthRow ? newlineRows : textLengthRow
 
   if (result < maxRows) {
-    return result < rows ? rows : result;
+    return result < rows ? rows : result
   }
-  return maxRows;
-});
+  return maxRows
+})
 
 const inputValue = computed({
   get() {
-    return modelValue;
+    return modelValue
   },
   set(newValue) {
-    emit('update:modelValue', newValue);
+    emit('update:modelValue', newValue)
   },
-});
+})
 </script>
 
 <style scoped lang="scss"></style>

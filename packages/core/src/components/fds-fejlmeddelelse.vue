@@ -1,7 +1,5 @@
 <template>
-  <div
-    v-if="showError"
-    class="form-error-message">
+  <div v-if="showError" class="form-error-message">
     <slot>
       {{ compErrorMessage }}
     </slot>
@@ -9,27 +7,25 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref, useSlots } from 'vue';
+import { computed, inject, ref, useSlots } from 'vue'
 
-const {
-  auto = true,
-} = defineProps<{
-  auto?: boolean;
-}>();
+const { auto = true } = defineProps<{
+  auto?: boolean
+}>()
 
-const slots = useSlots();
+const slots = useSlots()
 
-const injErrorMessage = ref<string | null>(inject('provideErrorMessage', null));
-const injIsValid = ref<boolean>(inject('provideIsValid', true));
+const injErrorMessage = ref<string | null>(inject('provideErrorMessage', null))
+const injIsValid = ref<boolean>(inject('provideIsValid', true))
 const compErrorMessage = computed(() => {
   if (!auto) {
-    return null;
+    return null
   }
-  return !injIsValid.value ? injErrorMessage.value : null;
-});
+  return !injIsValid.value ? injErrorMessage.value : null
+})
 const showError = computed(() => {
-  return slots.default || compErrorMessage;
-});
+  return slots.default || compErrorMessage
+})
 </script>
 
 <style scoped lang="scss"></style>

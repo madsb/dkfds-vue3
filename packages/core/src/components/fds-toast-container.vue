@@ -4,8 +4,8 @@
 
 <script setup lang="ts">
 const { id = 'main-toaster' } = defineProps<{
-  id?: string;
-}>();
+  id?: string
+}>()
 </script>
 
 <style scoped lang="scss"></style>

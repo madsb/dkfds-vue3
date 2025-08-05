@@ -10,72 +10,72 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-import { removeBrowserFileContentHeaders } from 'dkfds-vue3-utils';
-import { FdsFileInputModel } from 'dkfds-vue3-utils';
-import { formId } from 'dkfds-vue3-utils';
+import { removeBrowserFileContentHeaders } from 'dkfds-vue3-utils'
+import { FdsFileInputModel } from 'dkfds-vue3-utils'
+import { formId } from 'dkfds-vue3-utils'
 
 const {
   id = null,
   contenttypes = ['image/png', 'image/jpg', 'image/jpeg', '.pdf', '.doc', '.docx', '.odt'],
   removeContentHeaders = false,
 } = defineProps<{
-  id?: string | null;
-  contenttypes?: string[];
-  removeContentHeaders?: boolean;
-}>();
+  id?: string | null
+  contenttypes?: string[]
+  removeContentHeaders?: boolean
+}>()
 
 const emit = defineEmits<{
-  dirty: [value: boolean];
-  upload: [file: FdsFileInputModel];
-  error: [error: any];
-}>();
+  dirty: [value: boolean]
+  upload: [file: FdsFileInputModel]
+  error: [error: any]
+}>()
 
-const { formid } = formId(id);
-const file = ref<File | null>();
+const { formid } = formId(id)
+const file = ref<File | null>()
 
-const onDirty = () => emit('dirty', true);
+const onDirty = () => emit('dirty', true)
 
 const clearFile = () => {
-  file.value = null;
-};
+  file.value = null
+}
 
 const onFileChange = ($event: Event) => {
-  onDirty();
-  const target = $event.target as HTMLInputElement;
+  onDirty()
+  const target = $event.target as HTMLInputElement
 
-  const { files } = target;
+  const { files } = target
   if (!files || files.length === 0) {
-    return;
+    return
   }
 
   // TODO: håndtere flere filer - pt kun den første
-  [file.value] = files as unknown as any[];
+  ;[file.value] = files as unknown as any[]
 
-  const reader = new FileReader();
-  reader.readAsDataURL(file.value);
+  const reader = new FileReader()
+  reader.readAsDataURL(file.value)
   reader.onload = async () => {
     const data = removeContentHeaders
       ? removeBrowserFileContentHeaders(reader.result?.toString() ?? '')
-      : reader.result?.toString();
+      : reader.result?.toString()
 
     const fileObj = {
       filename: files[0].name, // test.pdf
       type: files[0].type, // application/pdf
       size: files[0].size,
       data,
-    } as FdsFileInputModel;
+    } as FdsFileInputModel
 
     try {
-      emit('upload', fileObj);
+      emit('upload', fileObj)
     } catch (error) {
-      console.error(error);
-      emit('error', error);
+      console.error(error)
+      emit('error', error)
     }
-    clearFile();
-  };
-};
+    clearFile()
+  }
+}
 </script>
 
 <style scoped lang="scss"></style>

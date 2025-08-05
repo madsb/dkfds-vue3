@@ -27,8 +27,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { uuid } from 'dkfds-vue3-utils';
+import { ref } from 'vue'
+import { uuid } from 'dkfds-vue3-utils'
 
 /**
  * Faneknap aktiv
@@ -43,22 +43,22 @@ const {
   /** Faneknap overskrift */
   header = 'Fane',
 } = defineProps<{
-  selected?: boolean;
-  id: string;
-  header?: string;
-}>();
+  selected?: boolean
+  id: string
+  header?: string
+}>()
 
 const emit = defineEmits<{
-  click: [id: string];
-  navigate: [id: string];
-}>();
+  click: [id: string]
+  navigate: [id: string]
+}>()
 
 const onFanButtonClick = () => {
-  emit('click', id);
-  emit('navigate', id);
-};
+  emit('click', id)
+  emit('navigate', id)
+}
 
-const formId = ref(id ?? uuid());
+const formId = ref(id ?? uuid())
 </script>
 
 <style scoped lang="scss"></style>

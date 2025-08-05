@@ -4,9 +4,7 @@
       <fds-preview-item>
         <div class="row">
           <div class="col-4">
-            <xfds-menu
-              v-model="manuelSideNavList"
-              @navigate="navigatedKey = $event" />
+            <xfds-menu v-model="manuelSideNavList" @navigate="navigatedKey = $event" />
           </div>
           <div class="col">
             <fds-pre :json="{ navigatedKey }" />
@@ -23,14 +21,14 @@
 </template>
 
 <script setup lang="ts">
-import { FdsNavigationItem } from 'dkfds-vue3/utils';
-import { ref } from 'vue';
+import { FdsNavigationItem } from 'dkfds-vue3/utils'
+import { ref } from 'vue'
 
 const code = `
 <xfds-menu v-model="manuelSideNavList" @navigate="navigatedKey = $event" />
-`;
+`
 
-const navigatedKey = ref('');
+const navigatedKey = ref('')
 const manuelSideNavList = ref<Array<FdsNavigationItem>>([
   {
     key: 'suppe',
@@ -91,5 +89,5 @@ const manuelSideNavList = ref<Array<FdsNavigationItem>>([
     hint: '',
     disabled: true,
   },
-] as unknown as FdsNavigationItem[]);
+] as unknown as FdsNavigationItem[])
 </script>

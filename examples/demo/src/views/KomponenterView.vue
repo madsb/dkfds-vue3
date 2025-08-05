@@ -8,12 +8,8 @@
           </nav>
         </aside>
         <div class="col-12 col-lg-9">
-          <div class="subheading">
-            Komponenter
-          </div>
-          <h1
-            v-if="currentItem"
-            :id="currentItem.key">
+          <div class="subheading">Komponenter</div>
+          <h1 v-if="currentItem" :id="currentItem.key">
             {{ currentItem.title }}
           </h1>
           <router-view />
@@ -24,8 +20,8 @@
 </template>
 
 <script setup lang="ts">
-import { FdsNavigationItem } from 'dkfds-vue3/utils';
-import { ref } from 'vue';
+import { FdsNavigationItem } from 'dkfds-vue3/utils'
+import { ref } from 'vue'
 
-const currentItem = ref<FdsNavigationItem | undefined>();
+const currentItem = ref<FdsNavigationItem | undefined>()
 </script>

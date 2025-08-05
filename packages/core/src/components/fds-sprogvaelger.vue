@@ -19,29 +19,29 @@
 </template>
 
 <script setup lang="ts">
-import { FdsLanguageItem } from 'dkfds-vue3-utils';
-import { ref } from 'vue';
+import { FdsLanguageItem } from 'dkfds-vue3-utils'
+import { ref } from 'vue'
 
 const { modelValue, autoSetLang = false } = defineProps<{
-  modelValue: FdsLanguageItem[];
-  autoSetLang?: boolean;
-}>();
+  modelValue: FdsLanguageItem[]
+  autoSetLang?: boolean
+}>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: FdsLanguageItem[]];
-  lang: [lang: string];
-}>();
+  'update:modelValue': [value: FdsLanguageItem[]]
+  lang: [lang: string]
+}>()
 
-const value = ref(modelValue);
+const value = ref(modelValue)
 
 const handleUpdateLang = (langauge: FdsLanguageItem) => {
-  value.value = value.value.map((m) => ({ ...m, active: langauge.lang === m.lang }));
+  value.value = value.value.map((m) => ({ ...m, active: langauge.lang === m.lang }))
   if (autoSetLang) {
-    document.documentElement.setAttribute('lang', langauge.lang);
+    document.documentElement.setAttribute('lang', langauge.lang)
   }
-  emit('lang', langauge.lang);
-  emit('update:modelValue', value.value);
-};
+  emit('lang', langauge.lang)
+  emit('update:modelValue', value.value)
+}
 </script>
 
 <style scoped lang="scss"></style>

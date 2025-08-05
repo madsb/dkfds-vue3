@@ -9,8 +9,8 @@
 
 <script setup lang="ts">
 const { icon = '' } = defineProps<{
-  icon?: string;
-}>();
+  icon?: string
+}>()
 </script>
 
 <style scoped lang="scss"></style>

@@ -1,12 +1,8 @@
 <template>
   <section>
-    <fds-preview
-      header="Single Accordions"
-      href="https://designsystem.dk/komponenter/accordions/">
+    <fds-preview header="Single Accordions" href="https://designsystem.dk/komponenter/accordions/">
       <fds-preview-item>
-        <fds-accordion
-          header="Accordion normal header"
-          class="mb-4">
+        <fds-accordion header="Accordion normal header" class="mb-4">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
@@ -14,10 +10,7 @@
           </p>
         </fds-accordion>
 
-        <fds-accordion
-          header="Accordion normal header"
-          header-tag="h3"
-          class="mb-4">
+        <fds-accordion header="Accordion normal header" header-tag="h3" class="mb-4">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
@@ -25,13 +18,9 @@
           </p>
         </fds-accordion>
 
-        <fds-accordion
-          class="mb-4"
-          header-tag="h3">
+        <fds-accordion class="mb-4" header-tag="h3">
           <template #header>
-            <p class="h4">
-              Accordion med custom header
-            </p>
+            <p class="h4">Accordion med custom header</p>
           </template>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
@@ -148,9 +137,7 @@
             </p>
           </fds-accordion>
 
-          <fds-accordion
-            header="Accordion header med Fejl"
-            variant="error">
+          <fds-accordion header="Accordion header med Fejl" variant="error">
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
               incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
@@ -193,7 +180,7 @@ const accSingleCode = `
     incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
     exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
   </p>
-</fds-accordion>`;
+</fds-accordion>`
 const accGroupCode = `
 <fds-accordion-group>
   <fds-accordion header="Accordion header med hint">
@@ -236,5 +223,5 @@ const accGroupCode = `
     </p>
   </fds-accordion>
 </fds-accordion-group>
-`;
+`
 </script>
