@@ -2,6 +2,7 @@
   <select
     :id="formid"
     ref="refElement"
+    v-model="selectedValue"
     class="form-select"
     :class="{ dirty: dirty }"
     :name="formid"
@@ -15,9 +16,9 @@
 <script setup lang="ts">
 import { formId } from 'dkfds-vue3-utils'
 
-import { ref, onMounted } from 'vue'
+import { ref, watch, computed } from 'vue'
 
-const { id = null, modelValue: _modelValue = '' } = defineProps<{
+const { id = null, modelValue = '' } = defineProps<{
   id?: string | null
   modelValue?: string
 }>()
@@ -32,16 +33,21 @@ const { formid } = formId(id, true)
 const refElement = ref(null)
 const dirty = ref(false)
 
-const onInput = (event: Event) =>
-  emit('update:modelValue', (event?.target as HTMLInputElement).value)
+// Create a computed property for v-model binding
+const selectedValue = computed({
+  get: () => modelValue,
+  set: (value: string) => emit('update:modelValue', value)
+})
+
+const onInput = (event: Event) => {
+  // The v-model binding already handles the emit, so we just need to emit the change event
+  emit('change', event)
+}
+
 const onDirty = () => {
   dirty.value = true
   emit('dirty', true)
 }
-
-onMounted(() => {
-  ;(refElement.value as any).dispatchEvent(new Event('change'))
-})
 </script>
 
 <style scoped lang="scss"></style>
