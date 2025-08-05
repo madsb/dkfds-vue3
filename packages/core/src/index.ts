@@ -13,8 +13,11 @@ import FdsDatoFelter from './components/fds-dato-felter.vue'
 import FdsDatoVaelger from './components/fds-dato-vaelger.vue'
 import FdsDetaljer from './components/fds-detaljer.vue'
 import FdsDropdown from './components/fds-dropdown.vue'
-import FdsFanebladItem from './components/fds-faneblad-item.vue'
 import FdsFaneblade from './components/fds-faneblade.vue'
+import FdsFanebladeTab from './components/fds-faneblade-tab.vue'
+import FdsFanebladePanel from './components/fds-faneblade-panel.vue'
+import FdsFanebladeNav from './components/fds-faneblade-nav.vue'
+import FdsFanebladeNavItem from './components/fds-faneblade-nav-item.vue'
 import FdsFejlmeddelelse from './components/fds-fejlmeddelelse.vue'
 import FdsFejlopsummering from './components/fds-fejlopsummering.vue'
 import FdsFileUpload from './components/fds-file-upload.vue'
@@ -70,8 +73,11 @@ function install(app: App): void {
 
   app.component('fds-alert', FdsAlert)
   app.component('fds-spinner', FdsSpinner)
-  app.component('fds-faneblad-item', FdsFanebladItem)
   app.component('fds-faneblade', FdsFaneblade)
+  app.component('fds-faneblade-tab', FdsFanebladeTab)
+  app.component('fds-faneblade-panel', FdsFanebladePanel)
+  app.component('fds-faneblade-nav', FdsFanebladeNav)
+  app.component('fds-faneblade-nav-item', FdsFanebladeNavItem)
 
   app.component('fds-pre', FdsPre)
   app.component('fds-hint', FdsHint)
@@ -145,8 +151,11 @@ export {
   FdsDatoVaelger,
   FdsDetaljer,
   FdsDropdown,
-  FdsFanebladItem,
   FdsFaneblade,
+  FdsFanebladeTab,
+  FdsFanebladePanel,
+  FdsFanebladeNav,
+  FdsFanebladeNavItem,
   FdsFejlmeddelelse,
   FdsFejlopsummering,
   FdsFileUpload,
