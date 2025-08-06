@@ -1,6 +1,3 @@
-// This file properly integrates DKFDS with our custom styles using @use
-
-// All @use rules must come first
 @use '../../node_modules/dkfds/src/stylesheets/dkfds-virkdk' as dkfds with (
   $font-path: '../../node_modules/dkfds/src/fonts/IBMPlexSans/',
   $image-path: '../../node_modules/dkfds/src/img/',
