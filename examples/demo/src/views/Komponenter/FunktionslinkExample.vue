@@ -108,23 +108,15 @@
 
     <fds-preview header="Forskellige varianter">
       <fds-preview-item>
-        <div style="display: flex; flex-direction: column; gap: 1rem; align-items: flex-start;">
-          <fds-funktionslink
-            icon="print"
-            title="Print denne side"
-            @click="handlePrint"
-          >
+        <div style="display: flex; flex-direction: column; gap: 1rem; align-items: flex-start">
+          <fds-funktionslink icon="print" title="Print denne side" @click="handlePrint">
             Print
           </fds-funktionslink>
-          
-          <fds-funktionslink
-            href="/download/document.pdf"
-            icon="download"
-            title="Download PDF"
-          >
+
+          <fds-funktionslink href="/download/document.pdf" icon="download" title="Download PDF">
             Download PDF
           </fds-funktionslink>
-          
+
           <fds-funktionslink
             href="https://designsystem.dk"
             target="_blank"
@@ -134,7 +126,7 @@
           >
             Åbn i nyt vindue
           </fds-funktionslink>
-          
+
           <fds-funktionslink
             icon="save"
             :disabled="isSaving"
@@ -143,12 +135,8 @@
           >
             {{ isSaving ? 'Gemmer...' : 'Gem kladde' }}
           </fds-funktionslink>
-          
-          <fds-funktionslink
-            icon="delete"
-            title="Slet element"
-            @click="handleDelete"
-          >
+
+          <fds-funktionslink icon="delete" title="Slet element" @click="handleDelete">
             Slet
           </fds-funktionslink>
         </div>
@@ -181,7 +169,7 @@ const handlePrint = () => {
 const handleSave = async () => {
   isSaving.value = true
   // Simulate save operation
-  await new Promise(resolve => setTimeout(resolve, 2000))
+  await new Promise((resolve) => setTimeout(resolve, 2000))
   isSaving.value = false
   console.log('Kladde gemt!')
 }
