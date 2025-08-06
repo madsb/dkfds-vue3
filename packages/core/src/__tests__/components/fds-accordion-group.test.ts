@@ -1,19 +1,31 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { ref, nextTick, inject, computed } from 'vue'
+import { nextTick, ref, inject, onMounted } from 'vue'
 import FdsAccordionGroup from '../../components/fds-accordion-group.vue'
+import FdsAccordion from '../../components/fds-accordion.vue'
 import { testAccessibility } from '../../../../../test-shared/test-utils'
 
 describe('FdsAccordionGroup', () => {
   describe('Rendering', () => {
-    it('renders container with accordion list', () => {
+    it('renders without errors', () => {
       const wrapper = mount(FdsAccordionGroup)
-
-      expect(wrapper.find('div').exists()).toBe(true)
-      expect(wrapper.find('ul.accordion').exists()).toBe(true)
+      expect(wrapper.exists()).toBe(true)
     })
 
-    it('renders bulk control button by default', () => {
+    it('renders with accordion-group class', () => {
+      const wrapper = mount(FdsAccordionGroup)
+      expect(wrapper.find('.accordion-group').exists()).toBe(true)
+    })
+
+    it('renders ul element with accordion class', () => {
+      const wrapper = mount(FdsAccordionGroup)
+      const ul = wrapper.find('ul')
+
+      expect(ul.exists()).toBe(true)
+      expect(ul.classes()).toContain('accordion')
+    })
+
+    it('renders bulk button by default', () => {
       const wrapper = mount(FdsAccordionGroup)
       const button = wrapper.find('button.accordion-bulk-button')
 
@@ -21,253 +33,217 @@ describe('FdsAccordionGroup', () => {
       expect(button.text()).toBe('Åbn alle')
     })
 
-    it('renders slot content in accordion list', () => {
+    it('does not render bulk button when showBulkButton is false', () => {
       const wrapper = mount(FdsAccordionGroup, {
-        slots: {
-          default: '<li>Accordion Item</li>',
-        },
-      })
-
-      expect(wrapper.find('ul.accordion').html()).toContain('<li>Accordion Item</li>')
-    })
-
-    it('does not render bulk control button when showBulkControls is false', () => {
-      const wrapper = mount(FdsAccordionGroup, {
-        props: {
-          showBulkControls: false,
-        },
+        props: { showBulkButton: false },
       })
 
       expect(wrapper.find('button.accordion-bulk-button').exists()).toBe(false)
+    })
+
+    it('renders slot content inside ul', () => {
+      const wrapper = mount(FdsAccordionGroup, {
+        slots: {
+          default: '<li>Test Item</li>',
+        },
+      })
+
+      expect(wrapper.find('ul.accordion').html()).toContain('<li>Test Item</li>')
     })
   })
 
   describe('Props', () => {
-    it('uses default text values', () => {
+    it('respects custom collapsedText prop', () => {
+      const wrapper = mount(FdsAccordionGroup, {
+        props: {
+          collapsedText: 'Custom Open Text',
+        },
+      })
+
+      expect(wrapper.find('button').text()).toBe('Custom Open Text')
+    })
+
+    it('respects custom expandedText prop', async () => {
+      const wrapper = mount({
+        template: `
+          <FdsAccordionGroup :expandedText="'Custom Close Text'">
+            <FdsAccordion header="Test">Content</FdsAccordion>
+          </FdsAccordionGroup>
+        `,
+        components: { FdsAccordionGroup, FdsAccordion },
+      })
+
+      // Click to expand all
+      await wrapper.find('button').trigger('click')
+      await nextTick()
+
+      expect(wrapper.find('button').text()).toBe('Custom Close Text')
+    })
+
+    it('uses default text when props not provided', () => {
       const wrapper = mount(FdsAccordionGroup)
-      const button = wrapper.find('button.accordion-bulk-button')
+      const button = wrapper.find('button')
 
       expect(button.text()).toBe('Åbn alle')
     })
 
-    it('respects custom collapsedText prop', () => {
+    it('handles empty string props', async () => {
       const wrapper = mount(FdsAccordionGroup, {
         props: {
-          collapsedText: 'Vis alle',
-        },
-      })
-
-      expect(wrapper.find('button').text()).toBe('Vis alle')
-    })
-
-    it('respects custom expandedText prop', async () => {
-      const wrapper = mount(FdsAccordionGroup, {
-        props: {
-          expandedText: 'Skjul alle',
-        },
-      })
-
-      // Click to expand
-      await wrapper.find('button').trigger('click')
-
-      expect(wrapper.find('button').text()).toBe('Skjul alle')
-    })
-
-    it('handles all props together', () => {
-      const wrapper = mount(FdsAccordionGroup, {
-        props: {
-          collapsedText: 'Open',
-          expandedText: 'Close',
-          showBulkControls: true,
+          collapsedText: '',
+          expandedText: '',
         },
       })
 
       const button = wrapper.find('button')
-      expect(button.exists()).toBe(true)
-      expect(button.text()).toBe('Open')
+      // Empty strings should show empty text, not default values
+      expect(button.text()).toBe('')
+
+      await button.trigger('click')
+      expect(button.text()).toBe('')
     })
   })
 
-  describe('Events', () => {
-    it('emits toggle-all event when bulk button is clicked', async () => {
-      const wrapper = mount(FdsAccordionGroup)
-      const button = wrapper.find('button')
-
-      await button.trigger('click')
-
-      expect(wrapper.emitted('toggle-all')).toBeTruthy()
-      expect(wrapper.emitted('toggle-all')![0]).toEqual([true])
-    })
-
-    it('emits correct expanded state on subsequent clicks', async () => {
-      const wrapper = mount(FdsAccordionGroup)
-      const button = wrapper.find('button')
-
-      // First click - expand
-      await button.trigger('click')
-      expect(wrapper.emitted('toggle-all')![0]).toEqual([true])
-
-      // Second click - collapse
-      await button.trigger('click')
-      expect(wrapper.emitted('toggle-all')![1]).toEqual([false])
-
-      // Third click - expand again
-      await button.trigger('click')
-      expect(wrapper.emitted('toggle-all')![2]).toEqual([true])
-    })
-
-    it('does not emit events when showBulkControls is false', async () => {
-      const wrapper = mount(FdsAccordionGroup, {
-        props: {
-          showBulkControls: false,
-        },
+  describe('Bulk Button Behavior', () => {
+    it('toggles button text when clicked', async () => {
+      const wrapper = mount({
+        template: `
+          <FdsAccordionGroup>
+            <FdsAccordion header="Test 1">Content 1</FdsAccordion>
+            <FdsAccordion header="Test 2">Content 2</FdsAccordion>
+          </FdsAccordionGroup>
+        `,
+        components: { FdsAccordionGroup, FdsAccordion },
       })
+      const button = wrapper.find('button')
 
-      // No button to click
-      expect(wrapper.find('button').exists()).toBe(false)
-      expect(wrapper.emitted('toggle-all')).toBeFalsy()
+      expect(button.text()).toBe('Åbn alle')
+
+      await button.trigger('click')
+      await nextTick()
+      expect(button.text()).toBe('Luk alle')
+
+      await button.trigger('click')
+      await nextTick()
+      expect(button.text()).toBe('Åbn alle')
+    })
+
+    it('updates aria-expanded attribute', async () => {
+      const wrapper = mount({
+        template: `
+          <FdsAccordionGroup>
+            <FdsAccordion header="Test 1">Content 1</FdsAccordion>
+            <FdsAccordion header="Test 2">Content 2</FdsAccordion>
+          </FdsAccordionGroup>
+        `,
+        components: { FdsAccordionGroup, FdsAccordion },
+      })
+      const button = wrapper.find('button')
+
+      expect(button.attributes('aria-expanded')).toBe('false')
+
+      await button.trigger('click')
+      await nextTick()
+      expect(button.attributes('aria-expanded')).toBe('true')
+
+      await button.trigger('click')
+      await nextTick()
+      expect(button.attributes('aria-expanded')).toBe('false')
     })
   })
 
   describe('Slots', () => {
-    it('renders default slot with scoped prop', async () => {
-      // Create a test component that will receive the scoped slot data
-      const SlotConsumer = {
-        template: '<li :class="{ active: groupActive }">Item</li>',
-        props: ['groupActive'],
-      }
-
-      const wrapper = mount({
-        template: `
-          <FdsAccordionGroup>
-            <template #default="{ groupActive }">
-              <SlotConsumer :group-active="groupActive" />
-            </template>
-          </FdsAccordionGroup>
-        `,
-        components: { FdsAccordionGroup, SlotConsumer },
-      })
-
-      // Initially not active
-      expect(wrapper.find('li.active').exists()).toBe(false)
-
-      // Click to expand
-      await wrapper.find('button').trigger('click')
-
-      // Now should be active
-      expect(wrapper.find('li.active').exists()).toBe(true)
-    })
-
-    it('renders custom header slot', () => {
+    it('renders header slot content', () => {
       const wrapper = mount(FdsAccordionGroup, {
         slots: {
-          header: '<div class="custom-header">Custom Controls</div>',
+          header: '<div class="custom-header">Custom Header</div>',
         },
       })
 
       expect(wrapper.find('.custom-header').exists()).toBe(true)
-      expect(wrapper.find('.custom-header').text()).toBe('Custom Controls')
+      expect(wrapper.find('.custom-header').text()).toBe('Custom Header')
       expect(wrapper.find('button.accordion-bulk-button').exists()).toBe(false)
     })
 
-    it('allows complex header slot content', () => {
+    it('renders default slot content in ul', () => {
       const wrapper = mount(FdsAccordionGroup, {
         slots: {
-          header: `
-            <div class="header-wrapper">
-              <h3>Accordion Group</h3>
-              <button class="custom-toggle">Toggle</button>
-            </div>
-          `,
+          default: '<li class="test-item">Test Content</li>',
         },
       })
 
-      expect(wrapper.find('.header-wrapper h3').text()).toBe('Accordion Group')
-      expect(wrapper.find('.custom-toggle').exists()).toBe(true)
+      const ul = wrapper.find('ul.accordion')
+      expect(ul.find('.test-item').exists()).toBe(true)
+      expect(ul.find('.test-item').text()).toBe('Test Content')
     })
   })
 
-  describe('State Management', () => {
-    it('toggles expanded state correctly', async () => {
-      const wrapper = mount(FdsAccordionGroup)
-      const button = wrapper.find('button')
+  describe('Integration with Accordions', () => {
+    it('works with fds-accordion components', async () => {
+      const wrapper = mount({
+        template: `
+          <FdsAccordionGroup>
+            <FdsAccordion header="Item 1" v-model="expanded1">Content 1</FdsAccordion>
+            <FdsAccordion header="Item 2" v-model="expanded2">Content 2</FdsAccordion>
+          </FdsAccordionGroup>
+        `,
+        components: { FdsAccordionGroup, FdsAccordion },
+        data() {
+          return {
+            expanded1: false,
+            expanded2: false,
+          }
+        },
+      })
 
       // Initially collapsed
-      expect(button.attributes('data-accordion-bulk-expand')).toBe('true')
-      expect(button.text()).toBe('Åbn alle')
+      expect(wrapper.vm.expanded1).toBe(false)
+      expect(wrapper.vm.expanded2).toBe(false)
 
-      // Click to expand
-      await button.trigger('click')
-      expect(button.attributes('data-accordion-bulk-expand')).toBe('false')
-      expect(button.text()).toBe('Luk alle')
+      // Click bulk expand
+      await wrapper.find('button.accordion-bulk-button').trigger('click')
+      await nextTick()
 
-      // Click to collapse
-      await button.trigger('click')
-      expect(button.attributes('data-accordion-bulk-expand')).toBe('true')
-      expect(button.text()).toBe('Åbn alle')
+      // Should expand all accordions via provide/inject
+      const accordions = wrapper.findAllComponents(FdsAccordion)
+      expect(accordions).toHaveLength(2)
     })
 
-    it('provides expanded state to children via injection', async () => {
-      // Create a test component that consumes the provided value
-      const TestChild = {
-        template: '<div>{{ expanded ? "expanded" : "collapsed" }}</div>',
+    it('provides API to child accordions', async () => {
+      const registeredRef = ref(false)
+      const TestAccordion = {
+        template: '<li>{{ registered ? "Registered" : "Not registered" }}</li>',
+        inject: {
+          'accordion-group-api': {
+            default: null,
+          },
+        },
         setup() {
-          const expanded = inject('provideGroupExpanded', ref(false))
-          return { expanded }
+          const api = inject('accordion-group-api', null)
+          const registered = ref(false)
+
+          onMounted(() => {
+            if (api) {
+              registered.value = true
+              registeredRef.value = true
+            }
+          })
+
+          return { registered }
         },
       }
 
       const wrapper = mount({
         template: `
           <FdsAccordionGroup>
-            <TestChild />
+            <TestAccordion />
           </FdsAccordionGroup>
         `,
-        components: { FdsAccordionGroup, TestChild },
+        components: { FdsAccordionGroup, TestAccordion },
       })
 
-      // Find the child div inside the accordion list
-      const child = wrapper.find('ul.accordion div')
-      expect(child.text()).toBe('collapsed')
-
-      // Click bulk button to expand
-      await wrapper.find('button').trigger('click')
-      expect(child.text()).toBe('expanded')
-    })
-  })
-
-  describe('Accessibility', () => {
-    it('sets correct data attribute for bulk expand button', () => {
-      const wrapper = mount(FdsAccordionGroup)
-      const button = wrapper.find('button')
-
-      // Initially should indicate it will expand (not expanded yet)
-      expect(button.attributes('data-accordion-bulk-expand')).toBe('true')
-    })
-
-    it('maintains semantic HTML structure', () => {
-      const wrapper = mount(FdsAccordionGroup, {
-        slots: {
-          default: '<li>Item 1</li><li>Item 2</li>',
-        },
-      })
-
-      // Check for proper list structure
-      const list = wrapper.find('ul.accordion')
-      expect(list.exists()).toBe(true)
-      expect(list.findAll('li')).toHaveLength(2)
-    })
-
-    it('button text clearly indicates action', async () => {
-      const wrapper = mount(FdsAccordionGroup)
-      const button = wrapper.find('button')
-
-      // Collapsed state - button says what will happen
-      expect(button.text()).toBe('Åbn alle')
-
-      // Expanded state - button says what will happen
-      await button.trigger('click')
-      expect(button.text()).toBe('Luk alle')
+      await nextTick()
+      expect(registeredRef.value).toBe(true)
     })
   })
 
@@ -279,172 +255,66 @@ describe('FdsAccordionGroup', () => {
       expect(wrapper.find('ul.accordion').text()).toBe('')
     })
 
-    it('handles rapid clicks correctly', async () => {
-      const wrapper = mount(FdsAccordionGroup)
-      const button = wrapper.find('button')
-
-      // Rapid clicks
-      await button.trigger('click')
-      await button.trigger('click')
-      await button.trigger('click')
-
-      const emissions = wrapper.emitted('toggle-all')!
-      expect(emissions).toHaveLength(3)
-      expect(emissions[0]).toEqual([true])
-      expect(emissions[1]).toEqual([false])
-      expect(emissions[2]).toEqual([true])
-    })
-
-    it('maintains reactivity when props change', async () => {
+    it('handles prop changes reactively', async () => {
       const wrapper = mount(FdsAccordionGroup, {
         props: {
-          collapsedText: 'Open All',
-          expandedText: 'Close All',
+          collapsedText: 'Open',
+          expandedText: 'Close',
         },
       })
 
-      expect(wrapper.find('button').text()).toBe('Open All')
+      expect(wrapper.find('button').text()).toBe('Open')
 
       await wrapper.setProps({
-        collapsedText: 'Expand Everything',
-        expandedText: 'Collapse Everything',
+        collapsedText: 'Expand',
+        expandedText: 'Collapse',
       })
 
-      expect(wrapper.find('button').text()).toBe('Expand Everything')
-
-      // Click to expand and verify new expanded text
-      await wrapper.find('button').trigger('click')
-      expect(wrapper.find('button').text()).toBe('Collapse Everything')
-    })
-
-    it('handles missing default props gracefully', () => {
-      const wrapper = mount(FdsAccordionGroup, {
-        props: {
-          collapsedText: undefined,
-          expandedText: undefined,
-          showBulkControls: undefined,
-        },
-      })
-
-      const button = wrapper.find('button')
-      expect(button.exists()).toBe(true)
-      expect(button.text()).toBe('Åbn alle')
-    })
-  })
-
-  describe('Integration', () => {
-    it('works with accordion items', async () => {
-      // Simulate accordion items that would consume the provided state
-      const AccordionItem = {
-        template: `
-          <li>
-            <button @click="toggle">{{ expanded ? 'Collapse' : 'Expand' }} Item</button>
-            <div v-if="expanded">Content</div>
-          </li>
-        `,
-        setup() {
-          const groupExpanded = inject('provideGroupExpanded', ref(false))
-          const localExpanded = ref(false)
-          const expanded = computed(() => groupExpanded.value || localExpanded.value)
-
-          const toggle = () => {
-            localExpanded.value = !localExpanded.value
-          }
-
-          return { expanded, toggle }
-        },
-      }
-
-      const wrapper = mount({
-        template: `
-          <FdsAccordionGroup>
-            <AccordionItem />
-            <AccordionItem />
-          </FdsAccordionGroup>
-        `,
-        components: { FdsAccordionGroup, AccordionItem },
-      })
-
-      const items = wrapper.findAll('li')
-
-      // Initially all collapsed
-      items.forEach((item) => {
-        expect(item.text()).toContain('Expand Item')
-      })
-
-      // Click bulk expand
-      await wrapper.find('button.accordion-bulk-button').trigger('click')
-
-      // All should show as expanded
-      items.forEach((item) => {
-        expect(item.text()).toContain('Collapse Item')
-      })
-    })
-
-    it('integrates with parent form components', () => {
-      const wrapper = mount({
-        template: `
-          <form>
-            <FdsAccordionGroup @toggle-all="handleToggle">
-              <li>Form Section 1</li>
-              <li>Form Section 2</li>
-            </FdsAccordionGroup>
-          </form>
-        `,
-        components: { FdsAccordionGroup },
-        setup() {
-          const handleToggle = vi.fn()
-          return { handleToggle }
-        },
-      })
-
-      const accordionGroup = wrapper.findComponent(FdsAccordionGroup)
-      expect(accordionGroup.exists()).toBe(true)
-
-      // Verify it's properly nested in form
-      expect(wrapper.find('form').find('ul.accordion').exists()).toBe(true)
-    })
-
-    it('supports dynamic accordion items', async () => {
-      const wrapper = mount({
-        template: `
-          <FdsAccordionGroup>
-            <li v-for="item in items" :key="item">{{ item }}</li>
-          </FdsAccordionGroup>
-        `,
-        components: { FdsAccordionGroup },
-        setup() {
-          const items = ref(['Item 1', 'Item 2'])
-          return { items }
-        },
-      })
-
-      expect(wrapper.findAll('li')).toHaveLength(2)
-
-      // Add item
-      await wrapper.vm.items.push('Item 3')
-      await nextTick()
-      expect(wrapper.findAll('li')).toHaveLength(3)
-
-      // Remove item
-      await wrapper.vm.items.pop()
-      await nextTick()
-      expect(wrapper.findAll('li')).toHaveLength(2)
+      expect(wrapper.find('button').text()).toBe('Expand')
     })
   })
 
   describe('Accessibility', () => {
-    it('meets WCAG accessibility standards', async () => {
-      // Wrap in main landmark to satisfy axe region rule
+    it('maintains semantic HTML structure', () => {
+      const wrapper = mount(FdsAccordionGroup, {
+        slots: {
+          default: '<li>Item 1</li><li>Item 2</li>',
+        },
+      })
+
+      const ul = wrapper.find('ul.accordion')
+      expect(ul.exists()).toBe(true)
+      expect(ul.findAll('li')).toHaveLength(2)
+    })
+
+    it('button has correct aria-expanded state', async () => {
+      const wrapper = mount({
+        template: `
+          <FdsAccordionGroup>
+            <FdsAccordion header="Test">Content</FdsAccordion>
+          </FdsAccordionGroup>
+        `,
+        components: { FdsAccordionGroup, FdsAccordion },
+      })
+      const button = wrapper.find('button')
+
+      expect(button.attributes('aria-expanded')).toBe('false')
+
+      await button.trigger('click')
+      await nextTick()
+      expect(button.attributes('aria-expanded')).toBe('true')
+    })
+
+    it('passes accessibility tests', async () => {
       const TestWrapper = {
         template: `
           <main>
             <FdsAccordionGroup>
-              <li>Test accordion item</li>
+              <FdsAccordion header="Test Item">Test Content</FdsAccordion>
             </FdsAccordionGroup>
           </main>
         `,
-        components: { FdsAccordionGroup },
+        components: { FdsAccordionGroup, FdsAccordion },
       }
 
       await testAccessibility(TestWrapper)

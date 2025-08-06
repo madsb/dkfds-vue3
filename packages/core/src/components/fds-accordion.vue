@@ -1,108 +1,196 @@
 <template>
-  <component :is="isInGroup ? 'li' : 'div'" :class="isInGroup ? '' : 'accordion'">
-    <component :is="headerTag">
-      <button
-        :id="formid"
-        class="accordion-button"
-        :class="getVariantClass"
-        :aria-expanded="`${refExpanded ? 'true' : 'false'}`"
-        :aria-controls="`acc_${formid}`"
-        @click="toggleAccordion"
-      >
-        <slot name="header">
-          {{ header }}
+  <!-- Standalone accordion: wrap in ul.accordion > li -->
+  <ul v-if="!isInGroup" class="accordion">
+    <li>
+      <component :is="headerTag">
+        <button
+          :id="buttonId"
+          class="accordion-button"
+          :class="variantClass"
+          :aria-expanded="isExpanded ? 'true' : 'false'"
+          :aria-controls="panelId"
+          @click="handleToggle"
+        >
+          <span class="accordion-title">
+            <slot name="header">
+              {{ header }}
+            </slot>
+          </span>
           <span
             v-if="variant && ['error', 'warning', 'success'].includes(variant)"
             class="accordion-icon"
           >
             <span v-if="variantText !== null" class="icon_text">
-              {{ variantText === '' ? getIconText : variantText }}
+              {{ variantText || defaultVariantTexts[variant] }}
             </span>
             <svg class="icon-svg" focusable="false" aria-hidden="true">
-              <use :href="`#${getIcon}`"></use>
+              <use :href="`#${icons[variant]}`"></use>
             </svg>
           </span>
-        </slot>
+        </button>
+      </component>
+
+      <div :id="panelId" :aria-hidden="!isExpanded" class="accordion-content">
+        <slot />
+      </div>
+    </li>
+  </ul>
+
+  <!-- In group: just render the li -->
+  <li v-else>
+    <component :is="headerTag">
+      <button
+        :id="buttonId"
+        class="accordion-button"
+        :class="variantClass"
+        :aria-expanded="isExpanded ? 'true' : 'false'"
+        :aria-controls="panelId"
+        @click="handleToggle"
+      >
+        <span class="accordion-title">
+          <slot name="header">
+            {{ header }}
+          </slot>
+        </span>
+        <span
+          v-if="variant && ['error', 'warning', 'success'].includes(variant)"
+          class="accordion-icon"
+        >
+          <span v-if="variantText !== null" class="icon_text">
+            {{ variantText || defaultVariantTexts[variant] }}
+          </span>
+          <svg class="icon-svg" focusable="false" aria-hidden="true">
+            <use :href="`#${icons[variant]}`"></use>
+          </svg>
+        </span>
       </button>
     </component>
 
-    <div
-      :id="`acc_${formid}`"
-      role="region"
-      :aria-labelledby="formid"
-      :aria-hidden="`${refExpanded ? 'false' : 'true'}`"
-      class="accordion-content"
-    >
+    <div :id="panelId" :aria-hidden="!isExpanded" class="accordion-content">
       <slot />
     </div>
-  </component>
+  </li>
 </template>
 
 <script setup lang="ts">
-import { formId } from 'dkfds-vue3-utils'
-import { ref, computed, inject, watch } from 'vue'
+import { ref, computed, inject, watch, onMounted, onUnmounted, type Ref } from 'vue'
+import { generateId } from 'dkfds-vue3-utils'
 
-const {
-  /** Overskrift */
-  header = null,
-  /** Hjælpetekst */
-  hint: _hint = '',
-  /** Er Accordion Åben = aktiv */
-  expanded = false,
-  headerTag = 'h2',
-  /** Variant - ikon der vises til højre */
-  variant = null,
-  /** Tilhørende tekst til varianten */
-  variantText = '',
-} = defineProps<{
-  header?: string | null
-  hint?: string
-  expanded?: boolean
-  headerTag?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
-  variant?: 'success' | 'warning' | 'error' | null
-  variantText?: string
-}>()
-
-const emit = defineEmits<{
-  'accordion-toggle': [expanded: boolean]
-}>()
-
-const refExpanded = ref(expanded)
-const groupExpanded = inject('provideGroupExpanded', null)
-
-// Detect if this accordion is inside a group
-const isInGroup = computed(() => groupExpanded !== null)
-
-const { formid } = formId(undefined, true)
-
-// Watch for group expand/collapse
-if (groupExpanded) {
-  watch(groupExpanded, (newValue) => {
-    if (newValue !== refExpanded.value) {
-      refExpanded.value = newValue
-      emit('accordion-toggle', refExpanded.value)
-    }
-  })
+interface AccordionGroupApi {
+  register: (id: string, expanded: Ref<boolean>) => void
+  unregister: (id: string) => void
+  getState: (id: string) => boolean
 }
 
+const props = withDefaults(
+  defineProps<{
+    /** Accordion header text */
+    header?: string
+    /** Controlled expanded state */
+    modelValue?: boolean
+    /** Heading level */
+    headerTag?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+    /** Variant type for icons */
+    variant?: 'success' | 'warning' | 'error' | null
+    /** Text to display with variant icon */
+    variantText?: string
+    /** Unique ID for the accordion */
+    id?: string
+  }>(),
+  {
+    headerTag: 'h2',
+    variant: null,
+  },
+)
+
+const emit = defineEmits<{
+  'update:modelValue': [value: boolean]
+  'fds.accordion.open': []
+  'fds.accordion.close': []
+}>()
+
+// Generate unique IDs
+const accordionId = generateId(props.id)
+const buttonId = computed(() => `${accordionId.value}-button`)
+const panelId = computed(() => `${accordionId.value}-panel`)
+
+// Check if we're in a group
+const groupApi = inject<AccordionGroupApi | null>('accordion-group-api', null)
+const isInGroup = computed(() => !!groupApi)
+
+// State management
+const localExpanded = ref(props.modelValue ?? false)
+
+const isExpanded = computed({
+  get() {
+    // If in a group and the group is managing state, use that
+    if (groupApi && groupApi.getState) {
+      return groupApi.getState(accordionId.value)
+    }
+    return localExpanded.value
+  },
+  set(value: boolean) {
+    localExpanded.value = value
+    emit('update:modelValue', value)
+  },
+})
+
+// Watch for external modelValue changes
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    if (newValue !== undefined) {
+      localExpanded.value = newValue
+    }
+  },
+)
+
+// Register with group if present
+onMounted(() => {
+  if (groupApi) {
+    groupApi.register(accordionId.value, localExpanded)
+  }
+})
+
+onUnmounted(() => {
+  if (groupApi) {
+    groupApi.unregister(accordionId.value)
+  }
+})
+
+// Icon configuration
 const icons = {
   success: 'check-circle',
   warning: 'report-problem',
   error: 'highlight-off',
-}
+} as const
 
-const defaultVariantText = {
+const defaultVariantTexts = {
   success: 'Success',
   warning: 'Advarsel',
   error: 'Fejl',
-}
+} as const
 
-const getVariantClass = computed(() => (variant ? `accordion-${variant}` : ''))
-const getIcon = computed(() => icons[variant as keyof typeof icons])
-const getIconText = computed(() => defaultVariantText[variant as keyof typeof icons])
+// Computed properties
+const variantClass = computed(() => (props.variant ? `accordion-${props.variant}` : ''))
 
-const toggleAccordion = () => {
-  refExpanded.value = !refExpanded.value
-  emit('accordion-toggle', refExpanded.value)
+// Methods
+const handleToggle = () => {
+  isExpanded.value = !isExpanded.value
+
+  // Emit DKFDS events
+  if (isExpanded.value) {
+    emit('fds.accordion.open')
+  } else {
+    emit('fds.accordion.close')
+  }
 }
 </script>
+
+<style scoped lang="scss">
+ul.accordion {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>

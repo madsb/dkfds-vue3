@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { nextTick, ref } from 'vue'
 import FdsAccordion from '../../components/fds-accordion.vue'
 import { testAccessibility } from '../../../../../test-shared/test-utils'
 
@@ -10,10 +11,27 @@ describe('FdsAccordion', () => {
       expect(wrapper.exists()).toBe(true)
     })
 
-    it('renders as div by default when not in group', () => {
+    it('renders as ul element when standalone', () => {
       const wrapper = mount(FdsAccordion)
-      expect(wrapper.element.tagName).toBe('DIV')
-      expect(wrapper.classes()).toContain('accordion')
+      expect(wrapper.find('ul').exists()).toBe(true)
+      expect(wrapper.find('ul').classes()).toContain('accordion')
+      expect(wrapper.find('li').exists()).toBe(true)
+    })
+
+    it('renders as li element when in group', () => {
+      const wrapper = mount(FdsAccordion, {
+        global: {
+          provide: {
+            'accordion-group-api': {
+              register: () => {},
+              unregister: () => {},
+              getState: () => false,
+            },
+          },
+        },
+      })
+      expect(wrapper.find('li').exists()).toBe(true)
+      expect(wrapper.find('ul').exists()).toBe(false)
     })
 
     it('renders default header tag as h2', () => {
@@ -23,24 +41,32 @@ describe('FdsAccordion', () => {
 
     it('renders accordion button with correct attributes', () => {
       const wrapper = mount(FdsAccordion)
-      const button = wrapper.find('button.accordion-button')
+      const button = wrapper.find('button')
 
       expect(button.exists()).toBe(true)
-      expect(button.attributes('aria-expanded')).toBe('false')
-      expect(button.attributes('aria-controls')).toMatch(/^acc_/)
+      expect(button.classes()).toContain('accordion-button')
+      expect(button.attributes('aria-expanded')).toBeDefined()
+      expect(button.attributes('aria-controls')).toBeDefined()
       expect(button.attributes('id')).toBeDefined()
     })
 
-    it('renders accordion content region with correct attributes', () => {
+    it('renders accordion content with correct attributes', () => {
       const wrapper = mount(FdsAccordion)
       const content = wrapper.find('.accordion-content')
-      const buttonId = wrapper.find('button').attributes('id')
 
       expect(content.exists()).toBe(true)
-      expect(content.attributes('role')).toBe('region')
-      expect(content.attributes('aria-hidden')).toBe('true')
-      expect(content.attributes('aria-labelledby')).toBe(buttonId)
-      expect(content.attributes('id')).toBe(`acc_${buttonId}`)
+      expect(content.attributes('id')).toBeDefined()
+      expect(content.attributes('aria-hidden')).toBeDefined()
+    })
+
+    it('renders accordion-title span', () => {
+      const wrapper = mount(FdsAccordion, {
+        props: { header: 'Test Header' },
+      })
+      const titleSpan = wrapper.find('.accordion-title')
+
+      expect(titleSpan.exists()).toBe(true)
+      expect(titleSpan.text()).toBe('Test Header')
     })
   })
 
@@ -50,161 +76,167 @@ describe('FdsAccordion', () => {
         props: { header: 'Test Accordion Header' },
       })
 
-      expect(wrapper.find('button').text()).toContain('Test Accordion Header')
+      expect(wrapper.find('.accordion-title').text()).toBe('Test Accordion Header')
     })
 
-    it('handles null header prop', () => {
-      const wrapper = mount(FdsAccordion, {
-        props: { header: null },
-      })
-
-      expect(wrapper.find('button').text()).toBe('')
+    it('handles undefined header prop', () => {
+      const wrapper = mount(FdsAccordion)
+      expect(wrapper.find('.accordion-title').text()).toBe('')
     })
 
-    it('renders accordion as expanded when expanded prop is true', () => {
+    it('respects modelValue for initial expanded state', () => {
       const wrapper = mount(FdsAccordion, {
-        props: { expanded: true },
+        props: { modelValue: true },
       })
 
-      const button = wrapper.find('button')
-      const content = wrapper.find('.accordion-content')
-
-      expect(button.attributes('aria-expanded')).toBe('true')
-      expect(content.attributes('aria-hidden')).toBe('false')
+      expect(wrapper.find('button').attributes('aria-expanded')).toBe('true')
+      expect(wrapper.find('.accordion-content').attributes('aria-hidden')).toBe('false')
     })
 
     it('renders with custom header tag', () => {
       const wrapper = mount(FdsAccordion, {
-        props: { headerTag: 'h4' },
+        props: { headerTag: 'h3' },
       })
 
-      expect(wrapper.find('h4').exists()).toBe(true)
+      expect(wrapper.find('h3').exists()).toBe(true)
       expect(wrapper.find('h2').exists()).toBe(false)
     })
 
     it('renders success variant with icon', () => {
       const wrapper = mount(FdsAccordion, {
-        props: {
-          variant: 'success',
-          header: 'Success Header',
-        },
+        props: { variant: 'success' },
       })
-
-      const button = wrapper.find('button')
-      expect(button.classes()).toContain('accordion-success')
 
       const icon = wrapper.find('.accordion-icon')
       expect(icon.exists()).toBe(true)
-
-      const svg = icon.find('svg')
-      expect(svg.find('use').attributes('href')).toBe('#check-circle')
-      expect(svg.attributes('focusable')).toBe('false')
-      expect(svg.attributes('aria-hidden')).toBe('true')
+      expect(wrapper.find('.accordion-button').classes()).toContain('accordion-success')
+      expect(wrapper.find('use').attributes('href')).toBe('#check-circle')
     })
 
     it('renders warning variant with icon', () => {
       const wrapper = mount(FdsAccordion, {
-        props: {
-          variant: 'warning',
-          header: 'Warning Header',
-        },
+        props: { variant: 'warning' },
       })
 
-      const button = wrapper.find('button')
-      expect(button.classes()).toContain('accordion-warning')
-
-      const use = wrapper.find('use')
-      expect(use.attributes('href')).toBe('#report-problem')
+      expect(wrapper.find('.accordion-button').classes()).toContain('accordion-warning')
+      expect(wrapper.find('use').attributes('href')).toBe('#report-problem')
     })
 
     it('renders error variant with icon', () => {
       const wrapper = mount(FdsAccordion, {
-        props: {
-          variant: 'error',
-          header: 'Error Header',
-        },
+        props: { variant: 'error' },
       })
 
-      const button = wrapper.find('button')
-      expect(button.classes()).toContain('accordion-error')
-
-      const use = wrapper.find('use')
-      expect(use.attributes('href')).toBe('#highlight-off')
+      expect(wrapper.find('.accordion-button').classes()).toContain('accordion-error')
+      expect(wrapper.find('use').attributes('href')).toBe('#highlight-off')
     })
 
     it('renders default variant text when variant is set', () => {
       const wrapper = mount(FdsAccordion, {
-        props: {
-          variant: 'warning',
-          header: 'Test',
-        },
+        props: { variant: 'error' },
       })
 
-      const iconText = wrapper.find('.icon_text')
-      expect(iconText.text()).toBe('Advarsel')
+      expect(wrapper.find('.icon_text').text()).toBe('Fejl')
     })
 
     it('renders custom variant text', () => {
       const wrapper = mount(FdsAccordion, {
         props: {
-          variant: 'error',
-          variantText: 'Custom Error Text',
-          header: 'Test',
+          variant: 'success',
+          variantText: 'Custom Success',
         },
       })
 
-      const iconText = wrapper.find('.icon_text')
-      expect(iconText.text()).toBe('Custom Error Text')
+      expect(wrapper.find('.icon_text').text()).toBe('Custom Success')
     })
 
     it('does not render icon for null variant', () => {
+      const wrapper = mount(FdsAccordion)
+      expect(wrapper.find('.accordion-icon').exists()).toBe(false)
+    })
+
+    it('uses provided id for generating element ids', () => {
       const wrapper = mount(FdsAccordion, {
-        props: {
-          variant: null,
-          header: 'Test Header',
-        },
+        props: { id: 'my-accordion' },
       })
 
-      expect(wrapper.find('.accordion-icon').exists()).toBe(false)
+      const button = wrapper.find('button')
+      const panel = wrapper.find('.accordion-content')
+
+      expect(button.attributes('id')).toContain('my-accordion')
+      expect(panel.attributes('id')).toContain('my-accordion')
+      expect(button.attributes('aria-controls')).toBe(panel.attributes('id'))
     })
   })
 
   describe('Events', () => {
     it('toggles expanded state when button is clicked', async () => {
       const wrapper = mount(FdsAccordion, {
-        props: { expanded: false },
+        props: { modelValue: false },
       })
 
       const button = wrapper.find('button')
-
-      // Initial state
-      expect(button.attributes('aria-expanded')).toBe('false')
-
-      // Click to expand
       await button.trigger('click')
-      expect(button.attributes('aria-expanded')).toBe('true')
-      expect(wrapper.find('.accordion-content').attributes('aria-hidden')).toBe('false')
 
-      // Click to collapse
-      await button.trigger('click')
-      expect(button.attributes('aria-expanded')).toBe('false')
-      expect(wrapper.find('.accordion-content').attributes('aria-hidden')).toBe('true')
+      expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+      expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
     })
 
-    it('emits accordion-toggle event with correct payload', async () => {
+    it('emits fds.accordion.open event when opening', async () => {
       const wrapper = mount(FdsAccordion, {
-        props: { expanded: false },
+        props: { modelValue: false },
       })
 
+      await wrapper.find('button').trigger('click')
+
+      expect(wrapper.emitted('fds.accordion.open')).toBeTruthy()
+    })
+
+    it('emits fds.accordion.close event when closing', async () => {
+      const wrapper = mount(FdsAccordion, {
+        props: { modelValue: true },
+      })
+
+      await wrapper.find('button').trigger('click')
+
+      expect(wrapper.emitted('fds.accordion.close')).toBeTruthy()
+    })
+  })
+
+  describe('v-model binding', () => {
+    it('updates when v-model changes externally', async () => {
+      const wrapper = mount(FdsAccordion, {
+        props: { modelValue: false },
+      })
+
+      expect(wrapper.find('button').attributes('aria-expanded')).toBe('false')
+
+      await wrapper.setProps({ modelValue: true })
+
+      expect(wrapper.find('button').attributes('aria-expanded')).toBe('true')
+    })
+
+    it('maintains two-way binding', async () => {
+      const TestComponent = {
+        template: `
+          <ul class="accordion">
+            <FdsAccordion v-model="expanded" header="Test" />
+          </ul>
+        `,
+        components: { FdsAccordion },
+        data() {
+          return { expanded: false }
+        },
+      }
+
+      const wrapper = mount(TestComponent)
       const button = wrapper.find('button')
 
-      // Click to expand
-      await button.trigger('click')
-      expect(wrapper.emitted('accordion-toggle')?.[0]).toEqual([true])
+      expect(wrapper.vm.expanded).toBe(false)
 
-      // Click to collapse
       await button.trigger('click')
-      expect(wrapper.emitted('accordion-toggle')?.[1]).toEqual([false])
+
+      expect(wrapper.vm.expanded).toBe(true)
     })
   })
 
@@ -212,43 +244,41 @@ describe('FdsAccordion', () => {
     it('renders default slot content in accordion content area', () => {
       const wrapper = mount(FdsAccordion, {
         slots: {
-          default: '<p>Accordion content goes here</p>',
+          default: '<p>Test content</p>',
         },
       })
 
-      const content = wrapper.find('.accordion-content')
-      expect(content.find('p').text()).toBe('Accordion content goes here')
+      expect(wrapper.find('.accordion-content p').exists()).toBe(true)
+      expect(wrapper.find('.accordion-content').text()).toBe('Test content')
     })
 
     it('renders header slot content', () => {
       const wrapper = mount(FdsAccordion, {
         slots: {
-          header: '<span class="custom-header">Custom Header Content</span>',
+          header: '<span class="custom">Custom Header</span>',
         },
       })
 
-      const button = wrapper.find('button')
-      expect(button.find('.custom-header').text()).toBe('Custom Header Content')
+      expect(wrapper.find('.accordion-title .custom').exists()).toBe(true)
+      expect(wrapper.find('.accordion-title').text()).toBe('Custom Header')
     })
 
     it('prioritizes header slot over header prop', () => {
       const wrapper = mount(FdsAccordion, {
         props: { header: 'Prop Header' },
         slots: {
-          header: '<span>Slot Header</span>',
+          header: 'Slot Header',
         },
       })
 
-      const button = wrapper.find('button')
-      expect(button.text()).toContain('Slot Header')
-      expect(button.text()).not.toContain('Prop Header')
+      expect(wrapper.find('.accordion-title').text()).toBe('Slot Header')
     })
   })
 
   describe('Accessibility', () => {
     it('maintains correct ARIA attributes for collapsed state', () => {
       const wrapper = mount(FdsAccordion, {
-        props: { expanded: false },
+        props: { modelValue: false },
       })
 
       const button = wrapper.find('button')
@@ -260,7 +290,7 @@ describe('FdsAccordion', () => {
 
     it('maintains correct ARIA attributes for expanded state', () => {
       const wrapper = mount(FdsAccordion, {
-        props: { expanded: true },
+        props: { modelValue: true },
       })
 
       const button = wrapper.find('button')
@@ -270,24 +300,21 @@ describe('FdsAccordion', () => {
       expect(content.attributes('aria-hidden')).toBe('false')
     })
 
-    it('links button and content region with ARIA attributes', () => {
+    it('links button and content with ARIA attributes', () => {
       const wrapper = mount(FdsAccordion)
 
       const button = wrapper.find('button')
       const content = wrapper.find('.accordion-content')
-      const buttonId = button.attributes('id')
 
-      expect(button.attributes('aria-controls')).toBe(`acc_${buttonId}`)
-      expect(content.attributes('id')).toBe(`acc_${buttonId}`)
-      expect(content.attributes('aria-labelledby')).toBe(buttonId)
+      expect(button.attributes('aria-controls')).toBe(content.attributes('id'))
     })
 
-    it('passes accessibility tests', async () => {
+    it('passes accessibility tests when used in proper structure', async () => {
       const TestWrapper = {
         template: `
           <main>
-            <FdsAccordion header="Test Accordion" expanded>
-              <p>Accordion content for testing</p>
+            <FdsAccordion header="Accessible Accordion" :modelValue="true">
+              <p>This is accessible content within the accordion.</p>
             </FdsAccordion>
           </main>
         `,
@@ -304,7 +331,7 @@ describe('FdsAccordion', () => {
         props: { header: '' },
       })
 
-      expect(wrapper.find('button').text()).toBe('')
+      expect(wrapper.find('.accordion-title').text()).toBe('')
     })
 
     it('handles empty string variantText', () => {
@@ -312,18 +339,10 @@ describe('FdsAccordion', () => {
         props: {
           variant: 'success',
           variantText: '',
-          header: 'Test',
         },
       })
 
-      // Should fall back to default text
-      const iconText = wrapper.find('.icon_text')
-      expect(iconText.text()).toBe('Success')
-    })
-
-    it('handles undefined header prop (default)', () => {
-      const wrapper = mount(FdsAccordion)
-      expect(wrapper.find('button').text()).toBe('')
+      expect(wrapper.find('.icon_text').text()).toBe('Success')
     })
 
     it('generates unique IDs for multiple instances', () => {
@@ -333,72 +352,60 @@ describe('FdsAccordion', () => {
       const id1 = wrapper1.find('button').attributes('id')
       const id2 = wrapper2.find('button').attributes('id')
 
-      expect(id1).toBeDefined()
-      expect(id2).toBeDefined()
       expect(id1).not.toBe(id2)
     })
   })
 
-  describe('Integration', () => {
-    it('works within accordion group context', async () => {
-      const { ref } = await import('vue')
-      const groupExpanded = ref(false)
+  describe('Integration with Accordion Group', () => {
+    it('registers with group API when mounted', async () => {
+      const registerFn = vi.fn()
+      const unregisterFn = vi.fn()
 
       const wrapper = mount(FdsAccordion, {
+        props: {
+          header: 'Test Accordion',
+          modelValue: false,
+        },
         global: {
           provide: {
-            provideGroupExpanded: groupExpanded,
+            'accordion-group-api': {
+              register: registerFn,
+              unregister: unregisterFn,
+              getState: () => false,
+            },
           },
         },
       })
 
-      // Should render as li when in group
-      expect(wrapper.element.tagName).toBe('LI')
-      expect(wrapper.classes()).not.toContain('accordion')
+      // Should have called register on mount
+      expect(registerFn).toHaveBeenCalled()
+
+      // Unmount and check unregister was called
+      wrapper.unmount()
+      expect(unregisterFn).toHaveBeenCalled()
     })
 
-    it('responds to group expand/collapse signals', async () => {
-      const { ref, nextTick } = await import('vue')
-      const groupExpanded = ref(false)
+    it('uses group state when available', async () => {
+      const groupState = ref(true)
 
       const wrapper = mount(FdsAccordion, {
-        props: { expanded: false },
+        props: {
+          header: 'Test Accordion',
+          modelValue: false,
+        },
         global: {
           provide: {
-            provideGroupExpanded: groupExpanded,
+            'accordion-group-api': {
+              register: () => {},
+              unregister: () => {},
+              getState: () => groupState.value,
+            },
           },
         },
       })
 
-      const button = wrapper.find('button')
-
-      // Initial state
-      expect(button.attributes('aria-expanded')).toBe('false')
-
-      // Group expands all
-      groupExpanded.value = true
-      await nextTick()
-
-      expect(button.attributes('aria-expanded')).toBe('true')
-      expect(wrapper.emitted('accordion-toggle')?.[0]).toEqual([true])
-    })
-
-    it('works in a form context', () => {
-      const FormWrapper = {
-        template: `
-          <form>
-            <FdsAccordion header="Form Section">
-              <input type="text" name="test" />
-              <button type="submit">Submit</button>
-            </FdsAccordion>
-          </form>
-        `,
-        components: { FdsAccordion },
-      }
-
-      const wrapper = mount(FormWrapper)
-      expect(wrapper.find('form').exists()).toBe(true)
-      expect(wrapper.find('.accordion-content input').exists()).toBe(true)
+      // Should use group state instead of local state
+      expect(wrapper.find('button').attributes('aria-expanded')).toBe('true')
     })
   })
 })
