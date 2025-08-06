@@ -188,15 +188,15 @@
         </fds-faneblade-nav>
         
         <div class="mt-4">
-          <div id="sektion1" class="p-4 border" v-if="activeNavSection === 'sektion1'">
+          <div v-if="activeNavSection === 'sektion1'" id="sektion1" class="p-4 border">
             <h3>Sektion 1</h3>
             <p>Dette er indhold for sektion 1. Navigation faneblade bruges til at navigere mellem relaterede sektioner på samme side.</p>
           </div>
-          <div id="sektion2" class="p-4 border" v-if="activeNavSection === 'sektion2'">
+          <div v-if="activeNavSection === 'sektion2'" id="sektion2" class="p-4 border">
             <h3>Sektion 2</h3>
             <p>Dette er indhold for sektion 2. Disse bruger links i stedet for knapper.</p>
           </div>
-          <div id="sektion3" class="p-4 border" v-if="activeNavSection === 'sektion3'">
+          <div v-if="activeNavSection === 'sektion3'" id="sektion3" class="p-4 border">
             <h3>Sektion 3</h3>
             <p>Dette er indhold for sektion 3. De er beregnet til sidenavigation.</p>
           </div>
