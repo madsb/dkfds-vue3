@@ -10,7 +10,7 @@
 
         <fds-formgroup id="demo-name-field" :is-valid="isNameValid">
           <fds-label>Fulde navn</fds-label>
-          <fds-tooltip class="ml-2">Dit fulde navn som det står i dit pas</fds-tooltip>
+          <fds-tooltip class="ml-2" content="Dit fulde navn som det står i dit pas" />
           <fds-hint>Fx "Anders Andersen"</fds-hint>
           <fds-fejlmeddelelse v-if="!isNameValid">
             Navn skal være mindst 3 tegn
@@ -191,9 +191,7 @@ const code = `
 <!-- Eksempel med fuld accessibility -->
 <fds-formgroup id="demo-name-field" :is-valid="isNameValid">
   <fds-label>Fulde navn</fds-label>
-  <fds-tooltip class="ml-2">
-    Dit fulde navn som det står i dit pas
-  </fds-tooltip>
+  <fds-tooltip class="ml-2" content="Dit fulde navn som det står i dit pas" />
   <fds-hint>Fx "Anders Andersen"</fds-hint>
   <fds-fejlmeddelelse v-if="!isNameValid">
     Navn skal være mindst 3 tegn

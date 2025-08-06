@@ -6,9 +6,7 @@
       </fds-label>
     </slot>
     <slot name="tooltip">
-      <fds-tooltip v-if="tooltip" class="ml-2">
-        {{ tooltip }}
-      </fds-tooltip>
+      <fds-tooltip v-if="tooltip" :content="tooltip" class="ml-2" />
     </slot>
 
     <slot name="fejlmeddelelse">
