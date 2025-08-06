@@ -1,9 +1,6 @@
 <template>
   <nav v-if="hasErrors" :aria-labelledby="headingId">
-    <div
-      class="alert alert-error mt-0 mb-8"
-      role="alert"
-    >
+    <div class="alert alert-error mt-0 mb-8" role="alert">
       <svg class="icon-svg alert-icon" aria-label="Fejl" focusable="false">
         <use href="#error"></use>
       </svg>
@@ -115,12 +112,12 @@ const focusField = (fieldId: string) => {
     if (inputElement) {
       targetElement = inputElement as HTMLElement
     }
-    
+
     // Scroll to the target element with smooth behavior
     if (typeof targetElement.scrollIntoView === 'function') {
       targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }
-    
+
     // Focus after a longer delay to ensure smooth scrolling completes
     setTimeout(() => {
       if (typeof targetElement.focus === 'function') {

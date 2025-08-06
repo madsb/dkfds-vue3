@@ -9,7 +9,7 @@
         </fds-dropdown>
 
         <fds-pre header="v-model" :json="{ dropdownVal }" />
-        
+
         <div class="mt-6">
           <h4>Eksempel med forudvalgt værdi:</h4>
           <fds-dropdown v-model="dropdownVal2" class="mt-2">

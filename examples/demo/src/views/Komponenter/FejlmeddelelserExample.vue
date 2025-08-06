@@ -1,6 +1,9 @@
 <template>
   <section>
-    <fds-preview header="Fejlmeddelelser" href="https://designsystem.dk/komponenter/fejlmeddelelser/">
+    <fds-preview
+      header="Fejlmeddelelser"
+      href="https://designsystem.dk/komponenter/fejlmeddelelser/"
+    >
       <fds-preview-item>
         <h3>Manuel fejlmeddelelse</h3>
         <fds-formgroup :is-valid="false">
@@ -18,18 +21,14 @@
 
       <fds-preview-item>
         <h3>Automatisk fejlmeddelelse med xfds-validate</h3>
-        <xfds-validate 
-          v-model="txtEmail" 
-          :validations="emailValidations"
-          :dirty="emailDirty"
-        >
+        <xfds-validate v-model="txtEmail" :validations="emailValidations" :dirty="emailDirty">
           <fds-formgroup>
             <fds-label>E-mail</fds-label>
             <fds-hint>Indtast din e-mail adresse</fds-hint>
             <fds-fejlmeddelelse />
-            <fds-input 
-              v-model="txtEmail" 
-              input-type="email" 
+            <fds-input
+              v-model="txtEmail"
+              input-type="email"
               autocomplete="email"
               @blur="emailDirty = true"
             />
@@ -86,7 +85,10 @@
         </table>
 
         <h3 class="mt-4">Tilgængelighed</h3>
-        <p>Komponenten tilføjer automatisk en skærmlæser-venlig "Fejl: " præfiks til alle fejlbeskeder.</p>
+        <p>
+          Komponenten tilføjer automatisk en skærmlæser-venlig "Fejl: " præfiks til alle
+          fejlbeskeder.
+        </p>
       </fds-preview-item>
     </fds-preview>
   </section>
@@ -112,7 +114,7 @@ const emailValidations = [
       return 'Indtast en gyldig e-mail adresse'
     }
     return null
-  }
+  },
 ]
 
 const code = `

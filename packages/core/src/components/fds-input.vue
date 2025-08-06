@@ -48,7 +48,10 @@ const slots = useSlots()
 const { formid } = formId(id, true)
 
 // Inject aria-describedby from formgroup if available
-const injectedAriaDescribedby = inject<string | Ref<string> | undefined>('ariaDescribedby', undefined)
+const injectedAriaDescribedby = inject<string | Ref<string> | undefined>(
+  'ariaDescribedby',
+  undefined,
+)
 const computedAriaDescribedby = computed((): string | undefined => {
   // Use explicitly provided aria-describedby from attrs
   if (attrs['aria-describedby']) {

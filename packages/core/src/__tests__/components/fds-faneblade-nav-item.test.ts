@@ -7,21 +7,21 @@ describe('FdsFanebladeNavItem', () => {
   describe('Rendering', () => {
     it('renders without errors', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: '#test' }
+        props: { href: '#test' },
       })
       expect(wrapper.exists()).toBe(true)
     })
 
     it('renders as li element', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: '#test' }
+        props: { href: '#test' },
       })
       expect(wrapper.element.tagName).toBe('LI')
     })
 
     it('renders anchor element with correct class', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: '#test' }
+        props: { href: '#test' },
       })
       const anchor = wrapper.find('a')
       expect(anchor.exists()).toBe(true)
@@ -30,7 +30,7 @@ describe('FdsFanebladeNavItem', () => {
 
     it('renders span wrapper for label', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: '#test', label: 'Test Link' }
+        props: { href: '#test', label: 'Test Link' },
       })
       const span = wrapper.find('span')
       expect(span.exists()).toBe(true)
@@ -41,35 +41,35 @@ describe('FdsFanebladeNavItem', () => {
   describe('Props', () => {
     it('sets href attribute from prop', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: '#section1' }
+        props: { href: '#section1' },
       })
       expect(wrapper.find('a').attributes('href')).toBe('#section1')
     })
 
     it('renders label text from prop', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: '#test', label: 'Navigation Label' }
+        props: { href: '#test', label: 'Navigation Label' },
       })
       expect(wrapper.text()).toBe('Navigation Label')
     })
 
     it('sets aria-current when active', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: '#test', active: true }
+        props: { href: '#test', active: true },
       })
       expect(wrapper.find('a').attributes('aria-current')).toBe('true')
     })
 
     it('has no aria-current when not active', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: '#test', active: false }
+        props: { href: '#test', active: false },
       })
       expect(wrapper.find('a').attributes('aria-current')).toBeUndefined()
     })
 
     it('renders icon when icon prop is provided', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: '#test', icon: 'document' }
+        props: { href: '#test', icon: 'document' },
       })
       const svg = wrapper.find('svg')
       expect(svg.exists()).toBe(true)
@@ -78,7 +78,7 @@ describe('FdsFanebladeNavItem', () => {
 
     it('renders icon with correct use href', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: '#test', icon: 'document' }
+        props: { href: '#test', icon: 'document' },
       })
       const use = wrapper.find('use')
       expect(use.attributes('href')).toBe('#document')
@@ -86,7 +86,7 @@ describe('FdsFanebladeNavItem', () => {
 
     it('renders icon with proper accessibility attributes', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: '#test', icon: 'document' }
+        props: { href: '#test', icon: 'document' },
       })
       const svg = wrapper.find('svg')
       expect(svg.attributes('focusable')).toBe('false')
@@ -95,7 +95,7 @@ describe('FdsFanebladeNavItem', () => {
 
     it('does not render icon when prop not provided', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: '#test' }
+        props: { href: '#test' },
       })
       expect(wrapper.find('svg').exists()).toBe(false)
     })
@@ -104,11 +104,11 @@ describe('FdsFanebladeNavItem', () => {
   describe('Events', () => {
     it('emits click event when clicked', async () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: '#test' }
+        props: { href: '#test' },
       })
-      
+
       await wrapper.find('a').trigger('click')
-      
+
       expect(wrapper.emitted('click')).toBeTruthy()
       expect(wrapper.emitted('click')?.[0][0]).toBeInstanceOf(MouseEvent)
     })
@@ -117,16 +117,16 @@ describe('FdsFanebladeNavItem', () => {
       const handleClick = vi.fn((event: MouseEvent) => {
         event.preventDefault()
       })
-      
+
       const wrapper = mount(FdsFanebladeNavItem, {
         props: { href: '#test' },
         attrs: {
-          onClick: handleClick
-        }
+          onClick: handleClick,
+        },
       })
-      
+
       await wrapper.find('a').trigger('click')
-      
+
       expect(handleClick).toHaveBeenCalled()
     })
   })
@@ -136,8 +136,8 @@ describe('FdsFanebladeNavItem', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
         props: { href: '#test', label: 'Prop Label' },
         slots: {
-          default: 'Slot Content'
-        }
+          default: 'Slot Content',
+        },
       })
       expect(wrapper.text()).toBe('Slot Content')
       expect(wrapper.text()).not.toBe('Prop Label')
@@ -147,8 +147,8 @@ describe('FdsFanebladeNavItem', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
         props: { href: '#test' },
         slots: {
-          default: '<strong>Bold</strong> navigation'
-        }
+          default: '<strong>Bold</strong> navigation',
+        },
       })
       expect(wrapper.find('strong').exists()).toBe(true)
       expect(wrapper.find('strong').text()).toBe('Bold')
@@ -156,14 +156,14 @@ describe('FdsFanebladeNavItem', () => {
 
     it('falls back to label prop when no slot provided', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: '#test', label: 'Fallback Label' }
+        props: { href: '#test', label: 'Fallback Label' },
       })
       expect(wrapper.text()).toBe('Fallback Label')
     })
 
     it('renders empty when no label or slot', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: '#test' }
+        props: { href: '#test' },
       })
       expect(wrapper.find('span').text()).toBe('')
     })
@@ -172,18 +172,18 @@ describe('FdsFanebladeNavItem', () => {
   describe('Accessibility', () => {
     it('has proper structure for navigation', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: '#test' }
+        props: { href: '#test' },
       })
-      
+
       expect(wrapper.element.tagName).toBe('LI')
       expect(wrapper.find('a').exists()).toBe(true)
     })
 
     it('is keyboard accessible as a link', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: '#test' }
+        props: { href: '#test' },
       })
-      
+
       // Links are natively keyboard accessible
       expect(wrapper.find('a').element.tagName).toBe('A')
     })
@@ -201,22 +201,22 @@ describe('FdsFanebladeNavItem', () => {
             </nav>
           </main>
         `,
-        components: { FdsFanebladeNavItem }
+        components: { FdsFanebladeNavItem },
       }
-      
+
       await testAccessibility(TestWrapper)
     })
 
     it('maintains proper aria-current state', async () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: '#test', active: false }
+        props: { href: '#test', active: false },
       })
-      
+
       expect(wrapper.find('a').attributes('aria-current')).toBeUndefined()
-      
+
       await wrapper.setProps({ active: true })
       expect(wrapper.find('a').attributes('aria-current')).toBe('true')
-      
+
       await wrapper.setProps({ active: false })
       expect(wrapper.find('a').attributes('aria-current')).toBeUndefined()
     })
@@ -225,43 +225,43 @@ describe('FdsFanebladeNavItem', () => {
   describe('Edge Cases', () => {
     it('handles external URLs', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: 'https://example.com' }
+        props: { href: 'https://example.com' },
       })
-      
+
       expect(wrapper.find('a').attributes('href')).toBe('https://example.com')
     })
 
     it('handles special characters in href', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: '#section-with-special-chars_123' }
+        props: { href: '#section-with-special-chars_123' },
       })
-      
+
       expect(wrapper.find('a').attributes('href')).toBe('#section-with-special-chars_123')
     })
 
     it('handles icon and label together', () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { 
+        props: {
           href: '#test',
           icon: 'document',
-          label: 'Documents'
-        }
+          label: 'Documents',
+        },
       })
-      
+
       expect(wrapper.find('svg').exists()).toBe(true)
       expect(wrapper.find('span').text()).toBe('Documents')
     })
 
     it('handles rapid prop changes', async () => {
       const wrapper = mount(FdsFanebladeNavItem, {
-        props: { href: '#test', active: false }
+        props: { href: '#test', active: false },
       })
-      
+
       // Rapid changes
       await wrapper.setProps({ active: true })
       await wrapper.setProps({ active: false })
       await wrapper.setProps({ active: true })
-      
+
       expect(wrapper.find('a').attributes('aria-current')).toBe('true')
     })
   })
@@ -290,21 +290,21 @@ describe('FdsFanebladeNavItem', () => {
             navItems: [
               { href: '#home', label: 'Home' },
               { href: '#about', label: 'About' },
-              { href: '#services', label: 'Services' }
-            ]
+              { href: '#services', label: 'Services' },
+            ],
           }
         },
         methods: {
           handleClick(event: MouseEvent, href: string) {
             event.preventDefault()
             this.activeHref = href
-          }
-        }
+          },
+        },
       }
-      
+
       const wrapper = mount(NavListWrapper)
       const items = wrapper.findAll('li')
-      
+
       expect(items).toHaveLength(3)
       expect(items[0].find('a').attributes('aria-current')).toBe('true')
       expect(items[1].find('a').attributes('aria-current')).toBeUndefined()
@@ -325,26 +325,26 @@ describe('FdsFanebladeNavItem', () => {
         `,
         components: { FdsFanebladeNavItem },
         data() {
-          return { 
+          return {
             href: '#section1',
-            currentSection: 'none'
+            currentSection: 'none',
           }
         },
         methods: {
           handleClick(event: MouseEvent) {
             event.preventDefault()
             this.currentSection = 'section1'
-          }
-        }
+          },
+        },
       }
-      
+
       const wrapper = mount(NavigationComponent)
       const link = wrapper.find('a')
-      
+
       expect(wrapper.find('p').text()).toBe('Current: none')
-      
+
       await link.trigger('click')
-      
+
       expect(wrapper.find('p').text()).toBe('Current: section1')
     })
 
@@ -357,12 +357,12 @@ describe('FdsFanebladeNavItem', () => {
             <FdsFanebladeNavItem href="#videos" icon="videocam" label="Videos" />
           </ul>
         `,
-        components: { FdsFanebladeNavItem }
+        components: { FdsFanebladeNavItem },
       }
-      
+
       const wrapper = mount(IconNav)
       const icons = wrapper.findAll('svg')
-      
+
       expect(icons).toHaveLength(3)
       expect(wrapper.findAll('use')[0].attributes('href')).toBe('#file-image')
       expect(wrapper.findAll('use')[1].attributes('href')).toBe('#document')

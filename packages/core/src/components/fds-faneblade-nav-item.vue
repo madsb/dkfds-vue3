@@ -1,6 +1,6 @@
 <template>
   <li>
-    <a 
+    <a
       :href="href"
       class="tab-button"
       :aria-current="active ? 'true' : undefined"

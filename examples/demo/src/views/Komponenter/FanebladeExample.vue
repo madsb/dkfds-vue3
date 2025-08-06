@@ -10,30 +10,26 @@
               :active="activeTab === 'tab1'"
               @click="activeTab = $event"
             />
-            <fds-faneblade-tab
-              id="tab2"
-              :active="activeTab === 'tab2'"
-              @click="activeTab = $event"
-            >
+            <fds-faneblade-tab id="tab2" :active="activeTab === 'tab2'" @click="activeTab = $event">
               Template Header
             </fds-faneblade-tab>
           </template>
-          
+
           <template #panels>
             <fds-faneblade-panel id="tab1" :active="activeTab === 'tab1'">
               <h2>Fane 1</h2>
               <p>Dette er indholdet for den første fane.</p>
             </fds-faneblade-panel>
-            
+
             <fds-faneblade-panel id="tab2" :active="activeTab === 'tab2'">
               <h2>Fane 2</h2>
               <p>
-                Mauris tempor, tellus a laoreet finibus, neque metus hendrerit augue, ac lacinia nisl
-                dolor et augue. Ut lorem massa, consequat ut orci sit amet, maximus dictum orci.
-                Mauris pharetra nunc sed augue bibendum semper. Donec in cursus orci. Ut sed posuere
-                elit, quis semper turpis. Curabitur malesuada nisi nec nisl facilisis ornare. Praesent
-                vestibulum, velit id sollicitudin auctor, ipsum lacus auctor nisl, in lacinia sem
-                massa eget urna.
+                Mauris tempor, tellus a laoreet finibus, neque metus hendrerit augue, ac lacinia
+                nisl dolor et augue. Ut lorem massa, consequat ut orci sit amet, maximus dictum
+                orci. Mauris pharetra nunc sed augue bibendum semper. Donec in cursus orci. Ut sed
+                posuere elit, quis semper turpis. Curabitur malesuada nisi nec nisl facilisis
+                ornare. Praesent vestibulum, velit id sollicitudin auctor, ipsum lacus auctor nisl,
+                in lacinia sem massa eget urna.
               </p>
             </fds-faneblade-panel>
           </template>
@@ -84,7 +80,7 @@
             </tr>
           </tbody>
         </table>
-        
+
         <h4 class="mt-4">fds-faneblade-panel Props</h4>
         <table class="table table--compact">
           <thead>
@@ -114,8 +110,11 @@
     </fds-preview>
 
     <hr class="my-6" />
-    
-    <fds-preview header="Faneblade med ikoner" href="https://designsystem.dk/komponenter/faneblade/">
+
+    <fds-preview
+      header="Faneblade med ikoner"
+      href="https://designsystem.dk/komponenter/faneblade/"
+    >
       <fds-preview-item>
         <fds-faneblade>
           <template #tabs>
@@ -141,18 +140,18 @@
               @click="activeIconTab = $event"
             />
           </template>
-          
+
           <template #panels>
             <fds-faneblade-panel id="icon1" :active="activeIconTab === 'icon1'">
               <h3>Billede fane</h3>
               <p>Indhold for billede fanen.</p>
             </fds-faneblade-panel>
-            
+
             <fds-faneblade-panel id="icon2" :active="activeIconTab === 'icon2'">
               <h3>Dokument fane</h3>
               <p>Indhold for dokument fanen.</p>
             </fds-faneblade-panel>
-            
+
             <fds-faneblade-panel id="icon3" :active="activeIconTab === 'icon3'">
               <h3>Video fane</h3>
               <p>Indhold for video fanen.</p>
@@ -161,10 +160,13 @@
         </fds-faneblade>
       </fds-preview-item>
     </fds-preview>
-    
+
     <hr class="my-6" />
-    
-    <fds-preview header="Faneblade til navigation" href="https://designsystem.dk/komponenter/faneblade/">
+
+    <fds-preview
+      header="Faneblade til navigation"
+      href="https://designsystem.dk/komponenter/faneblade/"
+    >
       <fds-preview-item>
         <fds-faneblade-nav aria-label="Eksemplets undersider">
           <fds-faneblade-nav-item
@@ -186,11 +188,14 @@
             @click="handleNavClick($event, 'sektion3')"
           />
         </fds-faneblade-nav>
-        
+
         <div class="mt-4">
           <div v-if="activeNavSection === 'sektion1'" id="sektion1" class="p-4 border">
             <h3>Sektion 1</h3>
-            <p>Dette er indhold for sektion 1. Navigation faneblade bruges til at navigere mellem relaterede sektioner på samme side.</p>
+            <p>
+              Dette er indhold for sektion 1. Navigation faneblade bruges til at navigere mellem
+              relaterede sektioner på samme side.
+            </p>
           </div>
           <div v-if="activeNavSection === 'sektion2'" id="sektion2" class="p-4 border">
             <h3>Sektion 2</h3>
@@ -202,11 +207,11 @@
           </div>
         </div>
       </fds-preview-item>
-      
+
       <fds-preview-code>
         <pre v-text="navCode"></pre>
       </fds-preview-code>
-      
+
       <fds-preview-item>
         <h4>fds-faneblade-nav Props</h4>
         <table class="table table--compact">
@@ -227,7 +232,7 @@
             </tr>
           </tbody>
         </table>
-        
+
         <h4 class="mt-4">fds-faneblade-nav-item Props</h4>
         <table class="table table--compact">
           <thead>

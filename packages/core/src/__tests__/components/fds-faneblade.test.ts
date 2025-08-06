@@ -34,10 +34,10 @@ describe('FdsFaneblade', () => {
     it('renders tabs slot content', () => {
       const wrapper = mount(FdsFaneblade, {
         slots: {
-          tabs: '<button class="test-tab">Tab 1</button>'
-        }
+          tabs: '<button class="test-tab">Tab 1</button>',
+        },
       })
-      
+
       expect(wrapper.find('.tab-list .test-tab').exists()).toBe(true)
       expect(wrapper.find('.test-tab').text()).toBe('Tab 1')
     })
@@ -45,10 +45,10 @@ describe('FdsFaneblade', () => {
     it('renders panels slot content', () => {
       const wrapper = mount(FdsFaneblade, {
         slots: {
-          panels: '<div class="test-panel">Panel content</div>'
-        }
+          panels: '<div class="test-panel">Panel content</div>',
+        },
       })
-      
+
       expect(wrapper.find('.tab-container > .test-panel').exists()).toBe(true)
       expect(wrapper.find('.test-panel').text()).toBe('Panel content')
     })
@@ -63,10 +63,10 @@ describe('FdsFaneblade', () => {
           panels: `
             <div class="panel-1">Panel 1</div>
             <div class="panel-2">Panel 2</div>
-          `
-        }
+          `,
+        },
       })
-      
+
       expect(wrapper.find('.tab-list .tab-1').exists()).toBe(true)
       expect(wrapper.find('.tab-list .tab-2').exists()).toBe(true)
       expect(wrapper.find('.tab-container > .panel-1').exists()).toBe(true)
@@ -90,16 +90,16 @@ describe('FdsFaneblade', () => {
         components: { FdsFaneblade },
         data() {
           return { tabs: ['Tab 1', 'Tab 2'] }
-        }
+        },
       }
-      
+
       const wrapper = mount(TestComponent)
       expect(wrapper.findAll('.tab-list > button')).toHaveLength(2)
-      
+
       // Add a tab
       wrapper.vm.tabs.push('Tab 3')
       await wrapper.vm.$nextTick()
-      
+
       expect(wrapper.findAll('.tab-list > button')).toHaveLength(3)
     })
   })
@@ -125,14 +125,14 @@ describe('FdsFaneblade', () => {
             </template>
           </FdsFaneblade>
         `,
-        components: { FdsFaneblade }
+        components: { FdsFaneblade },
       }
-      
+
       const wrapper = mount(TestWrapper)
       const tablist = wrapper.find('[role="tablist"]')
       const tabs = wrapper.findAll('[role="tab"]')
       const panels = wrapper.findAll('[role="tabpanel"]')
-      
+
       expect(tablist.exists()).toBe(true)
       expect(tabs).toHaveLength(2)
       expect(panels).toHaveLength(2)
@@ -164,15 +164,15 @@ describe('FdsFaneblade', () => {
             </FdsFaneblade>
           </main>
         `,
-        components: { FdsFaneblade }
+        components: { FdsFaneblade },
       }
-      
+
       await testAccessibility(TestWrapper)
     })
 
     it('maintains proper document structure', () => {
       const wrapper = mount(FdsFaneblade)
-      
+
       // Component should not have any focusable elements itself
       // Focus management should be handled by child tab components
       expect(wrapper.element.tabIndex).toBe(-1)
@@ -183,10 +183,10 @@ describe('FdsFaneblade', () => {
     it('handles text nodes in slot', () => {
       const wrapper = mount(FdsFaneblade, {
         slots: {
-          tabs: 'Just text content'
-        }
+          tabs: 'Just text content',
+        },
       })
-      
+
       expect(wrapper.find('.tab-list').text()).toBe('Just text content')
     })
 
@@ -203,16 +203,16 @@ describe('FdsFaneblade', () => {
         components: { FdsFaneblade },
         data() {
           return { showTab1: true, showTab2: false }
-        }
+        },
       }
-      
+
       const wrapper = mount(ConditionalWrapper)
       expect(wrapper.findAll('.tab-list > button')).toHaveLength(1)
-      
+
       // Show second tab
       wrapper.vm.showTab2 = true
       await wrapper.vm.$nextTick()
-      
+
       expect(wrapper.findAll('.tab-list > button')).toHaveLength(2)
     })
 
@@ -220,10 +220,10 @@ describe('FdsFaneblade', () => {
       const wrapper = mount(FdsFaneblade, {
         attrs: {
           'data-testid': 'my-tabs',
-          'aria-label': 'Main navigation tabs'
-        }
+          'aria-label': 'Main navigation tabs',
+        },
       })
-      
+
       expect(wrapper.attributes('data-testid')).toBe('my-tabs')
       expect(wrapper.attributes('aria-label')).toBe('Main navigation tabs')
     })
@@ -253,12 +253,12 @@ describe('FdsFaneblade', () => {
         components: { FdsFaneblade },
         data() {
           return { activeTab: 1 }
-        }
+        },
       }
-      
+
       const wrapper = mount(TabsWrapper)
       const tabs = wrapper.findAll('[role="tab"]')
-      
+
       expect(tabs[0].attributes('aria-selected')).toBe('true')
       expect(tabs[1].attributes('aria-selected')).toBe('false')
     })
@@ -296,16 +296,16 @@ describe('FdsFaneblade', () => {
             tabs: [
               { id: 1, label: 'First' },
               { id: 2, label: 'Second' },
-              { id: 3, label: 'Third' }
-            ]
+              { id: 3, label: 'Third' },
+            ],
           }
-        }
+        },
       }
-      
+
       const wrapper = mount(DynamicTabs)
       const tabs = wrapper.findAll('[role="tab"]')
       const panels = wrapper.findAll('[role="tabpanel"]')
-      
+
       expect(tabs).toHaveLength(3)
       expect(panels).toHaveLength(3)
       expect(tabs[0].text()).toBe('First')
@@ -332,11 +332,11 @@ describe('FdsFaneblade', () => {
         components: { FdsFaneblade },
         data() {
           return {
-            sections: ['Overview', 'Details', 'Settings']
+            sections: ['Overview', 'Details', 'Settings'],
           }
-        }
+        },
       }
-      
+
       const wrapper = mount(NestedWrapper)
       expect(wrapper.findAll('[role="tab"]')).toHaveLength(3)
       expect(wrapper.findAll('[role="tabpanel"]')).toHaveLength(3)

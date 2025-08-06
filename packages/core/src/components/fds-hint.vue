@@ -18,7 +18,7 @@ const injectedHintId = inject<string | Ref<string> | undefined>('hintId', undefi
 const computedId = computed((): string | undefined => {
   if (id) return id
   if (injectedHintId) {
-    return isRef(injectedHintId) ? injectedHintId.value : injectedHintId as string
+    return isRef(injectedHintId) ? injectedHintId.value : (injectedHintId as string)
   }
   return undefined
 })

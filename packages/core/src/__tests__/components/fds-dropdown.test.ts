@@ -23,7 +23,7 @@ describe('FdsDropdown', () => {
     it('generates unique ID when not provided', () => {
       const wrapper = mount(FdsDropdown)
       const select = wrapper.find('select')
-      
+
       expect(select.attributes('id')).toBeDefined()
       expect(select.attributes('name')).toBe(select.attributes('id'))
     })
@@ -37,9 +37,9 @@ describe('FdsDropdown', () => {
   describe('Props', () => {
     it('uses custom id when provided', () => {
       const wrapper = mount(FdsDropdown, {
-        props: { id: 'custom-dropdown' }
+        props: { id: 'custom-dropdown' },
       })
-      
+
       const select = wrapper.find('select')
       expect(select.attributes('id')).toContain('custom-dropdown')
     })
@@ -52,10 +52,10 @@ describe('FdsDropdown', () => {
             <option value="option1">Option 1</option>
             <option value="option2">Option 2</option>
             <option value="option3">Option 3</option>
-          `
-        }
+          `,
+        },
       })
-      
+
       await wrapper.vm.$nextTick()
       const select = wrapper.find('select')
       expect(select.element.value).toBe('option2')
@@ -65,10 +65,10 @@ describe('FdsDropdown', () => {
       const wrapper = mount(FdsDropdown, {
         props: { modelValue: '' },
         slots: {
-          default: '<option value="">Select...</option>'
-        }
+          default: '<option value="">Select...</option>',
+        },
       })
-      
+
       const select = wrapper.find('select')
       expect(select.element.value).toBe('')
     })
@@ -87,13 +87,13 @@ describe('FdsDropdown', () => {
           default: `
             <option value="option1">Option 1</option>
             <option value="option2">Option 2</option>
-          `
-        }
+          `,
+        },
       })
-      
+
       const select = wrapper.find('select')
       await select.setValue('option2')
-      
+
       expect(wrapper.emitted('update:modelValue')).toBeTruthy()
       expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['option2'])
     })
@@ -101,9 +101,9 @@ describe('FdsDropdown', () => {
     it('emits dirty event on blur', async () => {
       const wrapper = mount(FdsDropdown)
       const select = wrapper.find('select')
-      
+
       await select.trigger('blur')
-      
+
       expect(wrapper.emitted('dirty')).toBeTruthy()
       expect(wrapper.emitted('dirty')?.[0]).toEqual([true])
     })
@@ -111,13 +111,13 @@ describe('FdsDropdown', () => {
     it('adds dirty class after blur', async () => {
       const wrapper = mount(FdsDropdown)
       const select = wrapper.find('select')
-      
+
       // Initially not dirty
       expect(wrapper.classes()).not.toContain('dirty')
-      
+
       // Blur to make it dirty
       await select.trigger('blur')
-      
+
       expect(wrapper.classes()).toContain('dirty')
     })
 
@@ -127,13 +127,13 @@ describe('FdsDropdown', () => {
           default: `
             <option value="a">A</option>
             <option value="b">B</option>
-          `
-        }
+          `,
+        },
       })
-      
+
       const select = wrapper.find('select')
       await select.setValue('b')
-      
+
       expect(wrapper.emitted('change')).toBeTruthy()
       expect(wrapper.emitted('change')?.[0][0]).toBeInstanceOf(Event)
     })
@@ -145,16 +145,16 @@ describe('FdsDropdown', () => {
             <option value="a">A</option>
             <option value="b">B</option>
             <option value="c">C</option>
-          `
-        }
+          `,
+        },
       })
-      
+
       const select = wrapper.find('select')
-      
+
       await select.setValue('a')
       await select.setValue('b')
       await select.setValue('c')
-      
+
       const emitted = wrapper.emitted('update:modelValue')
       expect(emitted).toHaveLength(3)
       expect(emitted?.[0]).toEqual(['a'])
@@ -171,10 +171,10 @@ describe('FdsDropdown', () => {
             <option value="1">First</option>
             <option value="2">Second</option>
             <option value="3">Third</option>
-          `
-        }
+          `,
+        },
       })
-      
+
       const options = wrapper.findAll('option')
       expect(options).toHaveLength(3)
       expect(options[0].text()).toBe('First')
@@ -194,10 +194,10 @@ describe('FdsDropdown', () => {
               <option value="3">Option 3</option>
               <option value="4">Option 4</option>
             </optgroup>
-          `
-        }
+          `,
+        },
       })
-      
+
       const optgroups = wrapper.findAll('optgroup')
       expect(optgroups).toHaveLength(2)
       expect(optgroups[0].attributes('label')).toBe('Group 1')
@@ -207,7 +207,7 @@ describe('FdsDropdown', () => {
     it('handles empty slot', () => {
       const wrapper = mount(FdsDropdown)
       const select = wrapper.find('select')
-      
+
       expect(select.element.children).toHaveLength(0)
     })
 
@@ -219,10 +219,10 @@ describe('FdsDropdown', () => {
             <option value="dk">Danmark</option>
             <option value="se">Sverige</option>
             <option value="no">Norge</option>
-          `
-        }
+          `,
+        },
       })
-      
+
       const options = wrapper.findAll('option')
       expect(options[0].attributes('disabled')).toBeDefined()
       expect(options[0].text()).toBe('Choose an option')
@@ -245,19 +245,19 @@ describe('FdsDropdown', () => {
         components: { FdsDropdown },
         data() {
           return { selected: 'b' }
-        }
+        },
       }
-      
+
       const wrapper = mount(ParentComponent)
       await wrapper.vm.$nextTick()
-      
+
       const select = wrapper.find('select')
-      
+
       expect(select.element.value).toBe('b')
       expect(wrapper.find('p').text()).toBe('Selected: b')
-      
+
       await select.setValue('c')
-      
+
       expect(wrapper.vm.selected).toBe('c')
       expect(wrapper.find('p').text()).toBe('Selected: c')
     })
@@ -273,18 +273,18 @@ describe('FdsDropdown', () => {
         components: { FdsDropdown },
         data() {
           return { selected: '1' }
-        }
+        },
       }
-      
+
       const wrapper = mount(ParentComponent)
       const select = wrapper.find('select')
-      
+
       expect(select.element.value).toBe('1')
-      
+
       // Change parent data
       wrapper.vm.selected = '2'
       await wrapper.vm.$nextTick()
-      
+
       expect(select.element.value).toBe('2')
     })
   })
@@ -293,7 +293,7 @@ describe('FdsDropdown', () => {
     it('has proper form control attributes', () => {
       const wrapper = mount(FdsDropdown)
       const select = wrapper.find('select')
-      
+
       expect(select.attributes('id')).toBeDefined()
       expect(select.attributes('name')).toBeDefined()
     })
@@ -309,13 +309,13 @@ describe('FdsDropdown', () => {
             </FdsDropdown>
           </div>
         `,
-        components: { FdsDropdown }
+        components: { FdsDropdown },
       }
-      
+
       const wrapper = mount(TestWrapper)
       const label = wrapper.find('label')
       const select = wrapper.find('select')
-      
+
       expect(label.attributes('for')).toBe(select.attributes('id'))
     })
 
@@ -325,12 +325,12 @@ describe('FdsDropdown', () => {
           default: `
             <option value="1">Option 1</option>
             <option value="2">Option 2</option>
-          `
-        }
+          `,
+        },
       })
-      
+
       const select = wrapper.find('select')
-      
+
       // Select elements are natively keyboard accessible
       expect(select.element.tagName).toBe('SELECT')
     })
@@ -351,9 +351,9 @@ describe('FdsDropdown', () => {
             </form>
           </main>
         `,
-        components: { FdsDropdown }
+        components: { FdsDropdown },
       }
-      
+
       await testAccessibility(TestWrapper)
     })
   })
@@ -366,10 +366,10 @@ describe('FdsDropdown', () => {
           default: `
             <option value="a">A</option>
             <option value="b">B</option>
-          `
-        }
+          `,
+        },
       })
-      
+
       const select = wrapper.find('select')
       // Browser will select first option if value doesn't exist
       expect(['', 'a']).toContain(select.element.value)
@@ -382,10 +382,10 @@ describe('FdsDropdown', () => {
             <option value="1">Active 1</option>
             <option value="2" disabled>Disabled</option>
             <option value="3">Active 2</option>
-          `
-        }
+          `,
+        },
       })
-      
+
       const options = wrapper.findAll('option')
       expect(options[1].attributes('disabled')).toBeDefined()
     })
@@ -397,13 +397,13 @@ describe('FdsDropdown', () => {
             <option value="same">First</option>
             <option value="same">Second</option>
             <option value="different">Third</option>
-          `
-        }
+          `,
+        },
       })
-      
+
       const select = wrapper.find('select')
       await select.setValue('same')
-      
+
       expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['same'])
     })
 
@@ -411,19 +411,19 @@ describe('FdsDropdown', () => {
       const wrapper = mount(FdsDropdown, {
         props: { modelValue: 'a' },
         slots: {
-          default: '<option value="a">A</option>'
-        }
+          default: '<option value="a">A</option>',
+        },
       })
-      
+
       const select = wrapper.find('select')
-      
+
       // Make it dirty
       await select.trigger('blur')
       expect(wrapper.classes()).toContain('dirty')
-      
+
       // Change props
       await wrapper.setProps({ modelValue: 'b' })
-      
+
       // Should still be dirty
       expect(wrapper.classes()).toContain('dirty')
     })
@@ -435,19 +435,19 @@ describe('FdsDropdown', () => {
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
-          `
-        }
+          `,
+        },
       })
-      
+
       const select = wrapper.find('select')
-      
+
       // Rapid changes
       await select.setValue('1')
       await select.setValue('2')
       await select.setValue('3')
       await select.setValue('2')
       await select.setValue('1')
-      
+
       const emitted = wrapper.emitted('update:modelValue')
       expect(emitted).toHaveLength(5)
       expect(emitted?.[4]).toEqual(['1'])
@@ -470,9 +470,9 @@ describe('FdsDropdown', () => {
         components: { FdsDropdown },
         data() {
           return { country: 'dk' }
-        }
+        },
       }
-      
+
       const wrapper = mount(FormWrapper)
       expect(wrapper.find('select').element.value).toBe('dk')
     })
@@ -490,21 +490,21 @@ describe('FdsDropdown', () => {
         `,
         components: { FdsDropdown },
         data() {
-          return { 
+          return {
             show: true,
-            value: 'a'
+            value: 'a',
           }
-        }
+        },
       }
-      
+
       const wrapper = mount(ConditionalWrapper)
-      
+
       expect(wrapper.find('select').exists()).toBe(true)
-      
+
       // Hide
       await wrapper.find('button').trigger('click')
       expect(wrapper.find('select').exists()).toBe(false)
-      
+
       // Show again
       await wrapper.find('button').trigger('click')
       expect(wrapper.find('select').exists()).toBe(true)
@@ -526,21 +526,21 @@ describe('FdsDropdown', () => {
             selected: '1',
             options: [
               { value: '1', label: 'Option 1' },
-              { value: '2', label: 'Option 2' }
-            ]
+              { value: '2', label: 'Option 2' },
+            ],
           }
-        }
+        },
       }
-      
+
       const wrapper = mount(DynamicWrapper)
       let options = wrapper.findAll('option')
-      
+
       expect(options).toHaveLength(2)
-      
+
       // Add new option
       wrapper.vm.options.push({ value: '3', label: 'Option 3' })
       await wrapper.vm.$nextTick()
-      
+
       options = wrapper.findAll('option')
       expect(options).toHaveLength(3)
       expect(options[2].text()).toBe('Option 3')
@@ -565,32 +565,32 @@ describe('FdsDropdown', () => {
         methods: {
           handleReset() {
             this.value = ''
-          }
-        }
+          },
+        },
       }
-      
+
       const wrapper = mount(FormWrapper)
       await wrapper.vm.$nextTick()
-      
+
       const select = wrapper.find('select')
-      
+
       expect(select.element.value).toBe('a')
       expect(wrapper.vm.value).toBe('a')
-      
+
       // Change value through component
       await select.setValue('b')
       await wrapper.vm.$nextTick()
-      
+
       expect(select.element.value).toBe('b')
       expect(wrapper.vm.value).toBe('b')
-      
+
       // Click reset button
       await wrapper.find('button').trigger('click')
       await wrapper.vm.$nextTick()
-      
+
       // Check that the parent's value was reset
       expect(wrapper.vm.value).toBe('')
-      
+
       // The select should also reflect the new value
       expect(select.element.value).toBe('')
     })

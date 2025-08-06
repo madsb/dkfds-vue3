@@ -7,49 +7,49 @@ describe('FdsFanebladeTab', () => {
   describe('Rendering', () => {
     it('renders without errors', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab' }
+        props: { id: 'test-tab' },
       })
       expect(wrapper.exists()).toBe(true)
     })
 
     it('renders as button element', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab' }
+        props: { id: 'test-tab' },
       })
       expect(wrapper.element.tagName).toBe('BUTTON')
     })
 
     it('applies correct CSS class', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab' }
+        props: { id: 'test-tab' },
       })
       expect(wrapper.classes()).toContain('tab-button')
     })
 
     it('generates correct id attribute', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'my-tab' }
+        props: { id: 'my-tab' },
       })
       expect(wrapper.attributes('id')).toBe('tab-my-tab')
     })
 
     it('generates correct aria-controls attribute', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'my-tab' }
+        props: { id: 'my-tab' },
       })
       expect(wrapper.attributes('aria-controls')).toBe('tabpanel-my-tab')
     })
 
     it('has role="tab" attribute', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab' }
+        props: { id: 'test-tab' },
       })
       expect(wrapper.attributes('role')).toBe('tab')
     })
 
     it('renders span wrapper for label', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab', label: 'My Tab' }
+        props: { id: 'test-tab', label: 'My Tab' },
       })
       const span = wrapper.find('span')
       expect(span.exists()).toBe(true)
@@ -60,35 +60,35 @@ describe('FdsFanebladeTab', () => {
   describe('Props', () => {
     it('renders label text from prop', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab', label: 'Custom Label' }
+        props: { id: 'test-tab', label: 'Custom Label' },
       })
       expect(wrapper.text()).toBe('Custom Label')
     })
 
     it('sets aria-selected based on active prop', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab', active: true }
+        props: { id: 'test-tab', active: true },
       })
       expect(wrapper.attributes('aria-selected')).toBe('true')
     })
 
     it('sets aria-selected to false when not active', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab', active: false }
+        props: { id: 'test-tab', active: false },
       })
       expect(wrapper.attributes('aria-selected')).toBe('false')
     })
 
     it('defaults to aria-selected false when active prop not provided', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab' }
+        props: { id: 'test-tab' },
       })
       expect(wrapper.attributes('aria-selected')).toBe('false')
     })
 
     it('renders icon when icon prop is provided', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab', icon: 'document' }
+        props: { id: 'test-tab', icon: 'document' },
       })
       const svg = wrapper.find('svg')
       expect(svg.exists()).toBe(true)
@@ -97,7 +97,7 @@ describe('FdsFanebladeTab', () => {
 
     it('renders icon with correct use href', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab', icon: 'document' }
+        props: { id: 'test-tab', icon: 'document' },
       })
       const use = wrapper.find('use')
       expect(use.attributes('href')).toBe('#document')
@@ -105,7 +105,7 @@ describe('FdsFanebladeTab', () => {
 
     it('renders icon with proper accessibility attributes', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab', icon: 'document' }
+        props: { id: 'test-tab', icon: 'document' },
       })
       const svg = wrapper.find('svg')
       expect(svg.attributes('focusable')).toBe('false')
@@ -114,7 +114,7 @@ describe('FdsFanebladeTab', () => {
 
     it('does not render icon when prop not provided', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab' }
+        props: { id: 'test-tab' },
       })
       expect(wrapper.find('svg').exists()).toBe(false)
     })
@@ -123,24 +123,24 @@ describe('FdsFanebladeTab', () => {
   describe('Events', () => {
     it('emits click event with id when clicked', async () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab' }
+        props: { id: 'test-tab' },
       })
-      
+
       await wrapper.trigger('click')
-      
+
       expect(wrapper.emitted('click')).toBeTruthy()
       expect(wrapper.emitted('click')?.[0]).toEqual(['test-tab'])
     })
 
     it('emits multiple click events correctly', async () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'my-tab' }
+        props: { id: 'my-tab' },
       })
-      
+
       await wrapper.trigger('click')
       await wrapper.trigger('click')
       await wrapper.trigger('click')
-      
+
       const emitted = wrapper.emitted('click')
       expect(emitted).toHaveLength(3)
       expect(emitted?.[0]).toEqual(['my-tab'])
@@ -154,8 +154,8 @@ describe('FdsFanebladeTab', () => {
       const wrapper = mount(FdsFanebladeTab, {
         props: { id: 'test-tab', label: 'Prop Label' },
         slots: {
-          default: 'Slot Content'
-        }
+          default: 'Slot Content',
+        },
       })
       expect(wrapper.text()).toBe('Slot Content')
       expect(wrapper.text()).not.toBe('Prop Label')
@@ -165,8 +165,8 @@ describe('FdsFanebladeTab', () => {
       const wrapper = mount(FdsFanebladeTab, {
         props: { id: 'test-tab' },
         slots: {
-          default: '<strong>Bold</strong> text'
-        }
+          default: '<strong>Bold</strong> text',
+        },
       })
       expect(wrapper.find('strong').exists()).toBe(true)
       expect(wrapper.find('strong').text()).toBe('Bold')
@@ -174,14 +174,14 @@ describe('FdsFanebladeTab', () => {
 
     it('falls back to label prop when no slot provided', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab', label: 'Fallback Label' }
+        props: { id: 'test-tab', label: 'Fallback Label' },
       })
       expect(wrapper.text()).toBe('Fallback Label')
     })
 
     it('renders empty when no label or slot', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab' }
+        props: { id: 'test-tab' },
       })
       expect(wrapper.find('span').text()).toBe('')
     })
@@ -190,9 +190,9 @@ describe('FdsFanebladeTab', () => {
   describe('Accessibility', () => {
     it('has proper ARIA attributes for tab role', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab' }
+        props: { id: 'test-tab' },
       })
-      
+
       expect(wrapper.attributes('role')).toBe('tab')
       expect(wrapper.attributes('aria-controls')).toBeDefined()
       expect(wrapper.attributes('aria-selected')).toBeDefined()
@@ -200,9 +200,9 @@ describe('FdsFanebladeTab', () => {
 
     it('is keyboard accessible as a button', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab' }
+        props: { id: 'test-tab' },
       })
-      
+
       // Buttons are natively keyboard accessible
       expect(wrapper.element.tagName).toBe('BUTTON')
     })
@@ -225,20 +225,20 @@ describe('FdsFanebladeTab', () => {
             </div>
           </main>
         `,
-        components: { FdsFanebladeTab }
+        components: { FdsFanebladeTab },
       }
-      
+
       await testAccessibility(TestWrapper)
     })
 
     it('maintains focus when switching between active states', async () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab', active: false }
+        props: { id: 'test-tab', active: false },
       })
-      
+
       await wrapper.setProps({ active: true })
       expect(wrapper.attributes('aria-selected')).toBe('true')
-      
+
       await wrapper.setProps({ active: false })
       expect(wrapper.attributes('aria-selected')).toBe('false')
     })
@@ -248,43 +248,43 @@ describe('FdsFanebladeTab', () => {
     it('handles very long label text', () => {
       const longLabel = 'This is a very long label '.repeat(10).trim()
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab', label: longLabel }
+        props: { id: 'test-tab', label: longLabel },
       })
-      
+
       expect(wrapper.text()).toBe(longLabel)
     })
 
     it('handles special characters in id', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab-123_special' }
+        props: { id: 'test-tab-123_special' },
       })
-      
+
       expect(wrapper.attributes('id')).toBe('tab-test-tab-123_special')
       expect(wrapper.attributes('aria-controls')).toBe('tabpanel-test-tab-123_special')
     })
 
     it('handles rapid prop changes', async () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { id: 'test-tab', active: false }
+        props: { id: 'test-tab', active: false },
       })
-      
+
       // Rapid changes
       await wrapper.setProps({ active: true })
       await wrapper.setProps({ active: false })
       await wrapper.setProps({ active: true })
-      
+
       expect(wrapper.attributes('aria-selected')).toBe('true')
     })
 
     it('handles icon and label together', () => {
       const wrapper = mount(FdsFanebladeTab, {
-        props: { 
-          id: 'test-tab', 
+        props: {
+          id: 'test-tab',
           icon: 'document',
-          label: 'Documents'
-        }
+          label: 'Documents',
+        },
       })
-      
+
       expect(wrapper.find('svg').exists()).toBe(true)
       expect(wrapper.find('span').text()).toBe('Documents')
     })
@@ -312,15 +312,15 @@ describe('FdsFanebladeTab', () => {
             tabs: [
               { id: 'tab1', label: 'First' },
               { id: 'tab2', label: 'Second' },
-              { id: 'tab3', label: 'Third' }
-            ]
+              { id: 'tab3', label: 'Third' },
+            ],
           }
-        }
+        },
       }
-      
+
       const wrapper = mount(TabListWrapper)
       const tabs = wrapper.findAll('.tab-button')
-      
+
       expect(tabs).toHaveLength(3)
       expect(tabs[0].attributes('aria-selected')).toBe('true')
       expect(tabs[1].attributes('aria-selected')).toBe('false')
@@ -347,17 +347,17 @@ describe('FdsFanebladeTab', () => {
           handleClick(id) {
             expect(id).toBe('test-tab')
             this.isActive = true
-          }
-        }
+          },
+        },
       }
-      
+
       const wrapper = mount(ParentComponent)
       const tab = wrapper.find('.tab-button')
-      
+
       expect(wrapper.find('p').text()).toBe('Active: false')
-      
+
       await tab.trigger('click')
-      
+
       expect(wrapper.find('p').text()).toBe('Active: true')
     })
 
@@ -370,12 +370,12 @@ describe('FdsFanebladeTab', () => {
             <FdsFanebladeTab id="videos" icon="videocam" label="Videos" />
           </div>
         `,
-        components: { FdsFanebladeTab }
+        components: { FdsFanebladeTab },
       }
-      
+
       const wrapper = mount(IconTabs)
       const icons = wrapper.findAll('svg')
-      
+
       expect(icons).toHaveLength(3)
       expect(wrapper.findAll('use')[0].attributes('href')).toBe('#file-image')
       expect(wrapper.findAll('use')[1].attributes('href')).toBe('#document')

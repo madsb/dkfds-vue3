@@ -37,7 +37,7 @@ describe('FdsFanebladeNav', () => {
   describe('Props', () => {
     it('sets aria-label when provided', () => {
       const wrapper = mount(FdsFanebladeNav, {
-        props: { ariaLabel: 'Main navigation' }
+        props: { ariaLabel: 'Main navigation' },
       })
       expect(wrapper.attributes('aria-label')).toBe('Main navigation')
     })
@@ -52,10 +52,10 @@ describe('FdsFanebladeNav', () => {
     it('renders default slot content', () => {
       const wrapper = mount(FdsFanebladeNav, {
         slots: {
-          default: '<li>Navigation item</li>'
-        }
+          default: '<li>Navigation item</li>',
+        },
       })
-      
+
       expect(wrapper.find('li').exists()).toBe(true)
       expect(wrapper.find('li').text()).toBe('Navigation item')
     })
@@ -67,10 +67,10 @@ describe('FdsFanebladeNav', () => {
             <li class="nav-1">Nav 1</li>
             <li class="nav-2">Nav 2</li>
             <li class="nav-3">Nav 3</li>
-          `
-        }
+          `,
+        },
       })
-      
+
       expect(wrapper.findAll('li')).toHaveLength(3)
       expect(wrapper.find('.nav-1').text()).toBe('Nav 1')
       expect(wrapper.find('.nav-2').text()).toBe('Nav 2')
@@ -113,17 +113,17 @@ describe('FdsFanebladeNav', () => {
             </FdsFanebladeNav>
           </main>
         `,
-        components: { FdsFanebladeNav }
+        components: { FdsFanebladeNav },
       }
-      
+
       await testAccessibility(TestWrapper)
     })
 
     it('works with aria-label for screen readers', () => {
       const wrapper = mount(FdsFanebladeNav, {
-        props: { ariaLabel: 'Section navigation' }
+        props: { ariaLabel: 'Section navigation' },
       })
-      
+
       expect(wrapper.attributes('aria-label')).toBe('Section navigation')
     })
   })
@@ -132,10 +132,10 @@ describe('FdsFanebladeNav', () => {
     it('handles text nodes in slot', () => {
       const wrapper = mount(FdsFanebladeNav, {
         slots: {
-          default: 'Just text content'
-        }
+          default: 'Just text content',
+        },
       })
-      
+
       expect(wrapper.find('ul').text()).toBe('Just text content')
     })
 
@@ -143,10 +143,10 @@ describe('FdsFanebladeNav', () => {
       const wrapper = mount(FdsFanebladeNav, {
         attrs: {
           'data-testid': 'my-navigation',
-          'id': 'main-nav'
-        }
+          id: 'main-nav',
+        },
       })
-      
+
       expect(wrapper.attributes('data-testid')).toBe('my-navigation')
       expect(wrapper.attributes('id')).toBe('main-nav')
     })
@@ -170,15 +170,15 @@ describe('FdsFanebladeNav', () => {
             navItems: [
               { id: 1, href: '#section1', label: 'Section 1', active: true },
               { id: 2, href: '#section2', label: 'Section 2', active: false },
-              { id: 3, href: '#section3', label: 'Section 3', active: false }
-            ]
+              { id: 3, href: '#section3', label: 'Section 3', active: false },
+            ],
           }
-        }
+        },
       }
-      
+
       const wrapper = mount(NavigationWrapper)
       const links = wrapper.findAll('a')
-      
+
       expect(links).toHaveLength(3)
       expect(links[0].attributes('aria-current')).toBe('true')
       expect(links[1].attributes('aria-current')).toBeUndefined()
@@ -197,18 +197,18 @@ describe('FdsFanebladeNav', () => {
         components: { FdsFanebladeNav },
         data() {
           return {
-            sections: ['Home', 'About']
+            sections: ['Home', 'About'],
           }
-        }
+        },
       }
-      
+
       const wrapper = mount(ReactiveNav)
       expect(wrapper.findAll('li')).toHaveLength(2)
-      
+
       // Add a section
       wrapper.vm.sections.push('Contact')
       await wrapper.vm.$nextTick()
-      
+
       expect(wrapper.findAll('li')).toHaveLength(3)
     })
 
@@ -222,16 +222,16 @@ describe('FdsFanebladeNav', () => {
         components: { FdsFanebladeNav },
         data() {
           return { showNav: true }
-        }
+        },
       }
-      
+
       const wrapper = mount(ConditionalNav)
       expect(wrapper.find('nav').exists()).toBe(true)
-      
+
       // Hide navigation
       wrapper.vm.showNav = false
       await wrapper.vm.$nextTick()
-      
+
       expect(wrapper.find('nav').exists()).toBe(false)
     })
   })

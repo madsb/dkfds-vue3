@@ -16,9 +16,9 @@ describe('FdsFejlmeddelelse', () => {
         global: {
           provide: {
             provideIsValid: false,
-            provideErrorMessage: 'Error message'
-          }
-        }
+            provideErrorMessage: 'Error message',
+          },
+        },
       })
       expect(wrapper.find('.form-error-message').exists()).toBe(true)
       expect(wrapper.element.tagName).toBe('SPAN')
@@ -29,9 +29,9 @@ describe('FdsFejlmeddelelse', () => {
         global: {
           provide: {
             provideIsValid: true,
-            provideErrorMessage: 'Error message'
-          }
-        }
+            provideErrorMessage: 'Error message',
+          },
+        },
       })
       expect(wrapper.find('.form-error-message').exists()).toBe(false)
     })
@@ -41,9 +41,9 @@ describe('FdsFejlmeddelelse', () => {
         global: {
           provide: {
             provideIsValid: false,
-            provideErrorMessage: 'This field is required'
-          }
-        }
+            provideErrorMessage: 'This field is required',
+          },
+        },
       })
       expect(wrapper.text()).toBe('Fejl: This field is required')
       expect(wrapper.find('.sr-only').text()).toBe('Fejl:')
@@ -57,9 +57,9 @@ describe('FdsFejlmeddelelse', () => {
         global: {
           provide: {
             provideIsValid: false,
-            provideErrorMessage: 'Auto error'
-          }
-        }
+            provideErrorMessage: 'Auto error',
+          },
+        },
       })
       expect(wrapper.text()).toBe('Fejl: Auto error')
     })
@@ -70,9 +70,9 @@ describe('FdsFejlmeddelelse', () => {
         global: {
           provide: {
             provideIsValid: false,
-            provideErrorMessage: 'Should not show'
-          }
-        }
+            provideErrorMessage: 'Should not show',
+          },
+        },
       })
       // The component still renders the div, but without content from injection
       expect(wrapper.find('.form-error-message').exists()).toBe(false)
@@ -83,9 +83,9 @@ describe('FdsFejlmeddelelse', () => {
         global: {
           provide: {
             provideIsValid: false,
-            provideErrorMessage: 'Default auto'
-          }
-        }
+            provideErrorMessage: 'Default auto',
+          },
+        },
       })
       expect(wrapper.text()).toBe('Fejl: Default auto')
     })
@@ -94,8 +94,8 @@ describe('FdsFejlmeddelelse', () => {
       const wrapper = mount(FdsFejlmeddelelse, {
         props: { auto: false },
         slots: {
-          default: 'Slot error message'
-        }
+          default: 'Slot error message',
+        },
       })
       expect(wrapper.text()).toBe('Fejl: Slot error message')
     })
@@ -107,12 +107,12 @@ describe('FdsFejlmeddelelse', () => {
         global: {
           provide: {
             provideIsValid: false,
-            provideErrorMessage: 'Injected error'
-          }
+            provideErrorMessage: 'Injected error',
+          },
         },
         slots: {
-          default: 'Slot error content'
-        }
+          default: 'Slot error content',
+        },
       })
       expect(wrapper.text()).toBe('Fejl: Slot error content')
     })
@@ -120,8 +120,8 @@ describe('FdsFejlmeddelelse', () => {
     it('renders complex slot content', () => {
       const wrapper = mount(FdsFejlmeddelelse, {
         slots: {
-          default: '<strong>Error:</strong> Custom message'
-        }
+          default: '<strong>Error:</strong> Custom message',
+        },
       })
       expect(wrapper.find('strong').exists()).toBe(true)
       expect(wrapper.find('strong').text()).toBe('Error:')
@@ -131,8 +131,8 @@ describe('FdsFejlmeddelelse', () => {
     it('renders empty slot', () => {
       const wrapper = mount(FdsFejlmeddelelse, {
         slots: {
-          default: ''
-        }
+          default: '',
+        },
       })
       // Empty slot doesn't render
       expect(wrapper.find('.form-error-message').exists()).toBe(false)
@@ -157,9 +157,9 @@ describe('FdsFejlmeddelelse', () => {
         global: {
           provide: {
             provideIsValid: false,
-            provideErrorMessage: null
-          }
-        }
+            provideErrorMessage: null,
+          },
+        },
       })
       // With null message, compErrorMessage is null, so showError is false
       expect(wrapper.find('.form-error-message').exists()).toBe(false)
@@ -170,9 +170,9 @@ describe('FdsFejlmeddelelse', () => {
         global: {
           provide: {
             provideIsValid: false,
-            provideErrorMessage: ''
-          }
-        }
+            provideErrorMessage: '',
+          },
+        },
       })
       // Empty string is falsy for display purposes
       expect(wrapper.find('.form-error-message').exists()).toBe(false)
@@ -189,11 +189,11 @@ describe('FdsFejlmeddelelse', () => {
           provide('provideIsValid', isValid)
           provide('provideErrorMessage', errorMessage)
           return { isValid, errorMessage }
-        }
+        },
       }
 
       const wrapper = mount(ParentComponent)
-      
+
       // Initially valid - no error shown
       expect(wrapper.find('.form-error-message').exists()).toBe(false)
 
@@ -222,9 +222,9 @@ describe('FdsFejlmeddelelse', () => {
         global: {
           provide: {
             provideIsValid: false,
-            provideErrorMessage: 'Computed error'
-          }
-        }
+            provideErrorMessage: 'Computed error',
+          },
+        },
       })
       expect(wrapper.vm.compErrorMessage).toBe('Computed error')
     })
@@ -235,9 +235,9 @@ describe('FdsFejlmeddelelse', () => {
         global: {
           provide: {
             provideIsValid: false,
-            provideErrorMessage: 'Should be null'
-          }
-        }
+            provideErrorMessage: 'Should be null',
+          },
+        },
       })
       expect(wrapper.vm.compErrorMessage).toBe(null)
     })
@@ -248,9 +248,9 @@ describe('FdsFejlmeddelelse', () => {
         global: {
           provide: {
             provideIsValid: true,
-            provideErrorMessage: 'Should be null'
-          }
-        }
+            provideErrorMessage: 'Should be null',
+          },
+        },
       })
       expect(wrapper.vm.compErrorMessage).toBe(null)
     })
@@ -258,7 +258,7 @@ describe('FdsFejlmeddelelse', () => {
     it('shows error based on slot or computed message', () => {
       // showError is a computed property that checks slots.default || compErrorMessage
       const wrapper = mount(FdsFejlmeddelelse, {
-        props: { auto: false }
+        props: { auto: false },
       })
       // With auto: false and no slot, showError should be falsy
       expect(wrapper.find('.form-error-message').exists()).toBe(false)
@@ -271,9 +271,9 @@ describe('FdsFejlmeddelelse', () => {
         global: {
           provide: {
             provideIsValid: false,
-            provideErrorMessage: 'Error: <script>alert("XSS")</script>'
-          }
-        }
+            provideErrorMessage: 'Error: <script>alert("XSS")</script>',
+          },
+        },
       })
       expect(wrapper.text()).toBe('Fejl: Error: <script>alert("XSS")</script>')
     })
@@ -284,27 +284,27 @@ describe('FdsFejlmeddelelse', () => {
         global: {
           provide: {
             provideIsValid: false,
-            provideErrorMessage: longMessage
-          }
-        }
+            provideErrorMessage: longMessage,
+          },
+        },
       })
       expect(wrapper.text()).toBe('Fejl: ' + longMessage)
     })
 
     it('handles rapid validity changes', async () => {
       const isValid = ref(true)
-      
+
       const ParentComponent = {
         template: '<FdsFejlmeddelelse />',
         components: { FdsFejlmeddelelse },
         setup() {
           provide('provideIsValid', isValid)
           provide('provideErrorMessage', 'Error')
-        }
+        },
       }
 
       const wrapper = mount(ParentComponent)
-      
+
       // Rapid changes
       isValid.value = false
       await wrapper.vm.$nextTick()
@@ -312,7 +312,7 @@ describe('FdsFejlmeddelelse', () => {
       await wrapper.vm.$nextTick()
       isValid.value = false
       await wrapper.vm.$nextTick()
-      
+
       expect(wrapper.find('.form-error-message').exists()).toBe(true)
     })
 
@@ -321,9 +321,9 @@ describe('FdsFejlmeddelelse', () => {
         global: {
           provide: {
             provideIsValid: false,
-            provideErrorMessage: undefined
-          }
-        }
+            provideErrorMessage: undefined,
+          },
+        },
       })
       // undefined is falsy, so no error shown
       expect(wrapper.find('.form-error-message').exists()).toBe(false)
@@ -340,25 +340,25 @@ describe('FdsFejlmeddelelse', () => {
         data() {
           return {
             useAuto: true,
-            showSlot: false
+            showSlot: false,
           }
         },
         setup() {
           provide('provideIsValid', false)
           provide('provideErrorMessage', 'Injected error')
-        }
+        },
       }
 
       const wrapper = mount(SlotSwitchComponent)
-      
+
       // Initially shows injected error
       expect(wrapper.text()).toBe('Fejl: Injected error')
-      
+
       // Switch to slot
       wrapper.vm.showSlot = true
       await wrapper.vm.$nextTick()
       expect(wrapper.text()).toBe('Fejl: Slot error')
-      
+
       // Disable auto
       wrapper.vm.useAuto = false
       await wrapper.vm.$nextTick()
@@ -380,7 +380,7 @@ describe('FdsFejlmeddelelse', () => {
         data() {
           return {
             isValid: false,
-            errorMessage: 'Field is required'
+            errorMessage: 'Field is required',
           }
         },
         setup() {
@@ -389,7 +389,7 @@ describe('FdsFejlmeddelelse', () => {
           provide('provideIsValid', isValid)
           provide('provideErrorMessage', errorMessage)
           return { isValid, errorMessage }
-        }
+        },
       }
 
       const wrapper = mount(FormComponent)
@@ -411,7 +411,7 @@ describe('FdsFejlmeddelelse', () => {
         setup() {
           provide('provideIsValid', false)
           provide('provideErrorMessage', 'Shared error')
-        }
+        },
       }
 
       const wrapper = mount(MultiErrorComponent)
@@ -433,21 +433,21 @@ describe('FdsFejlmeddelelse', () => {
         setup() {
           const errorMessage = ref('Initial error')
           const isValid = ref(false)
-          
+
           provide('provideIsValid', isValid)
           provide('provideErrorMessage', errorMessage)
-          
+
           const changeError = () => {
             errorMessage.value = 'Changed error'
           }
-          
+
           return { changeError }
-        }
+        },
       }
 
       const wrapper = mount(DynamicErrorComponent)
       expect(wrapper.find('.form-error-message').text()).toBe('Fejl: Initial error')
-      
+
       await wrapper.find('button').trigger('click')
       expect(wrapper.find('.form-error-message').text()).toBe('Fejl: Changed error')
     })
@@ -461,10 +461,10 @@ describe('FdsFejlmeddelelse', () => {
     it('registers error when shown', async () => {
       const registerError = vi.fn()
       const unregisterError = vi.fn()
-      
+
       const wrapper = mount(FdsFejlmeddelelse, {
         slots: {
-          default: 'Test error message'
+          default: 'Test error message',
         },
         global: {
           provide: {
@@ -472,10 +472,10 @@ describe('FdsFejlmeddelelse', () => {
             errorSummary: {
               registerError,
               unregisterError,
-              clearErrors: vi.fn()
-            }
-          }
-        }
+              clearErrors: vi.fn(),
+            },
+          },
+        },
       })
 
       await nextTick()
@@ -486,7 +486,7 @@ describe('FdsFejlmeddelelse', () => {
       const registerError = vi.fn()
       const unregisterError = vi.fn()
       const isValid = ref(false)
-      
+
       const wrapper = mount(FdsFejlmeddelelse, {
         global: {
           provide: {
@@ -496,10 +496,10 @@ describe('FdsFejlmeddelelse', () => {
             errorSummary: {
               registerError,
               unregisterError,
-              clearErrors: vi.fn()
-            }
-          }
-        }
+              clearErrors: vi.fn(),
+            },
+          },
+        },
       })
 
       await nextTick()
@@ -514,10 +514,10 @@ describe('FdsFejlmeddelelse', () => {
     it('handles reactive formid', async () => {
       const registerError = vi.fn()
       const formid = ref('field-1')
-      
+
       const wrapper = mount(FdsFejlmeddelelse, {
         slots: {
-          default: 'Test error'
+          default: 'Test error',
         },
         global: {
           provide: {
@@ -525,10 +525,10 @@ describe('FdsFejlmeddelelse', () => {
             errorSummary: {
               registerError,
               unregisterError: vi.fn(),
-              clearErrors: vi.fn()
-            }
-          }
-        }
+              clearErrors: vi.fn(),
+            },
+          },
+        },
       })
 
       await nextTick()
@@ -537,20 +537,20 @@ describe('FdsFejlmeddelelse', () => {
 
     it('does not register if no formid', async () => {
       const registerError = vi.fn()
-      
+
       const wrapper = mount(FdsFejlmeddelelse, {
         slots: {
-          default: 'Test error'
+          default: 'Test error',
         },
         global: {
           provide: {
             errorSummary: {
               registerError,
               unregisterError: vi.fn(),
-              clearErrors: vi.fn()
-            }
-          }
-        }
+              clearErrors: vi.fn(),
+            },
+          },
+        },
       })
 
       await nextTick()
@@ -560,13 +560,13 @@ describe('FdsFejlmeddelelse', () => {
     it('does not register if no errorSummary', async () => {
       const wrapper = mount(FdsFejlmeddelelse, {
         slots: {
-          default: 'Test error'
+          default: 'Test error',
         },
         global: {
           provide: {
-            formid: 'test-field'
-          }
-        }
+            formid: 'test-field',
+          },
+        },
       })
 
       // Should not throw
@@ -576,10 +576,10 @@ describe('FdsFejlmeddelelse', () => {
 
     it('unregisters on unmount', async () => {
       const unregisterError = vi.fn()
-      
+
       const wrapper = mount(FdsFejlmeddelelse, {
         slots: {
-          default: 'Test error'
+          default: 'Test error',
         },
         global: {
           provide: {
@@ -587,10 +587,10 @@ describe('FdsFejlmeddelelse', () => {
             errorSummary: {
               registerError: vi.fn(),
               unregisterError,
-              clearErrors: vi.fn()
-            }
-          }
-        }
+              clearErrors: vi.fn(),
+            },
+          },
+        },
       })
 
       await nextTick()
@@ -602,7 +602,7 @@ describe('FdsFejlmeddelelse', () => {
       const registerError = vi.fn()
       const unregisterError = vi.fn()
       const errorMessage = ref('Initial error')
-      
+
       const ParentComponent = {
         template: '<FdsFejlmeddelelse />',
         components: { FdsFejlmeddelelse },
@@ -613,10 +613,10 @@ describe('FdsFejlmeddelelse', () => {
           provide('errorSummary', {
             registerError,
             unregisterError,
-            clearErrors: vi.fn()
+            clearErrors: vi.fn(),
           })
           return { errorMessage }
-        }
+        },
       }
 
       const wrapper = mount(ParentComponent)
@@ -638,11 +638,11 @@ describe('FdsFejlmeddelelse', () => {
         global: {
           provide: {
             provideIsValid: false,
-            provideErrorMessage: 'Accessibility error'
-          }
-        }
+            provideErrorMessage: 'Accessibility error',
+          },
+        },
       })
-      
+
       const errorSpan = wrapper.find('.form-error-message')
       expect(errorSpan.element.tagName).toBe('SPAN')
       expect(wrapper.find('.sr-only').exists()).toBe(true)
@@ -665,9 +665,9 @@ describe('FdsFejlmeddelelse', () => {
         setup() {
           provide('provideIsValid', false)
           provide('provideErrorMessage', 'This field has an error')
-        }
+        },
       }
-      
+
       await testAccessibility(TestWrapper)
     })
 
@@ -693,13 +693,13 @@ describe('FdsFejlmeddelelse', () => {
           provide('provideIsValid', isValid)
           provide('provideErrorMessage', 'Please enter a valid email')
           return { isValid }
-        }
+        },
       }
 
       const wrapper = mount(AccessibleForm)
       const input = wrapper.find('input')
       const errorContainer = wrapper.find('#email-error')
-      
+
       expect(input.attributes('aria-describedby')).toBe('email-error')
       expect(input.attributes('aria-invalid')).toBe('true')
       expect(errorContainer.find('.form-error-message').exists()).toBe(true)

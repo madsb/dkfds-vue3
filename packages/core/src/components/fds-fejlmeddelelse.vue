@@ -54,12 +54,14 @@ const displayedError = computed(() => {
       // Handle text nodes
       if (slotContent[0].children && typeof slotContent[0].children === 'object') {
         // Try to extract text from complex slot content
-        const text = slotContent.map(node => {
-          if (typeof node.children === 'string') {
-            return node.children
-          }
-          return ''
-        }).join('')
+        const text = slotContent
+          .map((node) => {
+            if (typeof node.children === 'string') {
+              return node.children
+            }
+            return ''
+          })
+          .join('')
         if (text) return text
       }
     }
@@ -106,7 +108,7 @@ watch(
       }
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 // Clean up on unmount

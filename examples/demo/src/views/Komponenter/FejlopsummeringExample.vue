@@ -3,8 +3,10 @@
     <fds-preview header="Eksempel" href="https://designsystem.dk/komponenter/fejlopsummering/">
       <fds-preview-item>
         <h3>Automatisk fejlindsamling fra formgrupper</h3>
-        <p>Fejlmeddelelser registreres automatisk i fejlopsummeringen når de vises i formgrupper.</p>
-        
+        <p>
+          Fejlmeddelelser registreres automatisk i fejlopsummeringen når de vises i formgrupper.
+        </p>
+
         <fds-fejlopsummering header="Formular fejl" />
 
         <form class="mt-6">
@@ -32,7 +34,9 @@
 
           <div class="mt-6">
             <fds-button variant="primary" @click="validateAutoForm">Valider formular</fds-button>
-            <fds-button variant="secondary" class="ml-4" @click="clearAutoForm">Ryd formular</fds-button>
+            <fds-button variant="secondary" class="ml-4" @click="clearAutoForm"
+              >Ryd formular</fds-button
+            >
           </div>
         </form>
       </fds-preview-item>
@@ -64,34 +68,44 @@
 
       <fds-preview-item>
         <h3>Scroll-to-field funktionalitet</h3>
-        <p>Klik på fejlene nedenfor for at se, hvordan komponenten automatisk scroller til og fokuserer på det relevante felt.</p>
-        
-        <fds-fejlopsummering 
-          header="Der er 4 fejl i formularen" 
+        <p>
+          Klik på fejlene nedenfor for at se, hvordan komponenten automatisk scroller til og
+          fokuserer på det relevante felt.
+        </p>
+
+        <fds-fejlopsummering
+          header="Der er 4 fejl i formularen"
           :errors="scrollDemoErrors"
           @error-clicked="onErrorClicked"
         />
 
-        <form class="mt-6" style="min-height: 100vh;">
+        <form class="mt-6" style="min-height: 100vh">
           <fds-formgroup id="scroll-name" class="mb-6">
             <fds-label for="scroll-name">Fulde navn *</fds-label>
-            <fds-input 
-              v-model="scrollForm.name" 
-              :class="{ 'input-error': !scrollForm.name }"
-            />
+            <fds-input v-model="scrollForm.name" :class="{ 'input-error': !scrollForm.name }" />
             <fds-fejlmeddelelse v-if="!scrollForm.name">
               Indtast dit fulde navn
             </fds-fejlmeddelelse>
           </fds-formgroup>
 
-          <div style="height: 50vh; display: flex; align-items: center; justify-content: center; background: #f8f9fa; margin: 2rem 0; border: 1px dashed #ccc;">
+          <div
+            style="
+              height: 50vh;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: #f8f9fa;
+              margin: 2rem 0;
+              border: 1px dashed #ccc;
+            "
+          >
             <p>Scroll-afstand mellem felter...</p>
           </div>
 
           <fds-formgroup id="scroll-email" class="mb-6">
             <fds-label for="scroll-email">Email adresse *</fds-label>
-            <fds-input 
-              v-model="scrollForm.email" 
+            <fds-input
+              v-model="scrollForm.email"
               type="email"
               :class="{ 'input-error': !isValidEmail }"
             />
@@ -100,38 +114,53 @@
             </fds-fejlmeddelelse>
           </fds-formgroup>
 
-          <div style="height: 40vh; display: flex; align-items: center; justify-content: center; background: #f8f9fa; margin: 2rem 0; border: 1px dashed #ccc;">
+          <div
+            style="
+              height: 40vh;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: #f8f9fa;
+              margin: 2rem 0;
+              border: 1px dashed #ccc;
+            "
+          >
             <p>Mere indhold for at demonstrere scrolling...</p>
           </div>
 
           <fds-formgroup id="scroll-phone" class="mb-6">
             <fds-label for="scroll-phone">Telefonnummer *</fds-label>
-            <fds-input 
-              v-model="scrollForm.phone"
-              :class="{ 'input-error': !isValidPhone }"
-            />
+            <fds-input v-model="scrollForm.phone" :class="{ 'input-error': !isValidPhone }" />
             <fds-fejlmeddelelse v-if="!isValidPhone">
               Indtast et gyldigt telefonnummer (8 cifre)
             </fds-fejlmeddelelse>
           </fds-formgroup>
 
-          <div style="height: 30vh; display: flex; align-items: center; justify-content: center; background: #f8f9fa; margin: 2rem 0; border: 1px dashed #ccc;">
+          <div
+            style="
+              height: 30vh;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: #f8f9fa;
+              margin: 2rem 0;
+              border: 1px dashed #ccc;
+            "
+          >
             <p>Endnu mere indhold...</p>
           </div>
 
           <fds-formgroup id="scroll-message" class="mb-6">
             <fds-label for="scroll-message">Besked *</fds-label>
-            <textarea 
-              id="scroll-message" 
-              v-model="scrollForm.message" 
+            <textarea
+              id="scroll-message"
+              v-model="scrollForm.message"
               class="form-textarea"
               :class="{ 'input-error': !scrollForm.message }"
               rows="4"
               placeholder="Skriv din besked här..."
             ></textarea>
-            <fds-fejlmeddelelse v-if="!scrollForm.message">
-              Indtast en besked
-            </fds-fejlmeddelelse>
+            <fds-fejlmeddelelse v-if="!scrollForm.message"> Indtast en besked </fds-fejlmeddelelse>
           </fds-formgroup>
 
           <p class="mt-4">
@@ -253,7 +282,7 @@ interface ErrorItem {
 const autoForm = ref({
   name: '',
   email: '',
-  phone: ''
+  phone: '',
 })
 
 const isValidAutoEmail = computed(() => {
@@ -285,7 +314,7 @@ const scrollForm = ref({
   name: '',
   email: '',
   phone: '',
-  message: ''
+  message: '',
 })
 
 const lastClickedField = ref<string | null>(null)
@@ -305,23 +334,23 @@ const isValidPhone = computed(() => {
 // Error list for scroll demo
 const scrollDemoErrors = computed(() => {
   const errors: ErrorItem[] = []
-  
+
   if (!scrollForm.value.name) {
     errors.push({ id: 'scroll-name', message: 'Fulde navn er påkrævet' })
   }
-  
+
   if (!isValidEmail.value) {
     errors.push({ id: 'scroll-email', message: 'Email adresse er påkrævet og skal være gyldig' })
   }
-  
+
   if (!isValidPhone.value) {
     errors.push({ id: 'scroll-phone', message: 'Telefonnummer er påkrævet og skal være 8 cifre' })
   }
-  
+
   if (!scrollForm.value.message) {
     errors.push({ id: 'scroll-message', message: 'Besked er påkrævet' })
   }
-  
+
   return errors
 })
 
@@ -329,9 +358,9 @@ const scrollDemoErrors = computed(() => {
 const onErrorClicked = (fieldId: string) => {
   const fieldNames: Record<string, string> = {
     'scroll-name': 'Fulde navn',
-    'scroll-email': 'Email adresse', 
+    'scroll-email': 'Email adresse',
     'scroll-phone': 'Telefonnummer',
-    'scroll-message': 'Besked'
+    'scroll-message': 'Besked',
   }
   lastClickedField.value = fieldNames[fieldId] || fieldId
 }
