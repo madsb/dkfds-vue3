@@ -51,35 +51,21 @@
       <fds-preview-item>
         <h3>Tilgængelighed</h3>
         <p>Tooltip med custom aria-label:</p>
-        <fds-tooltip 
-          aria-label="Åbn detaljeret hjælp"
-          content="Detaljeret hjælpetekst"
-        />
+        <fds-tooltip aria-label="Åbn detaljeret hjælp" content="Detaljeret hjælpetekst" />
         <p class="mt-4">For ikoner uden tekst (hover tooltip med isLabel):</p>
-        <fds-tooltip 
-          trigger="hover"
-          :is-label="true"
-          content="Slet"
-          icon="delete"
-        />
+        <fds-tooltip trigger="hover" :is-label="true" content="Slet" icon="delete" />
       </fds-preview-item>
 
       <fds-preview-item>
         <h3>Deaktiveret tooltip</h3>
         <p>Tooltip kan deaktiveres:</p>
-        <fds-tooltip 
-          :disabled="true" 
-          content="Denne tooltip er deaktiveret"
-        />
+        <fds-tooltip :disabled="true" content="Denne tooltip er deaktiveret" />
       </fds-preview-item>
 
       <fds-preview-item>
         <h3>Force visible (til komplekse layouts)</h3>
         <p>Tooltip med force-visible for modaler og overflow containere:</p>
-        <fds-tooltip 
-          :force-visible="true"
-          content="Special positionering for komplekse layouts"
-        />
+        <fds-tooltip :force-visible="true" content="Special positionering for komplekse layouts" />
       </fds-preview-item>
 
       <fds-preview-code>

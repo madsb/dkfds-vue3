@@ -7,8 +7,8 @@ import { testAccessibility } from '../../../../../test-shared/test-utils'
 // Mock generateId function
 vi.mock('dkfds-vue3-utils', () => ({
   generateId: vi.fn((id) => ({
-    value: id || `fid_${Math.random().toString(36).substr(2, 9)}`
-  }))
+    value: id || `fid_${Math.random().toString(36).substr(2, 9)}`,
+  })),
 }))
 
 describe('FdsTooltip', () => {
@@ -32,8 +32,8 @@ describe('FdsTooltip', () => {
     it('renders without errors', () => {
       wrapper = mount(FdsTooltip, {
         props: {
-          content: 'Tooltip text'
-        }
+          content: 'Tooltip text',
+        },
       })
       expect(wrapper.exists()).toBe(true)
     })
@@ -41,10 +41,10 @@ describe('FdsTooltip', () => {
     it('renders button with correct basic attributes', () => {
       wrapper = mount(FdsTooltip, {
         props: {
-          content: 'Tooltip text'
-        }
+          content: 'Tooltip text',
+        },
       })
-      
+
       const button = wrapper.find('button')
       expect(button.exists()).toBe(true)
       expect(button.classes()).toContain('button')
@@ -56,10 +56,10 @@ describe('FdsTooltip', () => {
     it('renders help icon by default', () => {
       wrapper = mount(FdsTooltip, {
         props: {
-          content: 'Tooltip text'
-        }
+          content: 'Tooltip text',
+        },
       })
-      
+
       const icon = wrapper.find('svg use')
       expect(icon.attributes('href')).toBe('#help')
     })
@@ -67,10 +67,10 @@ describe('FdsTooltip', () => {
     it('renders tooltip wrapper with correct classes', () => {
       wrapper = mount(FdsTooltip, {
         props: {
-          content: 'Tooltip text'
-        }
+          content: 'Tooltip text',
+        },
       })
-      
+
       const tooltipWrapper = wrapper.find('.tooltip-wrapper')
       expect(tooltipWrapper.exists()).toBe(true)
       expect(tooltipWrapper.classes()).toContain('hide-tooltip')
@@ -80,39 +80,39 @@ describe('FdsTooltip', () => {
   describe('Props', () => {
     it('uses custom id when provided', async () => {
       wrapper = mount(FdsTooltip, {
-        props: { 
+        props: {
           id: 'custom-id',
           content: 'Tooltip text',
-          trigger: 'click'
-        }
+          trigger: 'click',
+        },
       })
-      
+
       // Open tooltip to make span visible
       const button = wrapper.find('button')
       await button.trigger('click')
       await nextTick()
-      
+
       const tooltipSpan = wrapper.find('.tooltip')
       expect(tooltipSpan.attributes('id')).toBe('custom-id')
     })
 
     it('sets data-tooltip from content prop', () => {
       wrapper = mount(FdsTooltip, {
-        props: { content: 'Prop tooltip text' }
+        props: { content: 'Prop tooltip text' },
       })
-      
+
       const tooltipWrapper = wrapper.find('.tooltip-wrapper')
       expect(tooltipWrapper.attributes('data-tooltip')).toBe('Prop tooltip text')
     })
 
     it('sets position attribute correctly', () => {
       wrapper = mount(FdsTooltip, {
-        props: { 
+        props: {
           position: 'below',
-          content: 'Tooltip text'
-        }
+          content: 'Tooltip text',
+        },
       })
-      
+
       const tooltipWrapper = wrapper.find('.tooltip-wrapper')
       expect(tooltipWrapper.attributes('data-position')).toBe('below')
     })
@@ -120,22 +120,22 @@ describe('FdsTooltip', () => {
     it('defaults position to above', () => {
       wrapper = mount(FdsTooltip, {
         props: {
-          content: 'Tooltip text'
-        }
+          content: 'Tooltip text',
+        },
       })
-      
+
       const tooltipWrapper = wrapper.find('.tooltip-wrapper')
       expect(tooltipWrapper.attributes('data-position')).toBe('above')
     })
 
     it('sets trigger attribute correctly', () => {
       wrapper = mount(FdsTooltip, {
-        props: { 
+        props: {
           trigger: 'hover',
-          content: 'Tooltip text'
-        }
+          content: 'Tooltip text',
+        },
       })
-      
+
       const tooltipWrapper = wrapper.find('.tooltip-wrapper')
       expect(tooltipWrapper.attributes('data-trigger')).toBe('hover')
     })
@@ -143,46 +143,46 @@ describe('FdsTooltip', () => {
     it('defaults trigger to click for better accessibility', () => {
       wrapper = mount(FdsTooltip, {
         props: {
-          content: 'Tooltip text'
-        }
+          content: 'Tooltip text',
+        },
       })
-      
+
       const tooltipWrapper = wrapper.find('.tooltip-wrapper')
       expect(tooltipWrapper.attributes('data-trigger')).toBe('click')
     })
 
     it('applies disabled state correctly', () => {
       wrapper = mount(FdsTooltip, {
-        props: { 
+        props: {
           disabled: true,
-          content: 'Tooltip text'
-        }
+          content: 'Tooltip text',
+        },
       })
-      
+
       const button = wrapper.find('button')
       expect(button.attributes('disabled')).toBeDefined()
     })
 
     it('uses custom icon when provided', () => {
       wrapper = mount(FdsTooltip, {
-        props: { 
+        props: {
           icon: 'info',
-          content: 'Tooltip text'
-        }
+          content: 'Tooltip text',
+        },
       })
-      
+
       const icon = wrapper.find('svg use')
       expect(icon.attributes('href')).toBe('#info')
     })
 
     it('sets custom aria-label when provided', () => {
       wrapper = mount(FdsTooltip, {
-        props: { 
+        props: {
           ariaLabel: 'Custom help text',
-          content: 'Tooltip text'
-        }
+          content: 'Tooltip text',
+        },
       })
-      
+
       const button = wrapper.find('button')
       expect(button.attributes('aria-label')).toBe('Custom help text')
     })
@@ -191,10 +191,10 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'click',
-          content: 'Tooltip text'
-        }
+          content: 'Tooltip text',
+        },
       })
-      
+
       const button = wrapper.find('button')
       expect(button.attributes('aria-label')).toBe('Vis hjælpetekst')
     })
@@ -203,34 +203,34 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'hover',
-          content: 'Tooltip text'
-        }
+          content: 'Tooltip text',
+        },
       })
-      
+
       const button = wrapper.find('button')
       expect(button.attributes('aria-label')).toBe('Hjælpetekst')
     })
 
     it('sets forceVisible attribute when true', () => {
       wrapper = mount(FdsTooltip, {
-        props: { 
+        props: {
           forceVisible: true,
-          content: 'Tooltip text'
-        }
+          content: 'Tooltip text',
+        },
       })
-      
+
       const tooltipWrapper = wrapper.find('.tooltip-wrapper')
       expect(tooltipWrapper.attributes('data-force-visible')).toBe('true')
     })
 
     it('omits forceVisible attribute when false', () => {
       wrapper = mount(FdsTooltip, {
-        props: { 
+        props: {
           forceVisible: false,
-          content: 'Tooltip text'
-        }
+          content: 'Tooltip text',
+        },
       })
-      
+
       const tooltipWrapper = wrapper.find('.tooltip-wrapper')
       expect(tooltipWrapper.attributes('data-force-visible')).toBeUndefined()
     })
@@ -241,22 +241,22 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'hover',
-          content: 'Hover tooltip text'
-        }
+          content: 'Hover tooltip text',
+        },
       })
 
       const button = wrapper.find('button')
-      
+
       // Trigger hover
       await button.trigger('pointerover', { pointerType: 'mouse' })
-      
+
       // Should not be visible immediately
       expect(wrapper.find('.tooltip-wrapper').classes()).toContain('hide-tooltip')
-      
+
       // Advance time by hover delay (300ms)
       vi.advanceTimersByTime(300)
       await nextTick()
-      
+
       // Should now be visible
       expect(wrapper.find('.tooltip-wrapper').classes()).not.toContain('hide-tooltip')
       expect(wrapper.emitted('show')).toBeTruthy()
@@ -266,21 +266,21 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'hover',
-          content: 'Hover tooltip text'
-        }
+          content: 'Hover tooltip text',
+        },
       })
 
       const button = wrapper.find('button')
-      
+
       // Show tooltip first using focus (simpler than pointer events for this test)
       await button.trigger('focus')
       await nextTick()
       expect(wrapper.find('.tooltip-wrapper').classes()).not.toContain('hide-tooltip')
-      
+
       // Hide tooltip using blur
       await button.trigger('blur')
       await nextTick()
-      
+
       expect(wrapper.find('.tooltip-wrapper').classes()).toContain('hide-tooltip')
       expect(wrapper.emitted('hide')).toBeTruthy()
     })
@@ -289,27 +289,27 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'hover',
-          content: 'Hover tooltip text'
-        }
+          content: 'Hover tooltip text',
+        },
       })
 
       const button = wrapper.find('button')
-      
+
       // Start hover
       await button.trigger('pointerover', { pointerType: 'mouse' })
-      
+
       // Leave before delay completes
       vi.advanceTimersByTime(100)
-      await button.trigger('pointerleave', { 
+      await button.trigger('pointerleave', {
         pointerType: 'mouse',
         clientX: 0,
-        clientY: 0
+        clientY: 0,
       })
-      
+
       // Complete the timer
       vi.advanceTimersByTime(200)
       await nextTick()
-      
+
       // Should not show tooltip
       expect(wrapper.find('.tooltip-wrapper').classes()).toContain('hide-tooltip')
       expect(wrapper.emitted('show')).toBeFalsy()
@@ -319,14 +319,14 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'hover',
-          content: 'Hover tooltip text'
-        }
+          content: 'Hover tooltip text',
+        },
       })
 
       const button = wrapper.find('button')
       await button.trigger('focus')
       await nextTick()
-      
+
       expect(wrapper.find('.tooltip-wrapper').classes()).not.toContain('hide-tooltip')
       expect(wrapper.emitted('show')).toBeTruthy()
     })
@@ -335,20 +335,20 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'hover',
-          content: 'Hover tooltip text'
-        }
+          content: 'Hover tooltip text',
+        },
       })
 
       const button = wrapper.find('button')
-      
+
       // Show via focus
       await button.trigger('focus')
       await nextTick()
-      
+
       // Hide via blur
       await button.trigger('blur')
       await nextTick()
-      
+
       expect(wrapper.find('.tooltip-wrapper').classes()).toContain('hide-tooltip')
       expect(wrapper.emitted('hide')).toBeTruthy()
     })
@@ -359,18 +359,18 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'click',
-          content: 'Click tooltip text'
-        }
+          content: 'Click tooltip text',
+        },
       })
 
       const button = wrapper.find('button')
-      
+
       // First click - show
       await button.trigger('click')
       expect(wrapper.find('.tooltip-wrapper').classes()).not.toContain('hide-tooltip')
       expect(wrapper.emitted('show')).toBeTruthy()
       expect(wrapper.emitted('toggle')?.[0]).toEqual([true])
-      
+
       // Second click - hide
       await button.trigger('click')
       expect(wrapper.find('.tooltip-wrapper').classes()).toContain('hide-tooltip')
@@ -382,21 +382,21 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'click',
-          content: 'Click tooltip text'
+          content: 'Click tooltip text',
         },
-        attachTo: document.body
+        attachTo: document.body,
       })
 
       const button = wrapper.find('button')
-      
+
       // Open tooltip
       await button.trigger('click')
       expect(wrapper.find('.tooltip-wrapper').classes()).not.toContain('hide-tooltip')
-      
+
       // Click outside
       document.body.click()
       await nextTick()
-      
+
       expect(wrapper.find('.tooltip-wrapper').classes()).toContain('hide-tooltip')
     })
 
@@ -404,14 +404,14 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'click',
-          content: 'Click tooltip text'
-        }
+          content: 'Click tooltip text',
+        },
       })
 
       const button = wrapper.find('button')
       await button.trigger('focus')
       await nextTick()
-      
+
       // Should remain hidden
       expect(wrapper.find('.tooltip-wrapper').classes()).toContain('hide-tooltip')
       expect(wrapper.emitted('show')).toBeFalsy()
@@ -423,25 +423,25 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'hover',
-          content: 'Touch tooltip text'
-        }
+          content: 'Touch tooltip text',
+        },
       })
 
       const button = wrapper.find('button')
-      
+
       // Start touch
       await button.trigger('pointerdown', { pointerType: 'touch' })
-      
+
       // Should show pressing state
       expect(button.classes()).toContain('js-pressing')
-      
+
       // Complete long press (600ms)
       vi.advanceTimersByTime(600)
-      
+
       // Release touch
       await button.trigger('pointerup', { pointerType: 'touch' })
       await nextTick()
-      
+
       // Should show tooltip
       expect(wrapper.find('.tooltip-wrapper').classes()).not.toContain('hide-tooltip')
       expect(wrapper.emitted('show')).toBeTruthy()
@@ -451,20 +451,20 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'hover',
-          content: 'Touch tooltip text'
-        }
+          content: 'Touch tooltip text',
+        },
       })
 
       const button = wrapper.find('button')
-      
+
       // Start touch
       await button.trigger('pointerdown', { pointerType: 'touch' })
-      
+
       // Release before long press completes
       vi.advanceTimersByTime(300)
       await button.trigger('pointerup', { pointerType: 'touch' })
       await nextTick()
-      
+
       // Should not show tooltip
       expect(wrapper.find('.tooltip-wrapper').classes()).toContain('hide-tooltip')
       expect(wrapper.emitted('show')).toBeFalsy()
@@ -474,19 +474,19 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'hover',
-          content: 'Touch tooltip text'
-        }
+          content: 'Touch tooltip text',
+        },
       })
 
       const button = wrapper.find('button')
-      
+
       // Start touch
       await button.trigger('pointerdown', { pointerType: 'touch' })
-      
+
       // Leave before completion
       vi.advanceTimersByTime(300)
       await button.trigger('pointerleave', { pointerType: 'touch' })
-      
+
       // Should cancel pressing state
       expect(button.classes()).not.toContain('js-pressing')
       expect(button.classes()).not.toContain('js-pressed')
@@ -498,22 +498,22 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'click',
-          content: 'Keyboard tooltip text'
+          content: 'Keyboard tooltip text',
         },
-        attachTo: document.body
+        attachTo: document.body,
       })
 
       const button = wrapper.find('button')
-      
+
       // Open tooltip
       await button.trigger('click')
       expect(wrapper.find('.tooltip-wrapper').classes()).not.toContain('hide-tooltip')
-      
+
       // Press Escape
       const event = new KeyboardEvent('keyup', { key: 'Escape' })
       document.dispatchEvent(event)
       await nextTick()
-      
+
       expect(wrapper.find('.tooltip-wrapper').classes()).toContain('hide-tooltip')
     })
 
@@ -521,21 +521,21 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'click',
-          content: 'Keyboard tooltip text'
+          content: 'Keyboard tooltip text',
         },
-        attachTo: document.body
+        attachTo: document.body,
       })
 
       const button = wrapper.find('button')
-      
+
       // Open tooltip
       await button.trigger('click')
-      
+
       // Press other key
       const event = new KeyboardEvent('keyup', { key: 'Enter' })
       document.dispatchEvent(event)
       await nextTick()
-      
+
       // Should remain open
       expect(wrapper.find('.tooltip-wrapper').classes()).not.toContain('hide-tooltip')
     })
@@ -547,8 +547,8 @@ describe('FdsTooltip', () => {
         wrapper = mount(FdsTooltip, {
           props: {
             trigger: 'hover',
-            content: 'Hover tooltip'
-          }
+            content: 'Hover tooltip',
+          },
         })
 
         const tooltip = wrapper.find('.tooltip')
@@ -560,19 +560,19 @@ describe('FdsTooltip', () => {
           props: {
             trigger: 'hover',
             content: 'Hover tooltip',
-            isLabel: false
-          }
+            isLabel: false,
+          },
         })
 
         const button = wrapper.find('button')
-        
+
         // Initially no aria-describedby
         expect(button.attributes('aria-describedby')).toBeUndefined()
-        
+
         // Show tooltip
         await button.trigger('focus')
         await nextTick()
-        
+
         // Should have aria-describedby
         expect(button.attributes('aria-describedby')).toBeTruthy()
       })
@@ -582,19 +582,19 @@ describe('FdsTooltip', () => {
           props: {
             trigger: 'hover',
             content: 'Icon label',
-            isLabel: true
-          }
+            isLabel: true,
+          },
         })
 
         const button = wrapper.find('button')
-        
+
         // Initially no aria-labelledby
         expect(button.attributes('aria-labelledby')).toBeUndefined()
-        
+
         // Show tooltip
         await button.trigger('focus')
         await nextTick()
-        
+
         // Should have aria-labelledby
         expect(button.attributes('aria-labelledby')).toBeTruthy()
       })
@@ -604,8 +604,8 @@ describe('FdsTooltip', () => {
           props: {
             trigger: 'hover',
             content: 'Icon label',
-            isLabel: true
-          }
+            isLabel: true,
+          },
         })
 
         const button = wrapper.find('button')
@@ -618,19 +618,19 @@ describe('FdsTooltip', () => {
         wrapper = mount(FdsTooltip, {
           props: {
             trigger: 'click',
-            content: 'Click tooltip'
-          }
+            content: 'Click tooltip',
+          },
         })
 
         const button = wrapper.find('button')
-        
+
         // Initially closed
         expect(button.attributes('aria-expanded')).toBe('false')
-        
+
         // Open tooltip
         await button.trigger('click')
         expect(button.attributes('aria-expanded')).toBe('true')
-        
+
         // Close tooltip
         await button.trigger('click')
         expect(button.attributes('aria-expanded')).toBe('false')
@@ -640,8 +640,8 @@ describe('FdsTooltip', () => {
         wrapper = mount(FdsTooltip, {
           props: {
             trigger: 'click',
-            content: 'Click tooltip'
-          }
+            content: 'Click tooltip',
+          },
         })
 
         const button = wrapper.find('button')
@@ -652,8 +652,8 @@ describe('FdsTooltip', () => {
         wrapper = mount(FdsTooltip, {
           props: {
             trigger: 'click',
-            content: 'Click tooltip'
-          }
+            content: 'Click tooltip',
+          },
         })
 
         const liveRegion = wrapper.find('[aria-live="assertive"]')
@@ -665,8 +665,8 @@ describe('FdsTooltip', () => {
         wrapper = mount(FdsTooltip, {
           props: {
             trigger: 'click',
-            content: 'Click tooltip'
-          }
+            content: 'Click tooltip',
+          },
         })
 
         // Open tooltip
@@ -690,15 +690,15 @@ describe('FdsTooltip', () => {
         left: 0,
         right: 100,
         width: 100,
-        height: 20
+        height: 20,
       }))
 
       wrapper = mount(FdsTooltip, {
         props: {
           position: 'above',
           trigger: 'click',
-          content: 'Tooltip text'
-        }
+          content: 'Tooltip text',
+        },
       })
 
       const button = wrapper.find('button')
@@ -721,15 +721,15 @@ describe('FdsTooltip', () => {
         left: 0,
         right: 100,
         width: 100,
-        height: 20
+        height: 20,
       }))
 
       wrapper = mount(FdsTooltip, {
         props: {
           position: 'below',
           trigger: 'click',
-          content: 'Tooltip text'
-        }
+          content: 'Tooltip text',
+        },
       })
 
       const button = wrapper.find('button')
@@ -747,9 +747,9 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'click',
-          content: 'Tooltip text'
+          content: 'Tooltip text',
         },
-        attachTo: document.body
+        attachTo: document.body,
       })
 
       const button = wrapper.find('button')
@@ -767,9 +767,9 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'click',
-          content: 'Tooltip text'
+          content: 'Tooltip text',
         },
-        attachTo: document.body
+        attachTo: document.body,
       })
 
       const button = wrapper.find('button')
@@ -789,8 +789,8 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'click',
-          content: 'Event tooltip'
-        }
+          content: 'Event tooltip',
+        },
       })
 
       const button = wrapper.find('button')
@@ -804,12 +804,12 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'click',
-          content: 'Event tooltip'
-        }
+          content: 'Event tooltip',
+        },
       })
 
       const button = wrapper.find('button')
-      
+
       // Show then hide
       await button.trigger('click')
       await button.trigger('click')
@@ -822,16 +822,16 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'click',
-          content: 'Toggle tooltip'
-        }
+          content: 'Toggle tooltip',
+        },
       })
 
       const button = wrapper.find('button')
-      
+
       // Show
       await button.trigger('click')
       expect(wrapper.emitted('toggle')?.[0]).toEqual([true])
-      
+
       // Hide
       await button.trigger('click')
       expect(wrapper.emitted('toggle')?.[1]).toEqual([false])
@@ -844,8 +844,8 @@ describe('FdsTooltip', () => {
         props: {
           disabled: true,
           trigger: 'click',
-          content: 'Disabled tooltip'
-        }
+          content: 'Disabled tooltip',
+        },
       })
 
       const button = wrapper.find('button')
@@ -860,20 +860,20 @@ describe('FdsTooltip', () => {
         props: {
           disabled: false,
           trigger: 'click',
-          content: 'Tooltip text'
-        }
+          content: 'Tooltip text',
+        },
       })
 
       const button = wrapper.find('button')
-      
+
       // Show tooltip
       await button.trigger('click')
       expect(wrapper.find('.tooltip-wrapper').classes()).not.toContain('hide-tooltip')
-      
+
       // Disable
       await wrapper.setProps({ disabled: true })
       await nextTick()
-      
+
       expect(wrapper.find('.tooltip-wrapper').classes()).toContain('hide-tooltip')
     })
   })
@@ -888,9 +888,9 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'click',
-          content: 'New tooltip'
+          content: 'New tooltip',
         },
-        attachTo: document.body
+        attachTo: document.body,
       })
 
       const button = wrapper.find('button')
@@ -909,21 +909,21 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'click',
-          content: 'Print tooltip'
+          content: 'Print tooltip',
         },
-        attachTo: document.body
+        attachTo: document.body,
       })
 
       const button = wrapper.find('button')
-      
+
       // Show tooltip
       await button.trigger('click')
       expect(wrapper.find('.tooltip-wrapper').classes()).not.toContain('hide-tooltip')
-      
+
       // Trigger beforeprint event
       window.dispatchEvent(new Event('beforeprint'))
       await nextTick()
-      
+
       expect(wrapper.find('.tooltip-wrapper').classes()).toContain('hide-tooltip')
     })
   })
@@ -932,9 +932,9 @@ describe('FdsTooltip', () => {
     it('handles special characters in tooltip content', () => {
       const specialText = 'Special chars: æøå ÆØÅ "quotes" & <tags>'
       wrapper = mount(FdsTooltip, {
-        props: { content: specialText }
+        props: { content: specialText },
       })
-      
+
       const tooltipWrapper = wrapper.find('.tooltip-wrapper')
       expect(tooltipWrapper.attributes('data-tooltip')).toBe(specialText)
     })
@@ -942,9 +942,9 @@ describe('FdsTooltip', () => {
     it('handles very long tooltip content', () => {
       const longText = 'Very long tooltip text '.repeat(20).trim()
       wrapper = mount(FdsTooltip, {
-        props: { content: longText }
+        props: { content: longText },
       })
-      
+
       const tooltipWrapper = wrapper.find('.tooltip-wrapper')
       expect(tooltipWrapper.attributes('data-tooltip')).toBe(longText)
     })
@@ -953,18 +953,18 @@ describe('FdsTooltip', () => {
       wrapper = mount(FdsTooltip, {
         props: {
           trigger: 'click',
-          content: 'Rapid click tooltip'
-        }
+          content: 'Rapid click tooltip',
+        },
       })
 
       const button = wrapper.find('button')
-      
+
       // Rapid clicks
       await button.trigger('click')
       await button.trigger('click')
       await button.trigger('click')
       await button.trigger('click')
-      
+
       // Should end up closed (even number of clicks)
       expect(wrapper.find('.tooltip-wrapper').classes()).toContain('hide-tooltip')
     })
@@ -974,19 +974,19 @@ describe('FdsTooltip', () => {
         props: {
           position: 'above',
           trigger: 'click',
-          content: 'Position change tooltip'
-        }
+          content: 'Position change tooltip',
+        },
       })
 
       const button = wrapper.find('button')
-      
+
       // Show tooltip
       await button.trigger('click')
-      
+
       // Change position
       await wrapper.setProps({ position: 'below' })
       await nextTick()
-      
+
       // Should update computed position
       expect(wrapper.vm.computedPosition).toBe('below')
     })
@@ -996,8 +996,8 @@ describe('FdsTooltip', () => {
     it('has proper ARIA attributes', () => {
       wrapper = mount(FdsTooltip, {
         props: {
-          content: 'Accessible tooltip'
-        }
+          content: 'Accessible tooltip',
+        },
       })
 
       const button = wrapper.find('button')
@@ -1008,8 +1008,8 @@ describe('FdsTooltip', () => {
     it('has focusable="false" on SVG icon', () => {
       wrapper = mount(FdsTooltip, {
         props: {
-          content: 'Tooltip text'
-        }
+          content: 'Tooltip text',
+        },
       })
 
       const svg = wrapper.find('svg')
@@ -1029,7 +1029,7 @@ describe('FdsTooltip', () => {
             </div>
           </main>
         `,
-        components: { FdsTooltip }
+        components: { FdsTooltip },
       }
 
       await testAccessibility(TestWrapper)
@@ -1041,32 +1041,32 @@ describe('FdsTooltip', () => {
       document.body.appendChild(container)
 
       wrapper = mount(FdsTooltip, {
-        props: { 
+        props: {
           trigger: 'click',
-          content: 'Click tooltip'
+          content: 'Click tooltip',
         },
-        attachTo: container
+        attachTo: container,
       })
 
       const button = wrapper.find('button')
-      
+
       // Focus the button
       button.element.focus()
       expect(document.activeElement).toBe(button.element)
 
       // Should be focusable when not disabled
       expect(button.attributes('tabindex')).toBeUndefined() // Default focusable
-      
+
       // Cleanup
       document.body.removeChild(container)
     })
 
     it('is not focusable when disabled', () => {
       wrapper = mount(FdsTooltip, {
-        props: { 
+        props: {
           disabled: true,
-          content: 'Disabled tooltip'
-        }
+          content: 'Disabled tooltip',
+        },
       })
 
       const button = wrapper.find('button')
@@ -1076,8 +1076,8 @@ describe('FdsTooltip', () => {
     it('has proper arrow element for styling', () => {
       wrapper = mount(FdsTooltip, {
         props: {
-          content: 'Tooltip with arrow'
-        }
+          content: 'Tooltip with arrow',
+        },
       })
 
       const arrow = wrapper.find('.tooltip-arrow')
