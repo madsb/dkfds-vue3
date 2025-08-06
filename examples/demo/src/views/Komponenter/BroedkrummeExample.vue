@@ -8,14 +8,18 @@
         <nav class="breadcrumbs container" aria-label="Brødkrumme">
           <ol class="breadcrumbs__list">
             <li class="breadcrumbs__list-item">
-              <a class="breadcrumbs__link" href="#"> Forside </a>
+              <a class="breadcrumbs__link" href="#">Forside</a>
             </li>
 
             <li class="breadcrumbs__list-item">
-              <a class="breadcrumbs__link" href="#"> Komponenter </a>
+              <fds-ikon icon="chevron-right" />
+              <a class="breadcrumbs__link" href="#">Komponenter</a>
             </li>
 
-            <li class="breadcrumbs__list-item" aria-current="page">Brødkrumme</li>
+            <li class="breadcrumbs__list-item" aria-current="page">
+              <fds-ikon icon="chevron-right" />
+              Brødkrumme
+            </li>
           </ol>
         </nav>
       </fds-preview-item>
@@ -31,16 +35,23 @@
 const code = `
 <nav class="breadcrumbs container" aria-label="Brødkrumme">
   <ol class="breadcrumbs__list">
-      <li class="breadcrumbs__list-item">
-          <a class="breadcrumbs__link" href="#">Forside</a>
-      </li>
-
-      <li class="breadcrumbs__list-item">
-          <a class="breadcrumbs__link" href="#">Komponenter</a>
-      </li>
-
-      <li class="breadcrumbs__list-item" aria-current="page">Brødkrumme
-      </li>
+    <li class="breadcrumbs__list-item">
+      <a class="breadcrumbs__link" href="#">Forside</a>
+    </li>
+    
+    <li class="breadcrumbs__list-item">
+      <svg class="icon-svg" focusable="false" aria-hidden="true">
+        <use href="#chevron-right"></use>
+      </svg>
+      <a class="breadcrumbs__link" href="#">Komponenter</a>
+    </li>
+    
+    <li class="breadcrumbs__list-item" aria-current="page">
+      <svg class="icon-svg" focusable="false" aria-hidden="true">
+        <use href="#chevron-right"></use>
+      </svg>
+      Brødkrumme
+    </li>
   </ol>
 </nav>
 `
