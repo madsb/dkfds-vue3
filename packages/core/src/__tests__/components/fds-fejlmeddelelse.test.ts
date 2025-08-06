@@ -1,6 +1,6 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { provide, ref } from 'vue'
+import { provide, ref, nextTick } from 'vue'
 import FdsFejlmeddelelse from '../../components/fds-fejlmeddelelse.vue'
 import { testAccessibility } from '../../../../../test-shared/test-utils'
 
@@ -450,6 +450,185 @@ describe('FdsFejlmeddelelse', () => {
       
       await wrapper.find('button').trigger('click')
       expect(wrapper.find('.form-error-message').text()).toBe('Fejl: Changed error')
+    })
+  })
+
+  describe('Error Registration with Fejlopsummering', () => {
+    beforeEach(() => {
+      vi.clearAllMocks()
+    })
+
+    it('registers error when shown', async () => {
+      const registerError = vi.fn()
+      const unregisterError = vi.fn()
+      
+      const wrapper = mount(FdsFejlmeddelelse, {
+        slots: {
+          default: 'Test error message'
+        },
+        global: {
+          provide: {
+            formid: 'test-field-id',
+            errorSummary: {
+              registerError,
+              unregisterError,
+              clearErrors: vi.fn()
+            }
+          }
+        }
+      })
+
+      await nextTick()
+      expect(registerError).toHaveBeenCalledWith('test-field-id', 'Test error message')
+    })
+
+    it('unregisters error when hidden', async () => {
+      const registerError = vi.fn()
+      const unregisterError = vi.fn()
+      const isValid = ref(false)
+      
+      const wrapper = mount(FdsFejlmeddelelse, {
+        global: {
+          provide: {
+            formid: 'test-field',
+            provideIsValid: isValid,
+            provideErrorMessage: 'Error message',
+            errorSummary: {
+              registerError,
+              unregisterError,
+              clearErrors: vi.fn()
+            }
+          }
+        }
+      })
+
+      await nextTick()
+      expect(registerError).toHaveBeenCalledWith('test-field', 'Error message')
+
+      // Hide the error
+      isValid.value = true
+      await nextTick()
+      expect(unregisterError).toHaveBeenCalledWith('test-field')
+    })
+
+    it('handles reactive formid', async () => {
+      const registerError = vi.fn()
+      const formid = ref('field-1')
+      
+      const wrapper = mount(FdsFejlmeddelelse, {
+        slots: {
+          default: 'Test error'
+        },
+        global: {
+          provide: {
+            formid,
+            errorSummary: {
+              registerError,
+              unregisterError: vi.fn(),
+              clearErrors: vi.fn()
+            }
+          }
+        }
+      })
+
+      await nextTick()
+      expect(registerError).toHaveBeenCalledWith('field-1', 'Test error')
+    })
+
+    it('does not register if no formid', async () => {
+      const registerError = vi.fn()
+      
+      const wrapper = mount(FdsFejlmeddelelse, {
+        slots: {
+          default: 'Test error'
+        },
+        global: {
+          provide: {
+            errorSummary: {
+              registerError,
+              unregisterError: vi.fn(),
+              clearErrors: vi.fn()
+            }
+          }
+        }
+      })
+
+      await nextTick()
+      expect(registerError).not.toHaveBeenCalled()
+    })
+
+    it('does not register if no errorSummary', async () => {
+      const wrapper = mount(FdsFejlmeddelelse, {
+        slots: {
+          default: 'Test error'
+        },
+        global: {
+          provide: {
+            formid: 'test-field'
+          }
+        }
+      })
+
+      // Should not throw
+      await nextTick()
+      expect(wrapper.find('.form-error-message').exists()).toBe(true)
+    })
+
+    it('unregisters on unmount', async () => {
+      const unregisterError = vi.fn()
+      
+      const wrapper = mount(FdsFejlmeddelelse, {
+        slots: {
+          default: 'Test error'
+        },
+        global: {
+          provide: {
+            formid: 'test-field',
+            errorSummary: {
+              registerError: vi.fn(),
+              unregisterError,
+              clearErrors: vi.fn()
+            }
+          }
+        }
+      })
+
+      await nextTick()
+      wrapper.unmount()
+      expect(unregisterError).toHaveBeenCalledWith('test-field')
+    })
+
+    it('updates registration when error message changes', async () => {
+      const registerError = vi.fn()
+      const unregisterError = vi.fn()
+      const errorMessage = ref('Initial error')
+      
+      const ParentComponent = {
+        template: '<FdsFejlmeddelelse />',
+        components: { FdsFejlmeddelelse },
+        setup() {
+          provide('formid', 'test-field')
+          provide('provideIsValid', false)
+          provide('provideErrorMessage', errorMessage)
+          provide('errorSummary', {
+            registerError,
+            unregisterError,
+            clearErrors: vi.fn()
+          })
+          return { errorMessage }
+        }
+      }
+
+      const wrapper = mount(ParentComponent)
+      await nextTick()
+      expect(registerError).toHaveBeenCalledWith('test-field', 'Initial error')
+
+      // Change error message
+      errorMessage.value = 'Updated error'
+      await nextTick()
+      // Should unregister old and register new
+      expect(unregisterError).toHaveBeenCalled()
+      expect(registerError).toHaveBeenCalledWith('test-field', 'Updated error')
     })
   })
 

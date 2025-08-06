@@ -2,21 +2,38 @@
   <section>
     <fds-preview header="Eksempel" href="https://designsystem.dk/komponenter/fejlopsummering/">
       <fds-preview-item>
-        <h3>Automatisk fejlindsamling</h3>
-        <fds-fejlopsummering />
+        <h3>Automatisk fejlindsamling fra formgrupper</h3>
+        <p>Fejlmeddelelser registreres automatisk i fejlopsummeringen når de vises i formgrupper.</p>
+        
+        <fds-fejlopsummering header="Formular fejl" />
 
         <form class="mt-6">
-          <fds-formgroup>
-            <fds-label for="demo-name">Navn</fds-label>
-            <fds-input id="demo-name" v-model="name" required />
-            <fds-fejlmeddelelse v-if="!name">Navn er påkrævet</fds-fejlmeddelelse>
+          <fds-formgroup id="auto-name">
+            <fds-label>Navn *</fds-label>
+            <fds-input v-model="autoForm.name" />
+            <fds-fejlmeddelelse v-if="!autoForm.name">Navn er påkrævet</fds-fejlmeddelelse>
           </fds-formgroup>
 
-          <fds-formgroup>
-            <fds-label for="demo-email">Email</fds-label>
-            <fds-input id="demo-email" v-model="email" type="email" required />
-            <fds-fejlmeddelelse v-if="!email">Email er påkrævet</fds-fejlmeddelelse>
+          <fds-formgroup id="auto-email">
+            <fds-label>Email *</fds-label>
+            <fds-input v-model="autoForm.email" type="email" />
+            <fds-fejlmeddelelse v-if="!isValidAutoEmail">
+              {{ !autoForm.email ? 'Email er påkrævet' : 'Indtast en gyldig email adresse' }}
+            </fds-fejlmeddelelse>
           </fds-formgroup>
+
+          <fds-formgroup id="auto-phone">
+            <fds-label>Telefon</fds-label>
+            <fds-input v-model="autoForm.phone" />
+            <fds-fejlmeddelelse v-if="autoForm.phone && !isValidAutoPhone">
+              Telefonnummer skal være 8 cifre
+            </fds-fejlmeddelelse>
+          </fds-formgroup>
+
+          <div class="mt-6">
+            <fds-button variant="primary" @click="validateAutoForm">Valider formular</fds-button>
+            <fds-button variant="secondary" class="ml-4" @click="clearAutoForm">Ryd formular</fds-button>
+          </div>
         </form>
       </fds-preview-item>
 
@@ -232,8 +249,36 @@ interface ErrorItem {
   element?: HTMLElement
 }
 
-const name = ref('')
-const email = ref('')
+// Auto-collection form data
+const autoForm = ref({
+  name: '',
+  email: '',
+  phone: ''
+})
+
+const isValidAutoEmail = computed(() => {
+  if (!autoForm.value.email) return false
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(autoForm.value.email)
+})
+
+const isValidAutoPhone = computed(() => {
+  if (!autoForm.value.phone) return true // Optional field
+  return /^\d{8}$/.test(autoForm.value.phone.replace(/\s/g, ''))
+})
+
+const validateAutoForm = () => {
+  // Trigger validation by clearing and setting values
+  const temp = { ...autoForm.value }
+  autoForm.value = { name: '', email: '', phone: '' }
+  setTimeout(() => {
+    autoForm.value = temp
+  }, 10)
+}
+
+const clearAutoForm = () => {
+  autoForm.value = { name: '', email: '', phone: '' }
+}
 
 // Scroll demo form data
 const scrollForm = ref({
@@ -297,16 +342,53 @@ const manualErrors: ErrorItem[] = [
 ]
 
 const codeAuto = `
-<!-- Automatisk fejlindsamling fra formfelter -->
-<fds-fejlopsummering />
+<!-- Automatisk fejlindsamling fra formgrupper -->
+<fds-fejlopsummering header="Formular fejl" />
 
 <form>
-  <fds-formgroup>
-    <fds-label for="name">Navn</fds-label>
-    <fds-input id="name" v-model="name" required />
-    <fds-fejlmeddelelse v-if="!name">Navn er påkrævet</fds-fejlmeddelelse>
+  <fds-formgroup id="auto-name">
+    <fds-label>Navn *</fds-label>
+    <fds-input v-model="autoForm.name" />
+    <fds-fejlmeddelelse v-if="!autoForm.name">
+      Navn er påkrævet
+    </fds-fejlmeddelelse>
+  </fds-formgroup>
+
+  <fds-formgroup id="auto-email">
+    <fds-label>Email *</fds-label>
+    <fds-input v-model="autoForm.email" type="email" />
+    <fds-fejlmeddelelse v-if="!isValidAutoEmail">
+      {{ !autoForm.email ? 'Email er påkrævet' : 'Indtast en gyldig email adresse' }}
+    </fds-fejlmeddelelse>
+  </fds-formgroup>
+
+  <fds-formgroup id="auto-phone">
+    <fds-label>Telefon</fds-label>
+    <fds-input v-model="autoForm.phone" />
+    <fds-fejlmeddelelse v-if="autoForm.phone && !isValidAutoPhone">
+      Telefonnummer skal være 8 cifre
+    </fds-fejlmeddelelse>
   </fds-formgroup>
 </form>
+
+<script setup>
+const autoForm = ref({
+  name: '',
+  email: '',
+  phone: ''
+})
+
+const isValidAutoEmail = computed(() => {
+  if (!autoForm.value.email) return false
+  const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/
+  return emailRegex.test(autoForm.value.email)
+})
+
+const isValidAutoPhone = computed(() => {
+  if (!autoForm.value.phone) return true // Optional field
+  return /^\\d{8}$/.test(autoForm.value.phone.replace(/\\s/g, ''))
+})
+<${'/'}script>
 `
 
 const codeManual = `
@@ -321,7 +403,7 @@ const errors = [
   { id: 'field-1', message: 'Feltnavn skal udfyldes' },
   { id: 'field-2', message: 'Email er ikke gyldig' }
 ]
-<\/script>
+<${'/'}script>
 `
 
 const codeSlot = `
@@ -397,6 +479,6 @@ const scrollDemoErrors = computed(() => {
 const onErrorClicked = (fieldId) => {
   console.log('Scrolling to field:', fieldId)
 }
-<` + `/script>
-\``
+<${'/'}script>
+`
 </script>
