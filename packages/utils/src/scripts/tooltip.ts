@@ -31,18 +31,26 @@ class Tooltip implements TooltipInstance {
   tooltip: HTMLSpanElement
   wrapperParents: HTMLElement[] = []
   updateTooltip?: () => void
-  private eventListeners: Array<{ element: Element | Window | Document; event: string; handler: EventListener }> = []
+  private eventListeners: Array<{
+    element: Element | Window | Document
+    event: string
+    handler: EventListener
+  }> = []
 
   constructor(wrapper: HTMLElement) {
     const targetElements = wrapper.getElementsByClassName('tooltip-target')
     if (targetElements.length === 0) {
-      throw new Error(`Missing tooltip target. Add class 'tooltip-target' to element inside tooltip wrapper.`)
+      throw new Error(
+        `Missing tooltip target. Add class 'tooltip-target' to element inside tooltip wrapper.`,
+      )
     }
     if (!wrapper.hasAttribute('data-tooltip') || wrapper.dataset.tooltip === '') {
       throw new Error(`Missing tooltip text. Wrapper must have data attribute 'data-tooltip'.`)
     }
     if (wrapper.dataset.trigger !== 'hover' && wrapper.dataset.trigger !== 'click') {
-      throw new Error(`Missing trigger. Tooltip wrapper must have data attribute 'data-trigger="hover"' or 'data-trigger="click"'.`)
+      throw new Error(
+        `Missing trigger. Tooltip wrapper must have data attribute 'data-trigger="hover"' or 'data-trigger="click"'.`,
+      )
     }
     if (!wrapper.hasAttribute('data-tooltip-id') || wrapper.dataset.tooltipId === '') {
       throw new Error(`Missing ID. Tooltip wrapper must have data attribute 'data-tooltip-id'.`)
@@ -50,10 +58,10 @@ class Tooltip implements TooltipInstance {
 
     this.wrapper = wrapper
     this.target = targetElements[0] as HTMLElement
-    
+
     this.tooltip = document.createElement('span')
     this.tooltip.classList.add('tooltip')
-    
+
     createdTooltips.push(this)
   }
 
@@ -61,7 +69,9 @@ class Tooltip implements TooltipInstance {
     const wrapper = this.wrapper
     const tooltipTarget = this.target
     const tooltipEl = this.tooltip
-    this.updateTooltip = () => { this.updateTooltipPosition() }
+    this.updateTooltip = () => {
+      this.updateTooltipPosition()
+    }
 
     this.hideTooltip()
 
@@ -77,13 +87,13 @@ class Tooltip implements TooltipInstance {
       // Hover tooltip implementation
       wrapper.append(tooltipEl)
       this.appendArrow(wrapper)
-      
+
       if (tooltipTarget.classList.contains('tooltip-is-label')) {
         tooltipTarget.setAttribute('aria-labelledby', wrapper.dataset.tooltipId || '')
       } else {
         tooltipTarget.setAttribute('aria-describedby', wrapper.dataset.tooltipId || '')
       }
-      
+
       tooltipEl.setAttribute('role', 'tooltip')
       tooltipEl.innerText = wrapper.dataset.tooltip || ''
 
@@ -126,7 +136,10 @@ class Tooltip implements TooltipInstance {
       })
 
       this.addEventListener(tooltipTarget, 'click', () => {
-        if (document.activeElement !== tooltipTarget && !tooltipTarget.classList.contains('js-pressed')) {
+        if (
+          document.activeElement !== tooltipTarget &&
+          !tooltipTarget.classList.contains('js-pressed')
+        ) {
           tooltipTarget.classList.remove('js-hover')
           this.hideTooltip()
         }
@@ -147,13 +160,19 @@ class Tooltip implements TooltipInstance {
           const rect = tooltipTarget.getBoundingClientRect()
           const center = (rect.top + rect.bottom) / 2
           let onTooltip = false
-          
+
           if (wrapper.classList.contains('place-above')) {
-            onTooltip = rect.left <= pointerEvent.clientX && pointerEvent.clientX <= rect.right && pointerEvent.clientY <= center
+            onTooltip =
+              rect.left <= pointerEvent.clientX &&
+              pointerEvent.clientX <= rect.right &&
+              pointerEvent.clientY <= center
           } else if (wrapper.classList.contains('place-below')) {
-            onTooltip = rect.left <= pointerEvent.clientX && pointerEvent.clientX <= rect.right && pointerEvent.clientY >= center
+            onTooltip =
+              rect.left <= pointerEvent.clientX &&
+              pointerEvent.clientX <= rect.right &&
+              pointerEvent.clientY >= center
           }
-          
+
           if (!onTooltip) {
             this.hideTooltip()
           }
@@ -170,13 +189,19 @@ class Tooltip implements TooltipInstance {
           const rect = tooltipEl.getBoundingClientRect()
           const center = (rect.top + rect.bottom) / 2
           let onTarget = false
-          
+
           if (wrapper.classList.contains('place-above')) {
-            onTarget = rect.left <= pointerEvent.clientX && pointerEvent.clientX <= rect.right && pointerEvent.clientY >= center
+            onTarget =
+              rect.left <= pointerEvent.clientX &&
+              pointerEvent.clientX <= rect.right &&
+              pointerEvent.clientY >= center
           } else if (wrapper.classList.contains('place-below')) {
-            onTarget = rect.left <= pointerEvent.clientX && pointerEvent.clientX <= rect.right && pointerEvent.clientY <= center
+            onTarget =
+              rect.left <= pointerEvent.clientX &&
+              pointerEvent.clientX <= rect.right &&
+              pointerEvent.clientY <= center
           }
-          
+
           if (!onTarget) {
             this.hideTooltip()
           }
@@ -198,7 +223,7 @@ class Tooltip implements TooltipInstance {
       wrapper.append(liveRegion)
       liveRegion.append(tooltipEl)
       this.appendArrow(wrapper)
-      
+
       tooltipTarget.setAttribute('aria-expanded', 'false')
       tooltipTarget.setAttribute('aria-controls', wrapper.dataset.tooltipId || '')
 
@@ -214,7 +239,7 @@ class Tooltip implements TooltipInstance {
 
   hideTooltip(): void {
     window.removeEventListener('resize', this.updateTooltip as EventListener)
-    
+
     if (this.wrapper.dataset.forceVisible === 'true') {
       document.removeEventListener('scroll', this.updateTooltip as EventListener)
       for (const parent of this.wrapperParents) {
@@ -222,39 +247,39 @@ class Tooltip implements TooltipInstance {
       }
       this.wrapperParents = []
     }
-    
+
     this.wrapper.classList.add('hide-tooltip')
-    
+
     if (this.target.hasAttribute('aria-expanded')) {
       this.target.setAttribute('aria-expanded', 'false')
       this.tooltip.innerText = ''
     }
-    
+
     this.target.classList.remove('js-pressing')
     this.target.classList.remove('js-pressed')
   }
 
   showTooltip(): void {
     this.addEventListener(window, 'resize', this.updateTooltip as EventListener)
-    
+
     if (this.wrapper.dataset.forceVisible === 'true') {
       this.addEventListener(document, 'scroll', this.updateTooltip as EventListener)
       this.wrapperParents = this.getParents(this.wrapper)
-      
+
       for (const parent of this.wrapperParents) {
         if (this.isScrollable(parent) || this.hasOverflow(parent)) {
           this.addEventListener(parent, 'scroll', this.updateTooltip as EventListener)
         }
       }
     }
-    
+
     this.wrapper.classList.remove('hide-tooltip')
-    
+
     if (this.target.hasAttribute('aria-expanded')) {
       this.target.setAttribute('aria-expanded', 'true')
       this.tooltip.innerText = this.wrapper.dataset.tooltip || ''
     }
-    
+
     this.updateTooltipPosition()
 
     // Close other tooltips
@@ -288,34 +313,38 @@ class Tooltip implements TooltipInstance {
       element.removeEventListener(event, handler)
     }
     this.eventListeners = []
-    
+
     // Remove from created tooltips
     const index = createdTooltips.indexOf(this)
     if (index > -1) {
       createdTooltips.splice(index, 1)
     }
-    
+
     // Remove tooltip element
     this.tooltip.remove()
-    
+
     // Remove arrow if exists
     const arrow = this.wrapper.querySelector('.tooltip-arrow')
     if (arrow) {
       arrow.remove()
     }
-    
+
     // Reset ARIA attributes
     this.target.removeAttribute('aria-describedby')
     this.target.removeAttribute('aria-labelledby')
     this.target.removeAttribute('aria-expanded')
     this.target.removeAttribute('aria-controls')
-    
+
     // Reset classes
     this.wrapper.classList.remove('hide-tooltip', 'place-above', 'place-below')
     this.target.classList.remove('js-hover', 'js-pressing', 'js-pressed')
   }
 
-  private addEventListener(element: Element | Window | Document, event: string, handler: EventListener): void {
+  private addEventListener(
+    element: Element | Window | Document,
+    event: string,
+    handler: EventListener,
+  ): void {
     element.addEventListener(event, handler)
     this.eventListeners.push({ element, event, handler })
   }
@@ -327,33 +356,38 @@ class Tooltip implements TooltipInstance {
     tooltipWrapper.append(arrow)
   }
 
-  private isVisibleOnScreen(tooltipWrapper: HTMLElement, tooltipWrapperParents: HTMLElement[]): boolean {
+  private isVisibleOnScreen(
+    tooltipWrapper: HTMLElement,
+    tooltipWrapperParents: HTMLElement[],
+  ): boolean {
     const wrapperRect = tooltipWrapper.getBoundingClientRect()
-    
-    if (wrapperRect.bottom < 0 || 
-        wrapperRect.right < 0 || 
-        wrapperRect.left > document.documentElement.clientWidth || 
-        wrapperRect.top > document.documentElement.clientHeight) {
+
+    if (
+      wrapperRect.bottom < 0 ||
+      wrapperRect.right < 0 ||
+      wrapperRect.left > document.documentElement.clientWidth ||
+      wrapperRect.top > document.documentElement.clientHeight
+    ) {
       return false
     }
-    
+
     if (tooltipWrapperParents.length > 0) {
       for (const parent of tooltipWrapperParents) {
         if (this.isScrollable(parent) || this.hasOverflow(parent)) {
           const parentRect = parent.getBoundingClientRect()
-          const wrapperIsVisible = 
-            wrapperRect.bottom > parentRect.top && 
-            wrapperRect.right > parentRect.left && 
-            wrapperRect.left < parentRect.right && 
+          const wrapperIsVisible =
+            wrapperRect.bottom > parentRect.top &&
+            wrapperRect.right > parentRect.left &&
+            wrapperRect.left < parentRect.right &&
             wrapperRect.top < parentRect.bottom
-          
+
           if (!wrapperIsVisible) {
             return false
           }
         }
       }
     }
-    
+
     return true
   }
 
@@ -369,7 +403,7 @@ class Tooltip implements TooltipInstance {
   private getParents(tooltipWrapper: HTMLElement): HTMLElement[] {
     let currentElement: HTMLElement | null = tooltipWrapper
     const parents: HTMLElement[] = []
-    
+
     while (currentElement && currentElement.parentElement) {
       currentElement = currentElement.parentElement
       if (currentElement !== document.body && currentElement !== document.documentElement) {
@@ -378,45 +412,53 @@ class Tooltip implements TooltipInstance {
         break
       }
     }
-    
+
     return parents
   }
 
   private setWidth(tooltipEl: HTMLElement): void {
     tooltipEl.style.width = 'max-content'
     const WCAGReflowCriterion = 320 // WCAG 2.1, Criterion 1.4.10 "Reflow"
-    const accessibleMaxWidth = WCAGReflowCriterion - (MIN_MARGIN * 2)
-    
+    const accessibleMaxWidth = WCAGReflowCriterion - MIN_MARGIN * 2
+
     if (parseInt(window.getComputedStyle(tooltipEl).width) > accessibleMaxWidth) {
       tooltipEl.style.width = accessibleMaxWidth + 'px'
     }
-    
-    const screenMaxWidth = document.body.getBoundingClientRect().width - (MIN_MARGIN * 2)
+
+    const screenMaxWidth = document.body.getBoundingClientRect().width - MIN_MARGIN * 2
     if (parseInt(window.getComputedStyle(tooltipEl).width) > screenMaxWidth) {
       tooltipEl.style.width = screenMaxWidth + 'px'
     }
   }
 
-  private placeAboveOrBelow(tooltipWrapper: HTMLElement, tooltipTarget: HTMLElement, tooltipEl: HTMLElement): void {
+  private placeAboveOrBelow(
+    tooltipWrapper: HTMLElement,
+    tooltipTarget: HTMLElement,
+    tooltipEl: HTMLElement,
+  ): void {
     let spaceAbove = tooltipTarget.getBoundingClientRect().top
     const bodyTop = document.body.getBoundingClientRect().top
     if (bodyTop > 0) {
       spaceAbove = tooltipTarget.getBoundingClientRect().top - bodyTop
     }
-    
+
     let spaceBelow = window.innerHeight - tooltipTarget.getBoundingClientRect().bottom
     const bodyBottom = document.body.getBoundingClientRect().bottom
     if (bodyBottom < window.innerHeight) {
       spaceBelow = bodyBottom - tooltipTarget.getBoundingClientRect().bottom
     }
-    
-    const height = tooltipEl.getBoundingClientRect().height + ARROW_DISTANCE_TO_TARGET + ARROW_HEIGHT
+
+    const height =
+      tooltipEl.getBoundingClientRect().height + ARROW_DISTANCE_TO_TARGET + ARROW_HEIGHT
     let placement = 'above' // Default
-    
-    if ((tooltipWrapper.dataset.position === 'below' && spaceBelow >= height) || (height > spaceAbove)) {
+
+    if (
+      (tooltipWrapper.dataset.position === 'below' && spaceBelow >= height) ||
+      height > spaceAbove
+    ) {
       placement = 'below'
     }
-    
+
     if (placement === 'above') {
       tooltipWrapper.classList.add('place-above')
       tooltipWrapper.classList.remove('place-below')
@@ -426,33 +468,46 @@ class Tooltip implements TooltipInstance {
     }
   }
 
-  private setLeft(tooltipWrapper: HTMLElement, tooltipTarget: HTMLElement, tooltipEl: HTMLElement): void {
+  private setLeft(
+    tooltipWrapper: HTMLElement,
+    tooltipTarget: HTMLElement,
+    tooltipEl: HTMLElement,
+  ): void {
     const tooltipTargetRect = tooltipTarget.getBoundingClientRect()
     const tooltipRect = tooltipEl.getBoundingClientRect()
 
     if (tooltipWrapper.dataset.forceVisible === 'true') {
       // Tooltip with position: fixed
-      const left = tooltipTargetRect.left + ((tooltipTargetRect.width - tooltipRect.width) / 2)
+      const left = tooltipTargetRect.left + (tooltipTargetRect.width - tooltipRect.width) / 2
       tooltipEl.style.left = Math.round(left) + 'px'
       tooltipEl.style.position = 'fixed'
 
       tooltipEl.classList.remove('open-right', 'open-left')
       const ARROW_BORDER_DISTANCE = 21
-      
+
       if (left < MIN_MARGIN) {
-        const adjustedLeft = tooltipTargetRect.left - ARROW_BORDER_DISTANCE + (tooltipTargetRect.width / 2)
+        const adjustedLeft =
+          tooltipTargetRect.left - ARROW_BORDER_DISTANCE + tooltipTargetRect.width / 2
         tooltipEl.style.left = adjustedLeft + 'px'
         tooltipEl.classList.add('open-right')
-        
+
         if (document.body.clientWidth - tooltipEl.getBoundingClientRect().right - MIN_MARGIN < 0) {
-          const newWidth = document.body.clientWidth - tooltipEl.getBoundingClientRect().left - MIN_MARGIN
+          const newWidth =
+            document.body.clientWidth - tooltipEl.getBoundingClientRect().left - MIN_MARGIN
           tooltipEl.style.width = newWidth + 'px'
         }
-      } else if (tooltipTargetRect.left + (tooltipTargetRect.width / 2) + (tooltipRect.width / 2) > (document.body.clientWidth - MIN_MARGIN)) {
-        const adjustedLeft = tooltipTargetRect.right + ARROW_BORDER_DISTANCE - tooltipRect.width - (tooltipTargetRect.width / 2)
+      } else if (
+        tooltipTargetRect.left + tooltipTargetRect.width / 2 + tooltipRect.width / 2 >
+        document.body.clientWidth - MIN_MARGIN
+      ) {
+        const adjustedLeft =
+          tooltipTargetRect.right +
+          ARROW_BORDER_DISTANCE -
+          tooltipRect.width -
+          tooltipTargetRect.width / 2
         tooltipEl.style.left = adjustedLeft + 'px'
         tooltipEl.classList.add('open-left')
-        
+
         if (tooltipEl.getBoundingClientRect().left < MIN_MARGIN) {
           const newWidth = tooltipEl.getBoundingClientRect().right - MIN_MARGIN
           tooltipEl.style.width = newWidth + 'px'
@@ -466,7 +521,7 @@ class Tooltip implements TooltipInstance {
       tooltipEl.style.position = 'absolute'
 
       const bodyRect = document.body.getBoundingClientRect()
-      
+
       if (tooltipEl.getBoundingClientRect().left < bodyRect.left + MIN_MARGIN) {
         const pixelsExceeded = bodyRect.left + MIN_MARGIN - tooltipEl.getBoundingClientRect().left
         const adjustedLeft = pixelsExceeded + left
@@ -479,9 +534,17 @@ class Tooltip implements TooltipInstance {
     }
   }
 
-  private setTop(tooltipWrapper: HTMLElement, tooltipTarget: HTMLElement, tooltipEl: HTMLElement): void {
+  private setTop(
+    tooltipWrapper: HTMLElement,
+    tooltipTarget: HTMLElement,
+    tooltipEl: HTMLElement,
+  ): void {
     const arrowAdjustment = 1 // Between 0 and ARROW_HEIGHT
-    const spaceNeededForEntireTooltip = tooltipEl.getBoundingClientRect().height + ARROW_HEIGHT + ARROW_DISTANCE_TO_TARGET - arrowAdjustment
+    const spaceNeededForEntireTooltip =
+      tooltipEl.getBoundingClientRect().height +
+      ARROW_HEIGHT +
+      ARROW_DISTANCE_TO_TARGET -
+      arrowAdjustment
     const spaceNeededForTooltipArrow = ARROW_HEIGHT + ARROW_DISTANCE_TO_TARGET - arrowAdjustment
 
     let aboveTopValue = 0 - spaceNeededForEntireTooltip
@@ -502,24 +565,26 @@ class Tooltip implements TooltipInstance {
 
 function closeAllTooltips(event: Event): void {
   const mouseEvent = event as MouseEvent
-  
+
   for (const tooltip of createdTooltips) {
     const target = tooltip.target
     const tooltipEl = tooltip.tooltip
     const targetRect = target.getBoundingClientRect()
     const tooltipRect = tooltipEl.getBoundingClientRect()
-    
-    const clickedOnTarget = targetRect.left <= mouseEvent.clientX && 
-                           mouseEvent.clientX <= targetRect.right && 
-                           targetRect.top <= mouseEvent.clientY && 
-                           mouseEvent.clientY <= targetRect.bottom
-    
-    const clickedOnTooltip = window.getComputedStyle(tooltipEl).display !== 'none' &&
-                            tooltipRect.left <= mouseEvent.clientX && 
-                            mouseEvent.clientX <= tooltipRect.right && 
-                            tooltipRect.top <= mouseEvent.clientY && 
-                            mouseEvent.clientY <= tooltipRect.bottom
-    
+
+    const clickedOnTarget =
+      targetRect.left <= mouseEvent.clientX &&
+      mouseEvent.clientX <= targetRect.right &&
+      targetRect.top <= mouseEvent.clientY &&
+      mouseEvent.clientY <= targetRect.bottom
+
+    const clickedOnTooltip =
+      window.getComputedStyle(tooltipEl).display !== 'none' &&
+      tooltipRect.left <= mouseEvent.clientX &&
+      mouseEvent.clientX <= tooltipRect.right &&
+      tooltipRect.top <= mouseEvent.clientY &&
+      mouseEvent.clientY <= tooltipRect.bottom
+
     if (!clickedOnTarget && target !== document.activeElement && !clickedOnTooltip) {
       tooltip.hideTooltip()
     } else if (event.type === 'beforeprint') {
@@ -531,7 +596,7 @@ function closeAllTooltips(event: Event): void {
 function closeOnKey(e: Event): void {
   const keyEvent = e as KeyboardEvent
   const key = keyEvent.key
-  
+
   if (key === 'Tab') {
     for (const tooltip of createdTooltips) {
       if (document.activeElement !== tooltip.target && tooltip.isShowing()) {
@@ -540,14 +605,14 @@ function closeOnKey(e: Event): void {
     }
   } else if (key === 'Escape') {
     let tooltipClosed = false
-    
+
     for (const tooltip of createdTooltips) {
       if (tooltip.isShowing()) {
         tooltip.hideTooltip()
         tooltipClosed = true
       }
     }
-    
+
     if (tooltipClosed) {
       e.stopImmediatePropagation()
     }
