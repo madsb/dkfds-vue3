@@ -102,11 +102,7 @@ const komponenterRoutes: Array<RouteRecordRaw> = [
         name: 'komponentformgruppe',
         component: () => import('@/views/Komponenter/FormgruppeExample.vue'),
       },
-      {
-        path: 'formular',
-        name: 'komponentformular',
-        component: () => import('@/views/Komponenter/FormularExample.vue'),
-      },
+
       {
         path: 'funktionslink',
         name: 'komponentfunktionslink',

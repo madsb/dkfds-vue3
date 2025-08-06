@@ -92,10 +92,7 @@ const navigationList = ref<Array<FdsNavigationItem>>(
       key: 'komponentformgruppe',
       title: 'Form gruppe',
     },
-    {
-      key: 'komponentformular',
-      title: 'Formular',
-    },
+
     {
       key: 'komponentfunktionslink',
       title: 'Funktionslink',
