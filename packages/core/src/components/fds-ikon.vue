@@ -1,14 +1,34 @@
 <template>
-  <svg class="icon-svg" focusable="false" aria-hidden="true">
-    <use v-bind="{ href: `#${icon}` }" />
+  <svg 
+    class="icon-svg" 
+    :class="{ 'inline-svg': inline }"
+    focusable="false" 
+    :aria-hidden="decorative ? 'true' : undefined"
+    :aria-label="ariaLabel"
+    :role="role"
+  >
+    <use :href="`#${icon}`" />
   </svg>
 </template>
 
 <script setup lang="ts">
-const {
-  /** Ikon som string */
-  icon = 'home',
-} = defineProps<{
+import { computed } from 'vue'
+
+const props = withDefaults(defineProps<{
+  /** Ikon navn (Material Design icon ID) */
   icon?: string
-}>()
+  /** Om ikonet skal justeres til teksthøjde (inline) */
+  inline?: boolean
+  /** Aria label for screen readers (hvis ikonet formidler mening) */
+  ariaLabel?: string
+  /** Om ikonet er dekorativt (standard: true) */
+  decorative?: boolean
+}>(), {
+  icon: 'home',
+  inline: false,
+  decorative: true
+})
+
+// Computed properties for accessibility
+const role = computed(() => !props.decorative && props.ariaLabel ? 'img' : undefined)
 </script>

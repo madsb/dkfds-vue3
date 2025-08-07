@@ -1,7 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import FdsButton from '../../components/fds-button.vue'
-import { FdsVariantEnum } from 'dkfds-vue3-utils'
 
 describe('FdsButton', () => {
   describe('Rendering', () => {
@@ -36,7 +35,9 @@ describe('FdsButton', () => {
   })
 
   describe('Variants', () => {
-    Object.values(FdsVariantEnum).forEach((variant) => {
+    const validVariants = ['primary', 'secondary', 'tertiary', 'warning']
+    
+    validVariants.forEach((variant) => {
       it(`applies ${variant} variant class correctly`, () => {
         const wrapper = mount(FdsButton, {
           props: { variant },
@@ -155,12 +156,12 @@ describe('FdsButton', () => {
 
     it('maintains reactivity when variant changes', async () => {
       const wrapper = mount(FdsButton, {
-        props: { variant: FdsVariantEnum.primary },
+        props: { variant: 'primary' },
       })
 
       expect(wrapper.classes()).toContain('button-primary')
 
-      await wrapper.setProps({ variant: FdsVariantEnum.secondary })
+      await wrapper.setProps({ variant: 'secondary' })
       expect(wrapper.classes()).not.toContain('button-primary')
       expect(wrapper.classes()).toContain('button-secondary')
     })
@@ -224,6 +225,221 @@ describe('FdsButton', () => {
 
       expect(button.text()).toBe('Saving...')
       expect(button.attributes('disabled')).toBeDefined()
+    })
+  })
+
+  describe('DKFDS v11 Features', () => {
+    describe('Icon Support', () => {
+      it('renders with icon', () => {
+        const wrapper = mount(FdsButton, {
+          props: { 
+            icon: 'refresh',
+            variant: 'primary'
+          },
+          slots: {
+            default: 'Refresh'
+          }
+        })
+
+        const iconSvg = wrapper.find('svg.icon-svg')
+        expect(iconSvg.exists()).toBe(true)
+        expect(iconSvg.attributes('focusable')).toBe('false')
+        expect(iconSvg.attributes('aria-hidden')).toBe('true')
+        expect(iconSvg.find('use').attributes('href')).toBe('#refresh')
+      })
+
+      it('renders icon on the right when iconRight is true', () => {
+        const wrapper = mount(FdsButton, {
+          props: { 
+            icon: 'arrow-right',
+            iconRight: true
+          },
+          slots: {
+            default: 'Next'
+          }
+        })
+
+        const iconSvgs = wrapper.findAll('svg.icon-svg')
+        expect(iconSvgs).toHaveLength(1)
+        
+        // Icon should be after the slot content
+        const button = wrapper.find('button')
+        const buttonHtml = button.html()
+        const iconIndex = buttonHtml.indexOf('<svg')
+        const textIndex = buttonHtml.indexOf('Next')
+        expect(iconIndex > textIndex).toBe(true)
+      })
+
+      it('does not render icon when icon prop is not provided', () => {
+        const wrapper = mount(FdsButton, {
+          slots: { default: 'No icon' }
+        })
+
+        expect(wrapper.find('svg.icon-svg').exists()).toBe(false)
+      })
+
+      it('handles empty icon prop gracefully', () => {
+        const wrapper = mount(FdsButton, {
+          props: { icon: '' },
+          slots: { default: 'Button' }
+        })
+
+        expect(wrapper.find('svg.icon-svg').exists()).toBe(false)
+      })
+
+      it('updates icon dynamically', async () => {
+        const wrapper = mount(FdsButton, {
+          props: { icon: 'save' },
+          slots: { default: 'Save' }
+        })
+
+        expect(wrapper.find('use').attributes('href')).toBe('#save')
+
+        await wrapper.setProps({ icon: 'edit' })
+        expect(wrapper.find('use').attributes('href')).toBe('#edit')
+      })
+    })
+
+    describe('Mobile Full Width', () => {
+      it('applies xs-full-width class when fullWidthMobile is true', () => {
+        const wrapper = mount(FdsButton, {
+          props: { fullWidthMobile: true }
+        })
+
+        expect(wrapper.classes()).toContain('xs-full-width')
+      })
+
+      it('does not apply xs-full-width class by default', () => {
+        const wrapper = mount(FdsButton)
+
+        expect(wrapper.classes()).not.toContain('xs-full-width')
+      })
+
+      it('can toggle fullWidthMobile dynamically', async () => {
+        const wrapper = mount(FdsButton, {
+          props: { fullWidthMobile: false }
+        })
+
+        expect(wrapper.classes()).not.toContain('xs-full-width')
+
+        await wrapper.setProps({ fullWidthMobile: true })
+        expect(wrapper.classes()).toContain('xs-full-width')
+      })
+    })
+
+    describe('Icon Only Buttons', () => {
+      it('applies button-icon-only class when iconOnly is true', () => {
+        const wrapper = mount(FdsButton, {
+          props: { iconOnly: true }
+        })
+
+        expect(wrapper.classes()).toContain('button-icon-only')
+      })
+
+      it('does not apply button-icon-only class by default', () => {
+        const wrapper = mount(FdsButton)
+
+        expect(wrapper.classes()).not.toContain('button-icon-only')
+      })
+
+      it('works correctly with icon and iconOnly props together', () => {
+        const wrapper = mount(FdsButton, {
+          props: { 
+            icon: 'close',
+            iconOnly: true
+          }
+        })
+
+        expect(wrapper.classes()).toContain('button-icon-only')
+        expect(wrapper.find('svg.icon-svg').exists()).toBe(true)
+        expect(wrapper.find('use').attributes('href')).toBe('#close')
+      })
+    })
+
+    describe('Combined Features', () => {
+      it('combines multiple v11 features correctly', () => {
+        const wrapper = mount(FdsButton, {
+          props: {
+            variant: 'secondary',
+            icon: 'settings',
+            iconRight: true,
+            fullWidthMobile: true,
+            iconOnly: false
+          }
+        })
+
+        expect(wrapper.classes()).toContain('button-secondary')
+        expect(wrapper.classes()).toContain('xs-full-width')
+        expect(wrapper.classes()).not.toContain('button-icon-only')
+        expect(wrapper.find('svg.icon-svg').exists()).toBe(true)
+      })
+
+      it('handles all features with warning variant', () => {
+        const wrapper = mount(FdsButton, {
+          props: {
+            variant: 'warning',
+            icon: 'warning',
+            iconOnly: true,
+            fullWidthMobile: true
+          }
+        })
+
+        expect(wrapper.classes()).toContain('button-warning')
+        expect(wrapper.classes()).toContain('xs-full-width')
+        expect(wrapper.classes()).toContain('button-icon-only')
+        expect(wrapper.find('svg.icon-svg').exists()).toBe(true)
+      })
+    })
+
+    describe('Backward Compatibility', () => {
+      it('maintains compatibility with basic button usage', () => {
+        const wrapper = mount(FdsButton, {
+          slots: { default: 'Click me' }
+        })
+
+        expect(wrapper.classes()).toContain('button')
+        expect(wrapper.classes()).toContain('button-primary')
+        expect(wrapper.text()).toBe('Click me')
+      })
+
+      it('maintains compatibility with variant prop', () => {
+        const variants = ['primary', 'secondary', 'tertiary', 'warning']
+        
+        variants.forEach(variant => {
+          const wrapper = mount(FdsButton, {
+            props: { variant }
+          })
+          expect(wrapper.classes()).toContain(`button-${variant}`)
+        })
+      })
+    })
+  })
+
+  describe('Accessibility', () => {
+    it('maintains proper ARIA attributes on icons', () => {
+      const wrapper = mount(FdsButton, {
+        props: { icon: 'save' }
+      })
+
+      const icon = wrapper.find('svg.icon-svg')
+      expect(icon.attributes('focusable')).toBe('false')
+      expect(icon.attributes('aria-hidden')).toBe('true')
+    })
+
+    it('passes through all attributes correctly', () => {
+      const wrapper = mount(FdsButton, {
+        attrs: {
+          'aria-label': 'Save document',
+          'data-testid': 'save-btn',
+          type: 'submit',
+          disabled: true
+        }
+      })
+
+      expect(wrapper.attributes('aria-label')).toBe('Save document')
+      expect(wrapper.attributes('data-testid')).toBe('save-btn')
+      expect(wrapper.attributes('type')).toBe('submit')
+      expect(wrapper.attributes('disabled')).toBeDefined()
     })
   })
 })

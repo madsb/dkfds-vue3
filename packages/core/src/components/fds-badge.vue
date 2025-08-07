@@ -1,29 +1,29 @@
 <template>
-  <span class="badge" :class="`${getSizeClass} ${getVariantClass}`">
+  <component :is="tag" class="badge" :class="getVariantClass">
     <slot />
-  </span>
+  </component>
 </template>
 
 <script setup lang="ts">
 /**
- *
- * Komponent til Badge
+ * Badge component following DKFDS v11 specifications
  * https://designsystem.dk/komponenter/badges/
- *
- * */
+ * 
+ * Used to highlight new or important content
+ */
 import { computed } from 'vue'
 
 const {
-  size = 'large',
-  /** Variant 'success' | 'info' | 'warning' | 'error' */
+  /** HTML tag to use - 'strong' for emphasis, 'span' for regular badges */
+  tag = 'span',
+  /** Visual variant for different statuses */
   variant = null,
 } = defineProps<{
-  size?: 'small' | 'large'
+  tag?: 'span' | 'strong'
   variant?: 'success' | 'info' | 'warning' | 'error' | null
 }>()
 
-const getSizeClass = computed(() => `badge-${size}`)
-const getVariantClass = computed(() => (variant ? `badge-${variant}` : ''))
+const getVariantClass = computed(() => variant ? `badge-${variant}` : '')
 </script>
 
 <style scoped lang="scss"></style>

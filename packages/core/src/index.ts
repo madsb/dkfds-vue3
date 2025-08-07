@@ -3,7 +3,7 @@ import FdsAccordionGroup from './components/fds-accordion-group.vue'
 import FdsAccordion from './components/fds-accordion.vue'
 import FdsAlert from './components/fds-alert.vue'
 import FdsBadge from './components/fds-badge.vue'
-import FdsButtonIcon from './components/fds-button-icon.vue'
+
 import FdsButton from './components/fds-button.vue'
 import FdsCardGroup from './components/fds-card-group.vue'
 import FdsCard from './components/fds-card.vue'
@@ -108,7 +108,7 @@ function install(app: App): void {
   app.component('fds-fejlmeddelelse', FdsFejlmeddelelse)
   app.component('fds-fejlopsummering', FdsFejlopsummering)
   app.component('fds-button', FdsButton)
-  app.component('fds-button-icon', FdsButtonIcon)
+
   app.component('fds-toggle-switch', FdsToggleSwitch)
   app.component('fds-accordion', FdsAccordion)
   app.component('fds-accordion-group', FdsAccordionGroup)
@@ -141,7 +141,6 @@ export {
   FdsAccordion,
   FdsAlert,
   FdsBadge,
-  FdsButtonIcon,
   FdsButton,
   FdsCardGroup,
   FdsCard,

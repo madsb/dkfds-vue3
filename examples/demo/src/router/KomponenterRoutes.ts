@@ -144,6 +144,11 @@ const komponenterRoutes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Komponenter/PagineringExample.vue'),
       },
       {
+        path: 'pre',
+        name: 'komponentpre',
+        component: () => import('@/views/Komponenter/PreExample.vue'),
+      },
+      {
         path: 'radioknap',
         name: 'komponentradioknap',
         component: () => import('@/views/Komponenter/RadioknapExample.vue'),
