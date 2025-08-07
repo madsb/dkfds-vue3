@@ -192,7 +192,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import type { BreadcrumbItem } from '../../../packages/core/src/components/fds-breadcrumb.vue'
+import type { BreadcrumbItem } from '../../../../../packages/core/src/components/fds-breadcrumb.vue'
 
 // Interactive demo state
 const currentPageIndex = ref(2)
@@ -321,33 +321,33 @@ const routerExampleCode = `
 
 <!-- Items med Vue Router to prop -->
 const routerItems: BreadcrumbItem[] = [
-  { 
-    text: 'Forside', 
+  {
+    text: 'Forside',
     href: '/',        // Fallback for non-router
     to: '/'           // Vue Router navigation
   },
-  { 
-    text: 'Komponenter', 
+  {
+    text: 'Komponenter',
     href: '/komponenter',
     to: { name: 'komponenter' }  // Named route
   },
-  { 
-    text: 'Aktuel side' 
+  {
+    text: 'Aktuel side'
   }
 ]
 
 <!-- Tving native links -->
-<fds-breadcrumb 
-  :items="routerItems" 
+<fds-breadcrumb
+  :items="routerItems"
   :use-native-links="true"
-  container 
+  container
 />
 
 <!-- Eksterne links -->
 const externalItems: BreadcrumbItem[] = [
   { text: 'Intern', href: '/' },
-  { 
-    text: 'DKFDS', 
+  {
+    text: 'DKFDS',
     href: 'https://designsystem.dk',
     external: true  // Bruger altid <a> tag
   },
@@ -372,17 +372,17 @@ const codeExamples = `
 <fds-breadcrumb :items="breadcrumbItems" />
 
 <!-- Med tilpasset aria-label -->
-<fds-breadcrumb 
-  :items="breadcrumbItems" 
-  aria-label="Sidenavigation" 
-  container 
+<fds-breadcrumb
+  :items="breadcrumbItems"
+  aria-label="Sidenavigation"
+  container
 />
 
 <!-- Med event handling -->
-<fds-breadcrumb 
-  :items="breadcrumbItems" 
+<fds-breadcrumb
+  :items="breadcrumbItems"
   @item-click="handleBreadcrumbClick"
-  container 
+  container
 />
 
 <!-- TypeScript interface -->
@@ -394,8 +394,8 @@ interface BreadcrumbItem {
 
 <!-- Event handler -->
 const handleBreadcrumbClick = (
-  event: MouseEvent, 
-  item: BreadcrumbItem, 
+  event: MouseEvent,
+  item: BreadcrumbItem,
   index: number
 ) => {
   console.log('Klikket på:', item.text)

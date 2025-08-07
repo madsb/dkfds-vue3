@@ -25,10 +25,11 @@ describe('FdsInput', () => {
       expect(input.attributes('name')).toBe(customId)
     })
 
-    it('renders with default wrapper class', () => {
+    it('renders without wrapper classes when no prefix/suffix', () => {
       const wrapper = mount(FdsInput)
 
-      expect(wrapper.find('.flex-items-center').exists()).toBe(true)
+      // Should not have wrapper classes when no prefix/suffix
+      expect(wrapper.find('.form-input-wrapper').exists()).toBe(false)
     })
   })
 

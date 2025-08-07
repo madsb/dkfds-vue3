@@ -1,64 +1,146 @@
 <template>
-  <fieldset>
+  <div class="form-group-checkbox">
     <input
+      v-bind="attrs"
       :id="formid"
       type="checkbox"
-      class="form-checkbox"
-      :checked="refValue"
-      :class="{ 'checkbox-large': size === 'large' }"
-      v-bind="attrs"
-      @input="onInput"
-      @blur="$emit('dirty', true)"
+      :class="checkboxClass"
+      :checked="isChecked"
+      :name="props.name || formid"
+      :value="props.value"
+      :disabled="props.disabled"
+      :aria-describedby="computedAriaDescribedby"
+      :aria-controls="hasContent ? `collapse-${formid}` : undefined"
+      :data-controls="hasContent ? `collapse-${formid}` : undefined"
+      @change="handleChange"
+      @blur="handleBlur"
     />
-    <label :for="formid" class="hand">
-      <slot :id="formid" class="hand"></slot>
+    <label :for="formid" class="form-label">
+      <slot></slot>
     </label>
     <div
-      v-if="$slots.content"
+      v-if="hasContent"
       :id="`collapse-${formid}`"
-      :aria-hidden="!refValue"
-      class="checkbox-content checkbox-content-large"
+      :aria-hidden="!isChecked ? 'true' : 'false'"
+      class="checkbox-content"
+      :style="!isChecked ? 'display: none;' : undefined"
     >
       <slot name="content" />
     </div>
-  </fieldset>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, useAttrs } from 'vue'
+import { computed, useAttrs, useSlots, inject, isRef, type Ref } from 'vue'
 import { formId } from 'dkfds-vue3-utils'
 
 const attrs = useAttrs()
+const slots = useSlots()
 
-const {
-  id = null,
-  modelValue = false,
-  /** Vis som lille checkbox */
-  size = 'large',
-} = defineProps<{
+interface Props {
+  /** Unique identifier for the checkbox */
   id?: string | null
-  modelValue?: boolean
-  size?: 'small' | 'large'
-}>()
+  /** The v-model value */
+  modelValue?: boolean | string | string[]
+  /** Checkbox value for form submission */
+  value?: string | number | boolean
+  /** Name attribute for form submission */
+  name?: string
+  /** Whether the checkbox is disabled */
+  disabled?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  id: null,
+  modelValue: false,
+  value: true,
+  name: undefined,
+  disabled: false,
+})
 
 const emit = defineEmits<{
-  'update:modelValue': [checked: boolean]
+  /** Emitted when checkbox state changes */
+  'update:modelValue': [value: boolean | string | string[]]
+  /** Emitted when checkbox loses focus */
   dirty: [isDirty: boolean]
+  /** Emitted on change event */
+  change: [event: Event]
 }>()
 
-const { formid } = formId(id, true)
-const refValue = ref(modelValue)
+const { formid } = formId(props.id, true)
 
-const onInput = (event: Event) =>
-  emit('update:modelValue', (event?.target as HTMLInputElement).checked)
+// Check if content slot is provided
+const hasContent = computed(() => !!slots.content)
 
-watch(
-  () => [modelValue],
-  () => {
-    refValue.value = modelValue
-  },
-  {
-    immediate: true,
-  },
+// Inject aria-describedby from formgroup if available
+const injectedAriaDescribedby = inject<string | Ref<string> | undefined>(
+  'ariaDescribedby',
+  undefined,
 )
+
+const computedAriaDescribedby = computed((): string | undefined => {
+  // Use explicitly provided aria-describedby from attrs
+  if (attrs['aria-describedby']) {
+    return attrs['aria-describedby'] as string
+  }
+  // Otherwise use injected value from formgroup
+  if (injectedAriaDescribedby) {
+    return isRef(injectedAriaDescribedby) ? injectedAriaDescribedby.value : injectedAriaDescribedby
+  }
+  return undefined
+})
+
+/**
+ * Compute checkbox classes
+ */
+const checkboxClass = computed((): string => {
+  return 'form-checkbox'
+})
+
+/**
+ * Determine if checkbox is checked
+ */
+const isChecked = computed((): boolean => {
+  if (Array.isArray(props.modelValue)) {
+    return props.modelValue.includes(props.value as string)
+  }
+  if (typeof props.modelValue === 'boolean') {
+    return props.modelValue
+  }
+  return props.modelValue === props.value
+})
+
+/**
+ * Handle checkbox change
+ */
+const handleChange = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  const checked = target.checked
+
+  if (Array.isArray(props.modelValue)) {
+    const newValue = [...props.modelValue]
+    if (checked) {
+      if (!newValue.includes(props.value as string)) {
+        newValue.push(props.value as string)
+      }
+    } else {
+      const index = newValue.indexOf(props.value as string)
+      if (index > -1) {
+        newValue.splice(index, 1)
+      }
+    }
+    emit('update:modelValue', newValue)
+  } else {
+    emit('update:modelValue', checked)
+  }
+
+  emit('change', event)
+}
+
+/**
+ * Handle blur event
+ */
+const handleBlur = () => {
+  emit('dirty', true)
+}
 </script>

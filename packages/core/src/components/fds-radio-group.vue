@@ -1,45 +1,77 @@
 <template>
-  <fieldset>
-    <legend class="form-label">
+  <fieldset :aria-labelledby="legendId" :aria-describedby="helpTextId || undefined">
+    <legend :id="legendId" class="form-label">
       <slot name="label">
-        {{ label }}
+        {{ props.label }}
       </slot>
     </legend>
-    <ul :id="formid" class="nobullet-list">
+    <div v-if="props.helpText || $slots.help" :id="helpTextId" class="form-hint">
+      <slot name="help">
+        {{ props.helpText }}
+      </slot>
+    </div>
+    <div :id="formid" role="radiogroup">
       <slot />
-    </ul>
+    </div>
   </fieldset>
 </template>
 
 <script setup lang="ts">
-import { provide, computed } from 'vue'
+import { provide, computed, useSlots } from 'vue'
 import { formId } from 'dkfds-vue3-utils'
 
-const {
-  modelValue = null,
-  id = null,
-  label,
-} = defineProps<{
-  modelValue?: string | null
+interface Props {
+  /** The v-model value */
+  modelValue?: string | number | boolean | null
+  /** Unique identifier */
   id?: string | null
+  /** Label for the radio group */
   label: string
-}>()
+  /** Help text for the radio group */
+  helpText?: string
+  /** Name attribute for all radio buttons in the group */
+  name?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  modelValue: null,
+  id: null,
+  helpText: '',
+  name: undefined,
+})
 
 const emit = defineEmits<{
-  'update:modelValue': [value: string]
+  /** Emitted when selection changes */
+  'update:modelValue': [value: string | number | boolean]
+  /** Emitted when any radio loses focus */
   dirty: [isDirty: boolean]
 }>()
 
-const { formid } = formId(id)
+const slots = useSlots()
+const { formid } = formId(props.id, true)
 
-const value = computed(() => modelValue)
+// Generate IDs for accessibility
+const legendId = computed(() => `${formid.value}-legend`)
+const helpTextId = computed(() => (props.helpText || slots.help ? `${formid.value}-help` : null))
 
-const exposeEmit = (newValue: string) => {
+// Provide radio name to children
+const radioName = computed(() => props.name || `radio-${formid.value}`)
+
+const value = computed(() => props.modelValue)
+
+const exposeEmit = (newValue: string | number | boolean) => {
   emit('update:modelValue', newValue)
 }
 
+// Provide values to child radio items
 provide('provideGroupEmit', exposeEmit)
 provide('provideGroupValue', value)
+provide('provideGroupName', radioName)
+
+// Provide aria-describedby if help text exists
+if (helpTextId.value) {
+  provide('ariaDescribedby', helpTextId)
+}
 </script>
 
 <style scoped lang="scss"></style>

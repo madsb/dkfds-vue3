@@ -51,7 +51,6 @@ const preStyles = {
   margin: '0',
   padding: '1rem',
   fontFamily: "'Courier New', Courier, monospace",
-  fontSize: '0.875rem',
   lineHeight: '1.5',
   whiteSpace: 'pre' as const,
   overflowWrap: 'normal' as const,

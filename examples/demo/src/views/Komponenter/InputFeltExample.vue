@@ -3,8 +3,10 @@
     <fds-preview header="Tekstfelt" href="https://designsystem.dk/komponenter/inputfelter/">
       <fds-preview-item>
         <fds-formgroup>
-          <fds-label> Fornavn </fds-label>
-          <fds-tooltip class="ml-2"> Hjælpende <b>tekst</b> </fds-tooltip>
+          <fds-label>
+            Fornavn
+            <fds-tooltip class="ml-2" content="Hjælpende tekst" />
+          </fds-label>
           <fds-hint>Indtast fornavn</fds-hint>
           <fds-input v-model="txtFornavn" />
         </fds-formgroup>
@@ -40,10 +42,10 @@
               <td></td>
             </tr>
             <tr>
-              <td><code>placeholder</code></td>
+              <td><code>type</code></td>
               <td><code>string</code></td>
               <td><code>'text'</code></td>
-              <td></td>
+              <td>HTML input type (text, email, tel, number, etc.)</td>
             </tr>
             <tr>
               <td><code>prefix</code></td>
@@ -58,10 +60,25 @@
               <td>Indikator/tydeliggørelse af data i enden - eg. stk, kr, m.m.</td>
             </tr>
             <tr>
+              <td><code>widthClass</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>
+                DKFDS bredde klasser: input-width-xs, input-width-s, input-width-m, input-width-l,
+                input-width-xl
+              </td>
+            </tr>
+            <tr>
+              <td><code>placeholder</code></td>
+              <td><code>string</code></td>
+              <td><code>undefined</code></td>
+              <td>Placeholder tekst (brug via attrs)</td>
+            </tr>
+            <tr>
               <td><code>readonly</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td></td>
+              <td>Gør feltet readonly (brug via attrs)</td>
             </tr>
           </tbody>
         </table>
@@ -83,12 +100,58 @@
       </fds-preview-item>
     </fds-preview>
 
+    <fds-preview header="Input Typer og Bredder">
+      <fds-preview-item>
+        <fds-formgroup>
+          <fds-label id="email">Email (input-width-l)</fds-label>
+          <fds-input
+            id="email"
+            v-model="txtEmail"
+            type="email"
+            width-class="input-width-l"
+            placeholder="navn@example.dk"
+          />
+        </fds-formgroup>
+
+        <fds-formgroup>
+          <fds-label id="phone">Telefon (input-width-m)</fds-label>
+          <fds-input
+            id="phone"
+            v-model="txtPhone"
+            type="tel"
+            width-class="input-width-m"
+            placeholder="+45 12 34 56 78"
+          />
+        </fds-formgroup>
+
+        <fds-formgroup>
+          <fds-label id="postal">Postnummer (input-width-xs)</fds-label>
+          <fds-input
+            id="postal"
+            v-model="txtPostal"
+            type="text"
+            width-class="input-width-xs"
+            maxlength="4"
+            placeholder="1234"
+          />
+        </fds-formgroup>
+
+        <fds-pre header="v-model" :json="{ txtEmail, txtPhone, txtPostal }" />
+      </fds-preview-item>
+
+      <fds-preview-code>
+        <pre v-text="codeTypesWidths"></pre>
+      </fds-preview-code>
+    </fds-preview>
+
     <fds-preview header="Karakterbegrænsning">
       <fds-preview-item>
         <fds-formgroup>
-          <fds-label> Efternavn </fds-label>
-          <fds-tooltip class="ml-2"> Hjælpende <b>tekst</b> </fds-tooltip>
-          <fds-hint>Indtast fornavn</fds-hint>
+          <fds-label>
+            Efternavn
+            <fds-tooltip class="ml-2" content="Hjælpende tekst" />
+          </fds-label>
+          <fds-hint>Indtast efternavn</fds-hint>
           <fds-input v-model="txtEfternavn"></fds-input>
           <fds-input-limit :model-value="txtEfternavn" :limit="20" />
         </fds-formgroup>
@@ -142,8 +205,10 @@
     <fds-preview header="Readonly">
       <fds-preview-item>
         <fds-formgroup>
-          <fds-label> Fornavn </fds-label>
-          <fds-tooltip class="ml-2"> Hjælpende <b>tekst</b> </fds-tooltip>
+          <fds-label>
+            Fornavn
+            <fds-tooltip class="ml-2" content="Dette felt er skrivebeskyttet" />
+          </fds-label>
           <fds-input v-model="txtFornavn" readonly></fds-input>
         </fds-formgroup>
 
@@ -196,16 +261,55 @@ const txtPre = ref('')
 const txtSuffix = ref('')
 const txtSearch = ref('')
 const noBeloeb = ref(0)
+const txtEmail = ref('')
+const txtPhone = ref('')
+const txtPostal = ref('')
 
 const code = `
-<fds-input v-model="txtFornavn" />
+<fds-formgroup>
+  <fds-label>
+    Fornavn
+    <fds-tooltip class="ml-2" content="Hjælpende tekst" />
+  </fds-label>
+  <fds-hint>Indtast fornavn</fds-hint>
+  <fds-input v-model="txtFornavn" />
+</fds-formgroup>
+`
+
+const codeTypesWidths = `
+<!-- Email med large bredde -->
+<fds-input 
+  v-model="txtEmail" 
+  type="email"
+  width-class="input-width-l"
+  placeholder="navn@example.dk"
+/>
+
+<!-- Telefon med medium bredde -->
+<fds-input 
+  v-model="txtPhone" 
+  type="tel"
+  width-class="input-width-m"
+  placeholder="+45 12 34 56 78"
+/>
+
+<!-- Postnummer med extra small bredde -->
+<fds-input 
+  v-model="txtPostal" 
+  type="text"
+  width-class="input-width-xs"
+  maxlength="4"
+  placeholder="1234"
+/>
 `
 
 const codeLimit = `
 <fds-formgroup>
-  <fds-label> Efternavn </fds-label>
-  <fds-tooltip class="ml-2"> Hjælpende <b>tekst</b> </fds-tooltip>
-  <fds-hint>Indtast fornavn</fds-hint>
+  <fds-label>
+    Efternavn
+    <fds-tooltip class="ml-2" content="Hjælpende tekst" />
+  </fds-label>
+  <fds-hint>Indtast efternavn</fds-hint>
   <fds-input v-model="txtEfternavn"></fds-input>
   <fds-input-limit :modelValue="txtEfternavn" :limit="20" />
 </fds-formgroup>
@@ -238,9 +342,10 @@ const codeInputKnap = `
 
 const readonly = `
 <fds-formgroup>
- ...
- <fds-input
-  v-model="txtFornavn"
-  readonly />
+  <fds-label>
+    Fornavn
+    <fds-tooltip class="ml-2" content="Hjælpende tekst" />
+  </fds-label>
+  <fds-input v-model="txtFornavn" readonly />
 </fds-formgroup>`
 </script>

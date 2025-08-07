@@ -6,10 +6,10 @@ import { testAccessibility } from '../../../../../test-shared/test-utils'
 
 describe('FdsCheckbox', () => {
   describe('Rendering', () => {
-    it('should render fieldset with checkbox input and label', () => {
+    it('should render checkbox with label in form-group', () => {
       const wrapper = mount(FdsCheckbox)
 
-      expect(wrapper.find('fieldset').exists()).toBe(true)
+      expect(wrapper.find('.form-group-checkbox').exists()).toBe(true)
       expect(wrapper.find('input[type="checkbox"]').exists()).toBe(true)
       expect(wrapper.find('label').exists()).toBe(true)
     })
@@ -46,20 +46,11 @@ describe('FdsCheckbox', () => {
   })
 
   describe('Props', () => {
-    it('should apply large size by default', () => {
+    it('should have standard checkbox class', () => {
       const wrapper = mount(FdsCheckbox)
       const input = wrapper.find('input')
 
-      expect(input.classes()).toContain('checkbox-large')
-    })
-
-    it('should apply small size when specified', () => {
-      const wrapper = mount(FdsCheckbox, {
-        props: { size: 'small' },
-      })
-      const input = wrapper.find('input')
-
-      expect(input.classes()).not.toContain('checkbox-large')
+      expect(input.classes()).toContain('form-checkbox')
     })
 
     it('should bind modelValue to checked state', async () => {
@@ -300,7 +291,7 @@ describe('FdsCheckbox', () => {
     it('renders without any props or slots', () => {
       const wrapper = mount(FdsCheckbox)
 
-      expect(wrapper.find('fieldset').exists()).toBe(true)
+      expect(wrapper.find('.form-group-checkbox').exists()).toBe(true)
       expect(wrapper.find('input[type="checkbox"]').exists()).toBe(true)
       expect(wrapper.find('label').exists()).toBe(true)
       expect(wrapper.find('label').text()).toBe('')
