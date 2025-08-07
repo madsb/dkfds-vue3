@@ -11,7 +11,10 @@
         </p>
 
         <h3 class="h5 mt-6">HTML tags</h3>
-        <p>Badges kan renderes som enten <code>&lt;span&gt;</code> eller <code>&lt;strong&gt;</code> elementer:</p>
+        <p>
+          Badges kan renderes som enten <code>&lt;span&gt;</code> eller
+          <code>&lt;strong&gt;</code> elementer:
+        </p>
         <p>
           <fds-badge class="mr-4" variant="info">Normal (span)</fds-badge>
           <fds-badge tag="strong" variant="success">Vigtigt (strong)</fds-badge>
@@ -20,7 +23,7 @@
         <h3 class="h5 mt-6">Eksempler på brug</h3>
         <div class="mt-4">
           <h4>
-            Ny funktionalitet 
+            Ny funktionalitet
             <fds-badge tag="strong" variant="success">NY</fds-badge>
           </h4>
           <p>Brug badges til at fremhæve nyt eller vigtigt indhold.</p>

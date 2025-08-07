@@ -22,7 +22,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 /**
  * Tilbage til toppen component
  * DKFDS v11 compliant implementation
- * 
+ *
  * Features:
  * - Shows after scrolling 2 screen heights
  * - Responsive display (icon-only on mobile, with text on desktop)
@@ -42,7 +42,7 @@ export interface FdsTilTopProps {
 const props = withDefaults(defineProps<FdsTilTopProps>(), {
   screenReaderText: 'Til toppen af siden',
   visibleText: 'Til toppen',
-  threshold: undefined
+  threshold: undefined,
 })
 
 const backToTopRef = ref<HTMLAnchorElement>()
@@ -55,31 +55,35 @@ const updateVisibility = () => {
     // Calculate 2 screen heights on first scroll
     scrollThreshold = window.innerHeight * 2
   }
-  
+
   const scrollTop = window.pageYOffset || document.documentElement.scrollTop
   isVisible.value = scrollTop > scrollThreshold
 }
 
 const scrollToTop = (event: Event) => {
   event.preventDefault()
-  
+
   // Smooth scroll to top
   window.scrollTo({
     top: 0,
-    behavior: 'smooth'
+    behavior: 'smooth',
   })
 }
 
 onMounted(() => {
   window.addEventListener('scroll', updateVisibility, { passive: true })
-  window.addEventListener('resize', () => {
-    // Recalculate threshold on resize if using default
-    if (props.threshold === undefined) {
-      scrollThreshold = window.innerHeight * 2
-    }
-    updateVisibility()
-  }, { passive: true })
-  
+  window.addEventListener(
+    'resize',
+    () => {
+      // Recalculate threshold on resize if using default
+      if (props.threshold === undefined) {
+        scrollThreshold = window.innerHeight * 2
+      }
+      updateVisibility()
+    },
+    { passive: true },
+  )
+
   // Check initial state
   updateVisibility()
 })

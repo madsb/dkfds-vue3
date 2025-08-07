@@ -20,7 +20,6 @@ describe('FdsBadge', () => {
       expect(wrapper.classes()).toContain('badge')
     })
 
-
     it('renders without variant class when variant is null', () => {
       const wrapper = mount(FdsBadge)
       const classes = wrapper.classes()
@@ -75,7 +74,6 @@ describe('FdsBadge', () => {
         expect(wrapper.classes()).toContain('badge-success')
       })
     })
-
 
     describe('Variant prop', () => {
       it('renders all variant types correctly', () => {
@@ -210,7 +208,6 @@ describe('FdsBadge', () => {
       const wrapper = mount(FdsBadge)
       expect(wrapper.text()).toBe('')
     })
-
 
     it('handles undefined variant prop', () => {
       const wrapper = mount(FdsBadge, {
@@ -500,11 +497,11 @@ describe('FdsBadge', () => {
       // NEW badge uses strong for emphasis
       expect(badges[0].element.tagName).toBe('STRONG')
       expect(badges[0].classes()).toContain('badge-success')
-      
+
       // Status badge uses default span
       expect(badges[1].element.tagName).toBe('SPAN')
       expect(badges[1].classes()).toContain('badge-info')
-      
+
       // Stock warning uses span with warning variant
       expect(badges[2].element.tagName).toBe('SPAN')
       expect(badges[2].classes()).toContain('badge-warning')

@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
+const _props = defineProps<{
   /** Link destination */
   href: string
   /** Label text for the navigation item */

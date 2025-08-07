@@ -1,24 +1,10 @@
 <template>
-  <button 
-    class="button" 
-    :class="buttonClasses"
-    v-bind="$attrs"
-  >
-    <svg 
-      v-if="icon && !iconRight" 
-      class="icon-svg" 
-      focusable="false" 
-      aria-hidden="true"
-    >
+  <button class="button" :class="buttonClasses" v-bind="$attrs">
+    <svg v-if="icon && !iconRight" class="icon-svg" focusable="false" aria-hidden="true">
       <use :href="`#${icon}`" />
     </svg>
     <slot />
-    <svg 
-      v-if="icon && iconRight" 
-      class="icon-svg" 
-      focusable="false" 
-      aria-hidden="true"
-    >
+    <svg v-if="icon && iconRight" class="icon-svg" focusable="false" aria-hidden="true">
       <use :href="`#${icon}`" />
     </svg>
   </button>
@@ -29,7 +15,7 @@ import { computed } from 'vue'
 
 /**
  * Button component implementing DKFDS v11 specifications
- * 
+ *
  * @see https://designsystem.dk/komponenter/knapper/
  */
 
@@ -57,24 +43,24 @@ const props = withDefaults(defineProps<FdsButtonProps>(), {
 // Compute classes based on DKFDS v11 specifications
 const buttonClasses = computed(() => {
   const classes: string[] = []
-  
+
   // Add variant class (ensure it's a valid DKFDS variant)
   const validVariants = ['primary', 'secondary', 'tertiary', 'warning']
-  const variantClass = validVariants.includes(props.variant) 
-    ? `button-${props.variant}` 
+  const variantClass = validVariants.includes(props.variant)
+    ? `button-${props.variant}`
     : `button-${props.variant}` // Allow custom variants
-  
+
   classes.push(variantClass)
-  
+
   // Add utility classes
   if (props.fullWidthMobile) {
     classes.push('xs-full-width')
   }
-  
+
   if (props.iconOnly) {
     classes.push('button-icon-only')
   }
-  
+
   return classes
 })
 </script>

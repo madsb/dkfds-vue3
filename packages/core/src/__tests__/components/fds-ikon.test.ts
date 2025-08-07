@@ -7,13 +7,13 @@ describe('FdsIkon', () => {
     it('renders with default props', () => {
       const wrapper = mount(FdsIkon)
       const svg = wrapper.find('svg')
-      
+
       expect(svg.exists()).toBe(true)
       expect(svg.classes()).toContain('icon-svg')
       expect(svg.attributes('focusable')).toBe('false')
       // Check if the HTML contains aria-hidden
       expect(wrapper.html()).toContain('aria-hidden')
-      
+
       const use = svg.find('use')
       expect(use.attributes('href')).toBe('#home')
     })
@@ -21,10 +21,10 @@ describe('FdsIkon', () => {
     it('renders with custom icon', () => {
       const wrapper = mount(FdsIkon, {
         props: {
-          icon: 'search'
-        }
+          icon: 'search',
+        },
       })
-      
+
       const use = wrapper.find('use')
       expect(use.attributes('href')).toBe('#search')
     })
@@ -33,7 +33,7 @@ describe('FdsIkon', () => {
   describe('inline variant', () => {
     it('renders without inline class by default', () => {
       const wrapper = mount(FdsIkon)
-      
+
       const svg = wrapper.find('svg')
       expect(svg.classes()).toContain('icon-svg')
       expect(svg.classes()).not.toContain('inline-svg')
@@ -42,10 +42,10 @@ describe('FdsIkon', () => {
     it('renders with inline class when inline prop is true', () => {
       const wrapper = mount(FdsIkon, {
         props: {
-          inline: true
-        }
+          inline: true,
+        },
       })
-      
+
       const svg = wrapper.find('svg')
       expect(svg.classes()).toContain('icon-svg')
       expect(svg.classes()).toContain('inline-svg')
@@ -56,7 +56,7 @@ describe('FdsIkon', () => {
     it('is decorative by default', () => {
       const wrapper = mount(FdsIkon)
       const svg = wrapper.find('svg')
-      
+
       // Check HTML contains aria-hidden
       expect(wrapper.html()).toContain('aria-hidden')
       expect(svg.attributes('aria-label')).toBeUndefined()
@@ -67,10 +67,10 @@ describe('FdsIkon', () => {
       const wrapper = mount(FdsIkon, {
         props: {
           decorative: false,
-          ariaLabel: 'Søg ikon'
-        }
+          ariaLabel: 'Søg ikon',
+        },
       })
-      
+
       const svg = wrapper.find('svg')
       expect(wrapper.html()).not.toContain('aria-hidden')
       expect(svg.attributes('aria-label')).toBe('Søg ikon')
@@ -80,10 +80,10 @@ describe('FdsIkon', () => {
     it('remains without aria-hidden when decorative is false without aria-label', () => {
       const wrapper = mount(FdsIkon, {
         props: {
-          decorative: false
-        }
+          decorative: false,
+        },
       })
-      
+
       const svg = wrapper.find('svg')
       expect(wrapper.html()).not.toContain('aria-hidden')
       expect(svg.attributes('role')).toBeUndefined()
@@ -92,7 +92,7 @@ describe('FdsIkon', () => {
     it('always has focusable="false" for IE compatibility', () => {
       const wrapper = mount(FdsIkon)
       const svg = wrapper.find('svg')
-      
+
       expect(svg.attributes('focusable')).toBe('false')
     })
   })
@@ -104,10 +104,10 @@ describe('FdsIkon', () => {
           icon: 'visibility',
           inline: true,
           ariaLabel: 'Vis indhold',
-          decorative: false
-        }
+          decorative: false,
+        },
       })
-      
+
       expect(wrapper.find('use').attributes('href')).toBe('#visibility')
       expect(wrapper.find('svg').classes()).toContain('inline-svg')
       expect(wrapper.find('svg').attributes('aria-label')).toBe('Vis indhold')
@@ -118,10 +118,10 @@ describe('FdsIkon', () => {
     it('follows DKFDS v11 structure', () => {
       const wrapper = mount(FdsIkon, {
         props: {
-          icon: 'print'
-        }
+          icon: 'print',
+        },
       })
-      
+
       const html = wrapper.html()
       expect(html).toContain('<svg')
       expect(html).toContain('class="icon-svg"')

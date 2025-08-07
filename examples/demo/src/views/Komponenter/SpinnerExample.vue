@@ -1,7 +1,6 @@
 <template>
   <section>
     <fds-preview header="Spinner varianter" href="https://designsystem.dk/komponenter/spinner/">
-      
       <!-- Basic spinner -->
       <fds-preview-item header="Standard spinner">
         <div class="mt-6">
@@ -25,14 +24,14 @@
 
       <!-- Centered spinner -->
       <fds-preview-item header="Centreret spinner">
-        <div class="border p-6" style="min-height: 200px;">
+        <div class="border p-6" style="min-height: 200px">
           <fds-spinner :centered="true" :sr-only-text="'Indlæser side'" />
         </div>
       </fds-preview-item>
 
       <!-- Light variant for dark backgrounds -->
       <fds-preview-item header="Lys variant (til mørke baggrunde)">
-        <div class="bg-normal p-6">
+        <div class="bg-primary-dark p-6" style="color: white">
           <fds-spinner variant="light">Indlæser på mørk baggrund</fds-spinner>
         </div>
       </fds-preview-item>
@@ -75,31 +74,15 @@
           <fds-label for="search-field">Søg</fds-label>
           <div class="d-flex align-items-center">
             <fds-input id="search-field" v-model="searchText" />
-            <fds-spinner 
-              v-if="isSearching" 
-              size="small" 
-              class="ml-3"
-            >
-              Søger...
-            </fds-spinner>
+            <fds-spinner v-if="isSearching" size="small" class="ml-3"> Søger... </fds-spinner>
           </div>
         </fds-formgroup>
-        
+
         <hr class="my-5" />
-        
-        <fds-button 
-          :disabled="isProcessing" 
-          variant="primary"
-          @click="handleButtonClick"
-        >
+
+        <fds-button :disabled="isProcessing" variant="primary" @click="handleButtonClick">
           <span v-if="!isProcessing">Gem ændringer</span>
-          <fds-spinner 
-            v-else 
-            size="small" 
-            variant="light"
-          >
-            Gemmer...
-          </fds-spinner>
+          <fds-spinner v-else size="small" variant="light"> Gemmer... </fds-spinner>
         </fds-button>
       </fds-preview-item>
 

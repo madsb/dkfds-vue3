@@ -2,12 +2,13 @@
   <article>
     <h1>Kodevisning (Pre)</h1>
     <p class="font-lead">
-      Komponenten bruges til at vise formateret kode eller JSON-data med korrekt indentering og formatering.
+      Komponenten bruges til at vise formateret kode eller JSON-data med korrekt indentering og
+      formatering.
     </p>
 
     <section class="mt-8">
       <h2>Eksempler</h2>
-      
+
       <div class="component-example mt-5">
         <h3>Kodevisning med overskrift</h3>
         <fds-pre header="JavaScript eksempel" :code="jsCode" />
@@ -21,10 +22,8 @@
       <div class="component-example mt-5">
         <h3>HTML kode via slot</h3>
         <fds-pre header="HTML eksempel">
-&lt;div class="container"&gt;
-  &lt;h1&gt;Overskrift&lt;/h1&gt;
-  &lt;p&gt;Dette er et afsnit med tekst.&lt;/p&gt;
-&lt;/div&gt;
+          &lt;div class="container"&gt; &lt;h1&gt;Overskrift&lt;/h1&gt; &lt;p&gt;Dette er et afsnit
+          med tekst.&lt;/p&gt; &lt;/div&gt;
         </fds-pre>
       </div>
 
@@ -133,12 +132,12 @@ const jsonExample = {
     address: {
       street: 'Kongensgade 10',
       city: 'København',
-      postalCode: '1200'
+      postalCode: '1200',
     },
     roles: ['admin', 'user'],
-    active: true
+    active: true,
   },
-  timestamp: '2024-01-15T10:30:00Z'
+  timestamp: '2024-01-15T10:30:00Z',
 }
 
 // Create a large JSON for demonstration
@@ -148,12 +147,13 @@ const generateLargeJson = () => {
     items.push({
       id: i,
       name: `Item nummer ${i}`,
-      description: 'Dette er en beskrivelse der gør JSON-objektet større for at demonstrere advarslen om store datamængder.',
+      description:
+        'Dette er en beskrivelse der gør JSON-objektet større for at demonstrere advarslen om store datamængder.',
       metadata: {
         created: '2024-01-15',
         modified: '2024-01-16',
-        tags: ['tag1', 'tag2', 'tag3']
-      }
+        tags: ['tag1', 'tag2', 'tag3'],
+      },
     })
   }
   return { totalItems: items.length, items }
@@ -161,7 +161,8 @@ const generateLargeJson = () => {
 
 const largeJson = generateLargeJson()
 
-const vueExample = `<template>
+const vueExample =
+  `<template>
   <!-- Vis JavaScript kode -->
   <fds-pre 
     header="Min kode" 

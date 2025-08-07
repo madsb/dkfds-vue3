@@ -10,10 +10,13 @@
     class="function-link"
     @click="handleClick"
   >
-    <svg v-if="icon" class="icon-svg" focusable="false" aria-hidden="true">
+    <svg v-if="icon && !iconRight" class="icon-svg" focusable="false" aria-hidden="true">
       <use :href="`#${icon}`"></use>
     </svg>
     <slot />
+    <svg v-if="icon && iconRight" class="icon-svg" focusable="false" aria-hidden="true">
+      <use :href="`#${icon}`"></use>
+    </svg>
   </component>
 </template>
 
@@ -24,6 +27,8 @@ const props = withDefaults(
   defineProps<{
     /** Icon identifier from DKFDS icon set */
     icon?: string
+    /** Position icon on the right side of text */
+    iconRight?: boolean
     /** URL for link navigation */
     href?: string
     /** Element type - auto-detected from href if not specified */
@@ -39,6 +44,7 @@ const props = withDefaults(
   }>(),
   {
     type: undefined,
+    iconRight: false,
     disabled: false,
   },
 )

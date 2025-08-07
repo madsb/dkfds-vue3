@@ -1,17 +1,8 @@
 <template>
-  <button 
-    :id="formid" 
-    class="tag" 
-    :class="{ 'tag-icon': hasIcon }"
-    @click="handleClick"
-  >
+  <button :id="formid" class="tag" :class="{ 'tag-icon': hasIcon }" @click="handleClick">
     <slot />
     <slot name="icon">
-      <fds-ikon 
-        v-if="icon" 
-        :icon="icon"
-        :decorative="true"
-      />
+      <fds-ikon v-if="icon" :icon="icon" :decorative="true" />
     </slot>
   </button>
 </template>
@@ -19,10 +10,10 @@
 <script setup lang="ts">
 /**
  * FDS Tag Component
- * 
+ *
  * Implementation of DKFDS v11 tags component
  * https://designsystem.dk/komponenter/tags/
- * 
+ *
  * Tags are used to display secondary, metadata-related information
  * in a concise and contextually relevant manner.
  */
@@ -37,7 +28,7 @@ interface Props {
    * When provided, adds a tag-icon class and displays the icon
    */
   icon?: string | null
-  
+
   /**
    * Optional ID for the button element
    */
@@ -46,7 +37,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   icon: null,
-  id: null
+  id: null,
 })
 
 const slots = useSlots()

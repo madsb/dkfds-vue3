@@ -16,8 +16,8 @@ describe('FdsPre', () => {
       const slotContent = 'const example = "Hello World";'
       const wrapper = mount(FdsPre, {
         slots: {
-          default: slotContent
-        }
+          default: slotContent,
+        },
       })
       expect(wrapper.find('pre.code').text()).toContain(slotContent)
     })
@@ -32,7 +32,7 @@ describe('FdsPre', () => {
     it('renders header when provided', () => {
       const header = 'Code Example'
       const wrapper = mount(FdsPre, {
-        props: { header }
+        props: { header },
       })
       expect(wrapper.find('legend.form-label').exists()).toBe(true)
       expect(wrapper.find('legend.form-label').text()).toBe(header)
@@ -41,7 +41,7 @@ describe('FdsPre', () => {
     it('renders code string when provided', () => {
       const code = 'function test() { return true; }'
       const wrapper = mount(FdsPre, {
-        props: { code }
+        props: { code },
       })
       expect(wrapper.find('pre.code').text()).toBe(code)
     })
@@ -49,7 +49,7 @@ describe('FdsPre', () => {
     it('renders formatted JSON when json prop is provided', () => {
       const json = { name: 'test', value: 123, nested: { key: 'value' } }
       const wrapper = mount(FdsPre, {
-        props: { json }
+        props: { json },
       })
       const expectedOutput = JSON.stringify(json, null, 2)
       expect(wrapper.find('pre.code').text()).toBe(expectedOutput)
@@ -57,7 +57,7 @@ describe('FdsPre', () => {
 
     it('handles null json prop gracefully', () => {
       const wrapper = mount(FdsPre, {
-        props: { json: null }
+        props: { json: null },
       })
       expect(wrapper.find('pre.code').text()).toBe('')
     })
@@ -66,7 +66,7 @@ describe('FdsPre', () => {
       const json = { test: 'json' }
       const code = 'const test = "code"'
       const wrapper = mount(FdsPre, {
-        props: { json, code }
+        props: { json, code },
       })
       const expectedOutput = JSON.stringify(json, null, 2)
       expect(wrapper.find('pre.code').text()).toBe(expectedOutput)
@@ -77,7 +77,7 @@ describe('FdsPre', () => {
       const slotContent = 'slot content'
       const wrapper = mount(FdsPre, {
         props: { code },
-        slots: { default: slotContent }
+        slots: { default: slotContent },
       })
       expect(wrapper.find('pre.code').text()).toBe(code)
     })
@@ -89,20 +89,22 @@ describe('FdsPre', () => {
       const largeArray = new Array(10000).fill({ key: 'value with some text to make it longer' })
       const json = { data: largeArray }
       const wrapper = mount(FdsPre, {
-        props: { json }
+        props: { json },
       })
-      
+
       const formattedLength = JSON.stringify(json, null, 2).length
       if (formattedLength > 65535) {
         expect(wrapper.find('.form-hint').exists()).toBe(true)
-        expect(wrapper.find('.form-hint').text()).toContain('JSON indeholder elementer over 65.535 tegn')
+        expect(wrapper.find('.form-hint').text()).toContain(
+          'JSON indeholder elementer over 65.535 tegn',
+        )
       }
     })
 
     it('does not show warning for JSON content under 65535 characters', () => {
       const json = { small: 'data' }
       const wrapper = mount(FdsPre, {
-        props: { json }
+        props: { json },
       })
       expect(wrapper.find('.form-hint').exists()).toBe(false)
     })
@@ -110,7 +112,7 @@ describe('FdsPre', () => {
     it('does not show warning for code prop regardless of size', () => {
       const longCode = 'a'.repeat(70000)
       const wrapper = mount(FdsPre, {
-        props: { code: longCode }
+        props: { code: longCode },
       })
       expect(wrapper.find('.form-hint').exists()).toBe(false)
     })
@@ -119,7 +121,7 @@ describe('FdsPre', () => {
   describe('Styling classes', () => {
     it('applies correct form structure classes', () => {
       const wrapper = mount(FdsPre, {
-        props: { header: 'Test' }
+        props: { header: 'Test' },
       })
       expect(wrapper.find('.fds-pre').exists()).toBe(true)
       expect(wrapper.find('.form-group').exists()).toBe(true)
@@ -131,9 +133,9 @@ describe('FdsPre', () => {
       const largeArray = new Array(10000).fill({ key: 'value with some text to make it longer' })
       const json = { data: largeArray }
       const wrapper = mount(FdsPre, {
-        props: { json }
+        props: { json },
       })
-      
+
       const hint = wrapper.find('.form-hint')
       if (hint.exists()) {
         expect(hint.classes()).toContain('mt-2')
@@ -145,10 +147,10 @@ describe('FdsPre', () => {
     it('handles circular JSON references gracefully', () => {
       const circularObj: any = { name: 'test' }
       circularObj.self = circularObj
-      
+
       // Mount should not throw an error
       const wrapper = mount(FdsPre, {
-        props: { json: circularObj }
+        props: { json: circularObj },
       })
       expect(wrapper.find('pre.code').exists()).toBe(true)
     })
@@ -156,14 +158,14 @@ describe('FdsPre', () => {
     it('handles undefined values in JSON', () => {
       const json = { key: undefined, another: 'value' }
       const wrapper = mount(FdsPre, {
-        props: { json }
+        props: { json },
       })
       expect(wrapper.find('pre.code').exists()).toBe(true)
     })
 
     it('handles empty string code', () => {
       const wrapper = mount(FdsPre, {
-        props: { code: '' }
+        props: { code: '' },
       })
       expect(wrapper.find('pre.code').text()).toBe('')
     })
@@ -174,7 +176,7 @@ describe('FdsPre', () => {
   return value * 2;
 }`
       const wrapper = mount(FdsPre, {
-        props: { code: multiLineCode }
+        props: { code: multiLineCode },
       })
       expect(wrapper.find('pre.code').text()).toBe(multiLineCode)
     })
@@ -183,7 +185,7 @@ describe('FdsPre', () => {
   describe('Accessibility', () => {
     it('uses semantic fieldset and legend elements', () => {
       const wrapper = mount(FdsPre, {
-        props: { header: 'Code Sample' }
+        props: { header: 'Code Sample' },
       })
       expect(wrapper.find('fieldset').exists()).toBe(true)
       expect(wrapper.find('legend').exists()).toBe(true)
@@ -191,7 +193,7 @@ describe('FdsPre', () => {
 
     it('legend is associated with fieldset', () => {
       const wrapper = mount(FdsPre, {
-        props: { header: 'Code Sample' }
+        props: { header: 'Code Sample' },
       })
       const fieldset = wrapper.find('fieldset')
       const legend = wrapper.find('legend')
@@ -203,7 +205,7 @@ describe('FdsPre', () => {
     more indented
 regular`
       const wrapper = mount(FdsPre, {
-        props: { code: formattedCode }
+        props: { code: formattedCode },
       })
       const preText = wrapper.find('pre').text()
       // Note: Vue Test Utils may trim leading whitespace from the first line

@@ -182,6 +182,39 @@ describe('FdsFunktionslink', () => {
         })
       })
     })
+
+    describe('iconRight prop', () => {
+      it('defaults to false', () => {
+        const wrapper = mount(FdsFunktionslink, {
+          props: { icon: 'print' },
+          slots: { default: 'Print' },
+        })
+        const html = wrapper.html()
+        const iconIndex = html.indexOf('<svg')
+        const textIndex = html.indexOf('Print')
+        expect(iconIndex).toBeLessThan(textIndex)
+      })
+
+      it('positions icon after text when true', () => {
+        const wrapper = mount(FdsFunktionslink, {
+          props: { icon: 'print', iconRight: true },
+          slots: { default: 'Print' },
+        })
+        const html = wrapper.html()
+        const iconIndex = html.indexOf('<svg')
+        const textIndex = html.indexOf('Print')
+        expect(textIndex).toBeLessThan(iconIndex)
+      })
+
+      it('renders only one icon when iconRight is specified', () => {
+        const wrapper = mount(FdsFunktionslink, {
+          props: { icon: 'save', iconRight: true },
+          slots: { default: 'Save' },
+        })
+        const svgs = wrapper.findAll('svg')
+        expect(svgs.length).toBe(1)
+      })
+    })
   })
 
   describe('Events', () => {
@@ -244,7 +277,7 @@ describe('FdsFunktionslink', () => {
       expect(wrapper.find('strong').text()).toBe('PDF')
     })
 
-    it('renders icon before slot content', () => {
+    it('renders icon before slot content by default', () => {
       const wrapper = mount(FdsFunktionslink, {
         props: { icon: 'print' },
         slots: {
@@ -255,6 +288,19 @@ describe('FdsFunktionslink', () => {
       const iconIndex = html.indexOf('<svg')
       const textIndex = html.indexOf('Print')
       expect(iconIndex).toBeLessThan(textIndex)
+    })
+
+    it('renders icon after slot content when iconRight is true', () => {
+      const wrapper = mount(FdsFunktionslink, {
+        props: { icon: 'print', iconRight: true },
+        slots: {
+          default: 'Print',
+        },
+      })
+      const html = wrapper.html()
+      const iconIndex = html.indexOf('<svg')
+      const textIndex = html.indexOf('Print')
+      expect(textIndex).toBeLessThan(iconIndex)
     })
   })
 
@@ -421,6 +467,24 @@ describe('FdsFunktionslink', () => {
       })
       expect(wrapper.attributes('target')).toBe('_blank')
       expect(wrapper.attributes('rel')).toBe('noopener noreferrer')
+    })
+
+    it('works with icon positioned on the right', () => {
+      const wrapper = mount(FdsFunktionslink, {
+        props: {
+          icon: 'arrow-right',
+          iconRight: true,
+          title: 'Gå videre',
+        },
+        slots: {
+          default: 'Næste',
+        },
+      })
+      const html = wrapper.html()
+      const textIndex = html.indexOf('Næste')
+      const iconIndex = html.indexOf('<svg')
+      expect(textIndex).toBeLessThan(iconIndex)
+      expect(wrapper.find('svg use').attributes('href')).toBe('#arrow-right')
     })
   })
 })

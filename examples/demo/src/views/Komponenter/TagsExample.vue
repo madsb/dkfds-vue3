@@ -2,7 +2,8 @@
   <section>
     <h2>Tags</h2>
     <p>
-      Tags bruges til at vise sekundære, metadata-relaterede oplysninger på en præcis og kontekstuelt relevant måde.
+      Tags bruges til at vise sekundære, metadata-relaterede oplysninger på en præcis og
+      kontekstuelt relevant måde.
     </p>
 
     <fds-preview header="Standard tags" href="https://designsystem.dk/komponenter/tags/">
@@ -20,32 +21,31 @@
 
     <fds-preview header="Tags med ikon">
       <fds-preview-item>
-        <fds-tag icon="highlight-off" @click="handleTagClick">
-          Bornholm
-        </fds-tag>
-        <fds-tag icon="highlight-off" @click="handleTagClick">
-          Sjælland
-        </fds-tag>
-        <fds-tag icon="highlight-off" @click="handleTagClick">
-          Fyn
-        </fds-tag>
+        <fds-tag icon="highlight-off" @click="handleTagClick"> Bornholm </fds-tag>
+        <fds-tag icon="highlight-off" @click="handleTagClick"> Sjælland </fds-tag>
+        <fds-tag icon="highlight-off" @click="handleTagClick"> Fyn </fds-tag>
 
         <fds-pre header="Klik events" :json="{ antalTagKlik: antalTagClick }" />
       </fds-preview-item>
-      
+
       <fds-preview-code>
         <pre v-text="codeWithIcon"></pre>
       </fds-preview-code>
     </fds-preview>
-
 
     <fds-preview header="Tilgængelighed">
       <fds-preview-item>
         <div class="accessibility-info">
           <h4>Vigtige tilgængelighedspunkter:</h4>
           <ul>
-            <li>Tags er implementeret som <code>&lt;button&gt;</code> elementer for semantisk korrekthed</li>
-            <li>Ikoner har <code>aria-hidden="true"</code> og <code>focusable="false"</code> for skærmlæsere</li>
+            <li>
+              Tags er implementeret som <code>&lt;button&gt;</code> elementer for semantisk
+              korrekthed
+            </li>
+            <li>
+              Ikoner har <code>aria-hidden="true"</code> og <code>focusable="false"</code> for
+              skærmlæsere
+            </li>
             <li>Tags er fuldt tastaturnavigérbare</li>
             <li>Hver tag får automatisk et unikt ID hvis ikke angivet</li>
           </ul>
@@ -65,7 +65,6 @@ const handleTagClick = (formId: string) => {
   console.log('Tag clicked:', formId)
 }
 
-
 // Code examples
 const codeStandard = `<fds-tag>Bornholm</fds-tag>
 <fds-tag>Sjælland</fds-tag>
@@ -81,8 +80,7 @@ const handleTagClick = (formId) => {
   // Håndter klik på tag eller ikon
   console.log('Tag clicked:', formId)
 }
-<\/script>`
-
+<script>`
 </script>
 
 <style scoped>

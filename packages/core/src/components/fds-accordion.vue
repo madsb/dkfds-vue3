@@ -77,9 +77,9 @@ import { ref, computed, inject, watch, onMounted, onUnmounted, type Ref } from '
 import { generateId } from 'dkfds-vue3-utils'
 
 interface AccordionGroupApi {
-  register: (id: string, expanded: Ref<boolean>) => void
-  unregister: (id: string) => void
-  getState: (id: string) => boolean
+  register: (_id: string, _expanded: Ref<boolean>) => void
+  unregister: (_id: string) => void
+  getState: (_id: string) => boolean
 }
 
 const props = withDefaults(

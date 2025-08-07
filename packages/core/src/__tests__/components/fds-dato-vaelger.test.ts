@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import FdsDatoVaelger from '../../components/fds-dato-vaelger.vue'
 import { testAccessibility } from '../../../../../test-shared/test-utils'

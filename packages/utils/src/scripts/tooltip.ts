@@ -9,6 +9,9 @@ const MIN_MARGIN = 8 // Minimum margin to edge of window
 const HOVER_DELAY = 300 // Delay before showing hover tooltip
 const LONG_PRESS_DELAY = 600 // Long press duration for touch
 
+// Type for event listeners
+type EventHandler = (_event: Event) => void
+
 interface TooltipInstance {
   wrapper: HTMLElement
   target: HTMLElement
@@ -34,7 +37,7 @@ class Tooltip implements TooltipInstance {
   private eventListeners: Array<{
     element: Element | Window | Document
     event: string
-    handler: EventListener
+    handler: EventHandler
   }> = []
 
   constructor(wrapper: HTMLElement) {
@@ -238,12 +241,12 @@ class Tooltip implements TooltipInstance {
   }
 
   hideTooltip(): void {
-    window.removeEventListener('resize', this.updateTooltip as EventListener)
+    window.removeEventListener('resize', this.updateTooltip as EventHandler)
 
     if (this.wrapper.dataset.forceVisible === 'true') {
-      document.removeEventListener('scroll', this.updateTooltip as EventListener)
+      document.removeEventListener('scroll', this.updateTooltip as EventHandler)
       for (const parent of this.wrapperParents) {
-        parent.removeEventListener('scroll', this.updateTooltip as EventListener)
+        parent.removeEventListener('scroll', this.updateTooltip as EventHandler)
       }
       this.wrapperParents = []
     }
@@ -260,15 +263,15 @@ class Tooltip implements TooltipInstance {
   }
 
   showTooltip(): void {
-    this.addEventListener(window, 'resize', this.updateTooltip as EventListener)
+    this.addEventListener(window, 'resize', this.updateTooltip as EventHandler)
 
     if (this.wrapper.dataset.forceVisible === 'true') {
-      this.addEventListener(document, 'scroll', this.updateTooltip as EventListener)
+      this.addEventListener(document, 'scroll', this.updateTooltip as EventHandler)
       this.wrapperParents = this.getParents(this.wrapper)
 
       for (const parent of this.wrapperParents) {
         if (this.isScrollable(parent) || this.hasOverflow(parent)) {
-          this.addEventListener(parent, 'scroll', this.updateTooltip as EventListener)
+          this.addEventListener(parent, 'scroll', this.updateTooltip as EventHandler)
         }
       }
     }
@@ -343,7 +346,7 @@ class Tooltip implements TooltipInstance {
   private addEventListener(
     element: Element | Window | Document,
     event: string,
-    handler: EventListener,
+    handler: EventHandler,
   ): void {
     element.addEventListener(event, handler)
     this.eventListeners.push({ element, event, handler })

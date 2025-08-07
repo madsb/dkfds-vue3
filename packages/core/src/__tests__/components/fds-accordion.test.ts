@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { nextTick, ref } from 'vue'
+import { ref } from 'vue'
 import FdsAccordion from '../../components/fds-accordion.vue'
 import { testAccessibility } from '../../../../../test-shared/test-utils'
 

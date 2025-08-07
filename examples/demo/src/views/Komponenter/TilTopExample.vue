@@ -1,7 +1,7 @@
 <template>
   <article>
     <h1>Tilbage til toppen</h1>
-    
+
     <!-- Basic Example -->
     <section>
       <h2>Grundlæggende eksempel</h2>
@@ -9,7 +9,8 @@
         <fds-til-top class="example-til-top" />
         <p class="mt-3">
           <small class="text-muted">
-            Komponenten vises normalt efter 2 skærmhøjder scroll. I denne demo er den gjort synlig til demonstration.
+            Komponenten vises normalt efter 2 skærmhøjder scroll. I denne demo er den gjort synlig
+            til demonstration.
           </small>
         </p>
         <p>Se også i bund højre hjørne af siden for den rigtige implementering.</p>
@@ -20,7 +21,7 @@
     <section>
       <h2>Med tilpasset tekst</h2>
       <div class="example-container">
-        <fds-til-top 
+        <fds-til-top
           class="example-til-top"
           visible-text="Hop til top"
           screen-reader-text="Gå til toppen af denne side"
@@ -34,10 +35,7 @@
     <section>
       <h2>Med tilpasset scroll-tærskel</h2>
       <div class="example-container">
-        <fds-til-top 
-          class="example-til-top"
-          :threshold="200"
-        />
+        <fds-til-top class="example-til-top" :threshold="200" />
         <p class="mt-3">
           <small class="text-muted">
             Denne version vises efter kun 200px scroll i stedet for standard 2 skærmhøjder.
@@ -52,7 +50,7 @@
       <div class="example-container">
         <div class="d-flex flex-column gap-3">
           <div>
-            <fds-til-top 
+            <fds-til-top
               class="example-til-top"
               :visible-text="customVisibleText"
               :screen-reader-text="customScreenReaderText"
@@ -61,25 +59,25 @@
               {{ useSlotContent ? customSlotText : '' }}
             </fds-til-top>
           </div>
-          
+
           <div class="mt-4">
             <h4>Konfiguration:</h4>
             <div class="row">
               <div class="col-md-6">
                 <label for="visible-text">Synlig tekst (desktop):</label>
-                <input 
+                <input
                   id="visible-text"
-                  v-model="customVisibleText" 
-                  class="form-control mt-1" 
+                  v-model="customVisibleText"
+                  class="form-control mt-1"
                   placeholder="Til toppen"
                 />
               </div>
               <div class="col-md-6">
                 <label for="screen-reader-text">Skærmlæser tekst:</label>
-                <input 
+                <input
                   id="screen-reader-text"
-                  v-model="customScreenReaderText" 
-                  class="form-control mt-1" 
+                  v-model="customScreenReaderText"
+                  class="form-control mt-1"
                   placeholder="Til toppen af siden"
                 />
               </div>
@@ -87,29 +85,29 @@
             <div class="row mt-3">
               <div class="col-md-6">
                 <label for="threshold">Scroll-tærskel (px):</label>
-                <input 
+                <input
                   id="threshold"
-                  v-model.number="customThreshold" 
-                  type="number" 
-                  class="form-control mt-1" 
+                  v-model.number="customThreshold"
+                  type="number"
+                  class="form-control mt-1"
                   min="0"
                   step="100"
                 />
               </div>
               <div class="col-md-6 d-flex align-items-end">
                 <label>
-                  <input type="checkbox" v-model="useSlotContent"> 
+                  <input v-model="useSlotContent" type="checkbox" />
                   Brug slot indhold
                 </label>
               </div>
             </div>
-            <div class="row mt-3" v-if="useSlotContent">
+            <div v-if="useSlotContent" class="row mt-3">
               <div class="col-12">
                 <label for="slot-text">Slot tekst:</label>
-                <input 
+                <input
                   id="slot-text"
-                  v-model="customSlotText" 
-                  class="form-control mt-1" 
+                  v-model="customSlotText"
+                  class="form-control mt-1"
                   placeholder="Tilpasset slot tekst"
                 />
               </div>
@@ -126,15 +124,22 @@
         <div class="alert alert-info">
           <h4>Tilgængelighedsfeatures:</h4>
           <ul class="mb-0">
-            <li><strong>Skærmlæser support:</strong> Komponentet har skjult tekst til skærmlæsere</li>
-            <li><strong>Keyboard navigation:</strong> Kan navigeres med Tab og aktiveres med Enter/Space</li>
+            <li>
+              <strong>Skærmlæser support:</strong> Komponentet har skjult tekst til skærmlæsere
+            </li>
+            <li>
+              <strong>Keyboard navigation:</strong> Kan navigeres med Tab og aktiveres med
+              Enter/Space
+            </li>
             <li><strong>Responsivt design:</strong> Kun ikon på mobil, tekst + ikon på desktop</li>
-            <li><strong>Focus management:</strong> Springer til #top element eller document.body</li>
+            <li>
+              <strong>Focus management:</strong> Springer til #top element eller document.body
+            </li>
             <li><strong>Motion preferences:</strong> Respekterer brugerens motion preferences</li>
           </ul>
         </div>
-        
-        <fds-til-top 
+
+        <fds-til-top
           class="example-til-top"
           screen-reader-text="Gå til toppen af denne side - tilgængelig version"
           visible-text="Til top"
@@ -149,10 +154,22 @@
         <div class="alert alert-warning">
           <h4>Vigtigt at bemærke:</h4>
           <ul class="mb-0">
-            <li><strong>Placering:</strong> Komponenten skal typisk placeres i bunden af siden eller i en footer</li>
-            <li><strong>Scroll trigger:</strong> Vises automatisk efter 2 skærmhøjder scroll (kan tilpasses)</li>
-            <li><strong>Smooth scrolling:</strong> Bruger browser's native smooth scroll funktionalitet</li>
-            <li><strong>Target element:</strong> Springer til element med id="top" eller til toppen af siden</li>
+            <li>
+              <strong>Placering:</strong> Komponenten skal typisk placeres i bunden af siden eller i
+              en footer
+            </li>
+            <li>
+              <strong>Scroll trigger:</strong> Vises automatisk efter 2 skærmhøjder scroll (kan
+              tilpasses)
+            </li>
+            <li>
+              <strong>Smooth scrolling:</strong> Bruger browser's native smooth scroll
+              funktionalitet
+            </li>
+            <li>
+              <strong>Target element:</strong> Springer til element med id="top" eller til toppen af
+              siden
+            </li>
           </ul>
         </div>
       </div>

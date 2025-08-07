@@ -8,63 +8,63 @@ import { testAccessibility } from '../../../../../test-shared/test-utils'
 describe('FdsAccordionGroup', () => {
   describe('Rendering', () => {
     it('renders without errors', () => {
-      const wrapper = mount(FdsAccordionGroup)
-      expect(wrapper.exists()).toBe(true)
+      const _wrapper = mount(FdsAccordionGroup)
+      expect(_wrapper.exists()).toBe(true)
     })
 
     it('renders with accordion-group class', () => {
-      const wrapper = mount(FdsAccordionGroup)
-      expect(wrapper.find('.accordion-group').exists()).toBe(true)
+      const _wrapper = mount(FdsAccordionGroup)
+      expect(_wrapper.find('.accordion-group').exists()).toBe(true)
     })
 
     it('renders ul element with accordion class', () => {
-      const wrapper = mount(FdsAccordionGroup)
-      const ul = wrapper.find('ul')
+      const _wrapper = mount(FdsAccordionGroup)
+      const ul = _wrapper.find('ul')
 
       expect(ul.exists()).toBe(true)
       expect(ul.classes()).toContain('accordion')
     })
 
     it('renders bulk button by default', () => {
-      const wrapper = mount(FdsAccordionGroup)
-      const button = wrapper.find('button.accordion-bulk-button')
+      const _wrapper = mount(FdsAccordionGroup)
+      const button = _wrapper.find('button.accordion-bulk-button')
 
       expect(button.exists()).toBe(true)
       expect(button.text()).toBe('Åbn alle')
     })
 
     it('does not render bulk button when showBulkButton is false', () => {
-      const wrapper = mount(FdsAccordionGroup, {
+      const _wrapper = mount(FdsAccordionGroup, {
         props: { showBulkButton: false },
       })
 
-      expect(wrapper.find('button.accordion-bulk-button').exists()).toBe(false)
+      expect(_wrapper.find('button.accordion-bulk-button').exists()).toBe(false)
     })
 
     it('renders slot content inside ul', () => {
-      const wrapper = mount(FdsAccordionGroup, {
+      const _wrapper = mount(FdsAccordionGroup, {
         slots: {
           default: '<li>Test Item</li>',
         },
       })
 
-      expect(wrapper.find('ul.accordion').html()).toContain('<li>Test Item</li>')
+      expect(_wrapper.find('ul.accordion').html()).toContain('<li>Test Item</li>')
     })
   })
 
   describe('Props', () => {
     it('respects custom collapsedText prop', () => {
-      const wrapper = mount(FdsAccordionGroup, {
+      const _wrapper = mount(FdsAccordionGroup, {
         props: {
           collapsedText: 'Custom Open Text',
         },
       })
 
-      expect(wrapper.find('button').text()).toBe('Custom Open Text')
+      expect(_wrapper.find('button').text()).toBe('Custom Open Text')
     })
 
     it('respects custom expandedText prop', async () => {
-      const wrapper = mount({
+      const _wrapper = mount({
         template: `
           <FdsAccordionGroup :expandedText="'Custom Close Text'">
             <FdsAccordion header="Test">Content</FdsAccordion>
@@ -74,28 +74,28 @@ describe('FdsAccordionGroup', () => {
       })
 
       // Click to expand all
-      await wrapper.find('button').trigger('click')
+      await _wrapper.find('button').trigger('click')
       await nextTick()
 
-      expect(wrapper.find('button').text()).toBe('Custom Close Text')
+      expect(_wrapper.find('button').text()).toBe('Custom Close Text')
     })
 
     it('uses default text when props not provided', () => {
-      const wrapper = mount(FdsAccordionGroup)
-      const button = wrapper.find('button')
+      const _wrapper = mount(FdsAccordionGroup)
+      const button = _wrapper.find('button')
 
       expect(button.text()).toBe('Åbn alle')
     })
 
     it('handles empty string props', async () => {
-      const wrapper = mount(FdsAccordionGroup, {
+      const _wrapper = mount(FdsAccordionGroup, {
         props: {
           collapsedText: '',
           expandedText: '',
         },
       })
 
-      const button = wrapper.find('button')
+      const button = _wrapper.find('button')
       // Empty strings should show empty text, not default values
       expect(button.text()).toBe('')
 
@@ -106,7 +106,7 @@ describe('FdsAccordionGroup', () => {
 
   describe('Bulk Button Behavior', () => {
     it('toggles button text when clicked', async () => {
-      const wrapper = mount({
+      const _wrapper = mount({
         template: `
           <FdsAccordionGroup>
             <FdsAccordion header="Test 1">Content 1</FdsAccordion>
@@ -115,7 +115,7 @@ describe('FdsAccordionGroup', () => {
         `,
         components: { FdsAccordionGroup, FdsAccordion },
       })
-      const button = wrapper.find('button')
+      const button = _wrapper.find('button')
 
       expect(button.text()).toBe('Åbn alle')
 
@@ -129,7 +129,7 @@ describe('FdsAccordionGroup', () => {
     })
 
     it('updates aria-expanded attribute', async () => {
-      const wrapper = mount({
+      const _wrapper = mount({
         template: `
           <FdsAccordionGroup>
             <FdsAccordion header="Test 1">Content 1</FdsAccordion>
@@ -138,7 +138,7 @@ describe('FdsAccordionGroup', () => {
         `,
         components: { FdsAccordionGroup, FdsAccordion },
       })
-      const button = wrapper.find('button')
+      const button = _wrapper.find('button')
 
       expect(button.attributes('aria-expanded')).toBe('false')
 
@@ -154,25 +154,25 @@ describe('FdsAccordionGroup', () => {
 
   describe('Slots', () => {
     it('renders header slot content', () => {
-      const wrapper = mount(FdsAccordionGroup, {
+      const _wrapper = mount(FdsAccordionGroup, {
         slots: {
           header: '<div class="custom-header">Custom Header</div>',
         },
       })
 
-      expect(wrapper.find('.custom-header').exists()).toBe(true)
-      expect(wrapper.find('.custom-header').text()).toBe('Custom Header')
-      expect(wrapper.find('button.accordion-bulk-button').exists()).toBe(false)
+      expect(_wrapper.find('.custom-header').exists()).toBe(true)
+      expect(_wrapper.find('.custom-header').text()).toBe('Custom Header')
+      expect(_wrapper.find('button.accordion-bulk-button').exists()).toBe(false)
     })
 
     it('renders default slot content in ul', () => {
-      const wrapper = mount(FdsAccordionGroup, {
+      const _wrapper = mount(FdsAccordionGroup, {
         slots: {
           default: '<li class="test-item">Test Content</li>',
         },
       })
 
-      const ul = wrapper.find('ul.accordion')
+      const ul = _wrapper.find('ul.accordion')
       expect(ul.find('.test-item').exists()).toBe(true)
       expect(ul.find('.test-item').text()).toBe('Test Content')
     })
@@ -180,7 +180,7 @@ describe('FdsAccordionGroup', () => {
 
   describe('Integration with Accordions', () => {
     it('works with fds-accordion components', async () => {
-      const wrapper = mount({
+      const _wrapper = mount({
         template: `
           <FdsAccordionGroup>
             <FdsAccordion header="Item 1" v-model="expanded1">Content 1</FdsAccordion>
@@ -197,15 +197,15 @@ describe('FdsAccordionGroup', () => {
       })
 
       // Initially collapsed
-      expect(wrapper.vm.expanded1).toBe(false)
-      expect(wrapper.vm.expanded2).toBe(false)
+      expect(_wrapper.vm.expanded1).toBe(false)
+      expect(_wrapper.vm.expanded2).toBe(false)
 
       // Click bulk expand
-      await wrapper.find('button.accordion-bulk-button').trigger('click')
+      await _wrapper.find('button.accordion-bulk-button').trigger('click')
       await nextTick()
 
       // Should expand all accordions via provide/inject
-      const accordions = wrapper.findAllComponents(FdsAccordion)
+      const accordions = _wrapper.findAllComponents(FdsAccordion)
       expect(accordions).toHaveLength(2)
     })
 
@@ -233,7 +233,7 @@ describe('FdsAccordionGroup', () => {
         },
       }
 
-      const wrapper = mount({
+      const _wrapper = mount({
         template: `
           <FdsAccordionGroup>
             <TestAccordion />
@@ -249,46 +249,46 @@ describe('FdsAccordionGroup', () => {
 
   describe('Edge Cases', () => {
     it('handles empty accordion group', () => {
-      const wrapper = mount(FdsAccordionGroup)
+      const _wrapper = mount(FdsAccordionGroup)
 
-      expect(wrapper.find('ul.accordion').exists()).toBe(true)
-      expect(wrapper.find('ul.accordion').text()).toBe('')
+      expect(_wrapper.find('ul.accordion').exists()).toBe(true)
+      expect(_wrapper.find('ul.accordion').text()).toBe('')
     })
 
     it('handles prop changes reactively', async () => {
-      const wrapper = mount(FdsAccordionGroup, {
+      const _wrapper = mount(FdsAccordionGroup, {
         props: {
           collapsedText: 'Open',
           expandedText: 'Close',
         },
       })
 
-      expect(wrapper.find('button').text()).toBe('Open')
+      expect(_wrapper.find('button').text()).toBe('Open')
 
-      await wrapper.setProps({
+      await _wrapper.setProps({
         collapsedText: 'Expand',
         expandedText: 'Collapse',
       })
 
-      expect(wrapper.find('button').text()).toBe('Expand')
+      expect(_wrapper.find('button').text()).toBe('Expand')
     })
   })
 
   describe('Accessibility', () => {
     it('maintains semantic HTML structure', () => {
-      const wrapper = mount(FdsAccordionGroup, {
+      const _wrapper = mount(FdsAccordionGroup, {
         slots: {
           default: '<li>Item 1</li><li>Item 2</li>',
         },
       })
 
-      const ul = wrapper.find('ul.accordion')
+      const ul = _wrapper.find('ul.accordion')
       expect(ul.exists()).toBe(true)
       expect(ul.findAll('li')).toHaveLength(2)
     })
 
     it('button has correct aria-expanded state', async () => {
-      const wrapper = mount({
+      const _wrapper = mount({
         template: `
           <FdsAccordionGroup>
             <FdsAccordion header="Test">Content</FdsAccordion>
@@ -296,7 +296,7 @@ describe('FdsAccordionGroup', () => {
         `,
         components: { FdsAccordionGroup, FdsAccordion },
       })
-      const button = wrapper.find('button')
+      const button = _wrapper.find('button')
 
       expect(button.attributes('aria-expanded')).toBe('false')
 

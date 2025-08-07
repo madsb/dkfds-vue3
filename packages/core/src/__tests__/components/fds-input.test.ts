@@ -49,7 +49,7 @@ describe('FdsInput', () => {
       await input.setValue('new value')
 
       expect(wrapper.emitted('update:modelValue')).toBeTruthy()
-      expect(wrapper.emitted('update:modelValue')[0]).toEqual(['new value'])
+      expect(wrapper.emitted('update:modelValue')![0]).toEqual(['new value'])
     })
 
     it('updates value when modelValue prop changes', async () => {
@@ -155,7 +155,7 @@ describe('FdsInput', () => {
       await input.trigger('blur')
 
       expect(wrapper.emitted('dirty')).toBeTruthy()
-      expect(wrapper.emitted('dirty')[0]).toEqual([true])
+      expect(wrapper.emitted('dirty')![0]).toEqual([true])
     })
 
     it('emits only one dirty event per blur', async () => {
@@ -165,7 +165,7 @@ describe('FdsInput', () => {
       await input.trigger('blur')
       await input.trigger('blur')
 
-      expect(wrapper.emitted('dirty').length).toBe(2)
+      expect(wrapper.emitted('dirty')!.length).toBe(2)
     })
   })
 
@@ -256,7 +256,7 @@ describe('FdsInput', () => {
       await input.setValue('ab')
       await input.setValue('abc')
 
-      const emitted = wrapper.emitted('update:modelValue')
+      const emitted = wrapper.emitted('update:modelValue')!
       expect(emitted).toHaveLength(3)
       expect(emitted[0]).toEqual(['a'])
       expect(emitted[1]).toEqual(['ab'])

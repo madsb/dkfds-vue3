@@ -8,7 +8,7 @@
 /**
  * Badge component following DKFDS v11 specifications
  * https://designsystem.dk/komponenter/badges/
- * 
+ *
  * Used to highlight new or important content
  */
 import { computed } from 'vue'
@@ -23,7 +23,7 @@ const {
   variant?: 'success' | 'info' | 'warning' | 'error' | null
 }>()
 
-const getVariantClass = computed(() => variant ? `badge-${variant}` : '')
+const getVariantClass = computed(() => (variant ? `badge-${variant}` : ''))
 </script>
 
 <style scoped lang="scss"></style>

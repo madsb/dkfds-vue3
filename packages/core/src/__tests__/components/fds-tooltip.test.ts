@@ -9,9 +9,9 @@ vi.mock('dkfds-vue3-utils', () => {
   const TooltipMock = vi.fn().mockImplementation((wrapper) => {
     let isShowing = false
     const target = wrapper.querySelector('.tooltip-target')
-    let hoverTimeout = null
-    let longPressTimeout = null
-    const eventListeners = []
+    let hoverTimeout: ReturnType<typeof setTimeout> | undefined
+    let longPressTimeout: ReturnType<typeof setTimeout> | undefined
+    const eventListeners: Array<{ el: any; event: string; handler: (..._args: any[]) => void }> = []
 
     // Create tooltip span element if it doesn't exist
     let tooltipSpan = wrapper.querySelector('.tooltip')
@@ -66,7 +66,7 @@ vi.mock('dkfds-vue3-utils', () => {
           const handlePointerOver = (e) => {
             if (e.pointerType === 'mouse') {
               target.classList.add('js-hover')
-              clearTimeout(hoverTimeout)
+              if (hoverTimeout) clearTimeout(hoverTimeout)
               hoverTimeout = setTimeout(() => {
                 instance.showTooltip()
               }, 300) // HOVER_DELAY
@@ -76,7 +76,7 @@ vi.mock('dkfds-vue3-utils', () => {
           const handlePointerLeave = (e) => {
             if (e.pointerType === 'mouse') {
               target.classList.remove('js-hover')
-              clearTimeout(hoverTimeout)
+              if (hoverTimeout) clearTimeout(hoverTimeout)
               instance.hideTooltip()
             }
           }
@@ -84,7 +84,7 @@ vi.mock('dkfds-vue3-utils', () => {
           const handlePointerDown = (e) => {
             if (e.pointerType === 'touch') {
               target.classList.add('js-pressing')
-              clearTimeout(longPressTimeout)
+              if (longPressTimeout) clearTimeout(longPressTimeout)
               longPressTimeout = setTimeout(() => {
                 target.classList.remove('js-pressing')
                 target.classList.add('js-pressed')
@@ -96,7 +96,7 @@ vi.mock('dkfds-vue3-utils', () => {
           const handlePointerUp = (e) => {
             if (e.pointerType === 'touch') {
               target.classList.remove('js-pressing')
-              clearTimeout(longPressTimeout)
+              if (longPressTimeout) clearTimeout(longPressTimeout)
               if (target.classList.contains('js-pressed')) {
                 setTimeout(() => instance.hideTooltip(), 1500)
               }
@@ -205,8 +205,8 @@ vi.mock('dkfds-vue3-utils', () => {
         eventListeners.forEach(({ el, event, handler }) => {
           el.removeEventListener(event, handler)
         })
-        clearTimeout(hoverTimeout)
-        clearTimeout(longPressTimeout)
+        if (hoverTimeout) clearTimeout(hoverTimeout)
+        if (longPressTimeout) clearTimeout(longPressTimeout)
       }),
     }
 
@@ -474,7 +474,6 @@ describe('FdsTooltip', () => {
       // Wait for tooltip initialization
       await waitForTooltipInit()
 
-      const button = wrapper.find('button')
       const tooltipWrapper = wrapper.find('.tooltip-wrapper')
 
       // Trigger hover on wrapper (where the event listener is)
@@ -1206,10 +1205,10 @@ describe('FdsTooltip', () => {
 
       // Set up beforeprint handler in mock
       const tooltipWrapper = wrapper.find('.tooltip-wrapper').element
-      if (tooltipWrapper && wrapper.vm.tooltipInstance) {
+      if (tooltipWrapper && (wrapper.vm as any).tooltipInstance) {
         // Manually trigger hide for print
         window.dispatchEvent(new Event('beforeprint'))
-        wrapper.vm.tooltipInstance.hideTooltip()
+        ;(wrapper.vm as any).tooltipInstance.hideTooltip()
       }
       await nextTick()
 

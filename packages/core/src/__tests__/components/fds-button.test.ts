@@ -36,7 +36,7 @@ describe('FdsButton', () => {
 
   describe('Variants', () => {
     const validVariants = ['primary', 'secondary', 'tertiary', 'warning']
-    
+
     validVariants.forEach((variant) => {
       it(`applies ${variant} variant class correctly`, () => {
         const wrapper = mount(FdsButton, {
@@ -232,13 +232,13 @@ describe('FdsButton', () => {
     describe('Icon Support', () => {
       it('renders with icon', () => {
         const wrapper = mount(FdsButton, {
-          props: { 
+          props: {
             icon: 'refresh',
-            variant: 'primary'
+            variant: 'primary',
           },
           slots: {
-            default: 'Refresh'
-          }
+            default: 'Refresh',
+          },
         })
 
         const iconSvg = wrapper.find('svg.icon-svg')
@@ -250,18 +250,18 @@ describe('FdsButton', () => {
 
       it('renders icon on the right when iconRight is true', () => {
         const wrapper = mount(FdsButton, {
-          props: { 
+          props: {
             icon: 'arrow-right',
-            iconRight: true
+            iconRight: true,
           },
           slots: {
-            default: 'Next'
-          }
+            default: 'Next',
+          },
         })
 
         const iconSvgs = wrapper.findAll('svg.icon-svg')
         expect(iconSvgs).toHaveLength(1)
-        
+
         // Icon should be after the slot content
         const button = wrapper.find('button')
         const buttonHtml = button.html()
@@ -272,7 +272,7 @@ describe('FdsButton', () => {
 
       it('does not render icon when icon prop is not provided', () => {
         const wrapper = mount(FdsButton, {
-          slots: { default: 'No icon' }
+          slots: { default: 'No icon' },
         })
 
         expect(wrapper.find('svg.icon-svg').exists()).toBe(false)
@@ -281,7 +281,7 @@ describe('FdsButton', () => {
       it('handles empty icon prop gracefully', () => {
         const wrapper = mount(FdsButton, {
           props: { icon: '' },
-          slots: { default: 'Button' }
+          slots: { default: 'Button' },
         })
 
         expect(wrapper.find('svg.icon-svg').exists()).toBe(false)
@@ -290,7 +290,7 @@ describe('FdsButton', () => {
       it('updates icon dynamically', async () => {
         const wrapper = mount(FdsButton, {
           props: { icon: 'save' },
-          slots: { default: 'Save' }
+          slots: { default: 'Save' },
         })
 
         expect(wrapper.find('use').attributes('href')).toBe('#save')
@@ -303,7 +303,7 @@ describe('FdsButton', () => {
     describe('Mobile Full Width', () => {
       it('applies xs-full-width class when fullWidthMobile is true', () => {
         const wrapper = mount(FdsButton, {
-          props: { fullWidthMobile: true }
+          props: { fullWidthMobile: true },
         })
 
         expect(wrapper.classes()).toContain('xs-full-width')
@@ -317,7 +317,7 @@ describe('FdsButton', () => {
 
       it('can toggle fullWidthMobile dynamically', async () => {
         const wrapper = mount(FdsButton, {
-          props: { fullWidthMobile: false }
+          props: { fullWidthMobile: false },
         })
 
         expect(wrapper.classes()).not.toContain('xs-full-width')
@@ -330,7 +330,7 @@ describe('FdsButton', () => {
     describe('Icon Only Buttons', () => {
       it('applies button-icon-only class when iconOnly is true', () => {
         const wrapper = mount(FdsButton, {
-          props: { iconOnly: true }
+          props: { iconOnly: true },
         })
 
         expect(wrapper.classes()).toContain('button-icon-only')
@@ -344,10 +344,10 @@ describe('FdsButton', () => {
 
       it('works correctly with icon and iconOnly props together', () => {
         const wrapper = mount(FdsButton, {
-          props: { 
+          props: {
             icon: 'close',
-            iconOnly: true
-          }
+            iconOnly: true,
+          },
         })
 
         expect(wrapper.classes()).toContain('button-icon-only')
@@ -364,8 +364,8 @@ describe('FdsButton', () => {
             icon: 'settings',
             iconRight: true,
             fullWidthMobile: true,
-            iconOnly: false
-          }
+            iconOnly: false,
+          },
         })
 
         expect(wrapper.classes()).toContain('button-secondary')
@@ -380,8 +380,8 @@ describe('FdsButton', () => {
             variant: 'warning',
             icon: 'warning',
             iconOnly: true,
-            fullWidthMobile: true
-          }
+            fullWidthMobile: true,
+          },
         })
 
         expect(wrapper.classes()).toContain('button-warning')
@@ -394,7 +394,7 @@ describe('FdsButton', () => {
     describe('Backward Compatibility', () => {
       it('maintains compatibility with basic button usage', () => {
         const wrapper = mount(FdsButton, {
-          slots: { default: 'Click me' }
+          slots: { default: 'Click me' },
         })
 
         expect(wrapper.classes()).toContain('button')
@@ -404,10 +404,10 @@ describe('FdsButton', () => {
 
       it('maintains compatibility with variant prop', () => {
         const variants = ['primary', 'secondary', 'tertiary', 'warning']
-        
-        variants.forEach(variant => {
+
+        variants.forEach((variant) => {
           const wrapper = mount(FdsButton, {
-            props: { variant }
+            props: { variant },
           })
           expect(wrapper.classes()).toContain(`button-${variant}`)
         })
@@ -418,7 +418,7 @@ describe('FdsButton', () => {
   describe('Accessibility', () => {
     it('maintains proper ARIA attributes on icons', () => {
       const wrapper = mount(FdsButton, {
-        props: { icon: 'save' }
+        props: { icon: 'save' },
       })
 
       const icon = wrapper.find('svg.icon-svg')
@@ -432,8 +432,8 @@ describe('FdsButton', () => {
           'aria-label': 'Save document',
           'data-testid': 'save-btn',
           type: 'submit',
-          disabled: true
-        }
+          disabled: true,
+        },
       })
 
       expect(wrapper.attributes('aria-label')).toBe('Save document')
