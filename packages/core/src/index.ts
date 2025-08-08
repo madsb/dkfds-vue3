@@ -32,6 +32,7 @@ import FdsInputNumber from './components/fds-input-number.vue'
 import FdsInput from './components/fds-input.vue'
 import FdsLabel from './components/fds-label.vue'
 import FdsList from './components/fds-list.vue'
+import FdsListItem from './components/fds-list-item.vue'
 import FdsMenuItem from './components/fds-menu-item.vue'
 import FdsMenu from './components/fds-menu.vue'
 import FdsModal from './components/fds-modal.vue'
@@ -84,6 +85,7 @@ function install(app: App): void {
   app.component('fds-hint', FdsHint)
 
   app.component('fds-list', FdsList)
+  app.component('fds-list-item', FdsListItem)
 
   app.component('fds-badge', FdsBadge)
   app.component('fds-breadcrumb', FdsBreadcrumb)
@@ -171,6 +173,7 @@ export {
   FdsInput,
   FdsLabel,
   FdsList,
+  FdsListItem,
   FdsMenuItem,
   FdsMenu,
   FdsModal,
