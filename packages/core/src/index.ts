@@ -48,7 +48,6 @@ import FdsRadioGroup from './components/fds-radio-group.vue'
 import FdsRadioItem from './components/fds-radio-item.vue'
 import FdsSpinner from './components/fds-spinner.vue'
 import FdsSprogVaelger from './components/fds-sprogvaelger.vue'
-import FdsStruktureredeListe from './components/fds-strukturerede-liste.vue'
 import FdsTag from './components/fds-tag.vue'
 import FdsTextarea from './components/fds-textarea.vue'
 import FdsTilTop from './components/fds-til-top.vue'
@@ -68,7 +67,6 @@ function install(app: App): void {
   app.component('fds-cookiemeddelelse', FdsCookiemeddelelse)
 
   app.component('fds-overflow-menu', FdsOverflowMenu)
-  app.component('fds-strukturerede-liste', FdsStruktureredeListe)
   app.component('fds-dato-felter', FdsDatoFelter)
   app.component('fds-dato-vaelger', FdsDatoVaelger)
 
@@ -195,7 +193,6 @@ export {
   FdsRadioItem,
   FdsSpinner,
   FdsSprogVaelger,
-  FdsStruktureredeListe,
   FdsTag,
   FdsTextarea,
   FdsTilTop,

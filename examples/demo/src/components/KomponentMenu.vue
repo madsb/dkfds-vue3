@@ -153,10 +153,6 @@ const navigationList = ref<Array<FdsNavigationItem>>(
       title: 'Sprogvælger',
     },
     {
-      key: 'komponentstrukturerede',
-      title: 'Strukturerede lister',
-    },
-    {
       key: 'komponentsoegefelt',
       title: 'Søgefelt',
     },

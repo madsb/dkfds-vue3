@@ -174,11 +174,6 @@ const komponenterRoutes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Komponenter/SprogvaelgerExample.vue'),
       },
       {
-        path: 'strukturerede',
-        name: 'komponentstrukturerede',
-        component: () => import('@/views/Komponenter/StruktureredeExample.vue'),
-      },
-      {
         path: 'soegefelt',
         name: 'komponentsoegefelt',
         component: () => import('@/views/Komponenter/SoegefeltExample.vue'),
