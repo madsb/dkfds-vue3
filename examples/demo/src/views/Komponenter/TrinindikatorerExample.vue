@@ -2,37 +2,50 @@
   <section>
     <fds-preview header="Eksempel" href="https://designsystem.dk/komponenter/trinindikator/">
       <fds-preview-item>
-        <fds-trinindikator-group :size="trinSize ? 'large' : 'small'">
-          <template #header> Trin {{ trinNavigationsId }} af 4 </template>
-          <fds-trinindikator-item
-            id="1"
-            :active="trinNavigationsId === '1'"
-            icon="done"
-            hint="Et hint"
-            :index="1"
-            @navigate="trinNavigationsId = $event"
-          >
-            Første
-          </fds-trinindikator-item>
-          <fds-trinindikator-item
-            id="2"
-            :active="trinNavigationsId === '2'"
-            hint="Et hint"
-            :index="2"
-            @navigate="trinNavigationsId = $event"
-          >
-            Anden
-          </fds-trinindikator-item>
+        <!-- DKFDS v11 Compliant Step Indicator -->
+        <fds-trinindikator-group
+          :current-step="currentStep"
+          :total-steps="4"
+          :clickable-steps="true"
+          aria-label="Ansøgning trin"
+          @step-click="handleStepClick"
+        >
+          <fds-trinindikator-step
+            :step-number="1"
+            title="Personlige oplysninger"
+            step-info="Indtast dine grundlæggende oplysninger"
+            :is-current="currentStep === 1"
+            :is-completed="currentStep > 1"
+            :clickable="true"
+            @click="handleStepClick(1)"
+          />
+          <fds-trinindikator-step
+            :step-number="2"
+            title="Dokumenter"
+            step-info="Upload nødvendige dokumenter"
+            :is-current="currentStep === 2"
+            :is-completed="currentStep > 2"
+            :clickable="currentStep > 1"
+            @click="handleStepClick(2)"
+          />
+          <fds-trinindikator-step
+            :step-number="3"
+            title="Gennemgang"
+            step-info="Kontroller dine oplysninger"
+            :is-current="currentStep === 3"
+            :is-completed="currentStep > 3"
+            :clickable="currentStep > 2"
+            @click="handleStepClick(3)"
+          />
+          <fds-trinindikator-step
+            :step-number="4"
+            title="Bekræftelse"
+            :is-current="currentStep === 4"
+            :is-completed="false"
+            :clickable="currentStep > 3"
+            @click="handleStepClick(4)"
+          />
         </fds-trinindikator-group>
-
-        <fds-formgroup>
-          <fds-label>Størrelse af trin</fds-label>
-          <fds-checkbox v-model="trinSize">
-            Large - fuld bredde når der er plads (breakpoint lg)</fds-checkbox
-          >
-        </fds-formgroup>
-
-        <fds-pre :json="{ trinNavigationsId }"></fds-pre>
       </fds-preview-item>
 
       <fds-preview-code>
@@ -50,34 +63,40 @@
           </thead>
           <tbody>
             <tr>
-              <td><code>header</code></td>
-              <td><code>string</code></td>
-              <td>
-                <code>Trin</code>
-              </td>
-              <td></td>
+              <td><code>currentStep</code></td>
+              <td><code>number</code></td>
+              <td><code>1</code></td>
+              <td>Nuværende trin (1-baseret)</td>
             </tr>
             <tr>
-              <td><code>id</code></td>
-              <td><code>string</code></td>
-              <td>
-                <code>auto</code>
-              </td>
-              <td></td>
+              <td><code>totalSteps</code></td>
+              <td><code>number</code></td>
+              <td><code>0</code></td>
+              <td>Samlet antal trin</td>
             </tr>
             <tr>
-              <td><code>icon</code></td>
+              <td><code>ariaLabel</code></td>
               <td><code>string</code></td>
-              <td>
-                <code>arrow-drop-down</code>
-              </td>
-              <td></td>
+              <td><code>Trinindikator</code></td>
+              <td>ARIA label for navigation</td>
             </tr>
             <tr>
-              <td><code>size</code></td>
-              <td><code>'small' | 'large'</code></td>
-              <td><code>small</code></td>
-              <td>large = fuld bredde, men small ved responsive</td>
+              <td><code>clickableSteps</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Aktiver klikbare trin</td>
+            </tr>
+            <tr>
+              <td><code>showStepInfo</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Vis ekstra trin information</td>
+            </tr>
+            <tr>
+              <td><code>modalTitle</code></td>
+              <td><code>string</code></td>
+              <td><code>Trin</code></td>
+              <td>Modal titel for mobil visning</td>
             </tr>
           </tbody>
         </table>
@@ -85,7 +104,7 @@
         <table class="table table--compact">
           <thead>
             <tr>
-              <th>Props (Item)</th>
+              <th>Props (Step)</th>
               <th>Type</th>
               <th>Default</th>
               <th>Beskrivelse</th>
@@ -93,52 +112,52 @@
           </thead>
           <tbody>
             <tr>
-              <td><code>id</code></td>
+              <td><code>stepNumber</code></td>
+              <td><code>number</code></td>
+              <td><code>required</code></td>
+              <td>Trin nummer (1-baseret)</td>
+            </tr>
+            <tr>
+              <td><code>title</code></td>
               <td><code>string</code></td>
-              <td>
-                <code>required</code>
-              </td>
-              <td></td>
+              <td><code>required</code></td>
+              <td>Trin titel</td>
             </tr>
             <tr>
-              <td><code>icon</code></td>
+              <td><code>stepInfo</code></td>
               <td><code>string</code></td>
-              <td>
-                <code>null</code>
-              </td>
-              <td></td>
+              <td><code>''</code></td>
+              <td>Valgfri trin information</td>
             </tr>
             <tr>
-              <td><code>hint</code></td>
-              <td><code>string</code></td>
-              <td>
-                <code>null</code>
-              </td>
-              <td></td>
+              <td><code>isCurrent</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Om dette er det aktuelle trin</td>
             </tr>
             <tr>
-              <td><code>href</code></td>
-              <td><code>string</code></td>
-              <td>
-                <code>null</code>
-              </td>
-              <td></td>
+              <td><code>isCompleted</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Om trinnet er færdigt</td>
             </tr>
             <tr>
-              <td><code>index</code></td>
-              <td><code>Number</code></td>
-              <td>
-                <code>null</code>
-              </td>
-              <td></td>
+              <td><code>hasError</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Om trinnet har en fejl</td>
             </tr>
             <tr>
-              <td><code>active</code></td>
-              <td><code>Boolean</code></td>
-              <td>
-                <code>false</code>
-              </td>
-              <td></td>
+              <td><code>clickable</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Om trinnet kan klikkes på</td>
+            </tr>
+            <tr>
+              <td><code>disabled</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Om trinnet er deaktiveret</td>
             </tr>
           </tbody>
         </table>
@@ -150,30 +169,58 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const trinSize = ref(true)
-const trinNavigationsId = ref('1')
+const currentStep = ref(2)
+
+const handleStepClick = (stepNumber: number) => {
+  // Only allow navigation to completed steps or the next step
+  if (stepNumber <= currentStep.value + 1) {
+    currentStep.value = stepNumber
+  }
+}
+
 const code = `
-<fds-trinindikator-group :size="trinSize ? 'large' : 'small'">
-  <template #header> Trin {{ trinNavigationsId }} af 4 </template>
-  <fds-trinindikator-item
-    id="1"
-    :active="trinNavigationsId === '1'"
-    icon="done"
-    hint="Et hint"
-    @navigate="trinNavigationsId = $event"
-    :index="1"
-  >
-    Første
-  </fds-trinindikator-item>
-  <fds-trinindikator-item
-    id="2"
-    :active="trinNavigationsId === '2'"
-    hint="Et hint"
-    @navigate="trinNavigationsId = $event"
-    :index="2"
-  >
-    Anden
-  </fds-trinindikator-item>
+<fds-trinindikator-group
+  :current-step="currentStep"
+  :total-steps="4"
+  :clickable-steps="true"
+  aria-label="Ansøgning trin"
+  @step-click="handleStepClick"
+>
+  <fds-trinindikator-step
+    :step-number="1"
+    title="Personlige oplysninger"
+    step-info="Indtast dine grundlæggende oplysninger"
+    :is-current="currentStep === 1"
+    :is-completed="currentStep > 1"
+    :clickable="true"
+    @click="handleStepClick(1)"
+  />
+  <fds-trinindikator-step
+    :step-number="2"
+    title="Dokumenter"
+    step-info="Upload nødvendige dokumenter"
+    :is-current="currentStep === 2"
+    :is-completed="currentStep > 2"
+    :clickable="currentStep > 1"
+    @click="handleStepClick(2)"
+  />
+  <fds-trinindikator-step
+    :step-number="3"
+    title="Gennemgang"
+    step-info="Kontroller dine oplysninger"
+    :is-current="currentStep === 3"
+    :is-completed="currentStep > 3"
+    :clickable="currentStep > 2"
+    @click="handleStepClick(3)"
+  />
+  <fds-trinindikator-step
+    :step-number="4"
+    title="Bekræftelse"
+    :is-current="currentStep === 4"
+    :is-completed="false"
+    :clickable="currentStep > 3"
+    @click="handleStepClick(4)"
+  />
 </fds-trinindikator-group>
 `
 </script>

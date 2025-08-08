@@ -58,9 +58,11 @@ import FdsToast from './components/fds-toast.vue'
 import FdsToggleSwitch from './components/fds-toggle-switch.vue'
 import FdsTooltip from './components/fds-tooltip.vue'
 import FdsTrinindikatorGroup from './components/fds-trinindikator-group.vue'
+import FdsTrinindikatorStep from './components/fds-trinindikator-step.vue'
 
 function install(app: App): void {
   app.component('fds-trinindikator-group', FdsTrinindikatorGroup)
+  app.component('fds-trinindikator-step', FdsTrinindikatorStep)
 
   app.component('fds-modal', FdsModal)
   app.component('fds-cookiemeddelelse', FdsCookiemeddelelse)
@@ -203,4 +205,5 @@ export {
   FdsToggleSwitch,
   FdsTooltip,
   FdsTrinindikatorGroup,
+  FdsTrinindikatorStep,
 }
