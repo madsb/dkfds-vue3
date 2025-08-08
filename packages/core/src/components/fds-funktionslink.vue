@@ -10,18 +10,15 @@
     class="function-link"
     @click="handleClick"
   >
-    <svg v-if="icon && !iconRight" class="icon-svg" focusable="false" aria-hidden="true">
-      <use :href="`#${icon}`"></use>
-    </svg>
+    <fds-ikon v-if="icon && !iconRight" :icon="icon" :decorative="true" />
     <slot />
-    <svg v-if="icon && iconRight" class="icon-svg" focusable="false" aria-hidden="true">
-      <use :href="`#${icon}`"></use>
-    </svg>
+    <fds-ikon v-if="icon && iconRight" :icon="icon" :decorative="true" />
   </component>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import FdsIkon from './fds-ikon.vue'
 
 const props = withDefaults(
   defineProps<{

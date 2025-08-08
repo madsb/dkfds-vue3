@@ -8,9 +8,7 @@
               {{ header }}
             </h2>
             <button v-if="closeable" class="modal-close function-link" @click="hideModal">
-              <svg class="icon-svg" focusable="false" aria-hidden="true">
-                <use href="#close"></use></svg
-              >Luk
+              <fds-ikon icon="close" :decorative="true" />Luk
             </button>
           </slot>
         </div>
@@ -50,6 +48,7 @@
 
 import { generateId } from 'dkfds-vue3-utils'
 import { computed, ref, onMounted } from 'vue'
+import FdsIkon from './fds-ikon.vue'
 
 const {
   header = null,

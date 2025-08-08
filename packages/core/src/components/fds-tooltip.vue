@@ -19,9 +19,7 @@
       :disabled="disabled"
       :aria-label="ariaLabel || defaultAriaLabel"
     >
-      <svg class="icon-svg mr-0 mt-0" focusable="false" aria-hidden="true">
-        <use :href="`#${icon}`"></use>
-      </svg>
+      <fds-ikon :icon="icon" class="mr-0 mt-0" :decorative="true" />
     </button>
   </div>
 </template>
@@ -29,6 +27,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { generateId, tooltip as TooltipUtil } from 'dkfds-vue3-utils'
+import FdsIkon from './fds-ikon.vue'
 
 export interface FdsTooltipProps {
   /** Tooltip text content (required) */

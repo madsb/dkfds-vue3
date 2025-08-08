@@ -6,9 +6,7 @@
     href="#top"
     @click="scrollToTop"
   >
-    <svg class="icon-svg" focusable="false" aria-hidden="true">
-      <use href="#arrow-upward"></use>
-    </svg>
+    <fds-ikon icon="arrow-upward" :decorative="true" />
     <span class="sr-only">{{ screenReaderText }}</span>
     <span class="d-none d-md-inline-block" aria-hidden="true">
       <slot>{{ visibleText }}</slot>
@@ -18,6 +16,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import FdsIkon from './fds-ikon.vue'
 
 /**
  * Tilbage til toppen component

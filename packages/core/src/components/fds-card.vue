@@ -30,9 +30,7 @@
     </div>
 
     <!-- Navigation icon -->
-    <svg v-if="icon" class="icon-svg card-icon" focusable="false" aria-hidden="true">
-      <use :href="`#${icon}`"></use>
-    </svg>
+    <fds-ikon v-if="icon" :icon="icon" class="card-icon" :decorative="true" />
   </component>
 
   <!-- Regular card (section wrapper) -->
@@ -64,6 +62,8 @@
 </template>
 
 <script setup lang="ts">
+import FdsIkon from './fds-ikon.vue'
+
 /**
  *
  * Komponent for card

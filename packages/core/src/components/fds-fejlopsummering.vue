@@ -1,9 +1,7 @@
 <template>
   <nav v-if="hasErrors" :aria-labelledby="headingId">
     <div class="alert alert-error mt-0 mb-8" role="alert">
-      <svg class="icon-svg alert-icon" aria-label="Fejl" focusable="false">
-        <use href="#error"></use>
-      </svg>
+      <fds-ikon icon="error" class="alert-icon" aria-label="Fejl" :decorative="false" />
       <div class="alert-body">
         <h2 :id="headingId" class="alert-heading">
           <slot name="header">
@@ -26,6 +24,7 @@
 <script setup lang="ts">
 import { computed, provide, ref, onMounted, onUnmounted, toValue } from 'vue'
 import { generateId } from 'dkfds-vue3-utils'
+import FdsIkon from './fds-ikon.vue'
 
 export interface ErrorItem {
   id: string

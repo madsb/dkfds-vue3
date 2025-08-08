@@ -23,9 +23,7 @@
             <span v-if="variantText !== null" class="icon_text">
               {{ variantText || defaultVariantTexts[variant] }}
             </span>
-            <svg class="icon-svg" focusable="false" aria-hidden="true">
-              <use :href="`#${icons[variant]}`"></use>
-            </svg>
+            <fds-ikon :icon="icons[variant]" :decorative="true" />
           </span>
         </button>
       </component>
@@ -59,9 +57,7 @@
           <span v-if="variantText !== null" class="icon_text">
             {{ variantText || defaultVariantTexts[variant] }}
           </span>
-          <svg class="icon-svg" focusable="false" aria-hidden="true">
-            <use :href="`#${icons[variant]}`"></use>
-          </svg>
+          <fds-ikon :icon="icons[variant]" :decorative="true" />
         </span>
       </button>
     </component>
@@ -75,6 +71,7 @@
 <script setup lang="ts">
 import { ref, computed, inject, watch, onMounted, onUnmounted, type Ref } from 'vue'
 import { generateId } from 'dkfds-vue3-utils'
+import FdsIkon from './fds-ikon.vue'
 
 interface AccordionGroupApi {
   register: (_id: string, _expanded: Ref<boolean>) => void

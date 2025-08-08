@@ -7,9 +7,7 @@
     :aria-selected="active"
     @click="handleClick"
   >
-    <svg v-if="icon" class="icon-svg" focusable="false" aria-hidden="true">
-      <use :href="`#${icon}`"></use>
-    </svg>
+    <fds-ikon v-if="icon" :icon="icon" :decorative="true" />
     <span>
       <slot>{{ label }}</slot>
     </span>
@@ -18,6 +16,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import FdsIkon from './fds-ikon.vue'
 
 const props = defineProps<{
   /** Unique identifier for the tab */

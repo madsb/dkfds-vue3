@@ -1,17 +1,14 @@
 <template>
   <button class="button" :class="buttonClasses" v-bind="$attrs">
-    <svg v-if="icon && !iconRight" class="icon-svg" focusable="false" aria-hidden="true">
-      <use :href="`#${icon}`" />
-    </svg>
+    <fds-ikon v-if="icon && !iconRight" :icon="icon" :decorative="true" />
     <slot />
-    <svg v-if="icon && iconRight" class="icon-svg" focusable="false" aria-hidden="true">
-      <use :href="`#${icon}`" />
-    </svg>
+    <fds-ikon v-if="icon && iconRight" :icon="icon" :decorative="true" />
   </button>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import FdsIkon from './fds-ikon.vue'
 
 /**
  * Button component implementing DKFDS v11 specifications

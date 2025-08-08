@@ -6,14 +6,13 @@
       class="alert"
       :class="[`alert-${variant}`, { 'has-close': closeable }]"
     >
-      <svg
+      <fds-ikon
         v-if="showIcon"
-        class="icon-svg alert-icon"
+        :icon="variant"
+        class="alert-icon"
         :aria-label="iconAriaLabel"
-        focusable="false"
-      >
-        <use :href="`#${variant}`"></use>
-      </svg>
+        :decorative="false"
+      />
       <div class="alert-body">
         <slot v-if="$slots.header || header" name="header">
           <h2 class="alert-heading">
@@ -25,9 +24,7 @@
         </p>
         <button v-if="closeable" type="button" class="alert-close" @click="onClose">
           <slot name="button">
-            <svg class="icon-svg" focusable="false" aria-hidden="true">
-              <use href="#close"></use></svg
-            >Luk
+            <fds-ikon icon="close" :decorative="true" />Luk
           </slot>
         </button>
       </div>
@@ -43,6 +40,7 @@
  *
  * */
 import { ref, computed } from 'vue'
+import FdsIkon from './fds-ikon.vue'
 
 const {
   /** Overskrift */

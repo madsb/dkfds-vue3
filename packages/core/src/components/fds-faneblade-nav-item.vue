@@ -6,9 +6,7 @@
       :aria-current="active ? 'true' : undefined"
       @click="handleClick"
     >
-      <svg v-if="icon" class="icon-svg" focusable="false" aria-hidden="true">
-        <use :href="`#${icon}`"></use>
-      </svg>
+      <fds-ikon v-if="icon" :icon="icon" :decorative="true" />
       <span>
         <slot>{{ label }}</slot>
       </span>
@@ -17,6 +15,8 @@
 </template>
 
 <script setup lang="ts">
+import FdsIkon from './fds-ikon.vue'
+
 const _props = defineProps<{
   /** Link destination */
   href: string
