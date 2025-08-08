@@ -140,6 +140,10 @@ export default install as unknown as Plugin
 // https://stackoverflow.com/questions/65290358/vue3-typescript-declaration-file
 // https://stackoverflow.com/questions/64155229/add-global-properties-to-vue-3-using-typescript
 
+// Export composables
+export { useToast } from './composables/useToast'
+export type { ToastOptions } from './composables/useToast'
+
 export {
   FdsAccordionGroup,
   FdsAccordion,

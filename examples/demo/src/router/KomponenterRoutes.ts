@@ -219,6 +219,11 @@ const komponenterRoutes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Komponenter/ToggleExample.vue'),
       },
       {
+        path: 'toast',
+        name: 'komponenttoast',
+        component: () => import('@/views/Komponenter/ToastExample.vue'),
+      },
+      {
         path: 'tooltip',
         name: 'komponenttooltip',
         component: () => import('@/views/Komponenter/TooltipExample.vue'),

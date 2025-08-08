@@ -77,3 +77,18 @@ export interface FdsPaging {
   index: number
   dotted: boolean
 }
+
+export interface FdsToastOptions {
+  type?: 'info' | 'success' | 'warning' | 'error'
+  heading?: string
+  message: string
+  closable?: boolean
+  autoDismiss?: number
+  target?: string
+}
+
+export interface FdsToastInstance {
+  id: string
+  close: () => void
+  update: (options: Partial<FdsToastOptions>) => void
+}

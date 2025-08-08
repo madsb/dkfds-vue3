@@ -127,9 +127,8 @@ const navigationList = ref<Array<FdsNavigationItem>>(
       title: 'Navigation',
     },
     {
-      key: 'komponentnotifikation',
-      title: 'Notifikation (Toast)',
-      icon: 'engineering',
+      key: 'komponenttoast',
+      title: 'Toastbeskeder',
     },
     {
       key: 'komponentoverflow',
