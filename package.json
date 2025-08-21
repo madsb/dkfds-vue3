@@ -52,7 +52,7 @@
     "prettier": "^3.4.2",
     "terser": "^5.43.1",
     "typescript": "^5.8.3",
-    "vite": "^7.0.6",
+    "vite": "^6.3.5",
     "vite-plugin-eslint": "^1.8.1",
     "vitest": "^3.2.4",
     "vitest-axe": "^1.0.0-pre.3",
