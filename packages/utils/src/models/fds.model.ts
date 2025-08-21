@@ -90,5 +90,5 @@ export interface FdsToastOptions {
 export interface FdsToastInstance {
   id: string
   close: () => void
-  update: (options: Partial<FdsToastOptions>) => void
+  update: (_options: Partial<FdsToastOptions>) => void
 }

@@ -358,7 +358,6 @@ describe('FdsOverflowMenu', () => {
       const wrapper = mount(FdsOverflowMenu, {
         slots: { default: '<li><button>Menu Item</button></li>' },
       })
-      const menu = wrapper.find('.overflow-menu-inner')
       const menuItem = wrapper.find('li button')
 
       await wrapper.vm.open()

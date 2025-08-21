@@ -25,9 +25,9 @@ export interface NavigationItem {
  */
 export interface UseNavigationOptions {
   /** Custom route name resolver */
-  routeResolver?: (key: string) => string
+  routeResolver?: (_key: string) => string
   /** Custom key matcher for route names */
-  keyMatcher?: (key: string, routeName: string) => boolean
+  keyMatcher?: (_key: string, _routeName: string) => boolean
   /** Whether to sync with route automatically */
   autoSync?: boolean
   /** Whether to handle nested navigation */
@@ -45,13 +45,13 @@ export interface UseNavigationReturn {
   /** Currently active navigation item */
   currentItem: ComputedRef<NavigationItem | undefined>
   /** Navigate to a specific item */
-  navigate: (key: string) => void
+  navigate: (_key: string) => void
   /** Check if an item is active */
-  isActive: (key: string) => boolean
+  isActive: (_key: string) => boolean
   /** Set active item without navigation */
-  setActive: (key: string) => void
+  setActive: (_key: string) => void
   /** Find item by key */
-  findItem: (key: string) => NavigationItem | undefined
+  findItem: (_key: string) => NavigationItem | undefined
   /** Get breadcrumb trail to current item */
   breadcrumbs: ComputedRef<NavigationItem[]>
 }
@@ -191,8 +191,8 @@ export function useNavigation(
 
     const trail: NavigationItem[] = []
 
-    const buildTrail = (items: NavigationItem[], target: string): boolean => {
-      for (const item of items) {
+    const buildTrail = (navItems: NavigationItem[], target: string): boolean => {
+      for (const item of navItems) {
         if (item.key === target) {
           trail.push(item)
           return true

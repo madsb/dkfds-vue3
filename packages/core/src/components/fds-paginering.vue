@@ -162,7 +162,6 @@ const handlePageChange = (event: Event, newPage: number) => {
 }
 
 const generatePages = (): FdsPaging[] => {
-  const totalPages = getTotalPages.value
   const pages: FdsPaging[] = []
   const maxElements = props.maxElements
   const current = currentPage.value

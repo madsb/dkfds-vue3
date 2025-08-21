@@ -552,7 +552,6 @@ describe('FdsPaginering', () => {
       })
 
       const preventDefault = vi.fn()
-      const mockEvent = { preventDefault }
 
       // Test previous button
       const prevButton = wrapper.find('.button-previous')

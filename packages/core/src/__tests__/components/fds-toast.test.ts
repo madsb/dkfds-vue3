@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { mount, flushPromises } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import FdsToast from '../../components/fds-toast.vue'
 import { testAccessibility } from '../../../../../test-shared/test-utils'
 

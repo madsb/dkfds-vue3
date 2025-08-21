@@ -2,7 +2,7 @@
  * Toast Composable for DKFDS Vue3
  * Provides programmatic control of toast notifications
  */
-import { ref, reactive, nextTick, App, createApp, h } from 'vue'
+import { ref, nextTick, createApp, h } from 'vue'
 import FdsToast from '../components/fds-toast.vue'
 import { generateId } from 'dkfds-vue3-utils'
 
@@ -12,7 +12,7 @@ export interface ToastOptions {
   message: string
   closable?: boolean
   autoDismiss?: number
-  onClick?: (event: MouseEvent) => void
+  onClick?: (_event: MouseEvent) => void
 }
 
 export interface Toast {
@@ -99,7 +99,7 @@ const showToast = async (options: ToastOptions): Promise<string> => {
   })
 
   // Mount the toast
-  const instance = app.mount(toastWrapper)
+  app.mount(toastWrapper)
 
   // Store toast reference
   const toast: Toast = {

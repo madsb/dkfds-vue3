@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import FdsSprogvaelger from '../../components/fds-sprogvaelger.vue'
-import { testAccessibility } from '../../../../../test-shared/test-utils'
 import type { FdsLanguageItem } from 'dkfds-vue3-utils'
 
 // Mock document.documentElement.setAttribute
@@ -219,7 +218,6 @@ describe('FdsSprogvaelger', () => {
         })
 
         const mockEvent = { preventDefault: vi.fn() }
-        const englishLink = wrapper.findAll('a')[1]
 
         await wrapper.vm.handleLanguageChange(mockLanguages[1], mockEvent as any)
 
@@ -443,7 +441,7 @@ describe('FdsSprogvaelger', () => {
         active: false,
       }))
 
-      const wrapper = mount(FdsSprogvaelger, {
+      mount(FdsSprogvaelger, {
         props: {
           modelValue: noActiveLanguages,
           autoSetLang: true,

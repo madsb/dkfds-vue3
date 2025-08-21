@@ -62,9 +62,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, nextTick } from 'vue'
+import { ref, computed } from 'vue'
 
-import { removeBrowserFileContentHeaders, formId, generateId } from 'dkfds-vue3-utils'
+import { removeBrowserFileContentHeaders, formId } from 'dkfds-vue3-utils'
 import { FdsFileInputModel } from 'dkfds-vue3-utils'
 import FdsIkon from './fds-ikon.vue'
 
@@ -297,7 +297,7 @@ const processFiles = async (files: File[]) => {
 
       fileModels.push(fileModel)
       selectedFiles.value.push(file)
-    } catch (error) {
+    } catch (_error) {
       emit('error', {
         type: 'generic',
         message: `Fejl ved læsning af fil "${file.name}".`,

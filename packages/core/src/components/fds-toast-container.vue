@@ -22,7 +22,7 @@ interface Props {
   id?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   id: () => generateId('toast-container').value,
 })
 </script>

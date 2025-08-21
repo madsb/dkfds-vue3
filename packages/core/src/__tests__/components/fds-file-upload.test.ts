@@ -992,7 +992,7 @@ describe('FdsFileUpload', () => {
           }
         },
         methods: {
-          async handleUpload(files) {
+          async handleUpload(_files) {
             this.uploading = true
             // Simulate upload
             await new Promise((resolve) => setTimeout(resolve, 100))

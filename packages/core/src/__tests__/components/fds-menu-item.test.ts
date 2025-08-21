@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import FdsMenuItem from '../../components/fds-menu-item.vue'
-import { testAccessibility } from '../../../../../test-shared/test-utils'
 
 describe('FdsMenuItem', () => {
   beforeEach(() => {

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { nextTick, getCurrentInstance as originalGetCurrentInstance } from 'vue'
+import { nextTick } from 'vue'
 import { useNavigation, type NavigationItem } from '../../composable/useNavigation'
 
 // Mock getCurrentInstance
