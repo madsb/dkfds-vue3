@@ -1,60 +1,113 @@
 <template>
-  <div class="overflow-menu">
+  <div :class="['overflow-menu', positionClass]">
     <button
-      :id="`button_${formid}`"
+      :id="buttonId"
+      ref="buttonRef"
       class="button-overflow-menu js-dropdown"
-      :data-js-target="`${formid}`"
+      :data-js-target="menuId"
+      :aria-expanded="isOpen"
+      :aria-controls="menuId"
       aria-haspopup="true"
-      :aria-expanded="false"
+      @click="toggle"
+      @keydown="handleKeydown"
     >
-      <span
-      >{{ header }}
-        <svg
-          class="icon-svg"
-          aria-hidden="true"
-          focusable="false">
-          <use :xlink:href="`#${icon}`"></use>
-        </svg>
+      <span>
+        {{ header || 'Overflow menu' }}
+        <fds-ikon :icon="icon" :decorative="true" />
       </span>
     </button>
     <div
-      :id="formid"
-      class="overflow-menu-inner collapsed"
-      :aria-hidden="true">
-      <slot />
+      :id="menuId"
+      ref="menuRef"
+      :class="['overflow-menu-inner', { collapsed: !isOpen }]"
+      :aria-hidden="!isOpen"
+    >
+      <ul v-if="$slots.default" class="overflow-list">
+        <slot />
+      </ul>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-/**
- *
- * Komponent for Overflowmenu
- * https://designsystem.dk/komponenter/overflowmenu/
- *
- * */
-import { defineProps, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { formId } from 'dkfds-vue3-utils'
+import FdsIkon from './fds-ikon.vue'
 
-import { formId, dropdown } from 'dkfds-vue3-utils';
+interface Props {
+  header?: string
+  id?: string
+  icon?: string
+  position?: 'left' | 'right'
+}
 
-const props = defineProps({
-  header: {
-    type: String,
-    default: null,
-  },
-  id: {
-    type: String,
-    default: null,
-  },
-  icon: {
-    type: String,
-    default: 'more-vert',
-  },
-});
+const props = withDefaults(defineProps<Props>(), {
+  icon: 'more-vert',
+  position: 'right'
+})
 
-const { formid } = formId(props.id, true);
+const emit = defineEmits<{
+  open: []
+  close: []
+  toggle: [isOpen: boolean]
+}>()
 
-onMounted(async () => {
-  new dropdown(document.getElementById(`button_${formid.value}`)).init();
-});
+const { formid } = formId(props.id, true)
+
+const buttonRef = ref<HTMLButtonElement>()
+const menuRef = ref<HTMLDivElement>()
+const isOpen = ref(false)
+
+const buttonId = computed(() => `button_${formid.value}`)
+const menuId = computed(() => formid.value)
+const positionClass = computed(() => {
+  return props.position === 'left' ? 'overflow-menu--open-left' : 'overflow-menu--open-right'
+})
+
+const open = () => {
+  isOpen.value = true
+  emit('open')
+  emit('toggle', true)
+}
+
+const close = () => {
+  isOpen.value = false
+  emit('close')
+  emit('toggle', false)
+}
+
+const toggle = () => {
+  if (isOpen.value) {
+    close()
+  } else {
+    open()
+  }
+}
+
+const handleKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Escape' && isOpen.value) {
+    close()
+    buttonRef.value?.focus()
+  }
+}
+
+const handleClickOutside = (event: Event) => {
+  if (
+    isOpen.value &&
+    buttonRef.value &&
+    menuRef.value &&
+    !buttonRef.value.contains(event.target as Node) &&
+    !menuRef.value.contains(event.target as Node)
+  ) {
+    close()
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
+})
 </script>

@@ -1,61 +1,138 @@
 <template>
-  <li>
+  <div class="form-group-radio">
     <input
-      :id="'radio-' + formid + '-' + indexId"
+      v-bind="$attrs"
+      :id="radioId"
       type="radio"
-      :name="'radio' + formid"
-      :value="value"
-      :checked="value === injGroupValue"
-      class="form-radio radio-large"
-      @change="handleInput"
-      @blur="$emit('dirty', true)"
+      :name="radioName"
+      :value="props.value"
+      :checked="isChecked"
+      :disabled="props.disabled"
+      class="form-radio"
+      :aria-describedby="computedAriaDescribedby"
+      :aria-controls="hasContent ? `collapse-${radioId}` : undefined"
+      :data-controls="hasContent ? `collapse-${radioId}` : undefined"
+      @change="handleChange"
+      @blur="handleBlur"
     />
-    <label :for="'radio-' + formid + '-' + indexId">
+    <label :for="radioId" class="form-label">
       <slot />
     </label>
 
     <div
-      v-if="$slots.content && injGroupValue === value.toString()"
-      class="radio-content mt-2 ml-4 py-4"
+      v-if="hasContent && isChecked"
+      :id="`collapse-${radioId}`"
+      :aria-hidden="!isChecked"
+      class="radio-content"
     >
       <slot name="content" />
     </div>
-  </li>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, inject } from 'vue';
-import { formId } from 'dkfds-vue3-utils';
+import { computed, inject, useSlots, isRef, type Ref } from 'vue'
+import { formId, generateId } from 'dkfds-vue3-utils'
 
-import { generateId } from 'dkfds-vue3-utils';
+const slots = useSlots()
 
-const props = defineProps({
-  value: {
-    type: String,
-    required: true,
-  },
-  index: {
-    type: String,
-    default: null,
-  },
-  id: {
-    type: String,
-    default: null,
-  },
-});
+interface Props {
+  /** Radio button value */
+  value: string | number | boolean
+  /** Index for unique ID generation */
+  index?: string | null
+  /** Unique identifier */
+  id?: string | null
+  /** Whether the radio is disabled */
+  disabled?: boolean
+  /** Name attribute (usually injected from group) */
+  name?: string
+}
 
-const emit = defineEmits(['dirty']);
-const injGroupEmit = inject<(x: string) => void>('provideGroupEmit');
-const injGroupValue = inject<string | null>('provideGroupValue');
-const { formid } = formId(props.id);
-const indexId = generateId(props.index);
+const props = withDefaults(defineProps<Props>(), {
+  index: null,
+  id: null,
+  disabled: false,
+  name: undefined,
+})
 
-const handleInput = (event: Event) => {
-  emit('dirty', true);
-  if (injGroupEmit) {
-    injGroupEmit((event?.target as HTMLInputElement).value);
+const emit = defineEmits<{
+  /** Emitted when radio loses focus */
+  dirty: [value: boolean]
+  /** Emitted on change event */
+  change: [event: Event]
+}>()
+// Inject from radio group
+const injGroupEmit = inject<(_value: string | number | boolean) => void>(
+  'provideGroupEmit',
+  undefined,
+)
+const injGroupValue = inject<
+  Ref<string | number | boolean | null> | string | number | boolean | null
+>('provideGroupValue', null)
+const injGroupName = inject<Ref<string> | string>('provideGroupName', '')
+
+const { formid } = formId(props.id, true)
+const indexIdRef = generateId(props.index)
+const indexId = indexIdRef ? indexIdRef.value : 'item'
+
+// Generate unique radio ID
+const radioId = computed(() => `radio-${formid.value}-${indexId}`)
+
+// Use injected name or prop name
+const radioName = computed(() => {
+  const groupName = isRef(injGroupName) ? injGroupName.value : injGroupName
+  return props.name || groupName || `radio-${formid.value}`
+})
+
+// Check if content slot is provided
+const hasContent = computed(() => !!slots.content)
+
+// Check if this radio is selected
+const isChecked = computed(() => {
+  const groupValue = isRef(injGroupValue) ? injGroupValue.value : injGroupValue
+  return props.value === groupValue
+})
+
+// Inject aria-describedby from formgroup if available
+const injectedAriaDescribedby = inject<string | Ref<string> | undefined>(
+  'ariaDescribedby',
+  undefined,
+)
+
+const computedAriaDescribedby = computed((): string | undefined => {
+  // Use explicitly provided aria-describedby from attrs
+  const attrs = (slots as any).$attrs
+  if (attrs && attrs['aria-describedby']) {
+    return attrs['aria-describedby'] as string
   }
-};
+  // Otherwise use injected value from formgroup
+  if (injectedAriaDescribedby) {
+    return isRef(injectedAriaDescribedby) ? injectedAriaDescribedby.value : injectedAriaDescribedby
+  }
+  return undefined
+})
+
+/**
+ * Handle radio change
+ */
+const handleChange = (event: Event) => {
+  const target = event.target as HTMLInputElement
+
+  if (injGroupEmit) {
+    injGroupEmit(target.value)
+  }
+
+  emit('change', event)
+  emit('dirty', true)
+}
+
+/**
+ * Handle blur event
+ */
+const handleBlur = () => {
+  emit('dirty', true)
+}
 </script>
 
 <style scoped lang="scss"></style>

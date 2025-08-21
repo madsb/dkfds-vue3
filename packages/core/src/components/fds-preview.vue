@@ -1,14 +1,9 @@
 <template>
-  <div
-    class="component-preview component-preview-details mb-4"
-    :aria-label="header">
+  <div class="component-preview component-preview-details mb-4" :aria-label="header">
     <div class="component-link">
       {{ header }}
 
-      <a
-        v-if="href"
-        :href="href"
-        target="designsystem">
+      <a v-if="href" :href="href" target="designsystem">
         {{ linkText }}
       </a>
     </div>
@@ -16,22 +11,15 @@
   </div>
 </template>
 <script setup lang="ts">
-import { defineProps } from 'vue';
-
-defineProps({
-  header: {
-    type: String,
-    default: null,
-  },
-  href: {
-    type: String,
-    default: null,
-  },
-  linkText: {
-    type: String,
-    default: 'Design System',
-  },
-});
+const {
+  header = null,
+  href = null,
+  linkText = 'Design System',
+} = defineProps<{
+  header?: string | null
+  href?: string | null
+  linkText?: string
+}>()
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

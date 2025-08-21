@@ -1,26 +1,296 @@
 <template>
   <section>
-    <fds-preview
-      header="Eksempel"
-      href="https://designsystem.dk/komponenter/cards/">
+    <!-- Basic Card Example -->
+    <fds-preview header="Grundlæggende card" href="https://designsystem.dk/komponenter/cards/">
       <fds-preview-item>
-        <fds-card header="Overskrift">
+        <fds-card header="Card overskrift">
           <p>
-            In sollicitudin, nulla sit amet facilisis euismod, ex ex hendrerit eros, et egestas
-            purus lectus vitae tortor.
+            Dette er et grundlæggende card der viser, hvordan man grupperer relateret indhold. Cards
+            bruges til at adskille indhold fra det primære sideindhold.
           </p>
         </fds-card>
       </fds-preview-item>
 
       <fds-preview-code>
-        <pre v-text="code"></pre>
+        <pre v-text="basicCardCode"></pre>
       </fds-preview-code>
+    </fds-preview>
 
+    <!-- Card with Image -->
+    <fds-preview header="Card med billede">
       <fds-preview-item>
+        <fds-card header="Digital Post" subheader="Kommunikation">
+          <template #image>
+            <img
+              src="https://placehold.co/400x225/0868AC/ffffff?text=Digital+Post"
+              alt="Digital Post illustration"
+            />
+          </template>
+          <p>
+            Få digital post fra offentlige myndigheder direkte i din e-Boks eller anden digital
+            postløsning.
+          </p>
+          <template #actions>
+            <a href="#" class="button button-primary">Læs mere</a>
+          </template>
+        </fds-card>
+      </fds-preview-item>
+
+      <fds-preview-code>
+        <pre v-text="imageCardCode"></pre>
+      </fds-preview-code>
+    </fds-preview>
+
+    <!-- Navigation Cards -->
+    <fds-preview header="Navigations cards">
+      <fds-preview-item>
+        <fds-card-group>
+          <fds-card href="#" header="Borger.dk" subheader="For borgere" icon="arrow-forward">
+            <template #image>
+              <img
+                src="https://placehold.co/400x225/1D8649/ffffff?text=Borger.dk"
+                alt="Borger.dk"
+              />
+            </template>
+            <p>Find information og selvbetjeningsløsninger for borgere</p>
+          </fds-card>
+
+          <fds-card href="#" header="Virk.dk" subheader="For virksomheder" icon="arrow-forward">
+            <template #image>
+              <img src="https://placehold.co/400x225/7B2D8A/ffffff?text=Virk.dk" alt="Virk.dk" />
+            </template>
+            <p>Alt hvad din virksomhed har brug for på ét sted</p>
+          </fds-card>
+
+          <fds-card href="#" header="Sundhed.dk" subheader="Sundhed" icon="arrow-forward">
+            <template #image>
+              <img
+                src="https://placehold.co/400x225/C0392B/ffffff?text=Sundhed.dk"
+                alt="Sundhed.dk"
+              />
+            </template>
+            <p>Din indgang til det danske sundhedsvæsen</p>
+          </fds-card>
+        </fds-card-group>
+      </fds-preview-item>
+
+      <fds-preview-code>
+        <pre v-text="navigationCardsCode"></pre>
+      </fds-preview-code>
+    </fds-preview>
+
+    <!-- Cards with Actions -->
+    <fds-preview header="Cards med handlinger">
+      <fds-preview-item>
+        <fds-card-group>
+          <fds-card header="Ansøg om tilskud" subheader="Boligstøtte">
+            <p>
+              Få økonomisk hjælp til din bolig hvis du har svært ved at betale husleje eller
+              ejerudgifter.
+            </p>
+            <template #actions>
+              <div class="button-group">
+                <a href="#" class="button button-primary">Start ansøgning</a>
+                <a href="#" class="button button-secondary">Læs mere</a>
+              </div>
+            </template>
+          </fds-card>
+
+          <fds-card header="Book tid" subheader="Borgerservice" class="align">
+            <p>
+              Book tid til borgerservice for at få hjælp med pas, kørekort, folkeregister og andre
+              services.
+            </p>
+            <template #actions>
+              <a href="#" class="button button-primary">Book nu</a>
+            </template>
+          </fds-card>
+
+          <fds-card header="Digital Post" subheader="Kommunikation">
+            <p>
+              Tjek din digitale post fra offentlige myndigheder og private virksomheder på ét sted.
+            </p>
+            <template #actions>
+              <a href="#" class="button button-primary">Åbn e-Boks</a>
+              <ul class="nobullet-list">
+                <li>
+                  <a href="#" class="icon-link">
+                    Hjælp til digital post
+                    <svg class="icon-svg" aria-hidden="true" focusable="false">
+                      <use href="#open-in-new"></use>
+                    </svg>
+                  </a>
+                </li>
+              </ul>
+            </template>
+          </fds-card>
+        </fds-card-group>
+      </fds-preview-item>
+
+      <fds-preview-code>
+        <pre v-text="actionCardsCode"></pre>
+      </fds-preview-code>
+    </fds-preview>
+
+    <!-- Card Deck Layout -->
+    <fds-preview header="Deck layout">
+      <fds-preview-item>
+        <fds-card-group type="deck">
+          <fds-card header="NemID bliver til MitID" subheader="Vigtig information">
+            <template #image>
+              <img
+                src="https://placehold.co/400x225/E67E22/ffffff?text=MitID"
+                alt="MitID information"
+              />
+            </template>
+            <p>
+              Fra 2023 skal du bruge MitID i stedet for NemID. Få hjælp til overgangen og opret din
+              MitID i god tid.
+            </p>
+            <template #actions>
+              <a href="#" class="button button-primary">Opret MitID</a>
+            </template>
+          </fds-card>
+
+          <fds-card header="Årsopgørelse" subheader="Skat">
+            <template #image>
+              <img
+                src="https://placehold.co/400x225/2ECC71/ffffff?text=Årsopgørelse"
+                alt="Årsopgørelse"
+              />
+            </template>
+            <p>
+              Din årsopgørelse for 2023 er klar. Se hvor meget du skal betale eller få tilbage i
+              skat.
+            </p>
+            <template #actions>
+              <a href="#" class="button button-primary">Se årsopgørelse</a>
+            </template>
+          </fds-card>
+        </fds-card-group>
+      </fds-preview-item>
+
+      <fds-preview-code>
+        <pre v-text="deckLayoutCode"></pre>
+      </fds-preview-code>
+    </fds-preview>
+
+    <!-- Column Layout -->
+    <fds-preview header="Column layout">
+      <fds-preview-item>
+        <fds-card-group type="columns">
+          <fds-card header="Kontakt kommunen" subheader="Hjælp og support">
+            <p>Ring til kommunens borgerservice eller book en tid for personlig betjening.</p>
+            <template #actions>
+              <a href="#" class="button button-secondary">Kontakt os</a>
+            </template>
+          </fds-card>
+
+          <fds-card header="Ofte stillede spørgsmål">
+            <template #content>
+              <div class="bg-info-light p-4">
+                <ul class="nobullet-list mb-0">
+                  <li><strong>Hvordan opretter jeg digital post?</strong></li>
+                  <li><strong>Hvad er MitID og hvorfor skal jeg have det?</strong></li>
+                  <li><strong>Hvor finder jeg mine skatteoplysninger?</strong></li>
+                </ul>
+              </div>
+            </template>
+            <p>
+              Find svar på de mest stillede spørgsmål om offentlige services og digitale løsninger.
+            </p>
+            <template #actions>
+              <a href="#" class="button button-secondary">Se alle spørgsmål</a>
+            </template>
+          </fds-card>
+
+          <fds-card header="Tilgængelighed" subheader="For alle borgere">
+            <p>
+              Vi arbejder for at gøre vores digitale løsninger tilgængelige for alle borgere, uanset
+              funktionsnedsættelse.
+            </p>
+            <template #actions>
+              <ul class="nobullet-list">
+                <li>
+                  <a href="#" class="function-link"> Læs om tilgængelighed </a>
+                </li>
+                <li>
+                  <a href="#" class="function-link"> Rapportér problem </a>
+                </li>
+              </ul>
+            </template>
+          </fds-card>
+
+          <fds-card header="Nyheder og opdateringer">
+            <p>
+              Hold dig opdateret med de seneste nyheder om digitale services og systemændringer.
+            </p>
+            <template #actions>
+              <a href="#" class="button button-secondary">Se nyheder</a>
+            </template>
+          </fds-card>
+        </fds-card-group>
+      </fds-preview-item>
+
+      <fds-preview-code>
+        <pre v-text="columnLayoutCode"></pre>
+      </fds-preview-code>
+    </fds-preview>
+
+    <!-- Long Cards (Horizontal) -->
+    <fds-preview header="Lange cards (horisontale)">
+      <fds-preview-item>
+        <fds-card
+          href="#"
+          variant="long"
+          header="Book tid til borgerservice"
+          subheader="Personlig betjening"
+          icon="arrow-forward"
+        >
+          <template #image>
+            <img
+              src="https://placehold.co/400x225/9B59B6/ffffff?text=Borgerservice"
+              alt="Borgerservice"
+            />
+          </template>
+          <p>
+            Få hjælp med pas, kørekort, CPR-forhold og andre services ved personlig betjening i
+            borgerservice.
+          </p>
+        </fds-card>
+
+        <fds-card
+          href="#"
+          variant="long"
+          header="Akut hjælp og kontakt"
+          subheader="Nødsituation"
+          icon="open-in-new"
+        >
+          <template #image>
+            <img
+              src="https://placehold.co/400x225/E74C3C/ffffff?text=Akut+Hjælp"
+              alt="Akut hjælp"
+            />
+          </template>
+          <p>
+            Ring 112 ved livsfarlige situationer. Find andre vigtige telefonnumre til akut hjælp.
+          </p>
+        </fds-card>
+      </fds-preview-item>
+
+      <fds-preview-code>
+        <pre v-text="longCardsCode"></pre>
+      </fds-preview-code>
+    </fds-preview>
+
+    <!-- Component API Documentation -->
+    <fds-preview header="Komponent API">
+      <fds-preview-item>
+        <h3 class="h4">fds-card Props</h3>
         <table class="table table--compact">
           <thead>
             <tr>
-              <th>Props</th>
+              <th>Prop</th>
               <th>Type</th>
               <th>Default</th>
               <th>Beskrivelse</th>
@@ -31,146 +301,82 @@
               <td><code>header</code></td>
               <td><code>string</code></td>
               <td><code>null</code></td>
-              <td>Default h2 - benyt #header hvis andet ønskes</td>
+              <td>Card overskrift (bruger h2 som standard)</td>
+            </tr>
+            <tr>
+              <td><code>headerTag</code></td>
+              <td><code>'h2' | 'h3' | 'h4' | 'h5' | 'h6'</code></td>
+              <td><code>'h2'</code></td>
+              <td>HTML element til overskrift</td>
             </tr>
             <tr>
               <td><code>subheader</code></td>
               <td><code>string</code></td>
               <td><code>null</code></td>
-              <td></td>
+              <td>Understøttende tekst under overskrift</td>
+            </tr>
+            <tr>
+              <td><code>href</code></td>
+              <td><code>string</code></td>
+              <td><code>null</code></td>
+              <td>Link URL (gør card til navigation card)</td>
+            </tr>
+            <tr>
+              <td><code>icon</code></td>
+              <td><code>string</code></td>
+              <td><code>null</code></td>
+              <td>Ikon for navigation card (f.eks. 'arrow-forward')</td>
+            </tr>
+            <tr>
+              <td><code>variant</code></td>
+              <td><code>'long' | null</code></td>
+              <td><code>null</code></td>
+              <td>Card variant (long for horisontal layout)</td>
             </tr>
           </tbody>
         </table>
 
+        <h3 class="h4 mt-5">fds-card Slots</h3>
         <table class="table table--compact">
           <thead>
             <tr>
-              <th>Slots</th>
-              <th>Default</th>
+              <th>Slot</th>
               <th>Beskrivelse</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><code>content</code></td>
-              <td><code></code></td>
-              <td></td>
+              <td><code>image</code></td>
+              <td>Billede øverst i card</td>
             </tr>
             <tr>
               <td><code>header</code></td>
-              <td><code>props.header, props.subheader</code></td>
-              <td></td>
+              <td>Tilpasset overskrift (overskriver props)</td>
+            </tr>
+            <tr>
+              <td><code>content</code></td>
+              <td>Specielt indhold efter overskrift</td>
             </tr>
             <tr>
               <td><code>default</code></td>
-              <td><code></code></td>
-              <td></td>
+              <td>Hovedindhold (tekst, paragraffer)</td>
             </tr>
             <tr>
               <td><code>actions</code></td>
-              <td><code></code></td>
-              <td></td>
+              <td>Knapper og links</td>
+            </tr>
+            <tr>
+              <td><code>custom</code></td>
+              <td>Fuldstændig tilpasset card indhold</td>
             </tr>
           </tbody>
         </table>
-      </fds-preview-item>
-    </fds-preview>
 
-    <fds-preview header="Eksempel">
-      <fds-preview-item>
-        <fds-card-group>
-          <fds-card
-            header="Overskrift"
-            subheader="Understøttende tekst">
-            <p>
-              In sollicitudin, nulla sit amet facilisis euismod, ex ex hendrerit eros, et egestas
-              purus lectus vitae tortor.
-            </p>
-            <template #actions>
-              <button class="button button-secondary">
-                Sekundærknap
-              </button>
-            </template>
-          </fds-card>
-          <fds-card header="Overskrift">
-            <template #content>
-              <div class="align-text-center bg-info-light p-6">
-                <h2 class="h5 mb-5">
-                  Lorem ipsum fordeling
-                </h2>
-                <div class="mt-3 row">
-                  <div class="col-6">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-label="80%"
-                      class="w-percent-30 w-percent-md-70"
-                      viewBox="0 0 50 100"
-                    >
-                      <rect
-                        width="50"
-                        height="100"
-                        fill="#eefafa" />
-                      <rect
-                        y="20"
-                        width="50"
-                        height="80"
-                        fill="#0868AC" /></svg
-                    ><span class="small-text mt-2 bold d-block">
-                      København
-                    </span>
-                  </div>
-                  <div class="col-6">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-label="36%"
-                      class="w-percent-30 w-percent-md-70"
-                      viewBox="0 0 50 100"
-                    >
-                      <rect
-                        width="50"
-                        height="100"
-                        fill="#eefafa" />
-                      <rect
-                        y="64"
-                        width="50"
-                        height="36"
-                        fill="#0868AC" /></svg
-                    ><span class="small-text mt-2 bold d-block">
-                      Hele landet
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </template>
-            <p>
-              In sollicitudin, nulla sit amet facilisis euismod, ex ex hendrerit eros, et egestas
-              purus lectus vitae tortor.
-            </p>
-          </fds-card>
-          <fds-card
-            header="Overskrift"
-            subheader="Understøttende tekst">
-            <p>
-              In sollicitudin, nulla sit amet facilisis euismod, ex ex hendrerit eros, et egestas
-              purus lectus vitae tortor.
-            </p>
-            <template #actions>
-              <button class="button button-secondary">
-                Sekundærknap
-              </button>
-            </template>
-          </fds-card>
-        </fds-card-group>
-      </fds-preview-item>
-
-      <fds-preview-code>
-        <pre v-text="props"></pre>
-      </fds-preview-code>
-      <fds-preview-item>
+        <h3 class="h4 mt-5">fds-card-group Props</h3>
         <table class="table table--compact">
           <thead>
             <tr>
-              <th>Props</th>
+              <th>Prop</th>
               <th>Type</th>
               <th>Default</th>
               <th>Beskrivelse</th>
@@ -178,385 +384,113 @@
           </thead>
           <tbody>
             <tr>
-              <td><code>header</code></td>
-              <td><code>'deck' | 'columns'</code></td>
+              <td><code>type</code></td>
+              <td><code>'deck' | 'columns' | null</code></td>
               <td><code>null</code></td>
-              <td></td>
+              <td>Layout type for card gruppe</td>
             </tr>
           </tbody>
         </table>
       </fds-preview-item>
     </fds-preview>
-
-    <fds-preview header="Eksempel deck">
-      <fds-preview-item>
-        <fds-card-group type="deck">
-          <fds-card
-            header="Overskrift"
-            subheader="Understøttende tekst">
-            <p>
-              In sollicitudin, nulla sit amet facilisis euismod, ex ex hendrerit eros, et egestas
-              purus lectus vitae tortor.
-            </p>
-            <template #actions>
-              <button class="button button-secondary">
-                Sekundærknap
-              </button>
-            </template>
-          </fds-card>
-          <fds-card header="Overskrift">
-            <template #content>
-              <div class="align-text-center bg-info-light p-6">
-                <h2 class="h5 mb-5">
-                  Lorem ipsum fordeling
-                </h2>
-                <div class="mt-3 row">
-                  <div class="col-6">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-label="80%"
-                      class="w-percent-30 w-percent-md-70"
-                      viewBox="0 0 50 100"
-                    >
-                      <rect
-                        width="50"
-                        height="100"
-                        fill="#eefafa" />
-                      <rect
-                        y="20"
-                        width="50"
-                        height="80"
-                        fill="#0868AC" /></svg
-                    ><span class="small-text mt-2 bold d-block">
-                      København
-                    </span>
-                  </div>
-                  <div class="col-6">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-label="36%"
-                      class="w-percent-30 w-percent-md-70"
-                      viewBox="0 0 50 100"
-                    >
-                      <rect
-                        width="50"
-                        height="100"
-                        fill="#eefafa" />
-                      <rect
-                        y="64"
-                        width="50"
-                        height="36"
-                        fill="#0868AC" /></svg
-                    ><span class="small-text mt-2 bold d-block">
-                      Hele landet
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </template>
-            <p>
-              In sollicitudin, nulla sit amet facilisis euismod, ex ex hendrerit eros, et egestas
-              purus lectus vitae tortor.
-            </p>
-          </fds-card>
-          <fds-card
-            header="Overskrift"
-            subheader="Understøttende tekst">
-            <p>
-              In sollicitudin, nulla sit amet facilisis euismod, ex ex hendrerit eros, et egestas
-              purus lectus vitae tortor.
-            </p>
-            <template #actions>
-              <button class="button button-secondary">
-                Sekundærknap
-              </button>
-            </template>
-          </fds-card>
-        </fds-card-group>
-      </fds-preview-item>
-
-      <fds-preview-code>
-        <pre v-text="deck"></pre>
-      </fds-preview-code>
-    </fds-preview>
-
-    <fds-preview header="Eksempel columns">
-      <fds-preview-item>
-        <fds-card-group type="columns">
-          <fds-card
-            header="Overskrift"
-            subheader="Understøttende tekst">
-            <p>
-              In sollicitudin, nulla sit amet facilisis euismod, ex ex hendrerit eros, et egestas
-              purus lectus vitae tortor.
-            </p>
-            <template #actions>
-              <button class="button button-secondary">
-                Sekundærknap
-              </button>
-            </template>
-          </fds-card>
-          <fds-card
-            header="Overskrift"
-            class="card-align-height">
-            <template #content>
-              <div class="align-text-center bg-info-light p-6">
-                <h2 class="h5 mb-5">
-                  Lorem ipsum fordeling
-                </h2>
-                <div class="mt-3 row">
-                  <div class="col-6">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-label="80%"
-                      class="w-percent-30 w-percent-md-70"
-                      viewBox="0 0 50 100"
-                    >
-                      <rect
-                        width="50"
-                        height="100"
-                        fill="#eefafa" />
-                      <rect
-                        y="20"
-                        width="50"
-                        height="80"
-                        fill="#0868AC" /></svg
-                    ><span class="small-text mt-2 bold d-block">
-                      København
-                    </span>
-                  </div>
-                  <div class="col-6">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-label="36%"
-                      class="w-percent-30 w-percent-md-70"
-                      viewBox="0 0 50 100"
-                    >
-                      <rect
-                        width="50"
-                        height="100"
-                        fill="#eefafa" />
-                      <rect
-                        y="64"
-                        width="50"
-                        height="36"
-                        fill="#0868AC" /></svg
-                    ><span class="small-text mt-2 bold d-block">
-                      Hele landet
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </template>
-            <p>
-              In sollicitudin, nulla sit amet facilisis euismod, ex ex hendrerit eros, et egestas
-              purus lectus vitae tortor.
-            </p>
-          </fds-card>
-          <fds-card
-            header="Overskrift"
-            subheader="Understøttende tekst">
-            <p>
-              In sollicitudin, nulla sit amet facilisis euismod, ex ex hendrerit eros, et egestas
-              purus lectus vitae tortor.
-            </p>
-            <template #actions>
-              <button class="button button-secondary">
-                Sekundærknap
-              </button>
-            </template>
-          </fds-card>
-          <fds-card
-            header="Overskrift"
-            subheader="Understøttende tekst">
-            <p>
-              In sollicitudin, nulla sit amet facilisis euismod, ex ex hendrerit eros, et egestas
-              purus lectus vitae tortor.
-            </p>
-            <template #actions>
-              <button class="button button-secondary">
-                Sekundærknap
-              </button>
-            </template>
-          </fds-card>
-          <fds-card
-            header="Overskrift"
-            subheader="Understøttende tekst">
-            <p>
-              In sollicitudin, nulla sit amet facilisis euismod, ex ex hendrerit eros, et egestas
-              purus lectus vitae tortor.
-            </p>
-            <template #actions>
-              <button class="button button-secondary">
-                Sekundærknap
-              </button>
-            </template>
-          </fds-card>
-          <fds-card class="card-align-height">
-            <template #custom>
-              <div class="card-content">
-                <!-- Alt i denne div er blot et eksempel. Visse klasser er ikke en del af FDS. -->
-                <div class="row bg-success-light p-6">
-                  <div class="col-12 align-text-left">
-                    <h2 class="h3 mb-0">
-                      3 ofte stillede spørgsmål
-                    </h2>
-                    <ul class="mt-0 noindent-list">
-                      <li>In viverra faucibus lorem?</li>
-                      <li>Phasellus posuere neque?</li>
-                      <li>Nullam quis nunc dui?</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="card-header">
-                <h2 class="header-title">
-                  Header
-                </h2>
-                <p class="sub-header">
-                  Understøttende tekst
-                </p>
-              </div>
-
-              <div class="card-footer card-action">
-                <div class="action-buttons">
-                  <button class="button button-secondary">
-                    Sekundærknap
-                  </button
-                  ><button class="button button-tertiary">
-                    Tertiærknap
-                  </button>
-                </div>
-                <div class="action-links">
-                  <ul class="nobullet-list">
-                    <li>
-                      <a
-                        href="javascript:void(0);"
-                        class="default link state"
-                      >Et link til et sted i løsningen</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="javascript:void(0);"
-                        class="icon-link"
-                      >Et link til et sted uden for løsningen<svg
-                        class="icon-svg"
-                        aria-hidden="true"
-                        focusable="false"
-                        tabindex="-1"
-                      >
-                        <use xlink:href="#open-in-new"></use></svg
-                      ></a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </template>
-          </fds-card>
-        </fds-card-group>
-      </fds-preview-item>
-
-      <fds-preview-code>
-        <pre v-text="columns"></pre>
-      </fds-preview-code>
-    </fds-preview>
   </section>
 </template>
 
 <script setup lang="ts">
-const code = `
-<fds-card header="Overskrift">
+const basicCardCode = `<fds-card header="Card overskrift">
   <p>
-    In sollicitudin, nulla sit amet facilisis euismod, ex ex hendrerit eros, et egestas purus
-    lectus vitae tortor.
+    Dette er et grundlæggende card der viser, hvordan man grupperer relateret indhold.
+    Cards bruges til at adskille indhold fra den primære sideindhold.
   </p>
-</fds-card>
-`;
+</fds-card>`
 
-const props = `
-<fds-card-group>
-  <fds-card header="Overskrift" subheader="Understøttende tekst">
+const imageCardCode = `<fds-card header="Digital Post" subheader="Kommunikation">
+  <template #image>
+    <img src="https://placehold.co/400x225/0868AC/ffffff?text=Digital+Post"
+         alt="Digital Post illustration" />
+  </template>
+  <p>
+    Få digital post fra offentlige myndigheder direkte i din e-Boks eller
+    anden digital postløsning.
+  </p>
+  <template #actions>
+    <a href="#" class="button button-primary">Læs mere</a>
+  </template>
+</fds-card>`
+
+const navigationCardsCode = `<fds-card-group>
+  <fds-card
+    href="#"
+    header="Borger.dk"
+    subheader="For borgere"
+    icon="arrow-forward">
+    <template #image>
+      <img src="https://placehold.co/400x225/1D8649/ffffff?text=Borger.dk" alt="Borger.dk" />
+    </template>
+    <p>Find information og selvbetjeningsløsninger for borgere</p>
+  </fds-card>
+  <!-- Flere navigation cards... -->
+</fds-card-group>`
+
+const actionCardsCode = `<fds-card-group>
+  <fds-card header="Ansøg om tilskud" subheader="Boligstøtte">
     <p>
-      In sollicitudin, nulla sit amet facilisis euismod, ex ex hendrerit eros, et egestas
-      purus lectus vitae tortor.
+      Få økonomisk hjælp til din bolig hvis du har svært ved at betale
+      husleje eller ejerudgifter.
     </p>
     <template #actions>
-      <button class="button button-secondary">Sekundærknap</button>
-    </template>
-  </fds-card>
-  <fds-card header="Overskrift">
-    <template #content>
-      <div class="align-text-center bg-info-light p-6">
-        <h2 class="h5 mb-5">Lorem ipsum fordeling</h2>
-        <div class="mt-3 row">
-          <div class="col-6">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              aria-label="80%"
-              class="w-percent-30 w-percent-md-70"
-              viewBox="0 0 50 100"
-            >
-              <rect width="50" height="100" fill="#eefafa" />
-              <rect y="20" width="50" height="80" fill="#0868AC" /></svg
-            ><span class="small-text mt-2 bold d-block"> København </span>
-          </div>
-          <div class="col-6">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              aria-label="36%"
-              class="w-percent-30 w-percent-md-70"
-              viewBox="0 0 50 100"
-            >
-              <rect width="50" height="100" fill="#eefafa" />
-              <rect y="64" width="50" height="36" fill="#0868AC" /></svg
-            ><span class="small-text mt-2 bold d-block"> Hele landet </span>
-          </div>
-        </div>
+      <div class="button-group">
+        <a href="#" class="button button-primary">Start ansøgning</a>
+        <a href="#" class="button button-secondary">Læs mere</a>
       </div>
     </template>
-    <p>
-      In sollicitudin, nulla sit amet facilisis euismod, ex ex hendrerit eros, et egestas
-      purus lectus vitae tortor.
-    </p>
   </fds-card>
-  <fds-card header="Overskrift" subheader="Understøttende tekst">
+  <!-- Flere action cards... -->
+</fds-card-group>`
+
+const deckLayoutCode = `<fds-card-group type="deck">
+  <fds-card header="NemID bliver til MitID" subheader="Vigtig information">
+    <template #image>
+      <img src="https://placehold.co/400x225/E67E22/ffffff?text=MitID"
+           alt="MitID information" />
+    </template>
     <p>
-      In sollicitudin, nulla sit amet facilisis euismod, ex ex hendrerit eros, et egestas
-      purus lectus vitae tortor.
+      Fra 2023 skal du bruge MitID i stedet for NemID. Få hjælp til
+      overgangen og opret din MitID i god tid.
     </p>
     <template #actions>
-      <button class="button button-secondary">Sekundærknap</button>
+      <a href="#" class="button button-primary">Opret MitID</a>
     </template>
   </fds-card>
-</fds-card-group>
-`;
+  <!-- Flere deck cards... -->
+</fds-card-group>`
 
-const deck = `
-<fds-card-group type="deck">
-  <fds-card header="Overskrift" subheader="Understøttende tekst">
-   ...
+const columnLayoutCode = `<fds-card-group type="columns">
+  <fds-card header="Kontakt kommunen" subheader="Hjælp og support">
+    <p>
+      Ring til kommunens borgerservice eller book en tid for
+      personlig betjening.
+    </p>
+    <template #actions>
+      <a href="#" class="button button-secondary">Kontakt os</a>
+    </template>
   </fds-card>
-  <fds-card header="Overskrift">
-    ...
-  </fds-card>
-  <fds-card header="Overskrift" subheader="Understøttende tekst">
-   ...
-  </fds-card>
-</fds-card-group>
-`;
-const columns = `
-<fds-card-group type="columns">
-  <fds-card header="Overskrift" subheader="Understøttende tekst">
-   ...
-  </fds-card>
-  <fds-card header="Overskrift">
-    ...
-  </fds-card>
-  <fds-card header="Overskrift" subheader="Understøttende tekst">
-   ...
-  </fds-card>
-  ...
-</fds-card-group>
-`;
+  <!-- Flere column cards... -->
+</fds-card-group>`
+
+const longCardsCode = `<fds-card
+  href="#"
+  variant="long"
+  header="Book tid til borgerservice"
+  subheader="Personlig betjening"
+  icon="arrow-forward">
+  <template #image>
+    <img src="https://placehold.co/400x225/9B59B6/ffffff?text=Borgerservice"
+         alt="Borgerservice" />
+  </template>
+  <p>
+    Få hjælp med pas, kørekort, CPR-forhold og andre services
+    ved personlig betjening i borgerservice.
+  </p>
+</fds-card>`
 </script>

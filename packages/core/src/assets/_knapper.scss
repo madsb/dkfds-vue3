@@ -1,25 +1,28 @@
+@use 'sass:color';
+@use 'variables' as *;
+
 .button-warning {
   color: #ffffff;
-  background-color: darken($color-warning, 10%);
-  border-color: darken($color-warning, 20%);
+  background-color: color.adjust($color-warning, $lightness: -10%);
+  border-color: color.adjust($color-warning, $lightness: -20%);
 }
 
 .button-error {
   color: #ffffff;
   background-color: $color-error;
-  border-color: darken($color-error, 20%);
+  border-color: color.adjust($color-error, $lightness: -20%);
 }
 
 .button-info {
   color: #ffffff;
   background-color: $color-info;
-  border-color: darken($color-info, 20%);
+  border-color: color.adjust($color-info, $lightness: -20%);
 }
 
 .button-success {
   color: #ffffff;
   background-color: $color-success;
-  border-color: darken($color-success, 20%);
+  border-color: color.adjust($color-success, $lightness: -20%);
 }
 
 // spinner button

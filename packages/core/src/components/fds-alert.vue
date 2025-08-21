@@ -3,32 +3,28 @@
     <div
       v-if="showAlert"
       :role="compAlert ? 'alert' : ''"
-      :aria-atomic="compAlert"
-      class="alert has-close"
-      :class="[{ 'alert--show-icon': showIcon }, `alert-${variant}`]"
+      class="alert"
+      :class="[`alert-${variant}`, { 'has-close': closeable }]"
     >
-      <div class="alert-body align-text-left">
-        <slot
-          v-if="$slots.header || header"
-          name="header">
-          <p class="alert-heading">
+      <fds-ikon
+        v-if="showIcon"
+        :icon="variant"
+        class="alert-icon"
+        :aria-label="iconAriaLabel"
+        :decorative="false"
+      />
+      <div class="alert-body">
+        <slot v-if="$slots.header || header" name="header">
+          <h2 class="alert-heading">
             {{ header }}
-          </p>
+          </h2>
         </slot>
-        <div class="alert-text">
+        <p class="alert-text">
           <slot />
-        </div>
-        <button
-          v-if="closeable"
-          class="alert-close"
-          @click="onClose">
+        </p>
+        <button v-if="closeable" type="button" class="alert-close" @click="onClose">
           <slot name="button">
-            <svg
-              class="icon-svg"
-              aria-hidden="true"
-              focusable="false">
-              <use xlink:href="#close"></use></svg
-            >Luk
+            <fds-ikon icon="close" :decorative="true" />Luk
           </slot>
         </button>
       </div>
@@ -43,49 +39,47 @@
  * https://designsystem.dk/komponenter/beskeder/
  *
  * */
-import { defineProps, ref, defineEmits, PropType, computed } from 'vue';
+import { ref, computed } from 'vue'
+import FdsIkon from './fds-ikon.vue'
 
-const props = defineProps({
-  /**
-   *  Overskrift
-   * */
-  header: {
-    type: String,
-    default: null,
-  },
-  /**
-   * Type af besked
-   * */
-  variant: {
-    type: String as PropType<'success' | 'info' | 'warning' | 'error'>,
-    default: 'info',
-  },
-  /**
-   * Vis venstrestillet ikon
-   * */
-  showIcon: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   *  Klik for at lukke/fjerne besked
-   * */
-  closeable: {
-    type: Boolean,
-    default: false,
-  },
-});
+const {
+  /** Overskrift */
+  header = null,
+  /** Type af besked */
+  variant = 'info',
+  /** Vis venstrestillet ikon */
+  showIcon = false,
+  /** Klik for at lukke/fjerne besked */
+  closeable = false,
+} = defineProps<{
+  header?: string | null
+  variant?: 'success' | 'info' | 'warning' | 'error'
+  showIcon?: boolean
+  closeable?: boolean
+}>()
 
-const emit = defineEmits(['close']);
+const emit = defineEmits<{
+  close: [closed: boolean]
+}>()
 
-const showAlert = ref(true);
+const showAlert = ref(true)
 
-const compAlert = computed(() => ['warning', 'error'].includes(props.variant));
+const compAlert = computed(() => ['warning', 'error'].includes(variant))
+
+const iconAriaLabel = computed(() => {
+  const labels = {
+    info: 'Information',
+    success: 'Succes',
+    warning: 'Advarsel',
+    error: 'Fejl',
+  }
+  return labels[variant]
+})
 
 const onClose = () => {
-  showAlert.value = !showAlert.value;
-  emit('close', true);
-};
+  showAlert.value = !showAlert.value
+  emit('close', true)
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

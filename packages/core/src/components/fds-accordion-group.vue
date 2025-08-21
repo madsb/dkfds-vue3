@@ -1,51 +1,106 @@
 <template>
-  <div>
+  <div class="accordion-group">
     <slot name="header">
       <button
-        v-if="false"
+        v-if="showBulkButton"
         class="accordion-bulk-button"
-        :data-accordion-bulk-expand="!refExpanded"
-        @click="onToggle"
+        :data-accordion-bulk-expand="!allExpanded ? 'true' : 'false'"
+        :aria-expanded="allExpanded ? 'true' : 'false'"
+        @click="toggleAll"
       >
-        {{ `${refExpanded ? expandedText : collapsedText}` }}
+        {{ allExpanded ? expandedText : collapsedText }}
       </button>
     </slot>
-    <div class="accordion-group">
-      <slot :group-active="refExpanded" />
-    </div>
+
+    <ul class="accordion">
+      <slot />
+    </ul>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, provide, computed } from 'vue';
+import { computed, provide, reactive, type Ref } from 'vue'
 
-defineProps({
-  /**
-   * Tekst ved Lukket tilstand - Åbn alle
-   * */
-  collapsedText: {
-    type: String,
-    default: 'Åbn alle',
+interface Props {
+  /** Text for expand all button */
+  expandedText?: string
+  /** Text for collapse all button */
+  collapsedText?: string
+  /** Show bulk expand/collapse button */
+  showBulkButton?: boolean
+  /** Control all accordions expanded state */
+  modelValue?: boolean
+}
+
+withDefaults(defineProps<Props>(), {
+  expandedText: 'Luk alle',
+  collapsedText: 'Åbn alle',
+  showBulkButton: true,
+})
+
+const emit = defineEmits<{
+  'update:modelValue': [value: boolean]
+  'toggle-all': [expanded: boolean]
+}>()
+
+// State management using a Map for cleaner tracking
+const accordionStates = reactive(new Map<string, Ref<boolean>>())
+
+// Computed property for all expanded state
+const allExpanded = computed({
+  get() {
+    if (accordionStates.size === 0) return false
+    return Array.from(accordionStates.values()).every((state) => state.value)
   },
-  /**
-   * Tekst ved Åben tilstand - Luk alle
-   * */
-  expandedText: {
-    type: String,
-    default: 'Luk alle',
+  set(value: boolean) {
+    emit('update:modelValue', value)
   },
-});
+})
 
-// TODO: Overvej single select (collapse andre) og multiselect (multi default) ?
-// TODO: Group expand/
+// API for child accordions
+const accordionGroupApi = {
+  register(id: string, expanded: Ref<boolean>) {
+    accordionStates.set(id, expanded)
+  },
 
-const refExpanded = ref(false);
-const compExpanded = computed(() => refExpanded.value);
-provide('provideGroupExpanded', compExpanded);
+  unregister(id: string) {
+    accordionStates.delete(id)
+  },
 
-const onToggle = () => {
-  refExpanded.value = !refExpanded.value;
-};
+  getState(id: string): boolean {
+    const state = accordionStates.get(id)
+    return state ? state.value : false
+  },
+}
+
+// Provide the API to child accordions
+provide('accordion-group-api', accordionGroupApi)
+
+// Methods
+const toggleAll = () => {
+  const newState = !allExpanded.value
+
+  // Update all accordion states
+  accordionStates.forEach((state) => {
+    state.value = newState
+  })
+
+  allExpanded.value = newState
+  emit('toggle-all', newState)
+}
 </script>
 
-<style lang="scss"></style>
+<style scoped lang="scss">
+.accordion-group {
+  // Ensure proper spacing when bulk button is present
+  .accordion-bulk-button {
+    margin-bottom: var(--spacing-3, 1rem);
+  }
+}
+
+.accordion {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>

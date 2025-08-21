@@ -1,1 +1,1 @@
-export * from 'dkfds-vue3-utils';
+export * from 'dkfds-vue3-utils'

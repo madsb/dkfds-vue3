@@ -1,0 +1,33 @@
+@use '../../node_modules/dkfds/src/stylesheets/dkfds-virkdk' as dkfds with (
+  $font-path: '../../node_modules/dkfds/src/fonts/IBMPlexSans/',
+  $image-path: '../../node_modules/dkfds/src/img/',
+  $icons-folder-path: '../../node_modules/dkfds/src/img/svg-icons/'
+);
+@use '../../../../packages/core/src/assets/main' as core;
+@use './main' as demo;
+
+// Generate background and color classes using DKFDS theme variables
+@include core.generate-background-and-color-classes(
+  dkfds.$theme-color-primary,
+  dkfds.$theme-color-primary-dark,
+  dkfds.$theme-color-primary-darker,
+  dkfds.$theme-color-ink,
+  dkfds.$theme-color-ink-light,
+  dkfds.$theme-color-success,
+  dkfds.$theme-color-success-light,
+  dkfds.$theme-color-warning,
+  dkfds.$theme-color-warning-light,
+  dkfds.$theme-color-error,
+  dkfds.$theme-color-error-light,
+  dkfds.$theme-color-info,
+  dkfds.$theme-color-info-light,
+  dkfds.$theme-color-text-positive,
+  dkfds.$theme-color-text-negative,
+  dkfds.$theme-color-link,
+  dkfds.$theme-color-link-hover,
+  dkfds.$theme-color-link-focus,
+  dkfds.$theme-color-link-visited,
+  dkfds.$theme-color-disabled-light,
+  dkfds.$theme-color-disabled,
+  dkfds.$theme-color-shadow
+);

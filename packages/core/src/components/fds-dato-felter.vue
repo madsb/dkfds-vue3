@@ -1,11 +1,7 @@
 <template>
   <div class="date-group js-calendar-group mt-3">
     <div class="form-group form-group-day">
-      <label
-        class="form-label"
-        :for="`day_${formid}`">
-        Dag
-      </label>
+      <label class="form-label" :for="`day_${formid}`"> Dag </label>
       <input
         :id="`day_${formid}`"
         ref="day"
@@ -24,11 +20,7 @@
       />
     </div>
     <div class="form-group form-group-month">
-      <label
-        class="form-label"
-        :for="`month_${formid}`">
-        Måned
-      </label>
+      <label class="form-label" :for="`month_${formid}`"> Måned </label>
       <input
         :id="`month_${formid}`"
         ref="month"
@@ -47,11 +39,7 @@
       />
     </div>
     <div class="form-group form-group-year">
-      <label
-        class="form-label"
-        :for="`year_${formid}`">
-        År
-      </label>
+      <label class="form-label" :for="`year_${formid}`"> År </label>
       <input
         :id="`year_${formid}`"
         ref="year"
@@ -72,71 +60,121 @@
   </div>
 </template>
 <script setup lang="ts">
-import { defineProps, ref, defineEmits } from 'vue';
-import { formId } from 'dkfds-vue3-utils';
+import { ref, watch } from 'vue'
+import { formId } from 'dkfds-vue3-utils'
 
-const day = ref<HTMLInputElement | null>(null);
-const month = ref<HTMLInputElement | null>(null);
-const year = ref<HTMLInputElement | null>(null);
+const day = ref<HTMLInputElement | null>(null)
+const month = ref<HTMLInputElement | null>(null)
+const year = ref<HTMLInputElement | null>(null)
 
-const props = defineProps({
-  id: {
-    type: String,
-    default: null,
-  },
-  modelValue: {
-    type: String, // JSON Date
-    default: '',
-  },
-});
+const {
+  id = null,
+  /** JSON Date */
+  modelValue = '',
+} = defineProps<{
+  id?: string | null
+  modelValue?: string
+}>()
 
-const emit = defineEmits(['update:modelValue', 'dirty', 'valid']);
+const emit = defineEmits<{
+  'update:modelValue': [value: string]
+  dirty: [value: boolean]
+  valid: [isValid: boolean]
+}>()
 
 const isDateValid = (dateString: string) => {
-  const date = Date.parse(dateString);
-  return !Number.isNaN(date);
-};
+  // First check if it's parseable
+  if (Number.isNaN(Date.parse(dateString))) {
+    return false
+  }
+
+  // Parse the date parts
+  const parts = dateString.split('-')
+  if (parts.length !== 3) return false
+
+  const year = parseInt(parts[0], 10)
+  const month = parseInt(parts[1], 10)
+  const day = parseInt(parts[2], 10)
+
+  // Check if the date components are valid
+  if (month < 1 || month > 12) return false
+  if (day < 1) return false
+
+  // Create a date and check if it matches what we input
+  // This catches cases like Nov 31 which JS converts to Dec 1
+  const date = new Date(year, month - 1, day)
+  return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day
+}
 
 const getModelDate = (dateString: string) => {
-  if (isDateValid(props.modelValue)) {
-    const date = new Date(dateString);
+  if (isDateValid(dateString)) {
+    const date = new Date(dateString)
     return {
       day: date.getDate().toString(),
-      month: date.getMonth().toString(),
+      month: (date.getMonth() + 1).toString(), // Convert from 0-indexed to 1-indexed
       year: date.getFullYear().toString(),
-    };
+    }
   }
-  return { day: '', month: '', year: '' };
-};
+  return { day: '', month: '', year: '' }
+}
 
-const { formid } = formId(props.id, true);
-const dateObj = ref<{ day: string; month: string; year: string }>(getModelDate(props.modelValue));
+const { formid } = formId(id, true)
+const dateObj = ref<{ day: string; month: string; year: string }>(getModelDate(modelValue))
 
-const onInput = () =>
-  emit('update:modelValue', [dateObj.value.year, dateObj.value.month, dateObj.value.day].join('-'));
+const onInput = () => {
+  // Zero-pad values for proper date format (only if not empty)
+  const month = dateObj.value.month ? dateObj.value.month.padStart(2, '0') : ''
+  const day = dateObj.value.day ? dateObj.value.day.padStart(2, '0') : ''
+  emit('update:modelValue', [dateObj.value.year, month, day].join('-'))
+}
 
-const onValid = () =>
-  emit(
-    'valid',
-    isDateValid([dateObj.value.year, dateObj.value.month, dateObj.value.day].join('-')),
-  );
+const onValid = () => {
+  // Zero-pad values for validation (only if not empty)
+  const month = dateObj.value.month ? dateObj.value.month.padStart(2, '0') : ''
+  const day = dateObj.value.day ? dateObj.value.day.padStart(2, '0') : ''
+  emit('valid', isDateValid([dateObj.value.year, month, day].join('-')))
+}
 
 const onNextTab = (event: Event, source: string) => {
-  const inp = event.target as HTMLInputElement;
+  const inp = event.target as HTMLInputElement
+
+  // Mark that user is typing to prevent watch interference
+  isUserTyping = true
+
+  // Always emit on input change
+  onInput()
+  onValid()
+
+  // Check if we should auto-advance (only when 2 or more digits)
   if (!inp.selectionEnd || inp.selectionEnd < 2) {
-    return;
+    return
   }
 
   if (source === 'day') {
-    // const regExString: string = day.value?.dataset.inputRegex ?? '';
-    // const r = new RegExp(regExString); // TODO: skal den bruges?
-    (month.value as HTMLInputElement).focus();
+    ;(month.value as HTMLInputElement).focus()
+  } else if (source === 'month') {
+    ;(year.value as HTMLInputElement).focus()
   }
+}
 
-  if (source === 'month') {
-    (year.value as HTMLInputElement).focus();
-  }
-  onInput();
-  onValid();
-};
+// Track if user is currently typing
+let isUserTyping = false
+
+// Watch for modelValue changes from parent
+watch(
+  () => modelValue,
+  (newValue) => {
+    // Don't update while user is typing
+    if (isUserTyping) {
+      isUserTyping = false
+      return
+    }
+
+    // Only update if the value is significantly different
+    const newDate = getModelDate(newValue)
+    if (JSON.stringify(newDate) !== JSON.stringify(dateObj.value)) {
+      dateObj.value = newDate
+    }
+  },
+)
 </script>

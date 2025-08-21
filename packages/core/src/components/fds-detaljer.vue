@@ -11,15 +11,10 @@
   </details>
 </template>
 <script setup lang="ts">
-import { defineProps } from 'vue';
-
-defineProps({
-  /**
-   * Overskrift
-   * */
-  header: {
-    type: String,
-    default: 'Mere information',
-  },
-});
+const {
+  /** Overskrift */
+  header = 'Mere information',
+} = defineProps<{
+  header?: string
+}>()
 </script>

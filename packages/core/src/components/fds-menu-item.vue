@@ -1,74 +1,83 @@
 <template>
-  <li
-    role="none"
-    :class="[{ 'active current': active }]">
+  <li :class="liClass">
     <a
-      :href="`${href ? href : '#'}`"
-      role="menuitem"
-      class="d-block menuitem hand"
-      @click="navigate($event, id)"
+      :href="href || '#'"
+      class="nav-link"
+      :class="{ current: isCurrent }"
+      :aria-current="isCurrent ? 'page' : undefined"
+      @click="navigate($event)"
     >
-      <span v-if="index !== null">
-        {{ `${index}. ` }}
+      <div v-if="hint">
+        <span>
+          <template v-if="index !== null">{{ `${index}. ` }}</template>
+          <slot />
+        </span>
+        <span class="sidenav-information">
+          {{ hint }}
+        </span>
+      </div>
+      <span v-else>
+        <template v-if="index !== null">{{ `${index}. ` }}</template>
+        <slot />
       </span>
-      <slot />
-
-      <span
-        v-if="icon"
-        class="sidenav-icon">
-        <svg
-          class="icon-svg"
-          focusable="false"
-          aria-hidden="true">
-          <use :xlink:href="`#${icon}`" />
-        </svg>
-      </span>
-      <p
-        v-if="hint && hint.length > 0"
-        class="sidenav-information">
-        {{ hint }}
-      </p>
     </a>
-    <slot name="submenu" />
+    <slot v-if="$slots.submenu" name="submenu" />
   </li>
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
+import { computed } from 'vue'
 
-defineProps({
-  id: {
-    type: String,
-    required: true,
-  },
-  active: {
-    type: Boolean,
-    default: false,
-  },
-  icon: {
-    type: String,
-    default: null,
-  },
-  hint: {
-    type: String,
-    default: null,
-  },
-  href: {
-    type: String,
-    default: null,
-  },
-  index: {
-    type: Number,
-    default: null,
-  },
-});
+interface Props {
+  id?: string
+  active?: boolean
+  href?: string
+  index?: number | null
+  current?: boolean
+  expanded?: boolean
+  hint?: string
+}
 
-const emit = defineEmits(['update:modelValue', 'navigate']);
+const props = withDefaults(defineProps<Props>(), {
+  active: false,
+  current: false,
+  expanded: false,
+  index: null
+})
 
-const navigate = (event: Event, key: string) => {
-  event.preventDefault();
-  emit('navigate', key);
-};
+const emit = defineEmits<{
+  navigate: [id?: string]
+  click: [event: MouseEvent]
+}>()
+
+const liClass = computed(() => {
+  const classes: string[] = []
+  // 'active' class indicates the parent menu item has an expanded submenu
+  if (props.expanded || (props.active && slots.submenu)) {
+    classes.push('active')
+  }
+  return classes.length > 0 ? classes.join(' ') : undefined
+})
+
+const isCurrent = computed(() => {
+  // 'current' class on the link indicates the current page
+  return props.current || (props.active && !slots.submenu)
+})
+
+const navigate = (event: MouseEvent) => {
+  if (!props.href || props.href === '#') {
+    event.preventDefault()
+  }
+  emit('click', event)
+  if (props.id) {
+    emit('navigate', props.id)
+  }
+}
+
+const slots = defineSlots<{
+  default: () => any
+  submenu?: () => any
+}>()
 </script>
 
 <style scoped lang="scss"></style>

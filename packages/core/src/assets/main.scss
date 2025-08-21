@@ -1,15 +1,17 @@
-@import '_variables';
-@import '_animations';
-@import '_accordion';
-@import '_card';
-@import '_code';
-@import '_componentpreview';
-@import '_dialog';
-@import '_knapper';
-@import '_navigation';
-@import '_forms';
-@import '_range';
-@import '_progress';
+// Forward all partials to make them available when main.scss is imported
+@forward 'variables';
+@forward 'animations';
+@forward 'accordion';
+@forward 'bgs'; // Forward the mixin
+@forward 'card';
+@forward 'code';
+@forward 'componentpreview';
+@forward 'dialog';
+@forward 'knapper';
+@forward 'navigation';
+@forward 'forms';
+@forward 'range';
+@forward 'progress';
 
 body {
   display: flex;

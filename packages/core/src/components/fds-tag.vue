@@ -1,48 +1,68 @@
 <template>
-  <button
-    :id="formid"
-    class="tag"
-    :class="{ 'tag-icon': icon }">
+  <button :id="formid" class="tag" :class="{ 'tag-icon': hasIcon }" @click="handleClick">
     <slot />
-    <svg
-      v-if="icon"
-      class="icon-svg"
-      aria-hidden="true"
-      @click="handleIconClick">
-      <use :xlink:href="`#${icon}`"></use>
-    </svg>
+    <slot name="icon">
+      <fds-ikon v-if="icon" :icon="icon" :decorative="true" />
+    </slot>
   </button>
 </template>
+
 <script setup lang="ts">
 /**
+ * FDS Tag Component
  *
- * Komponent for Tags
+ * Implementation of DKFDS v11 tags component
  * https://designsystem.dk/komponenter/tags/
  *
- * */
+ * Tags are used to display secondary, metadata-related information
+ * in a concise and contextually relevant manner.
+ */
 
-import { defineProps, defineEmits } from 'vue';
-import { formId } from 'dkfds-vue3-utils';
+import { formId } from 'dkfds-vue3-utils'
+import { computed, useSlots } from 'vue'
+import FdsIkon from './fds-ikon.vue'
 
-const props = defineProps({
-  icon: {
-    type: String,
-    default: null,
-  },
-  id: {
-    type: String,
-    default: null,
-  },
-});
+interface Props {
+  /**
+   * Optional icon to display (typically 'close' or 'highlight-off')
+   * When provided, adds a tag-icon class and displays the icon
+   */
+  icon?: string | null
 
-const emit = defineEmits(['iconClick']);
+  /**
+   * Optional ID for the button element
+   */
+  id?: string | null
+}
 
-const { formid } = formId(props.id, true);
+const props = withDefaults(defineProps<Props>(), {
+  icon: null,
+  id: null,
+})
 
-const handleIconClick = () => {
-  emit('iconClick', formid.value);
-};
+const slots = useSlots()
+
+const emit = defineEmits<{
+  /**
+   * Emitted when the tag button is clicked
+   * @param formId - The form ID of the clicked tag
+   */
+  click: [formId: string]
+}>()
+
+const { formid } = formId(props.id, true)
+
+// Check if tag has an icon (either via prop or slot)
+const hasIcon = computed(() => props.icon || slots.icon)
+
+/**
+ * Handle click events on the tag button
+ */
+const handleClick = () => {
+  emit('click', formid.value)
+}
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+/* Component styles are provided by DKFDS CSS framework */
+</style>

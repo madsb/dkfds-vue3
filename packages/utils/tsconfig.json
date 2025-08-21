@@ -1,14 +1,17 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
+    "target": "ES2022",
+    "module": "ESNext",
     "strict": true,
     "declaration": true,
-    "lib": ["esnext", "dom", "dom.iterable", "ScriptHost"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "jsx": "preserve",
     "outDir": "./dist",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
     "types": ["node", "vite/client"]
   },
   "include": ["src/**/*.ts", "src/**/*.vue"],

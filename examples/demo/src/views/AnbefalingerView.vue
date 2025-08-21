@@ -3,19 +3,23 @@
     <div class="row">
       <aside class="col-12 col-lg-3 sidebar-col">
         <nav>
-          <xfds-menu
-            v-model="navigationList"
-            @navigate="handleNavigation" />
+          <fds-menu>
+            <fds-menu-item
+              v-for="item in nav.items.value"
+              :key="item.key"
+              :href="`#/anbefalinger/${item.key.replace('anbefalinger', '')}`"
+              :active="nav.isActive(item.key)"
+              @click.prevent="nav.navigate(item.key)"
+            >
+              {{ item.title }}
+            </fds-menu-item>
+          </fds-menu>
         </nav>
       </aside>
       <div class="col-12 col-lg-9">
-        <div class="subheading">
-          Anbefalinger
-        </div>
-        <h1
-          v-if="currentItem"
-          :id="currentItem.key">
-          {{ currentItem.title }}
+        <div class="subheading">Anbefalinger</div>
+        <h1 v-if="nav.currentItem.value" :id="nav.currentItem.value.key">
+          {{ nav.currentItem.value.title }}
         </h1>
         <router-view />
       </div>
@@ -24,41 +28,17 @@
 </template>
 
 <script setup lang="ts">
-import { FdsNavigationItem } from 'dkfds-vue3/utils';
-import { navigationService } from 'dkfds-vue3/extra';
-import { ref, watch } from 'vue';
+import { FdsMenu, FdsMenuItem } from 'dkfds-vue3'
+import { useNavigation, type NavigationItem } from 'dkfds-vue3/utils'
 
-import { useRouter, useRoute } from 'vue-router';
-
-const route = useRoute();
-const router = useRouter();
-
-const currentNavigationKey = ref('');
-const currentItem = ref<FdsNavigationItem | undefined>();
-const navigationList = ref<Array<FdsNavigationItem>>([
+const navigationItems: NavigationItem[] = [
   {
     key: 'anbefalingernavigation',
     title: 'Navigation',
   },
-] as FdsNavigationItem[]);
+]
 
-watch(
-  () => route.name,
-  () => {
-    navigationList.value = navigationService.setActive(
-      navigationList.value,
-      route.name?.toString() ?? '',
-    );
-    currentItem.value = navigationService.findFirstActiveItem(navigationList.value);
-  },
-  {
-    immediate: true,
-  },
-);
-
-const handleNavigation = (key: string) => {
-  currentNavigationKey.value = key;
-  router.push({ name: navigationService.resolveActiveKey(key) });
-};
+// Use navigation composable with simplified configuration
+const nav = useNavigation(navigationItems)
 </script>
 <style lang="scss" scoped></style>

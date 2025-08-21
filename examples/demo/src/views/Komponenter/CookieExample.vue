@@ -1,14 +1,9 @@
 <template>
   <section>
-    <fds-alert
-      variant="info"
-      header="Under udvikling"
-      closeable
-    >Cookiemeddelelse er stadig under udvikling, mindre ændringer kan forkomme
+    <fds-alert variant="info" header="Under udvikling" closeable
+      >Cookiemeddelelse er stadig under udvikling, mindre ændringer kan forkomme
     </fds-alert>
-    <fds-preview
-      header="Eksempel"
-      href="https://designsystem.dk/komponenter/cookiemeddelelse/">
+    <fds-preview header="Eksempel" href="https://designsystem.dk/komponenter/cookiemeddelelse/">
       <fds-preview-item>
         <fds-cookiemeddelelse
           class="example_relative"
@@ -16,25 +11,17 @@
           @cancel="cookieAccept = false"
         >
           <template #header>
-            <div
-              id="cookie-message-heading"
-              class="h3 mt-0 mb-3">
+            <div id="cookie-message-heading" class="h3 mt-0 mb-3">
               Fortæl os om du accepterer cookies
             </div>
           </template>
-          <p
-            id="cookie-message-text"
-            class="mt-0">
+          <p id="cookie-message-text" class="mt-0">
             Vi indsamler statistik ved hjælp af cookies. Alle indsamlede data anonymiseres.
-            <a href="#">
-              Læs mere om vores brug af cookies.
-            </a>
+            <a href="#"> Læs mere om vores brug af cookies. </a>
           </p>
         </fds-cookiemeddelelse>
 
-        <fds-pre
-          header="Cookimeddelelse"
-          :json="{ cookieAccept }" />
+        <fds-pre header="Cookimeddelelse" :json="{ cookieAccept }" />
       </fds-preview-item>
 
       <fds-preview-code>
@@ -103,9 +90,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const cookieAccept = ref<boolean | null>(null);
+const cookieAccept = ref<boolean | null>(null)
 
 const code = `
 <fds-cookiemeddelelse @accept="cookieAccept = $event">
@@ -153,7 +140,7 @@ const code = `
     </fds-button>
   </template>
 </fds-cookiemeddelelse>
-`;
+`
 </script>
 
 <style lang="scss" scoped>

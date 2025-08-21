@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from 'vue-router';
+import { RouteRecordRaw } from 'vue-router'
 
 const komponenterRoutes: Array<RouteRecordRaw> = [
   {
@@ -102,11 +102,7 @@ const komponenterRoutes: Array<RouteRecordRaw> = [
         name: 'komponentformgruppe',
         component: () => import('@/views/Komponenter/FormgruppeExample.vue'),
       },
-      {
-        path: 'formular',
-        name: 'komponentformular',
-        component: () => import('@/views/Komponenter/FormularExample.vue'),
-      },
+
       {
         path: 'funktionslink',
         name: 'komponentfunktionslink',
@@ -121,6 +117,16 @@ const komponenterRoutes: Array<RouteRecordRaw> = [
         path: 'knapper',
         name: 'komponentknapper',
         component: () => import('@/views/Komponenter/KnapperExample.vue'),
+      },
+      {
+        path: 'list',
+        name: 'komponentlist',
+        component: () => import('@/views/Komponenter/ListExample.vue'),
+      },
+      {
+        path: 'venstremenu',
+        name: 'komponentvenstremenu',
+        component: () => import('@/views/Komponenter/VenstremenuExample.vue'),
       },
       {
         path: 'modalvindue',
@@ -148,6 +154,11 @@ const komponenterRoutes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Komponenter/PagineringExample.vue'),
       },
       {
+        path: 'pre',
+        name: 'komponentpre',
+        component: () => import('@/views/Komponenter/PreExample.vue'),
+      },
+      {
         path: 'radioknap',
         name: 'komponentradioknap',
         component: () => import('@/views/Komponenter/RadioknapExample.vue'),
@@ -171,11 +182,6 @@ const komponenterRoutes: Array<RouteRecordRaw> = [
         path: 'sprogvaelger',
         name: 'komponentsprogvaelger',
         component: () => import('@/views/Komponenter/SprogvaelgerExample.vue'),
-      },
-      {
-        path: 'strukturerede',
-        name: 'komponentstrukturerede',
-        component: () => import('@/views/Komponenter/StruktureredeExample.vue'),
       },
       {
         path: 'soegefelt',
@@ -218,6 +224,11 @@ const komponenterRoutes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Komponenter/ToggleExample.vue'),
       },
       {
+        path: 'toast',
+        name: 'komponenttoast',
+        component: () => import('@/views/Komponenter/ToastExample.vue'),
+      },
+      {
         path: 'tooltip',
         name: 'komponenttooltip',
         component: () => import('@/views/Komponenter/TooltipExample.vue'),
@@ -234,6 +245,6 @@ const komponenterRoutes: Array<RouteRecordRaw> = [
       },
     ],
   },
-];
+]
 
-export default komponenterRoutes;
+export default komponenterRoutes

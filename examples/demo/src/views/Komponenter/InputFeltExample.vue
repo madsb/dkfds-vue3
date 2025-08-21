@@ -1,21 +1,17 @@
 <template>
   <section>
-    <fds-preview
-      header="Tekstfelt"
-      href="https://designsystem.dk/komponenter/inputfelter/">
+    <fds-preview header="Tekstfelt" href="https://designsystem.dk/komponenter/inputfelter/">
       <fds-preview-item>
         <fds-formgroup>
-          <fds-label> Fornavn </fds-label>
-          <fds-tooltip class="ml-2">
-            Hjælpende <b>tekst</b>
-          </fds-tooltip>
+          <fds-label>
+            Fornavn
+            <fds-tooltip class="ml-2" content="Hjælpende tekst" />
+          </fds-label>
           <fds-hint>Indtast fornavn</fds-hint>
           <fds-input v-model="txtFornavn" />
         </fds-formgroup>
 
-        <fds-pre
-          header="v-model"
-          :json="{ txtFornavn }" />
+        <fds-pre header="v-model" :json="{ txtFornavn }" />
       </fds-preview-item>
 
       <fds-preview-code>
@@ -46,10 +42,10 @@
               <td></td>
             </tr>
             <tr>
-              <td><code>placeholder</code></td>
+              <td><code>type</code></td>
               <td><code>string</code></td>
               <td><code>'text'</code></td>
-              <td></td>
+              <td>HTML input type (text, email, tel, number, etc.)</td>
             </tr>
             <tr>
               <td><code>prefix</code></td>
@@ -64,10 +60,25 @@
               <td>Indikator/tydeliggørelse af data i enden - eg. stk, kr, m.m.</td>
             </tr>
             <tr>
+              <td><code>widthClass</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>
+                DKFDS bredde klasser: input-width-xs, input-width-s, input-width-m, input-width-l,
+                input-width-xl
+              </td>
+            </tr>
+            <tr>
+              <td><code>placeholder</code></td>
+              <td><code>string</code></td>
+              <td><code>undefined</code></td>
+              <td>Placeholder tekst (brug via attrs)</td>
+            </tr>
+            <tr>
               <td><code>readonly</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td></td>
+              <td>Gør feltet readonly (brug via attrs)</td>
             </tr>
           </tbody>
         </table>
@@ -89,23 +100,63 @@
       </fds-preview-item>
     </fds-preview>
 
+    <fds-preview header="Input Typer og Bredder">
+      <fds-preview-item>
+        <fds-formgroup>
+          <fds-label id="email">Email (input-width-l)</fds-label>
+          <fds-input
+            id="email"
+            v-model="txtEmail"
+            type="email"
+            width-class="input-width-l"
+            placeholder="navn@example.dk"
+          />
+        </fds-formgroup>
+
+        <fds-formgroup>
+          <fds-label id="phone">Telefon (input-width-m)</fds-label>
+          <fds-input
+            id="phone"
+            v-model="txtPhone"
+            type="tel"
+            width-class="input-width-m"
+            placeholder="+45 12 34 56 78"
+          />
+        </fds-formgroup>
+
+        <fds-formgroup>
+          <fds-label id="postal">Postnummer (input-width-xs)</fds-label>
+          <fds-input
+            id="postal"
+            v-model="txtPostal"
+            type="text"
+            width-class="input-width-xs"
+            maxlength="4"
+            placeholder="1234"
+          />
+        </fds-formgroup>
+
+        <fds-pre header="v-model" :json="{ txtEmail, txtPhone, txtPostal }" />
+      </fds-preview-item>
+
+      <fds-preview-code>
+        <pre v-text="codeTypesWidths"></pre>
+      </fds-preview-code>
+    </fds-preview>
+
     <fds-preview header="Karakterbegrænsning">
       <fds-preview-item>
         <fds-formgroup>
-          <fds-label> Efternavn </fds-label>
-          <fds-tooltip class="ml-2">
-            Hjælpende <b>tekst</b>
-          </fds-tooltip>
-          <fds-hint>Indtast fornavn</fds-hint>
+          <fds-label>
+            Efternavn
+            <fds-tooltip class="ml-2" content="Hjælpende tekst" />
+          </fds-label>
+          <fds-hint>Indtast efternavn</fds-hint>
           <fds-input v-model="txtEfternavn"></fds-input>
-          <fds-input-limit
-            :model-value="txtEfternavn"
-            :limit="20" />
+          <fds-input-limit :model-value="txtEfternavn" :limit="20" />
         </fds-formgroup>
 
-        <fds-pre
-          header="v-model"
-          :json="{ txtEfternavn }" />
+        <fds-pre header="v-model" :json="{ txtEfternavn }" />
       </fds-preview-item>
 
       <fds-preview-code>
@@ -116,23 +167,13 @@
     <fds-preview header="Prefix og Suffix">
       <fds-preview-item>
         <fds-formgroup>
-          <fds-label id="prefix">
-            Med prefix
-          </fds-label>
-          <fds-input
-            id="prefix"
-            v-model="txtPre"
-            prefix="prefix"></fds-input>
+          <fds-label id="prefix"> Med prefix </fds-label>
+          <fds-input id="prefix" v-model="txtPre" prefix="prefix"></fds-input>
         </fds-formgroup>
 
         <fds-formgroup>
-          <fds-label id="txtSuffix">
-            Med suffix
-          </fds-label>
-          <fds-input
-            id="txtSuffix"
-            v-model="txtSuffix"
-            suffix="suffix"></fds-input>
+          <fds-label id="txtSuffix"> Med suffix </fds-label>
+          <fds-input id="txtSuffix" v-model="txtSuffix" suffix="suffix"></fds-input>
         </fds-formgroup>
       </fds-preview-item>
 
@@ -144,9 +185,7 @@
     <fds-preview header="Nummer tekstfelt">
       <fds-preview-item>
         <fds-formgroup>
-          <fds-label id="noBeloeb">
-            Tal/Beløb
-          </fds-label>
+          <fds-label id="noBeloeb"> Tal/Beløb </fds-label>
           <fds-input-number
             id="noBeloeb"
             v-model="noBeloeb"
@@ -155,9 +194,7 @@
           ></fds-input-number>
         </fds-formgroup>
 
-        <fds-pre
-          header="v-model"
-          :json="{ noBeloeb }" />
+        <fds-pre header="v-model" :json="{ noBeloeb }" />
       </fds-preview-item>
 
       <fds-preview-code>
@@ -168,18 +205,14 @@
     <fds-preview header="Readonly">
       <fds-preview-item>
         <fds-formgroup>
-          <fds-label> Fornavn </fds-label>
-          <fds-tooltip class="ml-2">
-            Hjælpende <b>tekst</b>
-          </fds-tooltip>
-          <fds-input
-            v-model="txtFornavn"
-            readonly></fds-input>
+          <fds-label>
+            Fornavn
+            <fds-tooltip class="ml-2" content="Dette felt er skrivebeskyttet" />
+          </fds-label>
+          <fds-input v-model="txtFornavn" readonly></fds-input>
         </fds-formgroup>
 
-        <fds-pre
-          header="v-model"
-          :json="{ txtFornavn }" />
+        <fds-pre header="v-model" :json="{ txtFornavn }" />
       </fds-preview-item>
 
       <fds-preview-code>
@@ -190,39 +223,23 @@
     <fds-preview header="Søg knap">
       <fds-preview-item>
         <fds-formgroup>
-          <fds-label id="searchtxt">
-            Input med knap ikon
-          </fds-label>
-          <fds-input
-            id="searchtxt"
-            v-model="txtSearch"
-            placeholder="Søg efter...">
+          <fds-label id="searchtxt"> Input med knap ikon </fds-label>
+          <fds-input id="searchtxt" v-model="txtSearch" placeholder="Søg efter...">
             <template #button>
               <button class="button button-search">
-                <svg
-                  class="icon-svg m-0"
-                  aria-hidden="true">
-                  <use xlink:href="#search"></use></svg
-                ><span class="sr-only">
-                  Søg
-                </span>
+                <svg class="icon-svg m-0" aria-hidden="true">
+                  <use href="#search"></use></svg
+                ><span class="sr-only"> Søg </span>
               </button>
             </template>
           </fds-input>
         </fds-formgroup>
 
         <fds-formgroup>
-          <fds-label id="searchbtn">
-            Input med knap tekst
-          </fds-label>
-          <fds-input
-            id="searchbtn"
-            v-model="txtSearch"
-            placeholder="Søg efter...">
+          <fds-label id="searchbtn"> Input med knap tekst </fds-label>
+          <fds-input id="searchbtn" v-model="txtSearch" placeholder="Søg efter...">
             <template #button>
-              <button class="button button-search">
-                Søg
-              </button>
+              <button class="button button-search">Søg</button>
             </template>
           </fds-input>
         </fds-formgroup>
@@ -236,42 +253,81 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const txtFornavn = ref('Anders');
-const txtEfternavn = ref('');
-const txtPre = ref('');
-const txtSuffix = ref('');
-const txtSearch = ref('');
-const noBeloeb = ref(0);
+const txtFornavn = ref('Anders')
+const txtEfternavn = ref('')
+const txtPre = ref('')
+const txtSuffix = ref('')
+const txtSearch = ref('')
+const noBeloeb = ref(0)
+const txtEmail = ref('')
+const txtPhone = ref('')
+const txtPostal = ref('')
 
 const code = `
-<fds-input v-model="txtFornavn" />
-`;
+<fds-formgroup>
+  <fds-label>
+    Fornavn
+    <fds-tooltip class="ml-2" content="Hjælpende tekst" />
+  </fds-label>
+  <fds-hint>Indtast fornavn</fds-hint>
+  <fds-input v-model="txtFornavn" />
+</fds-formgroup>
+`
+
+const codeTypesWidths = `
+<!-- Email med large bredde -->
+<fds-input 
+  v-model="txtEmail" 
+  type="email"
+  width-class="input-width-l"
+  placeholder="navn@example.dk"
+/>
+
+<!-- Telefon med medium bredde -->
+<fds-input 
+  v-model="txtPhone" 
+  type="tel"
+  width-class="input-width-m"
+  placeholder="+45 12 34 56 78"
+/>
+
+<!-- Postnummer med extra small bredde -->
+<fds-input 
+  v-model="txtPostal" 
+  type="text"
+  width-class="input-width-xs"
+  maxlength="4"
+  placeholder="1234"
+/>
+`
 
 const codeLimit = `
 <fds-formgroup>
-  <fds-label> Efternavn </fds-label>
-  <fds-tooltip class="ml-2"> Hjælpende <b>tekst</b> </fds-tooltip>
-  <fds-hint>Indtast fornavn</fds-hint>
+  <fds-label>
+    Efternavn
+    <fds-tooltip class="ml-2" content="Hjælpende tekst" />
+  </fds-label>
+  <fds-hint>Indtast efternavn</fds-hint>
   <fds-input v-model="txtEfternavn"></fds-input>
   <fds-input-limit :modelValue="txtEfternavn" :limit="20" />
 </fds-formgroup>
-`;
+`
 
 const codePrefixSuffix = `
 <fds-input v-model="txtPre" prefix="prefix" id="prefix"></fds-input>
 
 <fds-input v-model="txtSuffix" suffix="suffix" id="txtSuffix"></fds-input>
 
-`;
+`
 
 const codeInputKnap = `
 <fds-input v-model="txtSearch" placeholder="Søg efter..." id="search">
   <template #button>
     <button class="button button-search">
       <svg class="icon-svg m-0" aria-hidden="true">
-        <use xlink:href="#search"></use></svg
+        <use href="#search"></use></svg
       ><span class="sr-only"> Søg </span>
     </button>
   </template>
@@ -282,13 +338,14 @@ const codeInputKnap = `
     <button class="button button-search">Søg</button>
   </template>
 </fds-input>
-`;
+`
 
 const readonly = `
 <fds-formgroup>
- ...
- <fds-input
-  v-model="txtFornavn"
-  readonly />
-</fds-formgroup>`;
+  <fds-label>
+    Fornavn
+    <fds-tooltip class="ml-2" content="Hjælpende tekst" />
+  </fds-label>
+  <fds-input v-model="txtFornavn" readonly />
+</fds-formgroup>`
 </script>

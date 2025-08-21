@@ -8,9 +8,7 @@
         </p>
         <div class="navbar navbar-primary">
           <div class="navbar-inner container">
-            <ul
-              class="nav-primary"
-              role="menu">
+            <ul class="nav-primary" role="menu">
               <fds-xtnd-nav-item-route
                 to-name="forside"
                 :current-route-name="route.name?.toString()"
@@ -29,9 +27,7 @@
           </div>
         </div>
 
-        <fds-pre
-          :code="code"
-          :header="'Brug af komponent'" />
+        <fds-pre :code="code" :header="'Brug af komponent'" />
       </fds-preview-item>
       <hr />
       <fds-preview-item>
@@ -39,9 +35,7 @@
           Komponenten <code>fds-xtnd-nav-item-route</code> gør det nemmer at auto markere om siden
           er aktiv
         </p>
-        <p class="italic">
-          Se nedestående kode for komponenten
-        </p>
+        <p class="italic">Se nedestående kode for komponenten</p>
       </fds-preview-item>
       <fds-preview-code>
         <pre v-text="codeComponent"></pre>
@@ -51,9 +45,9 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
+import { useRoute } from 'vue-router'
 
-const route = useRoute();
+const route = useRoute()
 
 const code = `
 import { useRoute } from 'vue-router';
@@ -83,7 +77,7 @@ new navigation().init();
             </fds-nav-item-route>
         </ul>
     </div>
-</div>`;
+</div>`
 
 const codeComponent = `
 // fds-xtnd-nav-item-route.vue
@@ -99,7 +93,7 @@ const codeComponent = `
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
+
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
@@ -137,5 +131,5 @@ const isPartOfMenu = (name: string): boolean => {
   }
   return false;
 };
-<${'/'}script>`;
+<${'/'}script>`
 </script>

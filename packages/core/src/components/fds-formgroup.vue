@@ -2,40 +2,85 @@
   <div
     :key="formid"
     class="form-group"
-    :class="{ 'form-error': compValid === false }">
-    <slot :formid="formid" />
+    :class="{ 'form-error': compValid === false }"
+    :aria-invalid="compValid === false ? 'true' : undefined"
+  >
+    <slot :formid="formid" :ariaDescribedby="ariaDescribedby" :isValid="compValid" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, inject, provide, ref } from 'vue';
-import { formId } from 'dkfds-vue3-utils';
+import { computed, inject, provide, ref } from 'vue'
+import { formId } from 'dkfds-vue3-utils'
 
-const props = defineProps({
-  id: {
-    type: String,
-    default: null,
-  },
-  isValid: {
-    type: Boolean,
-    default: true,
-  },
-});
+interface Props {
+  /**
+   * Unique identifier for the form group.
+   * If not provided, a unique ID will be generated automatically.
+   */
+  id?: string | null
+  /**
+   * Validation state of the form group.
+   * When false, the form-error class is applied and aria-invalid is set.
+   */
+  isValid?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  id: null,
+  isValid: true,
+})
 
 /**
  * Form id der bruges i slots
  * eg. label for input element
  */
-const { formid } = formId(props.id, true);
+const { formid } = formId(props.id, true)
+
 /**
- * Provide for underliggende elementer
- * eg. label for input element
+ * Generate IDs for hint and error elements following DKFDS v11 naming conventions
  */
-provide('formid', formid);
+const hintId = computed(() => `${formid.value}-hint`)
+const errorId = computed(() => `${formid.value}-error`)
 
-const injIsValid = ref<boolean | null>(inject('provideIsValid', null));
+/**
+ * Build aria-describedby value for input elements
+ * Combines hint and error IDs when applicable according to DKFDS v11 accessibility requirements
+ */
+const ariaDescribedby = computed(() => {
+  const ids: string[] = []
 
-const compValid = computed(() => injIsValid.value ?? props.isValid);
+  // Add hint ID (always present for consistency)
+  ids.push(hintId.value)
+
+  // Add error ID when invalid for proper screen reader support
+  if (compValid.value === false) {
+    ids.push(errorId.value)
+  }
+
+  return ids.join(' ').trim()
+})
+
+/**
+ * Provide context for child components following DKFDS v11 integration patterns
+ */
+provide('formid', formid)
+provide('hintId', hintId)
+provide('errorId', errorId)
+provide('ariaDescribedby', ariaDescribedby)
+provide(
+  'isValid',
+  computed(() => compValid.value),
+)
+
+// Handle validation state from parent providers (e.g., form validation)
+const injIsValid = ref<boolean | null>(inject('provideIsValid', null))
+
+/**
+ * Computed validation state that considers both local prop and injected state
+ * Prioritizes injected state for form-wide validation coordination
+ */
+const compValid = computed(() => injIsValid.value ?? props.isValid)
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

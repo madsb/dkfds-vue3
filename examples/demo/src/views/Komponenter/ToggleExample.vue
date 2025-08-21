@@ -1,15 +1,11 @@
 <template>
   <section>
-    <fds-preview
-      header="Eksempel"
-      href="https://designsystem.dk/komponenter/toggle/">
+    <fds-preview header="Eksempel" href="https://designsystem.dk/komponenter/toggle/">
       <fds-preview-item>
         <fds-toggle-switch v-model="toggleswitch" />
 
         <div>
-          <fds-pre
-            header="v-model"
-            :json="{ toggleswitch }" />
+          <fds-pre header="v-model" :json="{ toggleswitch }" />
         </div>
       </fds-preview-item>
 
@@ -21,11 +17,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const toggleswitch = ref(false);
+const toggleswitch = ref(false)
 
 const code = `
 <fds-toggle-switch v-model="toggleswitch" />
-`;
+`
 </script>

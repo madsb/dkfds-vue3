@@ -1,18 +1,12 @@
 <template>
   <section>
-    <fds-preview
-      header="Eksempel"
-      href="https://designsystem.dk/komponenter/datofelter/">
+    <fds-preview header="Eksempel" href="https://designsystem.dk/komponenter/datofelter/">
       <fds-preview-item>
         <fds-formgroup>
           <fds-label> Indsendelsesfrist </fds-label>
-          <fds-dato-felter
-            v-model="datoAngiv"
-            @valid="datoAngivValid = $event" />
+          <fds-dato-felter v-model="datoAngiv" @valid="datoAngivValid = $event" />
         </fds-formgroup>
-        <fds-pre
-          :json="{ datoAngiv, datoAngivValid }"
-          header="JSON DATE format" />
+        <fds-pre :json="{ datoAngiv, datoAngivValid }" header="JSON DATE format" />
       </fds-preview-item>
 
       <fds-preview-code>
@@ -44,15 +38,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const datoAngiv = ref('2022-12-01');
-const datoAngivValid = ref(true);
+const datoAngiv = ref('2022-12-01')
+const datoAngivValid = ref(true)
 
 const code = `
 <fds-dato-felter v-model="datoAngiv" />
 
 const datoAngiv = ref('2022-12-01');
 const datoAngivValid = ref(true);
-`;
+`
 </script>

@@ -1,16 +1,12 @@
 <template>
   <section>
-    <fds-preview
-      header="Eksempel"
-      href="https://designsystem.dk/komponenter/overflowmenu/">
+    <fds-preview header="Eksempel" href="https://designsystem.dk/komponenter/overflowmenu/">
       <fds-preview-item>
         <fds-overflow-menu header="Overflow menu">
           <ul class="overflow-list">
             <li><button>Option 1</button></li>
             <li><button>Option 2</button></li>
-            <li><a href="#">
-              Option 3 as link
-            </a></li>
+            <li><a href="#"> Option 3 as link </a></li>
             <li><button>Option 4 is longer text</button></li>
           </ul>
         </fds-overflow-menu>
@@ -30,9 +26,7 @@
           <ul class="overflow-list">
             <li><button>Option 1</button></li>
             <li><button>Option 2</button></li>
-            <li><a href="#">
-              Option 3 as link
-            </a></li>
+            <li><a href="#"> Option 3 as link </a></li>
             <li><button>Option 4 is longer text</button></li>
           </ul>
         </fds-overflow-menu>
@@ -58,7 +52,7 @@ const code = `
     <li><button>Option 4 is longer text</button></li>
   </ul>
 </fds-overflow-menu>
-`;
+`
 
 const codeIcon = `
 <fds-overflow-menu
@@ -73,5 +67,5 @@ const codeIcon = `
     <li><button>Option 4 is longer text</button></li>
   </ul>
 </fds-overflow-menu>
-`;
+`
 </script>

@@ -1,76 +1,151 @@
 <template>
-  <div :class="`${cssClass}`">
-    <div
-      v-if="prefix"
-      class="form-input-prefix"
-      aria-hidden="true">
-      {{ prefix }}
+  <div :class="wrapperClass">
+    <div v-if="props.prefix" class="form-input-prefix" aria-hidden="true">
+      {{ props.prefix }}
     </div>
     <input
       v-bind="attrs"
       :id="formid"
       v-model="inputValue"
-      class="form-input d-flex"
-      :name="formid"
       type="number"
-      @blur="$emit('dirty', true)"
-      @focus="($event.target as any).select()"
+      :class="inputClass"
+      :name="formid"
+      :aria-describedby="computedAriaDescribedby"
+      :min="props.min"
+      :max="props.max"
+      :step="props.step"
+      @input="handleInput"
+      @blur="handleBlur"
+      @focus="handleFocus"
     />
-    <div
-      v-if="suffix"
-      class="form-input-suffix"
-      aria-hidden="true">
-      {{ suffix }}
+    <div v-if="props.suffix" class="form-input-suffix" aria-hidden="true">
+      {{ props.suffix }}
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, computed, useAttrs } from 'vue';
-import { formId } from 'dkfds-vue3-utils';
+import { computed, useAttrs, inject, isRef, type Ref } from 'vue'
+import { formId } from 'dkfds-vue3-utils'
 
-const attrs = useAttrs();
-const props = defineProps({
-  id: {
-    type: String,
-    default: null,
-  },
-  modelValue: {
-    type: [Number, String],
-    default: 0,
-  },
-  suffix: {
-    type: String,
-    default: null,
-  },
-  prefix: {
-    type: String,
-    default: null,
-  },
-});
+const attrs = useAttrs()
 
-const emit = defineEmits(['update:modelValue', 'dirty', 'input']);
+interface Props {
+  /** Unique identifier for the input */
+  id?: string | null
+  /** The v-model value */
+  modelValue?: number | string
+  /** Suffix text displayed after the input */
+  suffix?: string | null
+  /** Prefix text displayed before the input */
+  prefix?: string | null
+  /** Minimum value allowed */
+  min?: number
+  /** Maximum value allowed */
+  max?: number
+  /** Step value for increment/decrement */
+  step?: number | string
+  /** Width class for input sizing */
+  widthClass?: string
+}
 
-const { formid } = formId(props.id, true);
+const props = withDefaults(defineProps<Props>(), {
+  id: null,
+  modelValue: '',
+  suffix: null,
+  prefix: null,
+  min: undefined,
+  max: undefined,
+  step: undefined,
+  widthClass: '',
+})
 
-const cssClass = computed((): string => {
+const emit = defineEmits<{
+  /** Emitted when input value changes */
+  'update:modelValue': [value: number | string]
+  /** Emitted when input loses focus */
+  dirty: [isDirty: boolean]
+  /** Emitted on input event */
+  input: [event: Event]
+}>()
+
+const { formid } = formId(props.id, true)
+
+// Inject aria-describedby from formgroup if available
+const injectedAriaDescribedby = inject<string | Ref<string> | undefined>(
+  'ariaDescribedby',
+  undefined,
+)
+const computedAriaDescribedby = computed((): string | undefined => {
+  // Use explicitly provided aria-describedby from attrs
+  if (attrs['aria-describedby']) {
+    return attrs['aria-describedby'] as string
+  }
+  // Otherwise use injected value from formgroup
+  if (injectedAriaDescribedby) {
+    return isRef(injectedAriaDescribedby) ? injectedAriaDescribedby.value : injectedAriaDescribedby
+  }
+  return undefined
+})
+
+/**
+ * Compute wrapper classes based on props
+ */
+const wrapperClass = computed((): string => {
+  const classes: string[] = []
+
   if (props.suffix) {
-    return 'form-input-wrapper form-input-wrapper--suffix';
+    classes.push('form-input-wrapper', 'form-input-wrapper--suffix')
+  } else if (props.prefix) {
+    classes.push('form-input-wrapper', 'form-input-wrapper--prefix')
   }
-  if (props.prefix) {
-    return 'form-input-wrapper form-input-wrapper--prefix';
+
+  return classes.join(' ')
+})
+
+/**
+ * Compute input classes including width classes
+ */
+const inputClass = computed((): string => {
+  const classes = ['form-input']
+
+  if (props.widthClass) {
+    classes.push(props.widthClass)
   }
-  return 'flex-items-center';
-});
+
+  return classes.join(' ')
+})
 
 const inputValue = computed({
   get() {
-    return Number.isNaN(props.modelValue) ? 0 : props.modelValue;
+    return props.modelValue
   },
   set(newValue) {
-    emit('update:modelValue', newValue);
+    emit('update:modelValue', newValue)
   },
-});
+})
+
+/**
+ * Handle input event
+ */
+const handleInput = (event: Event) => {
+  emit('input', event)
+}
+
+/**
+ * Handle blur event
+ */
+const handleBlur = () => {
+  emit('dirty', true)
+}
+
+/**
+ * Handle focus event - select all text for easy replacement
+ */
+const handleFocus = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  target.select()
+}
 </script>
 
 <style scoped lang="scss"></style>

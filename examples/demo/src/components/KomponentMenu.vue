@@ -1,18 +1,24 @@
 <template>
-  <xfds-menu
-    v-model="navigationList"
-    class="discrete-icon"
-    @navigate="handleNavigation" />
+  <fds-menu class="discrete-icon">
+    <fds-menu-item
+      v-for="item in nav.items.value"
+      :key="item.key"
+      :href="`#/komponenter/${item.key.replace('komponent', '')}`"
+      :active="nav.isActive(item.key)"
+      @click.prevent="nav.navigate(item.key)"
+    >
+      {{ item.title }}
+    </fds-menu-item>
+  </fds-menu>
 </template>
 
 <script setup lang="ts">
-import { FdsNavigationItem } from 'dkfds-vue3/utils';
-import { defineProps, ref, watch } from 'vue';
-import { navigationService } from 'dkfds-vue3/extra';
-import { useRoute, useRouter } from 'vue-router';
-import { sort } from 'fast-sort';
+import { FdsMenu, FdsMenuItem } from 'dkfds-vue3'
+import { useNavigation, type NavigationItem } from 'dkfds-vue3/utils'
+import { sort } from 'fast-sort'
+import { watch } from 'vue'
 
-const props = defineProps({
+defineProps({
   header: {
     type: String,
     default: '',
@@ -21,17 +27,12 @@ const props = defineProps({
     type: String,
     default: '',
   },
-});
+})
 
-const route = useRoute();
-const router = useRouter();
+const emits = defineEmits(['currentItem'])
 
-const currentNavigationKey = ref('');
-const currentItem = ref<FdsNavigationItem | undefined>();
-
-const emits = defineEmits(['currentItem']);
-
-const navigationList = ref<Array<FdsNavigationItem>>(
+// Navigation items
+const navigationItems: NavigationItem[] = 
   sort([
     {
       key: 'komponentaccordions',
@@ -95,10 +96,7 @@ const navigationList = ref<Array<FdsNavigationItem>>(
       key: 'komponentformgruppe',
       title: 'Form gruppe',
     },
-    {
-      key: 'komponentformular',
-      title: 'Formular',
-    },
+
     {
       key: 'komponentfunktionslink',
       title: 'Funktionslink',
@@ -121,6 +119,10 @@ const navigationList = ref<Array<FdsNavigationItem>>(
       title: 'Knapper (Buttons)',
     },
     {
+      key: 'komponentlist',
+      title: 'Liste',
+    },
+    {
       key: 'komponentspinner',
       title: 'Loading spinner',
     },
@@ -133,9 +135,8 @@ const navigationList = ref<Array<FdsNavigationItem>>(
       title: 'Navigation',
     },
     {
-      key: 'komponentnotifikation',
-      title: 'Notifikation (Toast)',
-      icon: 'engineering',
+      key: 'komponenttoast',
+      title: 'Toastbeskeder',
     },
     {
       key: 'komponentoverflow',
@@ -158,10 +159,6 @@ const navigationList = ref<Array<FdsNavigationItem>>(
     {
       key: 'komponentsprogvaelger',
       title: 'Sprogvælger',
-    },
-    {
-      key: 'komponentstrukturerede',
-      title: 'Strukturerede lister',
     },
     {
       key: 'komponentsoegefelt',
@@ -212,29 +209,25 @@ const navigationList = ref<Array<FdsNavigationItem>>(
       key: 'komponentvenstremenu',
       title: 'Venstremenu',
     },
-  ] as FdsNavigationItem[]).asc((a) => a.title),
-);
+  ] as NavigationItem[]).asc((a) => a.title)
 
-watch(
-  () => route.name,
-  () => {
-    navigationList.value = navigationService.setActive(
-      navigationList.value,
-      route.name?.toString() ?? '',
-    );
-    currentNavigationKey.value = currentItem.value?.key ?? '';
-    currentItem.value = navigationService.findFirstActiveItem(navigationList.value);
-    emits('currentItem', currentItem.value);
-  },
-  {
-    immediate: true,
-  },
-);
+// Use navigation composable
+const nav = useNavigation(navigationItems, {
+  routeResolver: (key) => key, // Routes use the same key format
+  keyMatcher: (key, routeName) => {
+    // Direct match
+    if (key === routeName) return true
+    // Match with 'komponent' prefix variations
+    return key.replace('komponent', '') === routeName.replace('komponent', '')
+  }
+})
 
-const handleNavigation = (key: string) => {
-  currentNavigationKey.value = key;
-  router.push({ name: navigationService.resolveActiveKey(key) });
-};
+// Emit current item when it changes
+watch(nav.currentItem, (item) => {
+  if (item) {
+    emits('currentItem', item)
+  }
+}, { immediate: true })
 </script>
 <style lang="scss">
 .sidenav-list {

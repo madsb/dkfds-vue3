@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="component-example"
-    aria-label="Eksempel">
+  <div class="component-example" aria-label="Eksempel">
     <slot />
   </div>
 </template>

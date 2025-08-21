@@ -1,7 +1,7 @@
-import { resolve } from 'path';
-import { defineConfig } from 'vite';
+import { resolve } from 'path'
+import { defineConfig } from 'vite'
 
-import packageJson from './package.json';
+import packageJson from './package.json'
 
 export default defineConfig({
   build: {
@@ -21,4 +21,4 @@ export default defineConfig({
   define: {
     VERSION: JSON.stringify(packageJson.version),
   },
-});
+})

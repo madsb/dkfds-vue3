@@ -1,27 +1,29 @@
 <template>
-  <ul
-    :class="cssClass"
-    role="menu">
+  <nav v-if="variant === 'sidemenu'" :aria-label="ariaLabel">
+    <ul :class="cssClass">
+      <slot />
+    </ul>
+  </nav>
+  <ul v-else :class="cssClass">
     <slot />
   </ul>
 </template>
 
 <script setup lang="ts">
-import { defineProps, computed } from 'vue';
+import { computed } from 'vue'
 
-const props = defineProps({
-  variant: {
-    type: String as () => 'venstremenu' | 'trin' | 'submenu',
-    default: null,
-  },
-});
+interface Props {
+  variant?: 'sidemenu' | 'submenu'
+  ariaLabel?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  variant: 'sidemenu'
+})
 
 const cssClass = computed(() => {
-  if (props.variant === 'submenu') {
-    return 'sidenav-sub_list';
-  }
-  return 'sidenav-list';
-});
+  return props.variant === 'submenu' ? '' : 'sidemenu'
+})
 </script>
 
 <style scoped lang="scss"></style>

@@ -1,23 +1,22 @@
 <template>
   <div class="language-switcher">
     <div class="container">
-      <ul aria-label="Vælg sprog fra listen ">
-        <li
-          v-for="(langauge, index) of value"
-          :key="index">
+      <ul aria-label="Vælg sprog fra listen">
+        <li v-for="(language, index) of sortedLanguages" :key="index">
           <a
-            href="javascript:void(0);"
-            :lang="langauge.lang"
-            :aria-label="langauge.ariaLabel"
-            @click="handleUpdateLang(langauge)"
-          ><svg
-            v-if="langauge.active"
-            class="icon-svg"
-            focusable="false"
-            aria-hidden="true">
-            <use xlink:href="#done"></use></svg
-          >{{ langauge.title }}</a
+            :href="language.href || `?lang=${language.lang}`"
+            :lang="language.lang"
+            :aria-label="language.ariaLabel"
+            :class="{ active: language.active }"
+            @click="handleLanguageChange(language, $event)"
           >
+            <fds-ikon
+              v-if="language.active"
+              icon="check"
+              :decorative="true"
+            />
+            {{ language.title }}
+          </a>
         </li>
       </ul>
     </div>
@@ -25,33 +24,78 @@
 </template>
 
 <script setup lang="ts">
-import { FdsLanguageItem } from 'dkfds-vue3-utils';
-import { defineProps, defineEmits, ref, PropType } from 'vue';
+import { computed, watch } from 'vue'
+import { FdsLanguageItem } from 'dkfds-vue3-utils'
+import FdsIkon from './fds-ikon.vue'
 
-const props = defineProps({
-  modelValue: {
-    type: Array as PropType<Array<FdsLanguageItem>>,
-    required: true,
-    default: () => [],
-  },
-  autoSetLang: {
-    type: Boolean,
-    default: false,
-  },
-});
+interface ExtendedFdsLanguageItem extends FdsLanguageItem {
+  href?: string
+}
 
-const emit = defineEmits(['update:modelValue', 'lang']);
+interface Props {
+  modelValue: ExtendedFdsLanguageItem[]
+  autoSetLang?: boolean
+  preventDefault?: boolean
+}
 
-const value = ref(props.modelValue);
+const props = withDefaults(defineProps<Props>(), {
+  autoSetLang: false,
+  preventDefault: true
+})
 
-const handleUpdateLang = (langauge: FdsLanguageItem) => {
-  value.value = value.value.map((m) => ({ ...m, active: langauge.lang === m.lang }));
-  if (props.autoSetLang) {
-    document.documentElement.setAttribute('lang', langauge.lang);
+const emit = defineEmits<{
+  'update:modelValue': [value: ExtendedFdsLanguageItem[]]
+  'language-change': [language: ExtendedFdsLanguageItem]
+  lang: [lang: string]
+}>()
+
+// Sort languages with active language first
+const sortedLanguages = computed(() => {
+  const languages = [...props.modelValue]
+  const activeIndex = languages.findIndex(lang => lang.active)
+  
+  if (activeIndex > 0) {
+    const activeLanguage = languages.splice(activeIndex, 1)[0]
+    languages.unshift(activeLanguage)
   }
-  emit('lang', langauge.lang);
-  emit('update:modelValue', value.value);
-};
+  
+  return languages
+})
+
+const handleLanguageChange = (language: ExtendedFdsLanguageItem, event: MouseEvent) => {
+  if (props.preventDefault || !language.href) {
+    event.preventDefault()
+  }
+  
+  if (language.active) {
+    return // Don't change if already active
+  }
+  
+  const updatedLanguages = props.modelValue.map(lang => ({
+    ...lang,
+    active: lang.lang === language.lang
+  }))
+  
+  if (props.autoSetLang) {
+    document.documentElement.setAttribute('lang', language.lang)
+  }
+  
+  emit('update:modelValue', updatedLanguages)
+  emit('language-change', language)
+  emit('lang', language.lang)
+}
+
+// Watch for external changes to modelValue
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    const activeLanguage = newValue.find(lang => lang.active)
+    if (activeLanguage && props.autoSetLang) {
+      document.documentElement.setAttribute('lang', activeLanguage.lang)
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <style scoped lang="scss"></style>

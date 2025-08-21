@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from 'vue-router';
+import { RouteRecordRaw } from 'vue-router'
 
 const anbefalingerRoutes: Array<RouteRecordRaw> = [
   {
@@ -19,6 +19,6 @@ const anbefalingerRoutes: Array<RouteRecordRaw> = [
       },
     ],
   },
-];
+]
 
-export default anbefalingerRoutes;
+export default anbefalingerRoutes

@@ -1,21 +1,21 @@
 export function removeBrowserFileContentHeaders(data: string): string {
   // Remove the "data:...;base64," part, as it make Java sad ...
-  const regex = RegExp('data:([0-9a-z/.-]+);base64,', 'g');
+  const regex = RegExp('data:([0-9a-z/.-]+);base64,', 'g')
   if (regex.test(data)) {
-    return data.slice(regex.lastIndex);
+    return data.slice(regex.lastIndex)
   }
-  return data;
+  return data
 }
 
 export function downloadBlob(blob: Blob, filename = 'download') {
-  const url = window.URL.createObjectURL(blob);
+  const url = window.URL.createObjectURL(blob)
 
-  const anchor = document.createElement('a');
-  anchor.href = url;
-  anchor.download = filename;
-  anchor.click();
+  const anchor = document.createElement('a')
+  anchor.href = url
+  anchor.download = filename
+  anchor.click()
 
-  window.URL.revokeObjectURL(url);
+  window.URL.revokeObjectURL(url)
 }
 
 /**
@@ -25,20 +25,20 @@ export function downloadBlob(blob: Blob, filename = 'download') {
  * @returns blob
  */
 export function updateBlobType(blob: Blob, type: string): Blob {
-  return new Blob([blob], { type });
+  return new Blob([blob], { type })
 }
 
 export function readableFileSize(fileSizeInBytes: number) {
-  let b = fileSizeInBytes;
-  let u = 0;
-  const s = 1024;
+  let b = fileSizeInBytes
+  let u = 0
+  const s = 1024
   while (b >= s || -b >= s) {
-    b /= s;
-    u += 1;
+    b /= s
+    u += 1
   }
-  return `${(u ? `${b.toFixed(1)} ` : b) + ' KMGTPEZY'[u]}B`;
+  return `${(u ? `${b.toFixed(1)} ` : b) + ' KMGTPEZY'[u]}B`
 }
 
 export function base64Decode(data: string): string {
-  return decodeURIComponent(escape(window.atob(data)));
+  return decodeURIComponent(escape(window.atob(data)))
 }

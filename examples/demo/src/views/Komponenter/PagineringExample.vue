@@ -1,8 +1,6 @@
 <template>
   <section>
-    <fds-preview
-      header="Eksempel"
-      href="https://designsystem.dk/komponenter/paginering/">
+    <fds-preview header="Eksempel" href="https://designsystem.dk/komponenter/paginering/">
       <fds-preview-item>
         <fds-paginering
           :list="largeArray"
@@ -10,13 +8,9 @@
           @skip="skipPaging = $event"
         />
 
-        <fds-pre
-          header="filter list"
-          :json="{ skipPaging }" />
+        <fds-pre header="filter list" :json="{ skipPaging }" />
 
-        <fds-pre
-          header="filter list"
-          :json="{ filteredPagingList }" />
+        <fds-pre header="filter list" :json="{ filteredPagingList }" />
       </fds-preview-item>
       <fds-preview-item>
         <table class="table table--compact">
@@ -95,18 +89,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref } from 'vue'
 
-const filteredPagingList = ref<Array<{ id: string; indhold: string }>>([]);
-const skipPaging = ref(0);
+const filteredPagingList = ref<Array<{ id: string; indhold: string }>>([])
+const skipPaging = ref(0)
 
 const largeArray = computed((): Array<{ id: string; indhold: string }> => {
-  const totalPages = 200;
+  const totalPages = 200
   return [...Array(totalPages).keys()].map((i) => ({
     id: (i + 1).toString(),
     indhold: `Data${i}`,
-  }));
-});
+  }))
+})
 
 const code = `
 <fds-paginering
@@ -114,5 +108,5 @@ const code = `
   @filteredPage="filteredPagingList = $event"
   @skip="skipPaging = $event"
 />
-`;
+`
 </script>

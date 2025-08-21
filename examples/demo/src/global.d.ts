@@ -1,1 +1,1 @@
-declare module 'dkfds';
+declare module 'dkfds'

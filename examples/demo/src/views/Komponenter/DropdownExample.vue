@@ -1,21 +1,24 @@
 <template>
   <section>
-    <fds-preview
-      header="Eksempel"
-      href="https://designsystem.dk/komponenter/dropdown/">
+    <fds-preview header="Eksempel" href="https://designsystem.dk/komponenter/dropdown/">
       <fds-preview-item>
         <fds-dropdown v-model="dropdownVal">
-          <option value="Manuel">
-            Manuel
-          </option>
-          <option value="Auto">
-            Auto
-          </option>
+          <option value="">Vælg en mulighed</option>
+          <option value="Manuel">Manuel</option>
+          <option value="Auto">Auto</option>
         </fds-dropdown>
 
-        <fds-pre
-          header="v-model"
-          :json="{ dropdownVal }" />
+        <fds-pre header="v-model" :json="{ dropdownVal }" />
+
+        <div class="mt-6">
+          <h4>Eksempel med forudvalgt værdi:</h4>
+          <fds-dropdown v-model="dropdownVal2" class="mt-2">
+            <option value="">Vælg en mulighed</option>
+            <option value="Manuel">Manuel</option>
+            <option value="Auto">Auto</option>
+          </fds-dropdown>
+          <fds-pre header="v-model" :json="{ dropdownVal2 }" class="mt-3" />
+        </div>
       </fds-preview-item>
 
       <fds-preview-code>
@@ -53,20 +56,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const dropdownVal = ref('');
+const dropdownVal = ref('')
+const dropdownVal2 = ref('Auto')
 
 const code = `
+<!-- Uden forudvalgt værdi -->
 <fds-dropdown v-model="dropdownVal">
-  <option value="Manuel">
-    Manuel
-  </option>
-  <option value="Auto">
-    Auto
-  </option>
+  <option value="">Vælg en mulighed</option>
+  <option value="Manuel">Manuel</option>
+  <option value="Auto">Auto</option>
+</fds-dropdown>
+
+<!-- Med forudvalgt værdi -->
+<fds-dropdown v-model="dropdownVal2">
+  <option value="">Vælg en mulighed</option>
+  <option value="Manuel">Manuel</option>
+  <option value="Auto">Auto</option>
 </fds-dropdown>
 
 const dropdownVal = ref('');
-`;
+const dropdownVal2 = ref('Auto');
+`
 </script>

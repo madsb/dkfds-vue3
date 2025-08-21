@@ -1,31 +1,14 @@
 <template>
-  <dialog
-    :id="`${dialogId}`"
-    ref="refDialog"
-    :aria-labelledby="`modal_${dialogId}_title`">
-    <div
-      :id="`modal_${dialogId}`"
-      class="fds-modal"
-      aria-hidden="false"
-      aria-modal="true">
+  <dialog :id="`${dialogId}`" ref="refDialog" :aria-labelledby="`modal_${dialogId}_title`">
+    <div :id="`modal_${dialogId}`" class="fds-modal" aria-hidden="false" aria-modal="true">
       <div class="modal-content">
         <div class="modal-header">
           <slot name="header">
-            <h2
-              :id="`modal_${dialogId}_title`"
-              class="modal-title">
+            <h2 :id="`modal_${dialogId}_title`" class="modal-title">
               {{ header }}
             </h2>
-            <button
-              v-if="closeable"
-              class="modal-close function-link"
-              @click="hideModal">
-              <svg
-                class="icon-svg"
-                focusable="false"
-                aria-hidden="true">
-                <use xlink:href="#close"></use></svg
-              >Luk
+            <button v-if="closeable" class="modal-close function-link" @click="hideModal">
+              <fds-ikon icon="close" :decorative="true" />Luk
             </button>
           </slot>
         </div>
@@ -35,14 +18,10 @@
 
         <div class="modal-footer">
           <slot name="footer">
-            <button
-              class="button button-primary"
-              @click="handleAccept">
+            <button class="button button-primary" @click="handleAccept">
               {{ acceptText }}
             </button>
-            <button
-              class="button button-secondary"
-              @click="handleCancel">
+            <button class="button button-secondary" @click="handleCancel">
               {{ cancelText }}
             </button>
           </slot>
@@ -64,70 +43,66 @@
  * */
 
 // måske backdrop clik
-// eslint-disable-next-line max-len
+
 // https://stackoverflow.com/questions/25864259/how-to-close-the-new-html-dialog-tag-by-clicking-on-its-backdrop
 
-import { generateId } from 'dkfds-vue3-utils';
-import { computed, defineProps, ref, defineEmits, onMounted } from 'vue';
+import { generateId } from 'dkfds-vue3-utils'
+import { computed, ref, onMounted } from 'vue'
+import FdsIkon from './fds-ikon.vue'
 
-const props = defineProps({
-  header: {
-    type: String,
-    default: null,
-  },
-  id: {
-    type: String,
-    default: null,
-  },
-  closeable: {
-    type: Boolean,
-    default: true,
-  },
-  acceptText: {
-    type: String,
-    default: 'Godkend',
-  },
-  cancelText: {
-    type: String,
-    default: 'Annuller',
-  },
-});
+const {
+  header = null,
+  id = null,
+  closeable = true,
+  acceptText = 'Godkend',
+  cancelText = 'Annuller',
+} = defineProps<{
+  header?: string | null
+  id?: string | null
+  closeable?: boolean
+  acceptText?: string
+  cancelText?: string
+}>()
 
-const emit = defineEmits(['close', 'accept', 'cancel']);
+const emit = defineEmits<{
+  close: []
+  accept: []
+  cancel: []
+}>()
 
-const refDialog = ref(null);
-const dialogId = generateId(props.id);
-const htmlDialog = computed(() => refDialog.value as unknown as HTMLDialogElement);
+const refDialog = ref(null)
+const dialogId = generateId(id)
+const htmlDialog = computed(() => refDialog.value as unknown as HTMLDialogElement)
 
 const showModal = () => {
-  htmlDialog.value.showModal();
-};
+  htmlDialog.value.showModal()
+}
 const hideModal = () => {
-  htmlDialog.value.close();
-  emit('close');
-};
+  htmlDialog.value.close()
+  emit('close')
+}
 
 defineExpose({
   hideModal,
   showModal,
-});
+})
 
 onMounted(() => {
-  if (props.closeable) {
+  if (closeable) {
     // cancel is exposed by HTMLDialogElement
     htmlDialog.value.addEventListener('cancel', () => {
-      hideModal();
-    });
+      hideModal()
+    })
   }
-});
+})
 
 const handleAccept = () => {
-  emit('accept');
-  hideModal();
-};
+  emit('accept')
+  hideModal()
+}
 
 const handleCancel = () => {
-  hideModal();
-  emit('cancel');
-};
+  hideModal()
+  emit('cancel')
+}
 </script>

@@ -1,78 +1,139 @@
 <template>
-  <div
-    class="overflow-menu overflow-menu--open-right"
-    :class="lgNoResponsive">
-    <button
-      :id="`button_${formid}`"
-      class="button-overflow-menu js-dropdown"
-      :data-js-target="`#${formid}`"
-      aria-haspopup="true"
-      aria-expanded="false"
+  <div>
+    <!-- Desktop view -->
+    <nav :aria-label="ariaLabel" class="d-none d-md-block">
+      <ol class="step-indicator" :class="stepIndicatorClasses">
+        <slot :current-step="currentStep" :mobile="false" />
+      </ol>
+    </nav>
+
+    <!-- Mobile view: Button to show step modal -->
+    <button 
+      type="button"
+      class="step-indicator-button d-md-none"
+      aria-haspopup="dialog"
+      @click="openMobileModal"
     >
-      <slot name="header">
-        {{ header }}
-      </slot>
-      <svg
-        class="icon-svg"
-        aria-hidden="true"
-        focusable="false">
-        <use :xlink:href="`#${icon}`"></use>
-      </svg>
+      <span>Trin <strong>{{ currentStep }}</strong> af {{ totalSteps }}</span>
     </button>
-    <div
-      :id="formid"
-      class="overflow-menu-inner"
-      aria-hidden="true">
-      <nav>
-        <fds-menu>
-          <slot />
-        </fds-menu>
-      </nav>
-    </div>
+    
+    <!-- Mobile modal using fds-modal component -->
+    <fds-modal
+      ref="mobileModal"
+      :id="`modal-${formid}`"
+      :header="modalTitle"
+      :closeable="true"
+      @close="closeMobileModal"
+    >
+      <template #header>
+        <h2 class="modal-title">{{ modalTitle }}</h2>
+        <button class="modal-close function-link" @click="closeMobileModal">
+          <svg class="icon-svg" aria-hidden="true" focusable="false">
+            <use href="#close"></use>
+          </svg>
+          {{ closeButtonText }}
+        </button>
+      </template>
+      
+      <ol class="step-indicator">
+        <slot :current-step="currentStep" :mobile="true" />
+      </ol>
+      
+      <template #footer>
+        <!-- No footer for step indicator modal -->
+      </template>
+    </fds-modal>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, computed } from 'vue'
+import { formId } from 'dkfds-vue3-utils'
+import FdsModal from './fds-modal.vue'
+
 /**
- *
- * Komponent for Trin indikator
- * https://designsystem.dk/komponenter/trin/
- *
- * */
+ * Step indicator component following DKFDS v11 specifications
+ * 
+ * @component FdsTrinindikatorGroup
+ * @example
+ * <fds-trinindikator-group 
+ *   :current-step="2"
+ *   :total-steps="4"
+ *   aria-label="Application progress"
+ * >
+ *   <fds-trinindikator-step 
+ *     v-for="step in steps" 
+ *     :key="step.id"
+ *     :step="step"
+ *     :is-current="step.id === currentStep"
+ *   />
+ * </fds-trinindikator-group>
+ */
 
-import { computed, defineProps, onMounted } from 'vue';
+export interface Props {
+  /** Unique identifier */
+  id?: string | null
+  /** Current active step (1-based) */
+  currentStep?: number
+  /** Total number of steps */
+  totalSteps?: number
+  /** ARIA label for navigation */
+  ariaLabel?: string
+  /** Show mobile responsive behavior */
+  responsive?: boolean
+  /** Mobile breakpoint in pixels */
+  mobileBreakpoint?: number
+  /** Show extra step information */
+  showStepInfo?: boolean
+  /** Enable clickable steps */
+  clickableSteps?: boolean
+  /** Modal title for mobile view */
+  modalTitle?: string
+  /** ARIA label for mobile modal */
+  modalAriaLabel?: string
+  /** Close button text */
+  closeButtonText?: string
+}
 
-import { formId, dropdown } from 'dkfds-vue3-utils';
+const props = withDefaults(defineProps<Props>(), {
+  id: null,
+  currentStep: 1,
+  totalSteps: 0,
+  ariaLabel: 'Trinindikator',
+  responsive: true,
+  mobileBreakpoint: 768,
+  showStepInfo: false,
+  clickableSteps: false,
+  modalTitle: 'Trin',
+  modalAriaLabel: 'Trin modal',
+  closeButtonText: 'Luk'
+})
 
-const props = defineProps({
-  header: {
-    type: String,
-    default: 'Trin', // TODO: overvej interpolation
-  },
-  id: {
-    type: String,
-    default: null,
-  },
-  icon: {
-    type: String,
-    default: 'arrow-drop-down',
-  },
-  size: {
-    type: String,
-    default: 'large',
-    validator(value: string) {
-      return ['small', 'large'].includes(value);
-    },
-  },
-});
+const emit = defineEmits<{
+  /** Emitted when a step is clicked (if clickable) */
+  'step-click': [stepNumber: number]
+  /** Emitted when mobile modal opens */
+  'modal-open': []
+  /** Emitted when mobile modal closes */
+  'modal-close': []
+}>()
 
-const { formid } = formId(props.id, true);
+const { formid } = formId(props.id, true)
+const mobileModal = ref<InstanceType<typeof FdsModal> | null>(null)
 
-const lgNoResponsive = computed(() =>
-  props.size === 'large' ? 'overflow-menu--lg-no-responsive' : '',
-);
+const stepIndicatorClasses = computed(() => ({
+  'step-indicator--clickable': props.clickableSteps,
+  'step-indicator--with-info': props.showStepInfo
+}))
 
-onMounted(async () => {
-  new dropdown(document.getElementById(`button_${formid.value}`)).init();
-});
+const openMobileModal = () => {
+  mobileModal.value?.showModal()
+  emit('modal-open')
+}
+
+const closeMobileModal = () => {
+  mobileModal.value?.hideModal()
+  emit('modal-close')
+}
 </script>
+

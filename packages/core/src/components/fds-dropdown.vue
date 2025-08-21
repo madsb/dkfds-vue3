@@ -2,6 +2,7 @@
   <select
     :id="formid"
     ref="refElement"
+    v-model="selectedValue"
     class="form-select"
     :class="{ dirty: dirty }"
     :name="formid"
@@ -13,39 +14,40 @@
 </template>
 
 <script setup lang="ts">
-import { formId } from 'dkfds-vue3-utils';
+import { formId } from 'dkfds-vue3-utils'
 
-import { defineProps, defineEmits, ref, onMounted } from 'vue';
+import { ref, computed } from 'vue'
 
-const props = defineProps({
-  id: {
-    type: String,
-    default: null,
-  },
-  modelValue: {
-    type: String,
-    required: false,
-    default: '',
-  },
-});
+const { id = null, modelValue = '' } = defineProps<{
+  id?: string | null
+  modelValue?: string
+}>()
 
-const emit = defineEmits(['update:modelValue', 'dirty', 'change']);
+const emit = defineEmits<{
+  'update:modelValue': [value: string]
+  dirty: [isDirty: boolean]
+  change: [event: Event]
+}>()
 
-const { formid } = formId(props.id, true);
-const refElement = ref(null);
-const dirty = ref(false);
+const { formid } = formId(id, true)
+const refElement = ref(null)
+const dirty = ref(false)
 
-const onInput = (event: Event) =>
-  emit('update:modelValue', (event?.target as HTMLInputElement).value);
+// Create a computed property for v-model binding
+const selectedValue = computed({
+  get: () => modelValue,
+  set: (value: string) => emit('update:modelValue', value),
+})
+
+const onInput = (event: Event) => {
+  // The v-model binding already handles the emit, so we just need to emit the change event
+  emit('change', event)
+}
+
 const onDirty = () => {
-  dirty.value = true;
-  emit('dirty', true);
-};
-
-onMounted(() => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (refElement.value as any).dispatchEvent(new Event('change'));
-});
+  dirty.value = true
+  emit('dirty', true)
+}
 </script>
 
 <style scoped lang="scss"></style>

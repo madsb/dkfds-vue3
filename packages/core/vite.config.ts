@@ -1,8 +1,8 @@
-import { resolve } from 'path';
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
+import { resolve } from 'path'
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
 
-import packageJson from './package.json';
+import packageJson from './package.json'
 
 export default defineConfig({
   plugins: [vue()],
@@ -23,4 +23,4 @@ export default defineConfig({
   define: {
     VERSION: JSON.stringify(packageJson.version),
   },
-});
+})

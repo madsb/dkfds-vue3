@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="component-code"
-    aria-hidden="true">
+  <div class="component-code" aria-hidden="true">
     <legend v-if="header">
       {{ header }}
     </legend>
@@ -10,12 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
-
-defineProps({
-  header: {
-    type: String,
-    default: null,
-  },
-});
+const { header = null } = defineProps<{
+  header?: string | null
+}>()
 </script>

@@ -1,74 +1,93 @@
 <template>
-  <div class="card">
-    <slot name="custom" />
+  <!-- Custom slot replaces entire structure when used -->
+  <slot v-if="$slots.custom" name="custom" />
 
-    <div
-      v-if="$slots.content"
-      class="card-content">
-      <slot name="content" />
+  <!-- Navigation card (link wrapper) -->
+  <component
+    :is="'a'"
+    v-else-if="href"
+    :href="href"
+    :class="['card', { long: variant === 'long' }]"
+  >
+    <div v-if="$slots.image" class="card-image">
+      <slot name="image" />
     </div>
 
-    <div
-      v-if="$slots.header || header"
-      class="card-header">
+    <div class="card-content">
+      <span v-if="subheader" class="card-subheading">
+        {{ subheader }}
+      </span>
+
       <slot name="header">
-        <component
-          :is="headerTag"
-          class="header-title">
+        <component :is="headerTag" v-if="header" class="card-heading">
           {{ header }}
         </component>
-        <p
-          v-if="subheader"
-          class="sub-header">
-          {{ subheader }}
-        </p>
       </slot>
-    </div>
 
-    <div class="card-text">
+      <slot name="content" />
+
       <slot />
     </div>
 
-    <div
-      v-if="$slots.actions"
-      class="card-footer card-action">
-      <div class="action-buttons">
+    <!-- Navigation icon -->
+    <fds-ikon v-if="icon" :icon="icon" class="card-icon" :decorative="true" />
+  </component>
+
+  <!-- Regular card (section wrapper) -->
+  <section v-else :class="['card', { long: variant === 'long' }]">
+    <div v-if="$slots.image" class="card-image">
+      <slot name="image" />
+    </div>
+
+    <div class="card-content">
+      <span v-if="subheader" class="card-subheading">
+        {{ subheader }}
+      </span>
+
+      <slot name="header">
+        <component :is="headerTag" v-if="header" class="card-heading">
+          {{ header }}
+        </component>
+      </slot>
+
+      <slot name="content" />
+
+      <slot />
+
+      <div v-if="$slots.actions" class="card-actions">
         <slot name="actions" />
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
+import FdsIkon from './fds-ikon.vue'
+
 /**
  *
  * Komponent for card
  * https://designsystem.dk/komponenter/cards/
  *
  * */
-import { defineProps, PropType } from 'vue';
-
-defineProps({
-  /**
-   * Overskrift
-   * */
-  header: {
-    type: String,
-    default: null,
-  },
-  headerTag: {
-    type: String as PropType<'h2' | 'h3' | 'h4' | 'h5' | 'h6'>,
-    default: 'h2',
-    validator(value: string) {
-      return ['h2', 'h3', 'h4', 'h5', 'h6'].includes(value);
-    },
-  },
-  /**
-   * Under overskrift
-   * */
-  subheader: {
-    type: String,
-    default: null,
-  },
-});
+const {
+  /** Overskrift */
+  header = null,
+  headerTag = 'h2',
+  /** Under overskrift */
+  subheader = null,
+  /** Link for navigation card */
+  href = null,
+  /** Icon for navigation card (e.g., 'arrow-forward', 'open-in-new') */
+  icon = null,
+  /** Card variant */
+  variant = null,
+} = defineProps<{
+  header?: string | null
+  headerTag?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  subheader?: string | null
+  href?: string | null
+  icon?: string | null
+  variant?: 'long' | null
+}>()
 </script>

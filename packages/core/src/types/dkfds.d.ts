@@ -15,165 +15,165 @@
 /* eslint max-classes-per-file: 'off' */
 declare module 'dkfds' {
   class Accordion {
-    constructor($accordion: any);
+    constructor($accordion: any)
 
-    bulkEvent(): void;
+    bulkEvent(): void
 
-    eventOnClick($button: any, e: any): void;
+    eventOnClick($button: any, e: any): void
 
-    init(): void;
+    init(): void
 
-    toggleButton(button: any, expanded: any, ...args: any[]): void;
+    toggleButton(button: any, expanded: any, ...args: any[]): void
   }
   class Alert {
-    constructor(alert: any);
+    constructor(alert: any)
 
-    hide(): void;
+    hide(): void
 
-    init(): void;
+    init(): void
 
-    show(): void;
+    show(): void
   }
   class BackToTop {
-    constructor(backtotop: any);
+    constructor(backtotop: any)
 
-    init(): void;
+    init(): void
   }
   class CharacterLimit {
-    constructor(containerElement: any);
+    constructor(containerElement: any)
 
-    charactersLeft(): any;
+    charactersLeft(): any
 
-    handleBlur(e: any): void;
+    handleBlur(e: any): void
 
-    handleFocus(e: any): void;
+    handleFocus(e: any): void
 
-    handleKeyUp(e: any): void;
+    handleKeyUp(e: any): void
 
-    init(): void;
+    init(): void
 
-    resetScreenReaderMessage(): void;
+    resetScreenReaderMessage(): void
 
-    updateMessages(e: any): void;
+    updateMessages(e: any): void
 
-    updateScreenReaderMessage(): void;
+    updateScreenReaderMessage(): void
 
-    updateVisibleMessage(): void;
+    updateVisibleMessage(): void
   }
   class CheckboxToggleContent {
-    constructor(checkboxElement: any);
+    constructor(checkboxElement: any)
 
-    collapse(triggerEl: any, targetEl: any): void;
+    collapse(triggerEl: any, targetEl: any): void
 
-    expand(checkboxElement: any, contentElement: any): void;
+    expand(checkboxElement: any, contentElement: any): void
 
-    init(): void;
+    init(): void
 
-    toggle(): void;
+    toggle(): void
   }
   class Dropdown {
-    constructor(buttonElement: any);
+    constructor(buttonElement: any)
 
-    hide(): void;
+    hide(): void
 
-    init(): void;
+    init(): void
 
-    show(): void;
+    show(): void
   }
   class DropdownSort {
-    constructor(container: any);
+    constructor(container: any)
 
-    init(): void;
+    init(): void
 
-    onOptionClick(e: any): void;
+    onOptionClick(e: any): void
 
-    updateSelectedValue(): void;
+    updateSelectedValue(): void
   }
   class ErrorSummary {
-    constructor(element: any);
+    constructor(element: any)
 
-    focusTarget($target: any): any;
+    focusTarget($target: any): any
 
-    getAssociatedLegendOrLabel($input: any): any;
+    getAssociatedLegendOrLabel($input: any): any
 
-    getFragmentFromUrl(url: any): any;
+    getFragmentFromUrl(url: any): any
 
-    handleClick(event: any): void;
+    handleClick(event: any): void
 
-    init(): void;
+    init(): void
   }
   class Modal {
-    constructor($modal: any);
+    constructor($modal: any)
 
-    hide(): void;
+    hide(): void
 
-    init(): void;
+    init(): void
 
-    show(...args: any[]): void;
+    show(...args: any[]): void
   }
   class Navigation {
-    constructor();
+    constructor()
 
-    init(): void;
+    init(): void
 
-    teardown(): void;
+    teardown(): void
   }
   class RadioToggleGroup {
-    constructor(containerElement: any);
+    constructor(containerElement: any)
 
-    collapse(radioInputElement: any, contentElement: any): void;
+    collapse(radioInputElement: any, contentElement: any): void
 
-    expand(radioInputElement: any, contentElement: any): void;
+    expand(radioInputElement: any, contentElement: any): void
 
-    init(): void;
+    init(): void
 
-    toggle(radioInputElement: any): void;
+    toggle(radioInputElement: any): void
   }
   class TableSelectableRows {
-    constructor(table: any, ...args: any[]);
+    constructor(table: any, ...args: any[])
 
-    getCheckboxList(): any;
+    getCheckboxList(): any
 
-    getGroupCheckbox(): any;
+    getGroupCheckbox(): any
 
-    init(): void;
+    init(): void
   }
   class Tabnav {
-    constructor(tabnav: any);
+    constructor(tabnav: any)
 
-    activateTab(tab: any, setFocus: any): void;
+    activateTab(tab: any, setFocus: any): void
 
-    init(): void;
+    init(): void
   }
   class Toast {
-    constructor(element: any);
+    constructor(element: any)
 
-    hide(): void;
+    hide(): void
 
-    show(): void;
+    show(): void
   }
   class Tooltip {
-    constructor(element: any);
+    constructor(element: any)
 
-    init(): void;
+    init(): void
   }
-  function InputRegexMask(element: any): void;
-  function ResponsiveTable(table: any): void;
-  function init(options?: any): void;
+  function InputRegexMask(element: any): void
+  function ResponsiveTable(table: any): void
+  function init(options?: any): void
   namespace datePicker {
-    function add(element: any): void;
-    function disable(el: any): void;
-    function enable(el: any): void;
-    function getDatePickerContext(el: any): any;
+    function add(element: any): void
+    function disable(el: any): void
+    function enable(el: any): void
+    function getDatePickerContext(el: any): any
     // eslint-disable-next-line @typescript-eslint/no-shadow
-    function init(root: any): void;
-    function isDateInputInvalid(el: any): any;
-    function off(...args: any[]): void;
-    function on(...args: any[]): void;
-    function remove(element: any): void;
-    function renderCalendar(el: any, _dateToDisplay: any): any;
-    function setCalendarValue(el: any, dateString: any): void;
-    function updateCalendarIfVisible(el: any): void;
-    function validateDateInput(el: any): void;
+    function init(root: any): void
+    function isDateInputInvalid(el: any): any
+    function off(...args: any[]): void
+    function on(...args: any[]): void
+    function remove(element: any): void
+    function renderCalendar(el: any, _dateToDisplay: any): any
+    function setCalendarValue(el: any, dateString: any): void
+    function updateCalendarIfVisible(el: any): void
+    function validateDateInput(el: any): void
   }
 }
