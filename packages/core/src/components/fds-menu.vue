@@ -1,9 +1,12 @@
 <template>
-  <nav :aria-label="ariaLabel">
+  <nav v-if="variant === 'sidemenu'" :aria-label="ariaLabel">
     <ul :class="cssClass">
       <slot />
     </ul>
   </nav>
+  <ul v-else :class="cssClass">
+    <slot />
+  </ul>
 </template>
 
 <script setup lang="ts">
@@ -15,12 +18,11 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant: 'sidemenu',
-  ariaLabel: 'Navigation'
+  variant: 'sidemenu'
 })
 
 const cssClass = computed(() => {
-  return 'sidemenu'
+  return props.variant === 'submenu' ? '' : 'sidemenu'
 })
 </script>
 
