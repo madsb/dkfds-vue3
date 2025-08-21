@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { provide, computed, useSlots } from 'vue'
-import { formId } from 'dkfds-vue3-utils'
+import { formId } from '@madsb/dkfds-vue3-utils'
 
 interface Props {
   /** The v-model value */

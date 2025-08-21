@@ -86,8 +86,8 @@
  * DKFDS Pagination Component
  * https://designsystem.dk/komponenter/paginering/
  */
-import { generateId } from 'dkfds-vue3-utils'
-import type { FdsPaging } from 'dkfds-vue3-utils'
+import { generateId } from '@madsb/dkfds-vue3-utils'
+import type { FdsPaging } from '@madsb/dkfds-vue3-utils'
 import { computed, ref, watch } from 'vue'
 import FdsIkon from './fds-ikon.vue'
 

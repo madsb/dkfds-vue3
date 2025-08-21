@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { computed, useSlots, useAttrs, inject, isRef, type Ref } from 'vue'
-import { formId } from 'dkfds-vue3-utils'
+import { formId } from '@madsb/dkfds-vue3-utils'
 
 const attrs = useAttrs()
 

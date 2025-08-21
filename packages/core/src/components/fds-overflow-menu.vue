@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { formId } from 'dkfds-vue3-utils'
+import { formId } from '@madsb/dkfds-vue3-utils'
 import FdsIkon from './fds-ikon.vue'
 
 interface Props {

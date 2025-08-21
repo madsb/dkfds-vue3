@@ -64,8 +64,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 
-import { removeBrowserFileContentHeaders, formId } from 'dkfds-vue3-utils'
-import { FdsFileInputModel } from 'dkfds-vue3-utils'
+import { removeBrowserFileContentHeaders, formId } from '@madsb/dkfds-vue3-utils'
+import { FdsFileInputModel } from '@madsb/dkfds-vue3-utils'
 import FdsIkon from './fds-ikon.vue'
 
 /**

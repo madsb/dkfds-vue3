@@ -15,7 +15,7 @@
  * DKFDS Toast Container Component
  * https://designsystem.dk/komponenter/toastbesked/
  */
-import { generateId } from 'dkfds-vue3-utils'
+import { generateId } from '@madsb/dkfds-vue3-utils'
 
 interface Props {
   /** Unique identifier for the container */

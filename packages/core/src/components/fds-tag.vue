@@ -18,7 +18,7 @@
  * in a concise and contextually relevant manner.
  */
 
-import { formId } from 'dkfds-vue3-utils'
+import { formId } from '@madsb/dkfds-vue3-utils'
 import { computed, useSlots } from 'vue'
 import FdsIkon from './fds-ikon.vue'
 

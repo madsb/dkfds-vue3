@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
-import { generateId, tooltip as TooltipUtil } from 'dkfds-vue3-utils'
+import { generateId, tooltip as TooltipUtil } from '@madsb/dkfds-vue3-utils'
 import FdsIkon from './fds-ikon.vue'
 
 export interface FdsTooltipProps {

@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { computed, inject, provide, ref } from 'vue'
-import { formId } from 'dkfds-vue3-utils'
+import { formId } from '@madsb/dkfds-vue3-utils'
 
 interface Props {
   /**

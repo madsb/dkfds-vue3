@@ -34,9 +34,9 @@
  * DKFDS Toast Component
  * https://designsystem.dk/komponenter/toastbesked/
  */
-import { generateId } from 'dkfds-vue3-utils'
+import { generateId } from '@madsb/dkfds-vue3-utils'
 // @ts-ignore - Toast class import
-import { toast as ToastClass } from 'dkfds-vue3-utils'
+import { toast as ToastClass } from '@madsb/dkfds-vue3-utils'
 import { computed, onMounted, onUnmounted, ref, watch, nextTick } from 'vue'
 
 const Toast = ToastClass as any

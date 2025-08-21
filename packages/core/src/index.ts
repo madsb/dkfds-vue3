@@ -135,10 +135,11 @@ function install(app: App): void {
   app.component('fds-preview-example', FdsPreviewExample)
 }
 
-export default install as unknown as Plugin
-
 // https://stackoverflow.com/questions/65290358/vue3-typescript-declaration-file
 // https://stackoverflow.com/questions/64155229/add-global-properties-to-vue-3-using-typescript
+
+// Export install function as named export
+export { install }
 
 // Export composables
 export { useToast } from './composables/useToast'

@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { computed, provide, ref, onMounted, onUnmounted, toValue } from 'vue'
-import { generateId } from 'dkfds-vue3-utils'
+import { generateId } from '@madsb/dkfds-vue3-utils'
 import FdsIkon from './fds-ikon.vue'
 
 export interface ErrorItem {

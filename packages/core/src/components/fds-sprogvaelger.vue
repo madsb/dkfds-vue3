@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import { computed, watch } from 'vue'
-import { FdsLanguageItem } from 'dkfds-vue3-utils'
+import { FdsLanguageItem } from '@madsb/dkfds-vue3-utils'
 import FdsIkon from './fds-ikon.vue'
 
 interface ExtendedFdsLanguageItem extends FdsLanguageItem {

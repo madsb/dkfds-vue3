@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { computed, inject, isRef, type Ref } from 'vue'
-import { formId } from 'dkfds-vue3-utils'
+import { formId } from '@madsb/dkfds-vue3-utils'
 
 interface Props {
   /** The ID of the form control this label is associated with */

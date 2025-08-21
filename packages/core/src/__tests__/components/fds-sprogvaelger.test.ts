@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import FdsSprogvaelger from '../../components/fds-sprogvaelger.vue'
-import type { FdsLanguageItem } from 'dkfds-vue3-utils'
+import type { FdsLanguageItem } from '@madsb/dkfds-vue3-utils'
 
 // Mock document.documentElement.setAttribute
 const mockSetAttribute = vi.fn()

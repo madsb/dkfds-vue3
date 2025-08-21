@@ -4,7 +4,7 @@
  */
 import { ref, nextTick, createApp, h } from 'vue'
 import FdsToast from '../components/fds-toast.vue'
-import { generateId } from 'dkfds-vue3-utils'
+import { generateId } from '@madsb/dkfds-vue3-utils'
 
 export interface ToastOptions {
   type?: 'info' | 'success' | 'warning' | 'error'

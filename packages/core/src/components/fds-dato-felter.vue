@@ -61,7 +61,7 @@
 </template>
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { formId } from 'dkfds-vue3-utils'
+import { formId } from '@madsb/dkfds-vue3-utils'
 
 const day = ref<HTMLInputElement | null>(null)
 const month = ref<HTMLInputElement | null>(null)

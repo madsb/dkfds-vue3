@@ -46,7 +46,7 @@
 
 // https://stackoverflow.com/questions/25864259/how-to-close-the-new-html-dialog-tag-by-clicking-on-its-backdrop
 
-import { generateId } from 'dkfds-vue3-utils'
+import { generateId } from '@madsb/dkfds-vue3-utils'
 import { computed, ref, onMounted } from 'vue'
 import FdsIkon from './fds-ikon.vue'
 
