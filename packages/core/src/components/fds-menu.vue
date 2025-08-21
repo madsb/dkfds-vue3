@@ -1,5 +1,5 @@
 <template>
-  <nav :aria-label="ariaLabel || 'Navigation'">
+  <nav :aria-label="ariaLabel">
     <ul :class="cssClass">
       <slot />
     </ul>
@@ -9,15 +9,17 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-const { variant = null, ariaLabel } = defineProps<{
-  variant?: 'venstremenu' | 'trin' | 'submenu' | null
+interface Props {
+  variant?: 'sidemenu' | 'submenu'
   ariaLabel?: string
-}>()
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  variant: 'sidemenu',
+  ariaLabel: 'Navigation'
+})
 
 const cssClass = computed(() => {
-  if (variant === 'submenu') {
-    return 'sidemenu'
-  }
   return 'sidemenu'
 })
 </script>

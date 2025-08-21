@@ -1,55 +1,57 @@
 <template>
-  <li role="none" :class="[{ 'active current': active }]">
+  <li :class="[{ 'active current': active }]">
     <a
-      :href="`${href ? href : '#'}`"
-      role="menuitem"
+      :href="href || '#'"
       class="nav-link"
       :aria-current="active ? 'page' : undefined"
-      @click="navigate($event, id)"
+      @click="navigate($event)"
     >
       <span>
         <template v-if="index !== null">{{ `${index}. ` }}</template>
         <slot />
       </span>
 
-      <span v-if="icon" class="sidenav-icon">
-        <svg class="icon-svg" focusable="false" aria-hidden="true">
-          <use :href="`#${icon}`" />
-        </svg>
-      </span>
-      <p v-if="hint && hint.length > 0" class="sidenav-information">
+      <fds-ikon v-if="icon" :icon="icon" class="sidenav-icon" :decorative="true" />
+      <p v-if="hint" class="sidenav-information">
         {{ hint }}
       </p>
     </a>
-    <slot name="submenu" />
+    <ul v-if="$slots.submenu">
+      <slot name="submenu" />
+    </ul>
   </li>
 </template>
 
 <script setup lang="ts">
-const {
-  id,
-  active = false,
-  icon = null,
-  hint = null,
-  href = null,
-  index = null,
-} = defineProps<{
-  id: string
+import FdsIkon from './fds-ikon.vue'
+
+interface Props {
+  id?: string
   active?: boolean
-  icon?: string | null
-  hint?: string | null
-  href?: string | null
+  icon?: string
+  hint?: string
+  href?: string
   index?: number | null
-}>()
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  active: false,
+  index: null
+})
 
 const emit = defineEmits<{
-  'update:modelValue': [value: any]
-  navigate: [key: string]
+  navigate: [id?: string]
+  click: [event: MouseEvent]
 }>()
 
-const navigate = (event: Event, key: string) => {
-  event.preventDefault()
-  emit('navigate', key)
+const navigate = (event: MouseEvent) => {
+  if (!props.href || props.href === '#') {
+    event.preventDefault()
+  }
+  emit('click', event)
+  if (props.id) {
+    emit('navigate', props.id)
+  }
 }
 </script>
 

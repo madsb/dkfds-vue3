@@ -12,10 +12,6 @@
       "import": "./core/index.mjs",
       "types": "./core/index.d.ts"
     },
-    "./extra": {
-      "import": "./extra/index.mjs",
-      "types": "./extra/index.d.ts"
-    },
     "./utils": {
       "import": "./utils/index.mjs",
       "types": "./utils/index.d.ts"
@@ -33,7 +29,6 @@
   "dependencies": {
     "dkfds": "^11.0.1",
     "dkfds-vue3-core": "workspace:*",
-    "dkfds-vue3-extra": "workspace:*",
     "dkfds-vue3-utils": "workspace:*"
   },
   "devDependencies": {

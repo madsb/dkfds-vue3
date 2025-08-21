@@ -7,7 +7,7 @@ export default mergeConfig(
   defineConfig({
     test: {
       setupFiles: [resolve(__dirname, '../../test-shared/setup-node.ts')],
-      environment: 'node', // Utils package doesn't need jsdom
+      environment: 'jsdom', // Changed to jsdom for navigation tests that need DOM
     },
     resolve: {
       alias: {

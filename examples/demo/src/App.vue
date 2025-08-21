@@ -85,11 +85,6 @@
               <span>Komponenter</span>
             </a>
           </li>
-          <li :class="[{ current: isPartOfMenu('ekstrakomponenter') }]">
-            <a href="#" class="nav-link" @click.prevent="navigateTo('ekstrakomponenter')">
-              <span>Ekstra Komponenter</span>
-            </a>
-          </li>
           <li :class="[{ current: isPartOfMenu('boblere') }]">
             <a href="#" class="nav-link" @click.prevent="navigateTo('boblere')">
               <span>Boblere</span>

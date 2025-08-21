@@ -1,7 +1,5 @@
 <template>
   <article>
-    <h1>Knapper</h1>
-
     <!-- Basic Button Examples -->
     <section>
       <h2>Grundlæggende eksempel</h2>

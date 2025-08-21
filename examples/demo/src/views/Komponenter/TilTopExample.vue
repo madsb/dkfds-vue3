@@ -1,7 +1,5 @@
 <template>
   <article>
-    <h1>Tilbage til toppen</h1>
-
     <!-- Basic Example -->
     <section>
       <h2>Grundlæggende eksempel</h2>
@@ -224,7 +222,7 @@ const codeBasic = `
 
 const codeCustom = `
 <!-- Med tilpasset tekst og tærskel -->
-<fds-til-top 
+<fds-til-top
   visible-text="Hop til top"
   screen-reader-text="Gå til toppen af denne side"
   :threshold="300"
@@ -244,15 +242,15 @@ const codeLayout = `
     <header id="top">
       <!-- ... -->
     </header>
-    
+
     <main>
       <!-- ... side indhold ... -->
     </main>
-    
+
     <footer>
       <!-- Tilbage til toppen knap placeret i footer -->
       <fds-til-top />
-      
+
       <!-- ... andet footer indhold ... -->
     </footer>
   </div>

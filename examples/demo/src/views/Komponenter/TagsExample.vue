@@ -1,6 +1,5 @@
 <template>
   <section>
-    <h2>Tags</h2>
     <p>
       Tags bruges til at vise sekundære, metadata-relaterede oplysninger på en præcis og
       kontekstuelt relevant måde.

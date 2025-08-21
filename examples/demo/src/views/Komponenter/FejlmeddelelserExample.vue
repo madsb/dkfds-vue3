@@ -20,20 +20,20 @@
       </fds-preview-code>
 
       <fds-preview-item>
-        <h3>Automatisk fejlmeddelelse med xfds-validate</h3>
-        <xfds-validate v-model="txtEmail" :validations="emailValidations" :dirty="emailDirty">
-          <fds-formgroup>
-            <fds-label>E-mail</fds-label>
-            <fds-hint>Indtast din e-mail adresse</fds-hint>
-            <fds-fejlmeddelelse />
-            <fds-input
-              v-model="txtEmail"
-              input-type="email"
-              autocomplete="email"
-              @blur="emailDirty = true"
-            />
-          </fds-formgroup>
-        </xfds-validate>
+        <h3>Automatisk fejlmeddelelse med validering</h3>
+        <fds-formgroup :is-valid="emailValid">
+          <fds-label>E-mail</fds-label>
+          <fds-hint>Indtast din e-mail adresse</fds-hint>
+          <fds-fejlmeddelelse v-if="!emailValid">
+            {{ emailError }}
+          </fds-fejlmeddelelse>
+          <fds-input
+            v-model="txtEmail"
+            input-type="email"
+            autocomplete="email"
+            @blur="emailDirty = true"
+          />
+        </fds-formgroup>
       </fds-preview-item>
 
       <fds-preview-code>
@@ -95,7 +95,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const txtKursus = ref('')
 const txtEmail = ref('')
@@ -117,6 +117,21 @@ const emailValidations = [
   },
 ]
 
+// Validation logic for email
+const emailValid = computed(() => {
+  if (!emailDirty.value) return true
+  return emailValidations.every(v => !v(txtEmail.value))
+})
+
+const emailError = computed(() => {
+  if (emailValid.value || !emailDirty.value) return ''
+  for (const validation of emailValidations) {
+    const error = validation(txtEmail.value)
+    if (error) return error
+  }
+  return ''
+})
+
 const code = `
 <fds-formgroup :is-valid="false">
   <fds-label> Kursustitel </fds-label>
@@ -130,38 +145,33 @@ const code = `
 `
 
 const codeValidate = `
-<xfds-validate 
-  v-model="txtEmail" 
-  :validations="emailValidations"
-  :dirty="emailDirty"
->
-  <fds-formgroup>
-    <fds-label>E-mail</fds-label>
-    <fds-hint>Indtast din e-mail adresse</fds-hint>
-    <fds-fejlmeddelelse />
-    <fds-input 
-      v-model="txtEmail" 
-      input-type="email" 
-      autocomplete="email"
-      @blur="emailDirty = true"
-    />
-  </fds-formgroup>
-</xfds-validate>
+<fds-formgroup :is-valid="emailValid">
+  <fds-label>E-mail</fds-label>
+  <fds-hint>Indtast din e-mail adresse</fds-hint>
+  <fds-fejlmeddelelse v-if="!emailValid">
+    {{ emailError }}
+  </fds-fejlmeddelelse>
+  <fds-input 
+    v-model="txtEmail" 
+    input-type="email" 
+    autocomplete="email"
+    @blur="emailDirty = true"
+  />
+</fds-formgroup>
 
-const emailValidations = [
-  (value: string) => {
-    if (!value) {
-      return 'E-mail er påkrævet'
-    }
-    return null
-  },
-  (value: string) => {
-    const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/
-    if (!emailRegex.test(value)) {
-      return 'Indtast en gyldig e-mail adresse'
-    }
-    return null
+// I script setup:
+const emailValid = computed(() => {
+  if (!emailDirty.value) return true
+  return emailValidations.every(v => !v(txtEmail.value))
+})
+
+const emailError = computed(() => {
+  if (emailValid.value || !emailDirty.value) return ''
+  for (const validation of emailValidations) {
+    const error = validation(txtEmail.value)
+    if (error) return error
   }
-]
+  return ''
+})
 `
 </script>

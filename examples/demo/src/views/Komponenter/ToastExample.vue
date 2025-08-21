@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2 class="h3">Toastbeskeder</h2>
     <p>
       Toastbeskeder bruges til at vise midlertidige notifikationer til brugeren. De kan være
       informative, succesfulde, advarsler eller fejlmeddelelser.
@@ -21,9 +20,7 @@
           <fds-button variant="secondary" @click="showPersistentToast">
             Vedvarende toast
           </fds-button>
-          <fds-button variant="tertiary" @click="showClickableToast">
-            Klikbar toast
-          </fds-button>
+          <fds-button variant="tertiary" @click="showClickableToast"> Klikbar toast </fds-button>
         </div>
 
         <h3 class="h4 mt-5">Håndtering</h3>

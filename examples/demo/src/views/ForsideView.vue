@@ -65,11 +65,6 @@
             Vi har lavet ekstra komponenter der udvider funktionalitet, der hjælper til brugen af
             komponenent biblioteket
           </p>
-          <p>
-            <router-link :to="{ name: 'ekstrakomponenter' }" class="bold-link">
-              Brug Ekstra komponenter
-            </router-link>
-          </p>
         </div>
         <div class="col-12 col-lg-4">
           <h2 class="mt-0">Implementering</h2>

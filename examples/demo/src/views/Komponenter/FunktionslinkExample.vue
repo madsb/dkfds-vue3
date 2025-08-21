@@ -1,7 +1,5 @@
 <template>
   <article>
-    <h1>Funktionslink</h1>
-
     <!-- Basic Example -->
     <section>
       <h2>Grundlæggende eksempel</h2>

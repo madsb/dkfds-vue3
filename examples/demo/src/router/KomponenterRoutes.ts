@@ -119,6 +119,16 @@ const komponenterRoutes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Komponenter/KnapperExample.vue'),
       },
       {
+        path: 'list',
+        name: 'komponentlist',
+        component: () => import('@/views/Komponenter/ListExample.vue'),
+      },
+      {
+        path: 'menu',
+        name: 'komponentmenu',
+        component: () => import('@/views/Komponenter/MenuExample.vue'),
+      },
+      {
         path: 'modalvindue',
         name: 'komponentmodalvindue',
         component: () => import('@/views/Komponenter/ModalvindueExample.vue'),

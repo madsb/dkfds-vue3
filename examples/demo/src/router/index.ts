@@ -1,8 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import ekstraKomponenterRoutes from './ekstrakomponenterRoutes'
 import komponenterRoutes from './KomponenterRoutes'
 import anbefalingerRoutes from './AnbefalingerRoutes'
-import boblereRoutes from './BoblereRoutes'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -20,8 +18,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/AnbefalingerView.vue'),
   },
   ...komponenterRoutes,
-  ...ekstraKomponenterRoutes,
-  ...boblereRoutes,
   ...anbefalingerRoutes,
   {
     path: '/about',
