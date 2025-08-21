@@ -1,21 +1,21 @@
 <template>
   <div :class="wrapperClass">
-    <div v-if="props.prefix" class="form-input-prefix" aria-hidden="true">
-      {{ props.prefix }}
+    <div v-if="prefix" class="form-input-prefix" aria-hidden="true">
+      {{ prefix }}
     </div>
     <input
       v-bind="attrs"
       :id="formid"
       v-model="inputValue"
-      :type="props.type"
+      :type="type"
       :class="inputClass"
       :name="formid"
       :aria-describedby="computedAriaDescribedby"
       @input="handleInput"
       @blur="handleBlur"
     />
-    <div v-if="props.suffix" class="form-input-suffix" aria-hidden="true">
-      {{ props.suffix }}
+    <div v-if="suffix" class="form-input-suffix" aria-hidden="true">
+      {{ suffix }}
     </div>
     <slot name="button" />
   </div>
@@ -29,27 +29,27 @@ const attrs = useAttrs()
 
 interface Props {
   /** Unique identifier for the input */
-  id?: string | null
+  id?: string
   /** The v-model value */
   modelValue?: string
   /** Suffix text displayed after the input */
-  suffix?: string | null
+  suffix?: string
   /** Prefix text displayed before the input */
-  prefix?: string | null
+  prefix?: string
   /** Input type attribute */
   type?: string
   /** Width class for input sizing */
   widthClass?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  id: null,
-  modelValue: '',
-  suffix: null,
-  prefix: null,
-  type: 'text',
-  widthClass: '',
-})
+const {
+  id,
+  modelValue = '',
+  suffix,
+  prefix,
+  type = 'text',
+  widthClass = '',
+} = defineProps<Props>()
 
 const emit = defineEmits<{
   /** Emitted when input value changes */
@@ -61,7 +61,7 @@ const emit = defineEmits<{
 }>()
 const slots = useSlots()
 
-const { formid } = formId(props.id, true)
+const { formid } = formId(id, true)
 
 // Inject aria-describedby from formgroup if available
 const injectedAriaDescribedby = inject<string | Ref<string> | undefined>(
@@ -86,9 +86,9 @@ const computedAriaDescribedby = computed((): string | undefined => {
 const wrapperClass = computed((): string => {
   const classes: string[] = []
 
-  if (props.suffix) {
+  if (suffix) {
     classes.push('form-input-wrapper', 'form-input-wrapper--suffix')
-  } else if (props.prefix) {
+  } else if (prefix) {
     classes.push('form-input-wrapper', 'form-input-wrapper--prefix')
   } else if (slots.button) {
     classes.push('search')
@@ -103,8 +103,8 @@ const wrapperClass = computed((): string => {
 const inputClass = computed((): string => {
   const classes = ['form-input']
 
-  if (props.widthClass) {
-    classes.push(props.widthClass)
+  if (widthClass) {
+    classes.push(widthClass)
   }
 
   return classes.join(' ')
@@ -112,7 +112,7 @@ const inputClass = computed((): string => {
 
 const inputValue = computed({
   get() {
-    return props.modelValue
+    return modelValue
   },
   set(newValue) {
     emit('update:modelValue', newValue)

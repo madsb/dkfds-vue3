@@ -85,7 +85,7 @@ import FdsIkon from './fds-ikon.vue'
 
 export interface Props {
   /** Unique identifier for the input */
-  id?: string | null
+  id?: string
   /** Input name attribute */
   name?: string
   /** Label text for the file input */
@@ -124,27 +124,27 @@ export interface Props {
   removeFileText?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  id: null,
-  name: '',
-  label: 'Vælg fil',
-  showLabel: true,
-  hint: '',
-  accept: () => ['image/png', 'image/jpg', 'image/jpeg', '.pdf', '.doc', '.docx', '.odt'],
-  multiple: false,
-  maxFileSize: 5242880, // 5MB
-  maxFiles: 10,
-  disabled: false,
-  required: false,
-  error: '',
-  removeContentHeaders: false,
-  showFileList: true,
-  removable: true,
-  requiredText: 'Obligatorisk felt',
-  ariaLive: 'polite',
-  fileListAriaLabel: 'Valgte filer',
-  removeFileText: 'Fjern fil',
-})
+const {
+  id,
+  name = '',
+  label = 'Vælg fil',
+  showLabel = true,
+  hint = '',
+  accept = ['image/png', 'image/jpg', 'image/jpeg', '.pdf', '.doc', '.docx', '.odt'],
+  multiple = false,
+  maxFileSize = 5242880, // 5MB
+  maxFiles = 10,
+  disabled = false,
+  required = false,
+  error = '',
+  removeContentHeaders = false,
+  showFileList = true,
+  removable = true,
+  requiredText = 'Obligatorisk felt',
+  ariaLive = 'polite',
+  fileListAriaLabel = 'Valgte filer',
+  removeFileText = 'Fjern fil',
+} = defineProps<Props>()
 
 const emit = defineEmits<{
   /** Emitted when input loses focus */
@@ -161,17 +161,17 @@ const emit = defineEmits<{
   'remove-file': [index: number, file: File]
 }>()
 
-const { formid } = formId(props.id, true)
+const { formid } = formId(id, true)
 const selectedFiles = ref<File[]>([])
 const isDirty = ref(false)
-const hintId = computed(() => (props.hint ? `${formid.value}-hint` : undefined))
+const hintId = computed(() => (hint ? `${formid.value}-hint` : undefined))
 const errorId = computed(() => (hasError.value ? `${formid.value}-error` : undefined))
 
-const acceptedTypes = computed(() => props.accept.join(','))
+const acceptedTypes = computed(() => accept.join(','))
 
-const hasError = computed(() => Boolean(props.error))
+const hasError = computed(() => Boolean(error))
 
-const errorMessage = computed(() => props.error)
+const errorMessage = computed(() => error)
 
 const inputClasses = computed(() => ({
   'form-control': true,
@@ -209,19 +209,19 @@ const validateFile = (
   file: File,
 ): { valid: boolean; error?: { type: string; message: string } } => {
   // Check file size
-  if (file.size > props.maxFileSize) {
+  if (file.size > maxFileSize) {
     return {
       valid: false,
       error: {
         type: 'size',
-        message: `Filen "${file.name}" er for stor. Maksimal størrelse er ${formatFileSize(props.maxFileSize)}.`,
+        message: `Filen "${file.name}" er for stor. Maksimal størrelse er ${formatFileSize(maxFileSize)}.`,
       },
     }
   }
 
   // Check file type if specified
-  if (props.accept.length > 0) {
-    const isValidType = props.accept.some((acceptedType) => {
+  if (accept.length > 0) {
+    const isValidType = accept.some((acceptedType) => {
       if (acceptedType.startsWith('.')) {
         return file.name.toLowerCase().endsWith(acceptedType.toLowerCase())
       }
@@ -233,7 +233,7 @@ const validateFile = (
         valid: false,
         error: {
           type: 'type',
-          message: `Filen "${file.name}" har et ikke-understøttet format. Tilladte formater: ${props.accept.join(', ')}.`,
+          message: `Filen "${file.name}" har et ikke-understøttet format. Tilladte formater: ${accept.join(', ')}.`,
         },
       }
     }
@@ -268,10 +268,10 @@ const processFiles = async (files: File[]) => {
   }
 
   // Check total file count
-  if (selectedFiles.value.length + validFiles.length > props.maxFiles) {
+  if (selectedFiles.value.length + validFiles.length > maxFiles) {
     emit('error', {
       type: 'count',
-      message: `Du kan maksimalt vælge ${props.maxFiles} filer.`,
+      message: `Du kan maksimalt vælge ${maxFiles} filer.`,
     })
     return
   }
@@ -286,7 +286,7 @@ const processFiles = async (files: File[]) => {
         reader.readAsDataURL(file)
       })
 
-      const data = props.removeContentHeaders ? removeBrowserFileContentHeaders(result) : result
+      const data = removeContentHeaders ? removeBrowserFileContentHeaders(result) : result
 
       const fileModel: FdsFileInputModel = {
         filename: file.name,

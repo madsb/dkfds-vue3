@@ -2,12 +2,12 @@
   <fieldset :aria-labelledby="legendId" :aria-describedby="helpTextId || undefined">
     <legend :id="legendId" class="form-label">
       <slot name="label">
-        {{ props.label }}
+        {{ label }}
       </slot>
     </legend>
-    <div v-if="props.helpText || $slots.help" :id="helpTextId" class="form-hint">
+    <div v-if="helpText || $slots.help" :id="helpTextId" class="form-hint">
       <slot name="help">
-        {{ props.helpText }}
+        {{ helpText }}
       </slot>
     </div>
     <div :id="formid" role="radiogroup">
@@ -24,7 +24,7 @@ interface Props {
   /** The v-model value */
   modelValue?: string | number | boolean | null
   /** Unique identifier */
-  id?: string | null
+  id?: string
   /** Label for the radio group */
   label: string
   /** Help text for the radio group */
@@ -33,12 +33,13 @@ interface Props {
   name?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  modelValue: null,
-  id: null,
-  helpText: '',
-  name: undefined,
-})
+const {
+  modelValue,
+  id,
+  label,
+  helpText = '',
+  name,
+} = defineProps<Props>()
 
 const emit = defineEmits<{
   /** Emitted when selection changes */
@@ -48,16 +49,16 @@ const emit = defineEmits<{
 }>()
 
 const slots = useSlots()
-const { formid } = formId(props.id, true)
+const { formid } = formId(id, true)
 
 // Generate IDs for accessibility
 const legendId = computed(() => `${formid.value}-legend`)
-const helpTextId = computed(() => (props.helpText || slots.help ? `${formid.value}-help` : null))
+const helpTextId = computed(() => (helpText || slots.help ? `${formid.value}-help` : undefined))
 
 // Provide radio name to children
-const radioName = computed(() => props.name || `radio-${formid.value}`)
+const radioName = computed(() => name || `radio-${formid.value}`)
 
-const value = computed(() => props.modelValue)
+const value = computed(() => modelValue)
 
 const exposeEmit = (newValue: string | number | boolean) => {
   emit('update:modelValue', newValue)

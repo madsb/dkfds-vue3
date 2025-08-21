@@ -20,13 +20,13 @@ interface Props {
    * - 'active': Aktivt element
    * - 'disabled': Deaktiveret element
    */
-  variant?: 'current' | 'active' | 'disabled' | null
+  variant?: 'current' | 'active' | 'disabled'
   /**
    * Accessibility rolle for liste elementet
    * - 'none': Fjerner liste semantik
-   * - null: Standard li rolle
+   * - undefined: Standard li rolle
    */
-  role?: 'none' | null
+  role?: 'none'
   /**
    * Flexbox layout klasser
    */
@@ -37,26 +37,26 @@ interface Props {
   justifyBetween?: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  variant: null,
-  role: null,
-  flex: false,
-  justifyBetween: false,
-})
+const {
+  variant,
+  role,
+  flex = false,
+  justifyBetween = false,
+} = defineProps<Props>()
 
 const itemClasses = computed(() => {
   const classes: string[] = []
 
   // Status classes
-  if (props.variant) {
-    classes.push(props.variant)
+  if (variant) {
+    classes.push(variant)
   }
 
   // Flex layout classes
-  if (props.flex) {
+  if (flex) {
     classes.push('d-flex')
   }
-  if (props.justifyBetween) {
+  if (justifyBetween) {
     classes.push('justify-content-between')
   }
 

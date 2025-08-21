@@ -18,7 +18,7 @@ interface Props {
    * Unique identifier for the form group.
    * If not provided, a unique ID will be generated automatically.
    */
-  id?: string | null
+  id?: string
   /**
    * Validation state of the form group.
    * When false, the form-error class is applied and aria-invalid is set.
@@ -26,16 +26,13 @@ interface Props {
   isValid?: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  id: null,
-  isValid: true,
-})
+const { id, isValid = true } = defineProps<Props>()
 
 /**
  * Form id der bruges i slots
  * eg. label for input element
  */
-const { formid } = formId(props.id, true)
+const { formid } = formId(id, true)
 
 /**
  * Generate IDs for hint and error elements following DKFDS v11 naming conventions
@@ -80,7 +77,7 @@ const injIsValid = ref<boolean | null>(inject('provideIsValid', null))
  * Computed validation state that considers both local prop and injected state
  * Prioritizes injected state for form-wide validation coordination
  */
-const compValid = computed(() => injIsValid.value ?? props.isValid)
+const compValid = computed(() => injIsValid.value ?? isValid)
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

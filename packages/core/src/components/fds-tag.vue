@@ -27,18 +27,15 @@ interface Props {
    * Optional icon to display (typically 'close' or 'highlight-off')
    * When provided, adds a tag-icon class and displays the icon
    */
-  icon?: string | null
+  icon?: string
 
   /**
    * Optional ID for the button element
    */
-  id?: string | null
+  id?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  icon: null,
-  id: null,
-})
+const { icon, id } = defineProps<Props>()
 
 const slots = useSlots()
 
@@ -50,10 +47,10 @@ const emit = defineEmits<{
   click: [formId: string]
 }>()
 
-const { formid } = formId(props.id, true)
+const { formid } = formId(id, true)
 
 // Check if tag has an icon (either via prop or slot)
-const hasIcon = computed(() => props.icon || slots.icon)
+const hasIcon = computed(() => icon || slots.icon)
 
 /**
  * Handle click events on the tag button

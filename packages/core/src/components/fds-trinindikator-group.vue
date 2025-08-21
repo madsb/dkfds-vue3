@@ -74,7 +74,7 @@ import FdsModal from './fds-modal.vue'
 
 export interface Props {
   /** Unique identifier */
-  id?: string | null
+  id?: string
   /** Current active step (1-based) */
   currentStep?: number
   /** Total number of steps */
@@ -97,19 +97,19 @@ export interface Props {
   closeButtonText?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  id: null,
-  currentStep: 1,
-  totalSteps: 0,
-  ariaLabel: 'Trinindikator',
-  responsive: true,
-  mobileBreakpoint: 768,
-  showStepInfo: false,
-  clickableSteps: false,
-  modalTitle: 'Trin',
-  modalAriaLabel: 'Trin modal',
-  closeButtonText: 'Luk',
-})
+const {
+  id,
+  currentStep = 1,
+  totalSteps = 0,
+  ariaLabel = 'Trinindikator',
+  responsive = true,
+  mobileBreakpoint = 768,
+  showStepInfo = false,
+  clickableSteps = false,
+  modalTitle = 'Trin',
+  modalAriaLabel = 'Trin modal',
+  closeButtonText = 'Luk',
+} = defineProps<Props>()
 
 const emit = defineEmits<{
   /** Emitted when a step is clicked (if clickable) */
@@ -120,12 +120,12 @@ const emit = defineEmits<{
   'modal-close': []
 }>()
 
-const { formid } = formId(props.id, true)
+const { formid } = formId(id, true)
 const mobileModal = ref<InstanceType<typeof FdsModal> | null>(null)
 
 const stepIndicatorClasses = computed(() => ({
-  'step-indicator--clickable': props.clickableSteps,
-  'step-indicator--with-info': props.showStepInfo,
+  'step-indicator--clickable': clickableSteps,
+  'step-indicator--with-info': showStepInfo,
 }))
 
 const openMobileModal = () => {

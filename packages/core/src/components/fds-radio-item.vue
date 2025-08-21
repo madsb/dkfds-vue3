@@ -5,9 +5,9 @@
       :id="radioId"
       type="radio"
       :name="radioName"
-      :value="props.value"
+      :value="value"
       :checked="isChecked"
-      :disabled="props.disabled"
+      :disabled="disabled"
       class="form-radio"
       :aria-describedby="computedAriaDescribedby"
       :aria-controls="hasContent ? `collapse-${radioId}` : undefined"
@@ -40,21 +40,22 @@ interface Props {
   /** Radio button value */
   value: string | number | boolean
   /** Index for unique ID generation */
-  index?: string | null
+  index?: string
   /** Unique identifier */
-  id?: string | null
+  id?: string
   /** Whether the radio is disabled */
   disabled?: boolean
   /** Name attribute (usually injected from group) */
   name?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  index: null,
-  id: null,
-  disabled: false,
-  name: undefined,
-})
+const {
+  value,
+  index,
+  id,
+  disabled = false,
+  name,
+} = defineProps<Props>()
 
 const emit = defineEmits<{
   /** Emitted when radio loses focus */
@@ -63,7 +64,7 @@ const emit = defineEmits<{
   change: [event: Event]
 }>()
 // Inject from radio group
-const injGroupEmit = inject<(_value: string | number | boolean) => void>(
+const injGroupEmit = inject<((_value: string | number | boolean) => void) | undefined>(
   'provideGroupEmit',
   undefined,
 )
@@ -72,8 +73,8 @@ const injGroupValue = inject<
 >('provideGroupValue', null)
 const injGroupName = inject<Ref<string> | string>('provideGroupName', '')
 
-const { formid } = formId(props.id, true)
-const indexIdRef = generateId(props.index)
+const { formid } = formId(id, true)
+const indexIdRef = generateId(index)
 const indexId = indexIdRef ? indexIdRef.value : 'item'
 
 // Generate unique radio ID
@@ -82,7 +83,7 @@ const radioId = computed(() => `radio-${formid.value}-${indexId}`)
 // Use injected name or prop name
 const radioName = computed(() => {
   const groupName = isRef(injGroupName) ? injGroupName.value : injGroupName
-  return props.name || groupName || `radio-${formid.value}`
+  return name || groupName || `radio-${formid.value}`
 })
 
 // Check if content slot is provided
@@ -91,7 +92,7 @@ const hasContent = computed(() => !!slots.content)
 // Check if this radio is selected
 const isChecked = computed(() => {
   const groupValue = isRef(injGroupValue) ? injGroupValue.value : injGroupValue
-  return props.value === groupValue
+  return value === groupValue
 })
 
 // Inject aria-describedby from formgroup if available

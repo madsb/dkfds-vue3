@@ -4,7 +4,7 @@
     :id="formid"
     v-model="inputValue"
     :class="textareaClass"
-    :maxlength="props.maxlength"
+    :maxlength="maxlength"
     :rows="getRows"
     :name="formid"
     :aria-describedby="computedAriaDescribedby"
@@ -23,7 +23,7 @@ interface Props {
   /** The v-model value */
   modelValue: string
   /** Unique identifier for the textarea */
-  id?: string | null
+  id?: string
   /** Number of visible text rows */
   rows?: number
   /** Maximum number of rows for auto-resize */
@@ -36,14 +36,15 @@ interface Props {
   widthClass?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  id: null,
-  rows: 5,
-  maxRows: 10,
-  rowlength: 80,
-  maxlength: undefined,
-  widthClass: '',
-})
+const {
+  modelValue,
+  id,
+  rows = 5,
+  maxRows = 10,
+  rowlength = 80,
+  maxlength,
+  widthClass = '',
+} = defineProps<Props>()
 
 const emit = defineEmits<{
   /** Emitted when textarea value changes */
@@ -54,7 +55,7 @@ const emit = defineEmits<{
   input: [event: Event]
 }>()
 
-const { formid } = formId(props.id, true)
+const { formid } = formId(id, true)
 
 // Inject aria-describedby from formgroup if available
 const injectedAriaDescribedby = inject<string | Ref<string> | undefined>(
@@ -80,8 +81,8 @@ const computedAriaDescribedby = computed((): string | undefined => {
 const textareaClass = computed((): string => {
   const classes = ['form-input']
 
-  if (props.widthClass) {
-    classes.push(props.widthClass)
+  if (widthClass) {
+    classes.push(widthClass)
   }
 
   return classes.join(' ')
@@ -91,23 +92,23 @@ const textareaClass = computed((): string => {
  * Calculate dynamic rows based on content
  */
 const getRows = computed(() => {
-  if (!props.modelValue) {
-    return props.rows
+  if (!modelValue) {
+    return rows
   }
-  const newlineRows = props.modelValue.split(/\r?\n/).length
+  const newlineRows = modelValue.split(/\r?\n/).length
 
-  const textLengthRow = Math.floor(props.modelValue.length / props.rowlength) + 1
+  const textLengthRow = Math.floor(modelValue.length / rowlength) + 1
   const result = newlineRows > textLengthRow ? newlineRows : textLengthRow
 
-  if (result < props.maxRows) {
-    return result < props.rows ? props.rows : result
+  if (result < maxRows) {
+    return result < rows ? rows : result
   }
-  return props.maxRows
+  return maxRows
 })
 
 const inputValue = computed({
   get() {
-    return props.modelValue
+    return modelValue
   },
   set(newValue) {
     emit('update:modelValue', newValue)

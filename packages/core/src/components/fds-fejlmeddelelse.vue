@@ -19,8 +19,8 @@ const slots = useSlots()
 
 const injErrorMessage = inject<Ref<string | null> | string | null>('provideErrorMessage', null)
 const injIsValid = inject<Ref<boolean> | boolean>('provideIsValid', true)
-const formid = inject<string | Ref<string>>('formid', null)
-const errorId = inject<string | Ref<string>>('errorId', null)
+const formid = inject<string | Ref<string> | undefined>('formid', undefined)
+const errorId = inject<string | Ref<string> | undefined>('errorId', undefined)
 const errorSummary = inject<{
   registerError: (_id: string, _message: string, _element?: HTMLElement) => void
   unregisterError: (_id: string) => void

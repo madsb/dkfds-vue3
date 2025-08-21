@@ -51,14 +51,14 @@ import { computed, ref, onMounted } from 'vue'
 import FdsIkon from './fds-ikon.vue'
 
 const {
-  header = null,
-  id = null,
+  header,
+  id,
   closeable = true,
   acceptText = 'Godkend',
   cancelText = 'Annuller',
 } = defineProps<{
-  header?: string | null
-  id?: string | null
+  header?: string
+  id?: string
   closeable?: boolean
   acceptText?: string
   cancelText?: string

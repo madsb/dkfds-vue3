@@ -12,12 +12,12 @@
 </template>
 <script setup lang="ts">
 const {
-  header = null,
-  href = null,
+  header,
+  href,
   linkText = 'Design System',
 } = defineProps<{
-  header?: string | null
-  href?: string | null
+  header?: string
+  href?: string
   linkText?: string
 }>()
 </script>

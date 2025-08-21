@@ -22,7 +22,7 @@ import { formId } from 'dkfds-vue3-utils'
 
 interface Props {
   /** Unique identifier for the toggle switch */
-  id?: string | null
+  id?: string
   /** The v-model boolean value */
   modelValue?: boolean
   /** Whether the toggle switch is disabled */
@@ -35,14 +35,14 @@ interface Props {
   class?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  id: null,
-  modelValue: false,
-  disabled: false,
-  offText: 'Fra',
-  onText: 'Til',
-  class: '',
-})
+const {
+  id,
+  modelValue = false,
+  disabled = false,
+  offText = 'Fra',
+  onText = 'Til',
+  class: className = '',
+} = defineProps<Props>()
 
 const emit = defineEmits<{
   /** Emitted when toggle state changes */
@@ -51,7 +51,7 @@ const emit = defineEmits<{
   click: [event: MouseEvent]
 }>()
 
-const { formid } = formId(props.id, true)
+const { formid } = formId(id, true)
 
 // Inject aria-describedby from formgroup if available
 const injectedAriaDescribedby = inject<string | Ref<string> | undefined>(
@@ -71,8 +71,8 @@ const computedAriaDescribedby = computed((): string | undefined => {
 const toggleSwitchClass = computed((): string => {
   const classes: string[] = []
 
-  if (props.class) {
-    classes.push(props.class)
+  if (className) {
+    classes.push(className)
   }
 
   return classes.join(' ')
@@ -82,9 +82,9 @@ const toggleSwitchClass = computed((): string => {
  * Handle toggle state change
  */
 const handleToggle = (event: MouseEvent) => {
-  if (props.disabled) return
+  if (disabled) return
 
-  const newValue = !props.modelValue
+  const newValue = !modelValue
   emit('update:modelValue', newValue)
   emit('click', event)
 }

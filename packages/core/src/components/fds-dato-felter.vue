@@ -68,11 +68,11 @@ const month = ref<HTMLInputElement | null>(null)
 const year = ref<HTMLInputElement | null>(null)
 
 const {
-  id = null,
+  id,
   /** JSON Date */
   modelValue = '',
 } = defineProps<{
-  id?: string | null
+  id?: string
   modelValue?: string
 }>()
 

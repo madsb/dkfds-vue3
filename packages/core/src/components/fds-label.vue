@@ -13,7 +13,7 @@ import { formId } from 'dkfds-vue3-utils'
 
 interface Props {
   /** The ID of the form control this label is associated with */
-  forId?: string | null
+  forId?: string
   /** Whether the associated field is required */
   required?: boolean
   /** Show required indicator (defaults to true if required is true) */
@@ -22,16 +22,16 @@ interface Props {
   requiredText?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  forId: null,
-  required: false,
-  showRequired: true,
-  requiredText: '(skal udfyldes)',
-})
+const {
+  forId,
+  required = false,
+  showRequired = true,
+  requiredText = '(skal udfyldes)',
+} = defineProps<Props>()
 
 // Try to get form ID from formgroup context first, then use prop, then generate
 const injectedFormId = inject<string | Ref<string> | undefined>('formid', undefined)
-const { formid } = formId(props.forId)
+const { formid } = formId(forId)
 
 const computedFor = computed((): string => {
   // Use injected formid from formgroup if available

@@ -6,9 +6,9 @@
       type="checkbox"
       :class="checkboxClass"
       :checked="isChecked"
-      :name="props.name || formid"
-      :value="props.value"
-      :disabled="props.disabled"
+      :name="name || formid"
+      :value="value"
+      :disabled="disabled"
       :aria-describedby="computedAriaDescribedby"
       :aria-controls="hasContent ? `collapse-${formid}` : undefined"
       :data-controls="hasContent ? `collapse-${formid}` : undefined"
@@ -39,7 +39,7 @@ const slots = useSlots()
 
 interface Props {
   /** Unique identifier for the checkbox */
-  id?: string | null
+  id?: string
   /** The v-model value */
   modelValue?: boolean | string | string[]
   /** Checkbox value for form submission */
@@ -50,13 +50,13 @@ interface Props {
   disabled?: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  id: null,
-  modelValue: false,
-  value: true,
-  name: undefined,
-  disabled: false,
-})
+const {
+  id,
+  modelValue = false,
+  value = true,
+  name,
+  disabled = false,
+} = defineProps<Props>()
 
 const emit = defineEmits<{
   /** Emitted when checkbox state changes */
@@ -67,7 +67,7 @@ const emit = defineEmits<{
   change: [event: Event]
 }>()
 
-const { formid } = formId(props.id, true)
+const { formid } = formId(id, true)
 
 // Check if content slot is provided
 const hasContent = computed(() => !!slots.content)
@@ -101,13 +101,13 @@ const checkboxClass = computed((): string => {
  * Determine if checkbox is checked
  */
 const isChecked = computed((): boolean => {
-  if (Array.isArray(props.modelValue)) {
-    return props.modelValue.includes(props.value as string)
+  if (Array.isArray(modelValue)) {
+    return modelValue.includes(value as string)
   }
-  if (typeof props.modelValue === 'boolean') {
-    return props.modelValue
+  if (typeof modelValue === 'boolean') {
+    return modelValue
   }
-  return props.modelValue === props.value
+  return modelValue === value
 })
 
 /**
@@ -117,14 +117,14 @@ const handleChange = (event: Event) => {
   const target = event.target as HTMLInputElement
   const checked = target.checked
 
-  if (Array.isArray(props.modelValue)) {
-    const newValue = [...props.modelValue]
+  if (Array.isArray(modelValue)) {
+    const newValue = [...modelValue]
     if (checked) {
-      if (!newValue.includes(props.value as string)) {
-        newValue.push(props.value as string)
+      if (!newValue.includes(value as string)) {
+        newValue.push(value as string)
       }
     } else {
-      const index = newValue.indexOf(props.value as string)
+      const index = newValue.indexOf(value as string)
       if (index > -1) {
         newValue.splice(index, 1)
       }

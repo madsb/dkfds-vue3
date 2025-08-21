@@ -13,8 +13,8 @@
 import { ref } from 'vue'
 import { formId } from 'dkfds-vue3-utils'
 
-const { id = null, modelValue = '' } = defineProps<{
-  id?: string | null
+const { id, modelValue = '' } = defineProps<{
+  id?: string
   /** JSON Date */
   modelValue?: string
 }>()
