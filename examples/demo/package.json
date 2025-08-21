@@ -7,12 +7,14 @@
     "build": "vue-tsc && vite build",
     "buildpages": "vue-tsc && vite build --base=/dkfds-vue3-example/",
     "preview": "vite preview",
+    "typecheck": "vue-tsc --noEmit",
     "test": "vitest",
+    "test:run": "vitest run",
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "dkfds": "^11.0.1",
-    "dkfds-vue3": "workspace:*",
+    "@madsb/dkfds-vue3": "workspace:*",
     "fast-sort": "^3.4.1",
     "vue": "^3.5.18",
     "vue-router": "^4.5.1",

@@ -1,7 +1,11 @@
 {
-  "name": "dkfds-vue3-core",
-  "version": "0.4.9",
+  "name": "@madsb/dkfds-vue3-core",
+  "version": "0.9.0",
+  "description": "Core components for DKFDS v11 Vue 3 implementation",
+  "author": "Mads Bjerre",
+  "license": "MIT",
   "module": "./dist/dkfds-vue3-core.mjs",
+  "main": "./dist/dkfds-vue3-core.umd.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
@@ -15,14 +19,18 @@
   "scripts": {
     "build": "vite build && pnpm run typings",
     "typings": "vue-tsc --declaration --emitDeclarationOnly",
+    "typecheck": "vue-tsc --noEmit",
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui"
   },
   "dependencies": {
-    "dkfds": "^11.0.1",
-    "dkfds-vue3-utils": "workspace:*"
+    "@madsb/dkfds-vue3-utils": "workspace:*"
+  },
+  "peerDependencies": {
+    "dkfds": "^11.0.0",
+    "vue": "^3.4.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",

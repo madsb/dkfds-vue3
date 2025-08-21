@@ -1,36 +1,68 @@
-# dkfds-vue3
+# @madsb/dkfds-vue3
 
-DKFDS-Vue3 er et komponent bibliotek til [Det Fælles Designsystem](https://designsystem.dk/) (DKFDS).
+Vue 3 implementation of [Det Fælles Designsystem](https://designsystem.dk/) (DKFDS) v11.
 
-Med DKFDS-Vue3 kan du let benytte [DKFDS](https://designsystem.dk/) i vue 3 og bygge responsive og ARIA tilgængelige web projekter, som Det Fælles Designsystem foreligger.
+This is an updated fork of the original [dkfds-vue3](https://github.com/whitewillow/dkfds-vue3) by Kenneth Torsten Rørstrøm, with substantial upgrades including:
+- Updated to DKFDS v11 (from v8)
+- Comprehensive test coverage with Vitest
+- Improved TypeScript support
+- Modern build system with Vite
+- All dependencies updated to latest versions
 
-Med over 40 Standard komponenter og flere ekstra komponenter til at hjælpe dig med at udvikle selvbetjeningsløsninger hurtigt og effektivt.
+## Installation
 
-<p align="center">
-   <a href="https://www.npmjs.com/package/dkfds-vue3">
-    <img src="https://flat.badgen.net/npm/v/dkfds-vue3" alt="Current version">
-  </a>
-  <a href="https://www.npmjs.com/package/dkfds-vue3">
-    <img src="https://flat.badgen.net/npm/dt/dkfds-vue3" alt="npm downloads">
-  </a>
-  <a href="https://github.com/detfaellesdesignsystem/dkfds-components">
-    <img src="https://flat.badgen.net/badge/dkfds/8.2.0/0059b3" alt="DKFDS version">
-  </a>
-  <a href="https://vuejs.org">
-    <img src="https://flat.badgen.net/badge/vue.js/3.2.x/4fc08d" alt="Vue.js version">
-  </a>
+```bash
+npm install @madsb/dkfds-vue3 dkfds@^11.0.0
+# or
+pnpm add @madsb/dkfds-vue3 dkfds@^11.0.0
+```
 
-</p>
+## Usage
 
-# Demo side
+Import DKFDS styles in your main.js/ts:
+```javascript
+import 'dkfds/dist/css/dkfds.css'
+```
 
-**Se [DKFDS-Vue3 Demo](https://whitewillow.github.io/dkfds-vue3-example)** (Stadig under udarbejdelse) - herunder også hvordan komponenter bruges.
+Use components in your Vue app:
+```javascript
+import { FdsButton, FdsInput, FdsAccordion } from '@madsb/dkfds-vue3'
 
-Benyt også gerne demo project som reference: [DKFDS-Vue3 Demo Github](https://github.com/whitewillow/dkfds-vue3/tree/main/examples/demo)
+// Or import everything
+import * as DkfdsVue3 from '@madsb/dkfds-vue3'
+```
 
-<br />
-<br />
+## Features
 
-# Installation:
+- **40+ Components**: Complete set of DKFDS components
+- **WCAG Compliant**: Follows accessibility standards
+- **Tree-shakeable**: Import only what you need
+- **TypeScript Support**: Full type definitions included
+- **Vue 3 Composition API**: Modern Vue 3 implementation
+- **DKFDS v11**: Latest version of the Danish Design System
 
-Se [DKFDS-Vue3 Github](https://github.com/whitewillow/dkfds-vue3)
+## Component Categories
+
+### Core Components (fds-*)
+Standard DKFDS components following official specifications:
+- Forms: `fds-input`, `fds-checkbox`, `fds-radio-group`, `fds-dropdown`, `fds-textarea`
+- Navigation: `fds-accordion`, `fds-faneblade`, `fds-breadcrumb`, `fds-menu`
+- Feedback: `fds-alert`, `fds-modal`, `fds-toast`, `fds-spinner`
+- Layout: `fds-card`, `fds-detaljer`, `fds-badge`, `fds-tag`
+- And many more...
+
+## Documentation
+
+For detailed documentation and examples, see the demo project in `/examples/demo`.
+
+## Development Status
+
+**Version: 0.9.0** - Pre-release version for testing. The library is functional but still being tested and refined.
+
+## License
+
+MIT License - See LICENSE file for details.
+
+## Credits
+
+Original dkfds-vue3 created by Kenneth Torsten Rørstrøm. This fork is maintained by Mads Bjerre with substantial updates for DKFDS v11 compatibility.

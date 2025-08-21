@@ -1,12 +1,16 @@
 {
-  "name": "dkfds-vue3",
-  "version": "0.4.9",
+  "name": "@madsb/dkfds-vue3",
+  "version": "0.9.0",
+  "description": "Vue 3 implementation of Det Fælles Designsystem (DKFDS) v11 - Danish Common Design System",
+  "author": "Mads Bjerre",
+  "license": "MIT",
   "module": "./core/index.mjs",
   "types": "core/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/whitewillow/dkfds-vue3"
+    "url": "https://github.com/madsb/dkfds-vue3"
   },
+  "homepage": "https://github.com/madsb/dkfds-vue3#readme",
   "exports": {
     ".": {
       "import": "./core/index.mjs",
@@ -21,15 +25,19 @@
   },
   "scripts": {
     "typings": "vue-tsc src/index.ts --declaration --emitDeclarationOnly --outDir dist",
+    "typecheck": "echo 'No TypeScript files to check in main package'",
     "test": "echo 'No tests for main package - it only re-exports'",
     "test:run": "echo 'No tests for main package - it only re-exports'",
     "test:coverage": "echo 'No tests for main package - it only re-exports'",
     "test:ui": "echo 'No tests for main package - it only re-exports'"
   },
   "dependencies": {
-    "dkfds": "^11.0.1",
-    "dkfds-vue3-core": "workspace:*",
-    "dkfds-vue3-utils": "workspace:*"
+    "@madsb/dkfds-vue3-core": "workspace:*",
+    "@madsb/dkfds-vue3-utils": "workspace:*"
+  },
+  "peerDependencies": {
+    "dkfds": "^11.0.0",
+    "vue": "^3.4.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",
