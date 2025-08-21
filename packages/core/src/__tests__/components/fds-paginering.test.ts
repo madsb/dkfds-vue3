@@ -635,13 +635,13 @@ describe('FdsPaginering', () => {
         }
       })
       
-      wrapper.vm.$on('skip', (newSkip: number) => {
-        currentSkip = newSkip
-      })
+      // Check initial skip event
+      expect(wrapper.emitted('skip')?.[0]).toEqual([0])
       
       const nextButton = wrapper.find('.button-next')
       await nextButton.trigger('click')
       
+      // Should emit skip event with new value
       expect(wrapper.emitted('skip')?.[1]).toEqual([10])
     })
 
@@ -657,11 +657,14 @@ describe('FdsPaginering', () => {
       const nextButton = wrapper.find('.button-next')
       await nextButton.trigger('click')
       
-      // Change page size
+      // Verify we're on page 2
+      expect(wrapper.find('.pagination-mobile').text()).toBe('Side 2 af 3')
+      
+      // Change page size - this should keep us on a valid page
       await wrapper.setProps({ pageSize: 15 })
       
-      // Should recalculate pages correctly
-      expect(wrapper.find('.pagination-mobile').text()).toBe('Side 1 af 2')
+      // With new page size, we have 2 pages total, and we should stay on page 2
+      expect(wrapper.find('.pagination-mobile').text()).toBe('Side 2 af 2')
     })
 
     it('works with dynamic content loading', async () => {

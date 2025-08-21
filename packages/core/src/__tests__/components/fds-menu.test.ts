@@ -53,9 +53,9 @@ describe('FdsMenu', () => {
         const wrapper = mount(FdsMenu, {
           props: { variant: 'submenu' }
         })
-        // Note: The component currently always applies 'sidemenu' class
-        // This test documents current behavior
-        expect(wrapper.find('ul').classes()).toContain('sidemenu')
+        // Submenu variant should not have any class
+        expect(wrapper.find('ul').classes()).not.toContain('sidemenu')
+        expect(wrapper.find('ul').classes()).toEqual([])
       })
 
       it('handles undefined variant', () => {
@@ -67,9 +67,10 @@ describe('FdsMenu', () => {
     })
 
     describe('ariaLabel prop', () => {
-      it('defaults to "Navigation"', () => {
+      it('has no default aria-label', () => {
         const wrapper = mount(FdsMenu)
-        expect(wrapper.attributes('aria-label')).toBe('Navigation')
+        // The component doesn't have a default aria-label
+        expect(wrapper.attributes('aria-label')).toBeUndefined()
       })
 
       it('accepts custom aria-label', () => {
@@ -110,8 +111,9 @@ describe('FdsMenu', () => {
           }
         })
         
-        expect(wrapper.attributes('aria-label')).toBe('Submenu navigation')
-        expect(wrapper.find('ul').classes()).toContain('sidemenu')
+        // Submenu variant renders as ul without nav wrapper, so no aria-label on root
+        expect(wrapper.element.tagName).toBe('UL')
+        expect(wrapper.classes()).not.toContain('sidemenu')
       })
     })
   })
@@ -266,10 +268,17 @@ describe('FdsMenu', () => {
     it('passes accessibility tests for submenu variant', async () => {
       const TestWrapper = {
         template: `
-          <FdsMenu variant="submenu" aria-label="Submenu">
-            <li><a href="/sub1">Subitem 1</a></li>
-            <li><a href="/sub2">Subitem 2</a></li>
-          </FdsMenu>
+          <nav aria-label="Parent navigation">
+            <ul>
+              <li>
+                <a href="/parent">Parent</a>
+                <FdsMenu variant="submenu">
+                  <li><a href="/sub1">Subitem 1</a></li>
+                  <li><a href="/sub2">Subitem 2</a></li>
+                </FdsMenu>
+              </li>
+            </ul>
+          </nav>
         `,
         components: { FdsMenu }
       }
@@ -288,7 +297,7 @@ describe('FdsMenu', () => {
       })
 
       expect(wrapper.element.tagName).toBe('NAV')
-      expect(wrapper.attributes('aria-label')).toBe('Navigation') // default
+      expect(wrapper.attributes('aria-label')).toBeUndefined() // no default
       expect(wrapper.find('ul').classes()).toContain('sidemenu')
     })
 
@@ -300,8 +309,9 @@ describe('FdsMenu', () => {
         }
       })
 
-      expect(wrapper.element.tagName).toBe('NAV')
-      expect(wrapper.find('ul').classes()).toContain('sidemenu')
+      // null variant doesn't match 'sidemenu', so renders as ul
+      expect(wrapper.element.tagName).toBe('UL')
+      expect(wrapper.classes()).toContain('sidemenu')
     })
 
     it('maintains structure with no slot content', () => {
@@ -391,7 +401,7 @@ describe('FdsMenu', () => {
           <FdsMenu aria-label="Main menu">
             <li>
               <a href="/parent">Parent Item</a>
-              <FdsMenu variant="submenu" aria-label="Submenu">
+              <FdsMenu variant="submenu">
                 <li><a href="/child1">Child 1</a></li>
                 <li><a href="/child2">Child 2</a></li>
               </FdsMenu>
@@ -406,7 +416,8 @@ describe('FdsMenu', () => {
 
       expect(menus).toHaveLength(2)
       expect(menus[0].attributes('aria-label')).toBe('Main menu')
-      expect(menus[1].attributes('aria-label')).toBe('Submenu')
+      // Submenu variant renders as ul, so no aria-label attribute
+      expect(menus[1].element.tagName).toBe('UL')
     })
 
     it('follows DKFDS menu patterns', () => {

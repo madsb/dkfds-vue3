@@ -70,53 +70,67 @@ describe('FdsMenuItem', () => {
       it('defaults to false', () => {
         const wrapper = mount(FdsMenuItem)
         expect(wrapper.classes()).not.toContain('active')
-        expect(wrapper.classes()).not.toContain('current')
+        expect(wrapper.find('a').classes()).not.toContain('current')
         expect(wrapper.find('a').attributes('aria-current')).toBeUndefined()
       })
 
-      it('applies active classes when true', () => {
+      it('applies current class to anchor when active is true without submenu', () => {
         const wrapper = mount(FdsMenuItem, {
           props: { active: true }
         })
-        expect(wrapper.classes()).toContain('active')
-        expect(wrapper.classes()).toContain('current')
+        // Without submenu, active makes the link current
+        expect(wrapper.find('a').classes()).toContain('current')
         expect(wrapper.find('a').attributes('aria-current')).toBe('page')
+        // LI doesn't get active class without submenu
+        expect(wrapper.classes()).not.toContain('active')
       })
 
-      it('removes active classes when false', () => {
+      it('applies active class to li when active with submenu', () => {
         const wrapper = mount(FdsMenuItem, {
-          props: { active: false }
+          props: { active: true },
+          slots: {
+            default: 'Parent',
+            submenu: '<li>Child</li>'
+          }
         })
-        expect(wrapper.classes()).not.toContain('active')
-        expect(wrapper.classes()).not.toContain('current')
+        // With submenu, active applies to li element
+        expect(wrapper.classes()).toContain('active')
+        // But not current on the link
+        expect(wrapper.find('a').classes()).not.toContain('current')
         expect(wrapper.find('a').attributes('aria-current')).toBeUndefined()
       })
     })
 
-    describe('icon prop', () => {
-      it('renders icon when provided', () => {
-        const wrapper = mount(FdsMenuItem, {
-          props: { icon: 'arrow-right' }
-        })
-        const svg = wrapper.find('svg.sidenav-icon')
-        expect(svg.exists()).toBe(true)
-        expect(svg.attributes('focusable')).toBe('false')
-        expect(svg.attributes('aria-hidden')).toBe('true')
-        expect(wrapper.find('use').attributes('href')).toBe('#arrow-right')
-      })
-
-      it('does not render icon when not provided', () => {
+    describe('current prop', () => {
+      it('defaults to false', () => {
         const wrapper = mount(FdsMenuItem)
-        expect(wrapper.find('svg.sidenav-icon').exists()).toBe(false)
+        expect(wrapper.find('a').classes()).not.toContain('current')
+        expect(wrapper.find('a').attributes('aria-current')).toBeUndefined()
       })
 
-      it('handles empty string icon', () => {
+      it('applies current class to anchor when true', () => {
         const wrapper = mount(FdsMenuItem, {
-          props: { icon: '' }
+          props: { current: true }
         })
-        expect(wrapper.find('svg.sidenav-icon').exists()).toBe(false)
+        expect(wrapper.find('a').classes()).toContain('current')
+        expect(wrapper.find('a').attributes('aria-current')).toBe('page')
       })
     })
+
+    describe('expanded prop', () => {
+      it('defaults to false', () => {
+        const wrapper = mount(FdsMenuItem)
+        expect(wrapper.classes()).not.toContain('active')
+      })
+
+      it('applies active class to li when true', () => {
+        const wrapper = mount(FdsMenuItem, {
+          props: { expanded: true }
+        })
+        expect(wrapper.classes()).toContain('active')
+      })
+    })
+
 
     describe('hint prop', () => {
       it('renders hint when provided', () => {
@@ -216,8 +230,8 @@ describe('FdsMenuItem', () => {
         const wrapper = mount(FdsMenuItem, {
           props: {
             id: 'item-1',
-            active: true,
-            icon: 'check',
+            current: true,
+            expanded: true,
             hint: 'Current page',
             href: '/current',
             index: 1
@@ -225,13 +239,11 @@ describe('FdsMenuItem', () => {
           slots: { default: 'Current Page' }
         })
 
-        expect(wrapper.classes()).toContain('active')
-        expect(wrapper.classes()).toContain('current')
+        expect(wrapper.classes()).toContain('active') // from expanded
+        expect(wrapper.find('a').classes()).toContain('current') // from current prop
         expect(wrapper.find('a').attributes('href')).toBe('/current')
         expect(wrapper.find('a').attributes('aria-current')).toBe('page')
         expect(wrapper.find('a span').text()).toBe('1. Current Page')
-        expect(wrapper.find('svg.sidenav-icon').exists()).toBe(true)
-        expect(wrapper.find('use').attributes('href')).toBe('#check')
         expect(wrapper.find('.sidenav-information').text()).toBe('Current page')
       })
     })
@@ -351,9 +363,8 @@ describe('FdsMenuItem', () => {
         }
       })
 
-      const ul = wrapper.find('ul')
-      expect(ul.exists()).toBe(true)
-      expect(ul.html()).toContain('<li><a href="/child">Child Item</a></li>')
+      // The submenu slot content is rendered directly
+      expect(wrapper.html()).toContain('<li><a href="/child">Child Item</a></li>')
     })
 
     it('does not render submenu ul when submenu slot is not provided', () => {
@@ -377,9 +388,8 @@ describe('FdsMenuItem', () => {
         }
       })
 
-      const ul = wrapper.find('ul')
-      expect(ul.exists()).toBe(true)
-      expect(ul.text().trim()).toBe('')
+      // Submenu slot is still rendered even if empty
+      expect(wrapper.html()).toContain('</a></li>')
     })
   })
 
@@ -392,23 +402,22 @@ describe('FdsMenuItem', () => {
       expect(wrapper.find('a').attributes('aria-current')).toBeUndefined()
     })
 
-    it('has correct ARIA attributes for active item', () => {
+    it('has correct ARIA attributes for current item', () => {
       const wrapper = mount(FdsMenuItem, {
-        props: { active: true }
+        props: { current: true }
       })
 
       expect(wrapper.find('a').attributes('aria-current')).toBe('page')
     })
 
-    it('has proper icon accessibility attributes', () => {
+    it('has correct ARIA attributes for active item without submenu', () => {
       const wrapper = mount(FdsMenuItem, {
-        props: { icon: 'arrow-right' }
+        props: { active: true }
       })
-
-      const svg = wrapper.find('svg')
-      expect(svg.attributes('focusable')).toBe('false')
-      expect(svg.attributes('aria-hidden')).toBe('true')
+      // active without submenu makes it current
+      expect(wrapper.find('a').attributes('aria-current')).toBe('page')
     })
+
 
     it('provides semantic list item structure', () => {
       const wrapper = mount(FdsMenuItem, {
@@ -435,12 +444,12 @@ describe('FdsMenuItem', () => {
       const wrapper = mount(FdsMenuItem, {
         slots: {
           default: 'Parent',
-          submenu: '<li><a href="/child">Child</a></li>'
+          submenu: '<ul><li><a href="/child">Child</a></li></ul>'
         }
       })
 
-      const ul = wrapper.find('ul')
-      expect(ul.exists()).toBe(true)
+      // Submenu content is rendered directly through slot
+      expect(wrapper.find('ul').exists()).toBe(true)
       // UL provides semantic grouping for child items
     })
 
@@ -463,7 +472,8 @@ describe('FdsMenuItem', () => {
         props: {
           id: undefined,
           active: undefined,
-          icon: undefined,
+          current: undefined,
+          expanded: undefined,
           hint: undefined,
           href: undefined,
           index: undefined
@@ -480,7 +490,8 @@ describe('FdsMenuItem', () => {
         props: {
           id: null,
           active: null,
-          icon: null,
+          current: null,
+          expanded: null,
           hint: null,
           href: null,
           index: null
@@ -495,7 +506,6 @@ describe('FdsMenuItem', () => {
       const wrapper = mount(FdsMenuItem, {
         props: {
           id: '',
-          icon: '',
           hint: '',
           href: ''
         }
@@ -503,24 +513,35 @@ describe('FdsMenuItem', () => {
 
       // Component logic uses href || '#', so empty string becomes '#'
       expect(wrapper.find('a').attributes('href')).toBe('#')
-      expect(wrapper.find('svg').exists()).toBe(false)
       expect(wrapper.find('.sidenav-information').exists()).toBe(false)
     })
 
     it('handles prop changes dynamically', async () => {
       const wrapper = mount(FdsMenuItem, {
-        props: { active: false }
+        props: { expanded: false }
       })
 
       expect(wrapper.classes()).not.toContain('active')
 
-      await wrapper.setProps({ active: true })
+      await wrapper.setProps({ expanded: true })
       expect(wrapper.classes()).toContain('active')
-      expect(wrapper.classes()).toContain('current')
 
-      await wrapper.setProps({ active: false })
+      await wrapper.setProps({ expanded: false })
       expect(wrapper.classes()).not.toContain('active')
-      expect(wrapper.classes()).not.toContain('current')
+    })
+
+    it('handles current prop changes dynamically', async () => {
+      const wrapper = mount(FdsMenuItem, {
+        props: { current: false }
+      })
+
+      expect(wrapper.find('a').classes()).not.toContain('current')
+
+      await wrapper.setProps({ current: true })
+      expect(wrapper.find('a').classes()).toContain('current')
+
+      await wrapper.setProps({ current: false })
+      expect(wrapper.find('a').classes()).not.toContain('current')
     })
 
     it('maintains structure with all optional props undefined', () => {
@@ -531,9 +552,7 @@ describe('FdsMenuItem', () => {
       expect(wrapper.element.tagName).toBe('LI')
       expect(wrapper.find('a span').exists()).toBe(true)
       expect(wrapper.find('a span').text()).toBe('Basic Item')
-      expect(wrapper.find('svg').exists()).toBe(false)
-      expect(wrapper.find('p').exists()).toBe(false)
-      expect(wrapper.find('ul').exists()).toBe(false)
+      expect(wrapper.find('.sidenav-information').exists()).toBe(false)
     })
 
     it('handles negative index numbers', () => {
@@ -562,8 +581,8 @@ describe('FdsMenuItem', () => {
           <nav aria-label="Test menu">
             <ul class="sidemenu">
               <FdsMenuItem href="/home" :index="1">Home</FdsMenuItem>
-              <FdsMenuItem href="/about" :index="2" active>About</FdsMenuItem>
-              <FdsMenuItem href="/contact" :index="3" icon="mail" hint="Get in touch">Contact</FdsMenuItem>
+              <FdsMenuItem href="/about" :index="2" current>About</FdsMenuItem>
+              <FdsMenuItem href="/contact" :index="3" hint="Get in touch">Contact</FdsMenuItem>
             </ul>
           </nav>
         `,
@@ -575,8 +594,8 @@ describe('FdsMenuItem', () => {
 
       expect(items).toHaveLength(3)
       expect(items[0].find('a span').text()).toBe('1. Home')
-      expect(items[1].classes()).toContain('active')
-      expect(items[2].find('svg').exists()).toBe(true)
+      expect(items[1].find('a').classes()).toContain('current')
+      expect(items[2].find('.sidenav-information').exists()).toBe(true)
     })
 
     it('works with navigation events', async () => {
@@ -598,8 +617,10 @@ describe('FdsMenuItem', () => {
             <FdsMenuItem href="/parent" id="parent">
               Parent Item
               <template #submenu>
-                <FdsMenuItem href="/child1" id="child1">Child 1</FdsMenuItem>
-                <FdsMenuItem href="/child2" id="child2">Child 2</FdsMenuItem>
+                <ul>
+                  <FdsMenuItem href="/child1" id="child1">Child 1</FdsMenuItem>
+                  <FdsMenuItem href="/child2" id="child2">Child 2</FdsMenuItem>
+                </ul>
               </template>
             </FdsMenuItem>
           </ul>
@@ -619,7 +640,7 @@ describe('FdsMenuItem', () => {
         template: `
           <nav aria-label="Hovednavigation">
             <ul class="sidemenu">
-              <FdsMenuItem href="/trin1" :index="1" icon="done" active>Trin 1</FdsMenuItem>
+              <FdsMenuItem href="/trin1" :index="1" current>Trin 1</FdsMenuItem>
               <FdsMenuItem href="/trin2" :index="2" hint="Næste trin">Trin 2</FdsMenuItem>
               <FdsMenuItem href="/trin3" :index="3" hint="Afsluttende trin">Trin 3</FdsMenuItem>
             </ul>
@@ -632,8 +653,7 @@ describe('FdsMenuItem', () => {
       const items = wrapper.findAllComponents(FdsMenuItem)
 
       // Verify DKFDS step navigation pattern
-      expect(items[0].classes()).toContain('active')
-      expect(items[0].find('svg').exists()).toBe(true) // Done icon
+      expect(items[0].find('a').classes()).toContain('current')
       expect(items[0].find('a span').text()).toBe('1. Trin 1')
       expect(items[1].find('.sidenav-information').text()).toBe('Næste trin')
       expect(items[2].find('.sidenav-information').text()).toBe('Afsluttende trin')
@@ -648,8 +668,7 @@ describe('FdsMenuItem', () => {
               :key="item.id"
               :id="item.id"
               :href="item.href"
-              :active="item.active"
-              :icon="item.icon"
+              :current="item.active"
               :hint="item.hint"
               :index="index + 1"
               @navigate="handleNavigate"
@@ -663,7 +682,7 @@ describe('FdsMenuItem', () => {
           return {
             menuItems: [
               { id: 'home', href: '/home', title: 'Forside', active: false },
-              { id: 'about', href: '/om', title: 'Om os', active: true, icon: 'info' },
+              { id: 'about', href: '/om', title: 'Om os', active: true },
               { id: 'contact', href: '/kontakt', title: 'Kontakt', active: false, hint: 'Ring eller skriv' }
             ]
           }
@@ -681,7 +700,7 @@ describe('FdsMenuItem', () => {
       const items = wrapper.findAllComponents(FdsMenuItem)
 
       expect(items).toHaveLength(3)
-      expect(items[1].classes()).toContain('active')
+      expect(items[1].find('a').classes()).toContain('current')
 
       // Simulate navigation
       await items[0].find('a').trigger('click')
