@@ -59,7 +59,7 @@ export interface UseNavigationReturn {
 /**
  * Composable for managing navigation state and behavior
  * Provides a clean API for navigation menus with Vue Router integration
- * 
+ *
  * @example
  * ```vue
  * const nav = useNavigation([
@@ -70,27 +70,30 @@ export interface UseNavigationReturn {
  */
 export function useNavigation(
   items: NavigationItem[],
-  options: UseNavigationOptions = {}
+  options: UseNavigationOptions = {},
 ): UseNavigationReturn {
   const {
     routeResolver = defaultRouteResolver,
     keyMatcher = defaultKeyMatcher,
     autoSync = true,
-    nested = false
+    nested = false,
   } = options
 
   // Get router instance from Vue app if available
   const instance = getCurrentInstance()
   const router = instance?.appContext.app.config.globalProperties.$router
   const route = instance?.appContext.app.config.globalProperties.$route
-  
+
   const navigationItems = ref<NavigationItem[]>(items)
   const activeKey = ref<string>('')
 
   /**
    * Find an item by key, including nested items
    */
-  const findItem = (key: string, searchItems: NavigationItem[] = navigationItems.value): NavigationItem | undefined => {
+  const findItem = (
+    key: string,
+    searchItems: NavigationItem[] = navigationItems.value,
+  ): NavigationItem | undefined => {
     for (const item of searchItems) {
       if (item.key === key) {
         return item
@@ -106,7 +109,10 @@ export function useNavigation(
   /**
    * Find item that matches current route
    */
-  const findMatchingItem = (routeName: string, searchItems: NavigationItem[] = navigationItems.value): NavigationItem | undefined => {
+  const findMatchingItem = (
+    routeName: string,
+    searchItems: NavigationItem[] = navigationItems.value,
+  ): NavigationItem | undefined => {
     for (const item of searchItems) {
       if (keyMatcher(item.key, routeName)) {
         return item
@@ -129,13 +135,13 @@ export function useNavigation(
    */
   const isActive = (key: string): boolean => {
     if (activeKey.value === key) return true
-    
+
     // For nested navigation, check if any parent is active
     if (nested) {
-      const breadcrumbKeys = breadcrumbs.value.map(item => item.key)
+      const breadcrumbKeys = breadcrumbs.value.map((item) => item.key)
       return breadcrumbKeys.includes(key)
     }
-    
+
     return false
   }
 
@@ -182,9 +188,9 @@ export function useNavigation(
    */
   const breadcrumbs = computed((): NavigationItem[] => {
     if (!nested || !activeKey.value) return []
-    
+
     const trail: NavigationItem[] = []
-    
+
     const buildTrail = (items: NavigationItem[], target: string): boolean => {
       for (const item of items) {
         if (item.key === target) {
@@ -200,7 +206,7 @@ export function useNavigation(
       }
       return false
     }
-    
+
     buildTrail(navigationItems.value, activeKey.value)
     return trail
   })
@@ -217,7 +223,7 @@ export function useNavigation(
           activeKey.value = item.key
         }
       },
-      { immediate: true }
+      { immediate: true },
     )
   }
 
@@ -229,7 +235,7 @@ export function useNavigation(
     isActive,
     setActive,
     findItem,
-    breadcrumbs
+    breadcrumbs,
   }
 }
 
@@ -247,12 +253,12 @@ function defaultRouteResolver(key: string): string {
 function defaultKeyMatcher(key: string, routeName: string): boolean {
   // Direct match
   if (key === routeName) return true
-  
+
   // Try without prefix (e.g., 'komponent' prefix)
   const keyWithoutPrefix = key.replace(/^[a-z]+/, '')
   const routeWithoutPrefix = routeName.replace(/^[a-z]+/, '')
   if (keyWithoutPrefix === routeWithoutPrefix) return true
-  
+
   // Try normalized comparison
   const normalizedKey = key.toLowerCase().replace(/[^a-z0-9]/g, '')
   const normalizedRoute = routeName.toLowerCase().replace(/[^a-z0-9]/g, '')
@@ -263,9 +269,9 @@ function defaultKeyMatcher(key: string, routeName: string): boolean {
  * Utility to set all items to inactive
  */
 export function resetActiveState(items: NavigationItem[]): NavigationItem[] {
-  return items.map(item => ({
+  return items.map((item) => ({
     ...item,
-    children: item.children ? resetActiveState(item.children) : undefined
+    children: item.children ? resetActiveState(item.children) : undefined,
   }))
 }
 
@@ -273,8 +279,8 @@ export function resetActiveState(items: NavigationItem[]): NavigationItem[] {
  * Utility to find and activate a specific item
  */
 export function setActiveItem(items: NavigationItem[], targetKey: string): NavigationItem[] {
-  return items.map(item => ({
+  return items.map((item) => ({
     ...item,
-    children: item.children ? setActiveItem(item.children, targetKey) : undefined
+    children: item.children ? setActiveItem(item.children, targetKey) : undefined,
   }))
 }

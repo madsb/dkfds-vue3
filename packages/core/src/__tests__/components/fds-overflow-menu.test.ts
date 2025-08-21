@@ -23,7 +23,7 @@ describe('FdsOverflowMenu', () => {
 
     it('renders with correct base structure', () => {
       const wrapper = mount(FdsOverflowMenu)
-      
+
       expect(wrapper.find('.overflow-menu').exists()).toBe(true)
       expect(wrapper.find('button.button-overflow-menu').exists()).toBe(true)
       expect(wrapper.find('.overflow-menu-inner').exists()).toBe(true)
@@ -44,16 +44,16 @@ describe('FdsOverflowMenu', () => {
 
     it('is closed by default', () => {
       const wrapper = mount(FdsOverflowMenu)
-      
+
       expect(wrapper.find('.overflow-menu-inner.collapsed').exists()).toBe(true)
       expect(wrapper.find('button').attributes('aria-expanded')).toBe('false')
     })
 
     it('renders ul element when slot content is provided', () => {
       const wrapper = mount(FdsOverflowMenu, {
-        slots: { default: '<li>Item 1</li>' }
+        slots: { default: '<li>Item 1</li>' },
       })
-      
+
       expect(wrapper.find('ul.overflow-list').exists()).toBe(true)
     })
 
@@ -72,14 +72,14 @@ describe('FdsOverflowMenu', () => {
 
       it('accepts custom header text', () => {
         const wrapper = mount(FdsOverflowMenu, {
-          props: { header: 'Custom Menu' }
+          props: { header: 'Custom Menu' },
         })
         expect(wrapper.find('button span').text()).toContain('Custom Menu')
       })
 
       it('handles empty header', () => {
         const wrapper = mount(FdsOverflowMenu, {
-          props: { header: '' }
+          props: { header: '' },
         })
         // When header is empty, it falls back to default text due to template logic
         expect(wrapper.find('button span').text()).toContain('Overflow menu')
@@ -87,7 +87,7 @@ describe('FdsOverflowMenu', () => {
 
       it('handles Danish text', () => {
         const wrapper = mount(FdsOverflowMenu, {
-          props: { header: 'Flere muligheder' }
+          props: { header: 'Flere muligheder' },
         })
         expect(wrapper.find('button span').text()).toContain('Flere muligheder')
       })
@@ -97,10 +97,10 @@ describe('FdsOverflowMenu', () => {
       it('generates unique IDs when no id provided', () => {
         const wrapper1 = mount(FdsOverflowMenu)
         const wrapper2 = mount(FdsOverflowMenu)
-        
+
         const button1Id = wrapper1.find('button').attributes('id')
         const button2Id = wrapper2.find('button').attributes('id')
-        
+
         expect(button1Id).toBeTruthy()
         expect(button2Id).toBeTruthy()
         expect(button1Id).not.toBe(button2Id)
@@ -108,21 +108,21 @@ describe('FdsOverflowMenu', () => {
 
       it('uses custom id when provided', () => {
         const wrapper = mount(FdsOverflowMenu, {
-          props: { id: 'custom-menu' }
+          props: { id: 'custom-menu' },
         })
-        
+
         expect(wrapper.find('button').attributes('id')).toBe('button_custom-menu')
         expect(wrapper.find('.overflow-menu-inner').attributes('id')).toBe('custom-menu')
       })
 
       it('creates correct aria-controls relationship', () => {
         const wrapper = mount(FdsOverflowMenu, {
-          props: { id: 'test-menu' }
+          props: { id: 'test-menu' },
         })
-        
+
         const button = wrapper.find('button')
         const menu = wrapper.find('.overflow-menu-inner')
-        
+
         expect(button.attributes('aria-controls')).toBe('test-menu')
         expect(menu.attributes('id')).toBe('test-menu')
       })
@@ -136,7 +136,7 @@ describe('FdsOverflowMenu', () => {
 
       it('accepts custom icon', () => {
         const wrapper = mount(FdsOverflowMenu, {
-          props: { icon: 'menu' }
+          props: { icon: 'menu' },
         })
         expect(wrapper.find('use').attributes('href')).toBe('#menu')
       })
@@ -157,14 +157,14 @@ describe('FdsOverflowMenu', () => {
 
       it('applies right position class', () => {
         const wrapper = mount(FdsOverflowMenu, {
-          props: { position: 'right' }
+          props: { position: 'right' },
         })
         expect(wrapper.find('.overflow-menu').classes()).toContain('overflow-menu--open-right')
       })
 
       it('applies left position class', () => {
         const wrapper = mount(FdsOverflowMenu, {
-          props: { position: 'left' }
+          props: { position: 'left' },
         })
         expect(wrapper.find('.overflow-menu').classes()).toContain('overflow-menu--open-left')
       })
@@ -174,7 +174,7 @@ describe('FdsOverflowMenu', () => {
   describe('State Management', () => {
     it('starts in closed state', () => {
       const wrapper = mount(FdsOverflowMenu)
-      
+
       expect(wrapper.vm.isOpen).toBe(false)
       expect(wrapper.find('button').attributes('aria-expanded')).toBe('false')
       expect(wrapper.find('.overflow-menu-inner').attributes('aria-hidden')).toBe('true')
@@ -183,9 +183,9 @@ describe('FdsOverflowMenu', () => {
 
     it('opens when toggle is called', async () => {
       const wrapper = mount(FdsOverflowMenu)
-      
+
       await wrapper.vm.open()
-      
+
       expect(wrapper.vm.isOpen).toBe(true)
       expect(wrapper.find('button').attributes('aria-expanded')).toBe('true')
       expect(wrapper.find('.overflow-menu-inner').attributes('aria-hidden')).toBe('false')
@@ -194,20 +194,20 @@ describe('FdsOverflowMenu', () => {
 
     it('closes when toggle is called again', async () => {
       const wrapper = mount(FdsOverflowMenu)
-      
+
       await wrapper.vm.open()
       expect(wrapper.vm.isOpen).toBe(true)
-      
+
       await wrapper.vm.close()
       expect(wrapper.vm.isOpen).toBe(false)
     })
 
     it('toggles between open and closed states', async () => {
       const wrapper = mount(FdsOverflowMenu)
-      
+
       await wrapper.vm.toggle()
       expect(wrapper.vm.isOpen).toBe(true)
-      
+
       await wrapper.vm.toggle()
       expect(wrapper.vm.isOpen).toBe(false)
     })
@@ -216,9 +216,9 @@ describe('FdsOverflowMenu', () => {
   describe('Events', () => {
     it('emits open event when menu opens', async () => {
       const wrapper = mount(FdsOverflowMenu)
-      
+
       await wrapper.vm.open()
-      
+
       expect(wrapper.emitted('open')).toBeTruthy()
       expect(wrapper.emitted('toggle')).toBeTruthy()
       expect(wrapper.emitted('toggle')?.[0]).toEqual([true])
@@ -226,31 +226,31 @@ describe('FdsOverflowMenu', () => {
 
     it('emits close event when menu closes', async () => {
       const wrapper = mount(FdsOverflowMenu)
-      
+
       await wrapper.vm.open()
       await wrapper.vm.close()
-      
+
       expect(wrapper.emitted('close')).toBeTruthy()
       expect(wrapper.emitted('toggle')?.[1]).toEqual([false])
     })
 
     it('emits toggle event with correct state', async () => {
       const wrapper = mount(FdsOverflowMenu)
-      
+
       await wrapper.vm.toggle()
       expect(wrapper.emitted('toggle')?.[0]).toEqual([true])
-      
+
       await wrapper.vm.toggle()
       expect(wrapper.emitted('toggle')?.[1]).toEqual([false])
     })
 
     it('handles button click to toggle menu', async () => {
       const wrapper = mount(FdsOverflowMenu)
-      
+
       await wrapper.find('button').trigger('click')
       expect(wrapper.vm.isOpen).toBe(true)
       expect(wrapper.emitted('open')).toBeTruthy()
-      
+
       await wrapper.find('button').trigger('click')
       expect(wrapper.vm.isOpen).toBe(false)
       expect(wrapper.emitted('close')).toBeTruthy()
@@ -261,16 +261,16 @@ describe('FdsOverflowMenu', () => {
     it('closes menu on Escape key when open', async () => {
       const wrapper = mount(FdsOverflowMenu)
       const button = wrapper.find('button')
-      
+
       // Mock focus method
       const focusMock = vi.fn()
       button.element.focus = focusMock
-      
+
       await wrapper.vm.open()
       expect(wrapper.vm.isOpen).toBe(true)
-      
+
       await button.trigger('keydown', { key: 'Escape' })
-      
+
       expect(wrapper.vm.isOpen).toBe(false)
       expect(focusMock).toHaveBeenCalled()
     })
@@ -278,11 +278,11 @@ describe('FdsOverflowMenu', () => {
     it('does not close menu on Escape when already closed', async () => {
       const wrapper = mount(FdsOverflowMenu)
       const button = wrapper.find('button')
-      
+
       expect(wrapper.vm.isOpen).toBe(false)
-      
+
       await button.trigger('keydown', { key: 'Escape' })
-      
+
       expect(wrapper.vm.isOpen).toBe(false)
       expect(wrapper.emitted('close')).toBeFalsy()
     })
@@ -290,21 +290,21 @@ describe('FdsOverflowMenu', () => {
     it('ignores other keyboard events', async () => {
       const wrapper = mount(FdsOverflowMenu)
       const button = wrapper.find('button')
-      
+
       await wrapper.vm.open()
       expect(wrapper.vm.isOpen).toBe(true)
-      
+
       await button.trigger('keydown', { key: 'Enter' })
       await button.trigger('keydown', { key: 'Space' })
       await button.trigger('keydown', { key: 'ArrowDown' })
-      
+
       expect(wrapper.vm.isOpen).toBe(true) // Still open
     })
 
     it('has correct focus management attributes', () => {
       const wrapper = mount(FdsOverflowMenu)
       const button = wrapper.find('button')
-      
+
       expect(button.attributes('aria-haspopup')).toBe('true')
       expect(button.attributes('aria-expanded')).toBe('false')
     })
@@ -324,52 +324,52 @@ describe('FdsOverflowMenu', () => {
 
     it('closes menu when clicking outside', async () => {
       const wrapper = mount(FdsOverflowMenu)
-      
+
       await wrapper.vm.open()
       expect(wrapper.vm.isOpen).toBe(true)
-      
+
       // Simulate click outside
       const outsideElement = document.createElement('div')
       const clickEvent = new Event('click', { bubbles: true })
       Object.defineProperty(clickEvent, 'target', { value: outsideElement })
-      
+
       await wrapper.vm.handleClickOutside(clickEvent)
-      
+
       expect(wrapper.vm.isOpen).toBe(false)
     })
 
     it('does not close when clicking inside button', async () => {
       const wrapper = mount(FdsOverflowMenu)
       const button = wrapper.find('button')
-      
+
       await wrapper.vm.open()
       expect(wrapper.vm.isOpen).toBe(true)
-      
+
       // Simulate click on button
       const clickEvent = new Event('click', { bubbles: true })
       Object.defineProperty(clickEvent, 'target', { value: button.element })
-      
+
       await wrapper.vm.handleClickOutside(clickEvent)
-      
+
       expect(wrapper.vm.isOpen).toBe(true)
     })
 
     it('does not close when clicking inside menu', async () => {
       const wrapper = mount(FdsOverflowMenu, {
-        slots: { default: '<li><button>Menu Item</button></li>' }
+        slots: { default: '<li><button>Menu Item</button></li>' },
       })
       const menu = wrapper.find('.overflow-menu-inner')
       const menuItem = wrapper.find('li button')
-      
+
       await wrapper.vm.open()
       expect(wrapper.vm.isOpen).toBe(true)
-      
+
       // Simulate click on menu item
       const clickEvent = new Event('click', { bubbles: true })
       Object.defineProperty(clickEvent, 'target', { value: menuItem.element })
-      
+
       await wrapper.vm.handleClickOutside(clickEvent)
-      
+
       expect(wrapper.vm.isOpen).toBe(true)
     })
   })
@@ -378,10 +378,10 @@ describe('FdsOverflowMenu', () => {
     it('renders slot content in overflow list', () => {
       const wrapper = mount(FdsOverflowMenu, {
         slots: {
-          default: '<li><button>Action 1</button></li><li><button>Action 2</button></li>'
-        }
+          default: '<li><button>Action 1</button></li><li><button>Action 2</button></li>',
+        },
       })
-      
+
       const ul = wrapper.find('ul.overflow-list')
       expect(ul.exists()).toBe(true)
       expect(ul.html()).toContain('<li><button>Action 1</button></li>')
@@ -395,10 +395,10 @@ describe('FdsOverflowMenu', () => {
             <li><a href="/edit">Edit</a></li>
             <li><a href="/delete" class="text-danger">Delete</a></li>
             <li><button disabled>Disabled Action</button></li>
-          `
-        }
+          `,
+        },
       })
-      
+
       const ul = wrapper.find('ul.overflow-list')
       expect(ul.find('a[href="/edit"]').exists()).toBe(true)
       expect(ul.find('a.text-danger').exists()).toBe(true)
@@ -407,9 +407,9 @@ describe('FdsOverflowMenu', () => {
 
     it('handles empty slot content', () => {
       const wrapper = mount(FdsOverflowMenu, {
-        slots: { default: '' }
+        slots: { default: '' },
       })
-      
+
       expect(wrapper.find('ul.overflow-list').exists()).toBe(true)
       expect(wrapper.find('ul.overflow-list').text().trim()).toBe('')
     })
@@ -423,11 +423,11 @@ describe('FdsOverflowMenu', () => {
   describe('Accessibility', () => {
     it('has correct ARIA attributes', () => {
       const wrapper = mount(FdsOverflowMenu, {
-        props: { id: 'test-menu' }
+        props: { id: 'test-menu' },
       })
       const button = wrapper.find('button')
       const menu = wrapper.find('.overflow-menu-inner')
-      
+
       expect(button.attributes('aria-haspopup')).toBe('true')
       expect(button.attributes('aria-expanded')).toBe('false')
       expect(button.attributes('aria-controls')).toBe('test-menu')
@@ -438,31 +438,31 @@ describe('FdsOverflowMenu', () => {
       const wrapper = mount(FdsOverflowMenu)
       const button = wrapper.find('button')
       const menu = wrapper.find('.overflow-menu-inner')
-      
+
       await wrapper.vm.open()
-      
+
       expect(button.attributes('aria-expanded')).toBe('true')
       expect(menu.attributes('aria-hidden')).toBe('false')
-      
+
       await wrapper.vm.close()
-      
+
       expect(button.attributes('aria-expanded')).toBe('false')
       expect(menu.attributes('aria-hidden')).toBe('true')
     })
 
     it('has proper button labeling', () => {
       const wrapper = mount(FdsOverflowMenu, {
-        props: { header: 'Actions menu' }
+        props: { header: 'Actions menu' },
       })
       const button = wrapper.find('button')
-      
+
       expect(button.find('span').text()).toContain('Actions menu')
     })
 
     it('has proper icon accessibility', () => {
       const wrapper = mount(FdsOverflowMenu)
       const svg = wrapper.find('svg.icon-svg')
-      
+
       expect(svg.attributes('aria-hidden')).toBe('true')
       expect(svg.attributes('focusable')).toBe('false')
     })
@@ -470,13 +470,13 @@ describe('FdsOverflowMenu', () => {
     it('manages focus correctly on Escape', async () => {
       const wrapper = mount(FdsOverflowMenu)
       const button = wrapper.find('button')
-      
+
       const focusMock = vi.fn()
       button.element.focus = focusMock
-      
+
       await wrapper.vm.open()
       await button.trigger('keydown', { key: 'Escape' })
-      
+
       expect(focusMock).toHaveBeenCalled()
     })
 
@@ -491,7 +491,7 @@ describe('FdsOverflowMenu', () => {
             </FdsOverflowMenu>
           </div>
         `,
-        components: { FdsOverflowMenu }
+        components: { FdsOverflowMenu },
       }
 
       await testAccessibility(TestWrapper)
@@ -505,10 +505,10 @@ describe('FdsOverflowMenu', () => {
           header: undefined,
           id: undefined,
           icon: undefined,
-          position: undefined
-        }
+          position: undefined,
+        },
       })
-      
+
       expect(wrapper.find('button span').text()).toContain('Overflow menu')
       expect(wrapper.find('use').attributes('href')).toBe('#more-vert')
       expect(wrapper.find('.overflow-menu').classes()).toContain('overflow-menu--open-right')
@@ -519,21 +519,21 @@ describe('FdsOverflowMenu', () => {
         props: {
           header: '',
           icon: '',
-          id: ''
-        }
+          id: '',
+        },
       })
-      
+
       expect(wrapper.find('button').exists()).toBe(true)
       expect(wrapper.find('.overflow-menu-inner').exists()).toBe(true)
     })
 
     it('handles prop changes dynamically', async () => {
       const wrapper = mount(FdsOverflowMenu, {
-        props: { position: 'right' }
+        props: { position: 'right' },
       })
-      
+
       expect(wrapper.find('.overflow-menu').classes()).toContain('overflow-menu--open-right')
-      
+
       await wrapper.setProps({ position: 'left' })
       expect(wrapper.find('.overflow-menu').classes()).toContain('overflow-menu--open-left')
       expect(wrapper.find('.overflow-menu').classes()).not.toContain('overflow-menu--open-right')
@@ -541,42 +541,42 @@ describe('FdsOverflowMenu', () => {
 
     it('handles multiple rapid toggle calls', async () => {
       const wrapper = mount(FdsOverflowMenu)
-      
+
       // Rapid toggling
       await wrapper.vm.toggle()
       await wrapper.vm.toggle()
       await wrapper.vm.toggle()
-      
+
       expect(wrapper.vm.isOpen).toBe(true)
       expect(wrapper.emitted('toggle')).toHaveLength(3)
     })
 
     it('handles missing DOM elements gracefully', async () => {
       const wrapper = mount(FdsOverflowMenu)
-      
+
       // Remove refs to simulate edge case
       wrapper.vm.buttonRef = null
       wrapper.vm.menuRef = null
-      
+
       const clickEvent = new Event('click')
       await wrapper.vm.handleClickOutside(clickEvent)
-      
+
       // Should not throw error
       expect(wrapper.vm.isOpen).toBe(false)
     })
 
     it('maintains IDs when component is re-mounted', () => {
       const wrapper1 = mount(FdsOverflowMenu, {
-        props: { id: 'persistent-menu' }
+        props: { id: 'persistent-menu' },
       })
       const id1 = wrapper1.find('button').attributes('id')
       wrapper1.unmount()
-      
+
       const wrapper2 = mount(FdsOverflowMenu, {
-        props: { id: 'persistent-menu' }
+        props: { id: 'persistent-menu' },
       })
       const id2 = wrapper2.find('button').attributes('id')
-      
+
       expect(id1).toBe(id2)
     })
   })
@@ -599,12 +599,12 @@ describe('FdsOverflowMenu', () => {
             </tbody>
           </table>
         `,
-        components: { FdsOverflowMenu }
+        components: { FdsOverflowMenu },
       }
-      
+
       const wrapper = mount(TableWrapper)
       const menu = wrapper.findComponent(FdsOverflowMenu)
-      
+
       expect(menu.exists()).toBe(true)
       expect(menu.find('ul.overflow-list').exists()).toBe(true)
     })
@@ -623,12 +623,12 @@ describe('FdsOverflowMenu', () => {
             </div>
           </div>
         `,
-        components: { FdsOverflowMenu }
+        components: { FdsOverflowMenu },
       }
-      
+
       const wrapper = mount(CardWrapper)
       const menu = wrapper.findComponent(FdsOverflowMenu)
-      
+
       expect(menu.classes()).toContain('overflow-menu--open-left')
       expect(menu.find('ul li').exists()).toBe(true)
     })
@@ -644,14 +644,14 @@ describe('FdsOverflowMenu', () => {
         `,
         components: { FdsOverflowMenu },
         methods: {
-          actionHandler
-        }
+          actionHandler,
+        },
       }
-      
+
       const wrapper = mount(ActionWrapper)
       const overflowMenu = wrapper.findComponent(FdsOverflowMenu)
       await overflowMenu.vm.open() // Open menu
-      
+
       await wrapper.findAll('li button')[0].trigger('click')
       expect(actionHandler).toHaveBeenCalledWith('edit')
     })
@@ -667,12 +667,12 @@ describe('FdsOverflowMenu', () => {
             </FdsOverflowMenu>
           </div>
         `,
-        components: { FdsOverflowMenu }
+        components: { FdsOverflowMenu },
       }
-      
+
       const wrapper = mount(DKFDSWrapper)
       const menu = wrapper.findComponent(FdsOverflowMenu)
-      
+
       expect(menu.find('button span').text()).toContain('Flere handlinger')
       expect(menu.find('.overflow-menu').classes()).toContain('overflow-menu--open-right')
       expect(menu.find('a.text-error').text()).toBe('Slet')
@@ -695,26 +695,26 @@ describe('FdsOverflowMenu', () => {
             actions: [
               { id: 'edit', title: 'Edit', disabled: false },
               { id: 'share', title: 'Share', disabled: false },
-              { id: 'delete', title: 'Delete', disabled: true }
-            ]
+              { id: 'delete', title: 'Delete', disabled: true },
+            ],
           }
         },
         methods: {
           handleAction(action: any) {
-            this.actions = this.actions.filter(a => a.id !== action.id)
-          }
-        }
+            this.actions = this.actions.filter((a) => a.id !== action.id)
+          },
+        },
       }
-      
+
       const wrapper = mount(DynamicWrapper)
       const buttons = wrapper.findAll('button')
-      
+
       expect(buttons).toHaveLength(4) // 3 actions + toggle button
       expect(buttons[3].attributes('disabled')).toBeDefined() // Delete is disabled
-      
+
       // Simulate action
       await buttons[1].trigger('click') // Edit action
-      
+
       expect(wrapper.findAll('li')).toHaveLength(2) // One action removed
     })
   })

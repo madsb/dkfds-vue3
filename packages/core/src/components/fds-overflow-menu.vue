@@ -43,7 +43,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   icon: 'more-vert',
-  position: 'right'
+  position: 'right',
 })
 
 const emit = defineEmits<{

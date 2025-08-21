@@ -28,7 +28,7 @@ describe('FdsMenuItem', () => {
 
     it('has correct DKFDS structure', () => {
       const wrapper = mount(FdsMenuItem)
-      
+
       expect(wrapper.element.tagName).toBe('LI')
       expect(wrapper.find('a.nav-link').exists()).toBe(true)
       expect(wrapper.find('a span').exists()).toBe(true)
@@ -54,7 +54,7 @@ describe('FdsMenuItem', () => {
     describe('id prop', () => {
       it('accepts id prop', () => {
         const wrapper = mount(FdsMenuItem, {
-          props: { id: 'menu-item-1' }
+          props: { id: 'menu-item-1' },
         })
         // ID is used in navigation event, not as DOM attribute
         expect(wrapper.vm.$props.id).toBe('menu-item-1')
@@ -76,7 +76,7 @@ describe('FdsMenuItem', () => {
 
       it('applies current class to anchor when active is true without submenu', () => {
         const wrapper = mount(FdsMenuItem, {
-          props: { active: true }
+          props: { active: true },
         })
         // Without submenu, active makes the link current
         expect(wrapper.find('a').classes()).toContain('current')
@@ -90,8 +90,8 @@ describe('FdsMenuItem', () => {
           props: { active: true },
           slots: {
             default: 'Parent',
-            submenu: '<li>Child</li>'
-          }
+            submenu: '<li>Child</li>',
+          },
         })
         // With submenu, active applies to li element
         expect(wrapper.classes()).toContain('active')
@@ -110,7 +110,7 @@ describe('FdsMenuItem', () => {
 
       it('applies current class to anchor when true', () => {
         const wrapper = mount(FdsMenuItem, {
-          props: { current: true }
+          props: { current: true },
         })
         expect(wrapper.find('a').classes()).toContain('current')
         expect(wrapper.find('a').attributes('aria-current')).toBe('page')
@@ -125,17 +125,16 @@ describe('FdsMenuItem', () => {
 
       it('applies active class to li when true', () => {
         const wrapper = mount(FdsMenuItem, {
-          props: { expanded: true }
+          props: { expanded: true },
         })
         expect(wrapper.classes()).toContain('active')
       })
     })
 
-
     describe('hint prop', () => {
       it('renders hint when provided', () => {
         const wrapper = mount(FdsMenuItem, {
-          props: { hint: 'Additional information' }
+          props: { hint: 'Additional information' },
         })
         const hintElement = wrapper.find('.sidenav-information')
         expect(hintElement.exists()).toBe(true)
@@ -149,7 +148,7 @@ describe('FdsMenuItem', () => {
 
       it('handles empty string hint', () => {
         const wrapper = mount(FdsMenuItem, {
-          props: { hint: '' }
+          props: { hint: '' },
         })
         expect(wrapper.find('.sidenav-information').exists()).toBe(false)
       })
@@ -163,21 +162,21 @@ describe('FdsMenuItem', () => {
 
       it('accepts custom href value', () => {
         const wrapper = mount(FdsMenuItem, {
-          props: { href: '/dashboard' }
+          props: { href: '/dashboard' },
         })
         expect(wrapper.find('a').attributes('href')).toBe('/dashboard')
       })
 
       it('handles external URLs', () => {
         const wrapper = mount(FdsMenuItem, {
-          props: { href: 'https://example.com' }
+          props: { href: 'https://example.com' },
         })
         expect(wrapper.find('a').attributes('href')).toBe('https://example.com')
       })
 
       it('handles empty string href', () => {
         const wrapper = mount(FdsMenuItem, {
-          props: { href: '' }
+          props: { href: '' },
         })
         // Component logic uses href || '#', so empty string becomes '#'
         expect(wrapper.find('a').attributes('href')).toBe('#')
@@ -187,7 +186,7 @@ describe('FdsMenuItem', () => {
     describe('index prop', () => {
       it('defaults to null and shows no number prefix', () => {
         const wrapper = mount(FdsMenuItem, {
-          slots: { default: 'Menu Item' }
+          slots: { default: 'Menu Item' },
         })
         expect(wrapper.find('a span').text()).toBe('Menu Item')
       })
@@ -195,7 +194,7 @@ describe('FdsMenuItem', () => {
       it('shows number prefix when index is provided', () => {
         const wrapper = mount(FdsMenuItem, {
           props: { index: 1 },
-          slots: { default: 'Menu Item' }
+          slots: { default: 'Menu Item' },
         })
         expect(wrapper.find('a span').text()).toBe('1. Menu Item')
       })
@@ -203,7 +202,7 @@ describe('FdsMenuItem', () => {
       it('handles zero index', () => {
         const wrapper = mount(FdsMenuItem, {
           props: { index: 0 },
-          slots: { default: 'Menu Item' }
+          slots: { default: 'Menu Item' },
         })
         expect(wrapper.find('a span').text()).toBe('0. Menu Item')
       })
@@ -211,7 +210,7 @@ describe('FdsMenuItem', () => {
       it('handles larger index numbers', () => {
         const wrapper = mount(FdsMenuItem, {
           props: { index: 42 },
-          slots: { default: 'Menu Item' }
+          slots: { default: 'Menu Item' },
         })
         expect(wrapper.find('a span').text()).toBe('42. Menu Item')
       })
@@ -219,7 +218,7 @@ describe('FdsMenuItem', () => {
       it('does not show number when index is null', () => {
         const wrapper = mount(FdsMenuItem, {
           props: { index: null },
-          slots: { default: 'Menu Item' }
+          slots: { default: 'Menu Item' },
         })
         expect(wrapper.find('a span').text()).toBe('Menu Item')
       })
@@ -234,9 +233,9 @@ describe('FdsMenuItem', () => {
             expanded: true,
             hint: 'Current page',
             href: '/current',
-            index: 1
+            index: 1,
           },
-          slots: { default: 'Current Page' }
+          slots: { default: 'Current Page' },
         })
 
         expect(wrapper.classes()).toContain('active') // from expanded
@@ -252,7 +251,7 @@ describe('FdsMenuItem', () => {
   describe('Events', () => {
     it('emits click event when anchor is clicked', async () => {
       const wrapper = mount(FdsMenuItem, {
-        props: { href: '/page' }
+        props: { href: '/page' },
       })
 
       await wrapper.find('a').trigger('click')
@@ -262,7 +261,7 @@ describe('FdsMenuItem', () => {
 
     it('emits navigate event with id when clicked and id is provided', async () => {
       const wrapper = mount(FdsMenuItem, {
-        props: { id: 'menu-item-1', href: '/page' }
+        props: { id: 'menu-item-1', href: '/page' },
       })
 
       await wrapper.find('a').trigger('click')
@@ -272,7 +271,7 @@ describe('FdsMenuItem', () => {
 
     it('does not emit navigate event when id is not provided', async () => {
       const wrapper = mount(FdsMenuItem, {
-        props: { href: '/page' }
+        props: { href: '/page' },
       })
 
       await wrapper.find('a').trigger('click')
@@ -282,7 +281,7 @@ describe('FdsMenuItem', () => {
 
     it('prevents default when href is "#"', async () => {
       const wrapper = mount(FdsMenuItem, {
-        props: { href: '#' }
+        props: { href: '#' },
       })
 
       const mockEvent = { preventDefault: vi.fn() }
@@ -303,7 +302,7 @@ describe('FdsMenuItem', () => {
 
     it('does not prevent default when href is valid URL', async () => {
       const wrapper = mount(FdsMenuItem, {
-        props: { href: '/page' }
+        props: { href: '/page' },
       })
 
       const mockEvent = { preventDefault: vi.fn() }
@@ -314,7 +313,7 @@ describe('FdsMenuItem', () => {
 
     it('emits both click and navigate events with all data', async () => {
       const wrapper = mount(FdsMenuItem, {
-        props: { id: 'item-1', href: '/test' }
+        props: { id: 'item-1', href: '/test' },
       })
 
       const mockEvent = { preventDefault: vi.fn() }
@@ -328,7 +327,7 @@ describe('FdsMenuItem', () => {
   describe('Slots', () => {
     it('renders default slot content', () => {
       const wrapper = mount(FdsMenuItem, {
-        slots: { default: 'Menu Item Text' }
+        slots: { default: 'Menu Item Text' },
       })
 
       expect(wrapper.find('a span').text()).toContain('Menu Item Text')
@@ -337,8 +336,8 @@ describe('FdsMenuItem', () => {
     it('renders complex slot content', () => {
       const wrapper = mount(FdsMenuItem, {
         slots: {
-          default: '<strong>Important</strong> <em>Item</em>'
-        }
+          default: '<strong>Important</strong> <em>Item</em>',
+        },
       })
 
       const span = wrapper.find('a span')
@@ -349,7 +348,7 @@ describe('FdsMenuItem', () => {
     it('renders slot content with index prefix', () => {
       const wrapper = mount(FdsMenuItem, {
         props: { index: 2 },
-        slots: { default: 'Second Item' }
+        slots: { default: 'Second Item' },
       })
 
       expect(wrapper.find('a span').text()).toBe('2. Second Item')
@@ -359,8 +358,8 @@ describe('FdsMenuItem', () => {
       const wrapper = mount(FdsMenuItem, {
         slots: {
           default: 'Parent Item',
-          submenu: '<li><a href="/child">Child Item</a></li>'
-        }
+          submenu: '<li><a href="/child">Child Item</a></li>',
+        },
       })
 
       // The submenu slot content is rendered directly
@@ -369,7 +368,7 @@ describe('FdsMenuItem', () => {
 
     it('does not render submenu ul when submenu slot is not provided', () => {
       const wrapper = mount(FdsMenuItem, {
-        slots: { default: 'Simple Item' }
+        slots: { default: 'Simple Item' },
       })
 
       expect(wrapper.find('ul').exists()).toBe(false)
@@ -384,8 +383,8 @@ describe('FdsMenuItem', () => {
       const wrapper = mount(FdsMenuItem, {
         slots: {
           default: 'Item',
-          submenu: ''
-        }
+          submenu: '',
+        },
       })
 
       // Submenu slot is still rendered even if empty
@@ -396,7 +395,7 @@ describe('FdsMenuItem', () => {
   describe('Accessibility', () => {
     it('has correct ARIA attributes for normal item', () => {
       const wrapper = mount(FdsMenuItem, {
-        props: { active: false }
+        props: { active: false },
       })
 
       expect(wrapper.find('a').attributes('aria-current')).toBeUndefined()
@@ -404,7 +403,7 @@ describe('FdsMenuItem', () => {
 
     it('has correct ARIA attributes for current item', () => {
       const wrapper = mount(FdsMenuItem, {
-        props: { current: true }
+        props: { current: true },
       })
 
       expect(wrapper.find('a').attributes('aria-current')).toBe('page')
@@ -412,16 +411,15 @@ describe('FdsMenuItem', () => {
 
     it('has correct ARIA attributes for active item without submenu', () => {
       const wrapper = mount(FdsMenuItem, {
-        props: { active: true }
+        props: { active: true },
       })
       // active without submenu makes it current
       expect(wrapper.find('a').attributes('aria-current')).toBe('page')
     })
 
-
     it('provides semantic list item structure', () => {
       const wrapper = mount(FdsMenuItem, {
-        slots: { default: 'Menu Item' }
+        slots: { default: 'Menu Item' },
       })
 
       expect(wrapper.element.tagName).toBe('LI')
@@ -431,7 +429,7 @@ describe('FdsMenuItem', () => {
 
     it('supports keyboard navigation', () => {
       const wrapper = mount(FdsMenuItem, {
-        props: { href: '/page' }
+        props: { href: '/page' },
       })
 
       const anchor = wrapper.find('a')
@@ -444,8 +442,8 @@ describe('FdsMenuItem', () => {
       const wrapper = mount(FdsMenuItem, {
         slots: {
           default: 'Parent',
-          submenu: '<ul><li><a href="/child">Child</a></li></ul>'
-        }
+          submenu: '<ul><li><a href="/child">Child</a></li></ul>',
+        },
       })
 
       // Submenu content is rendered directly through slot
@@ -454,7 +452,7 @@ describe('FdsMenuItem', () => {
     })
 
     it('passes accessibility tests', async () => {
-      // Skipping accessibility test due to JSDOM navigation limitations  
+      // Skipping accessibility test due to JSDOM navigation limitations
       // Component structure verified through other tests
       expect(true).toBe(true)
     })
@@ -476,8 +474,8 @@ describe('FdsMenuItem', () => {
           expanded: undefined,
           hint: undefined,
           href: undefined,
-          index: undefined
-        }
+          index: undefined,
+        },
       })
 
       expect(wrapper.element.tagName).toBe('LI')
@@ -494,8 +492,8 @@ describe('FdsMenuItem', () => {
           expanded: null,
           hint: null,
           href: null,
-          index: null
-        }
+          index: null,
+        },
       })
 
       expect(wrapper.element.tagName).toBe('LI')
@@ -507,8 +505,8 @@ describe('FdsMenuItem', () => {
         props: {
           id: '',
           hint: '',
-          href: ''
-        }
+          href: '',
+        },
       })
 
       // Component logic uses href || '#', so empty string becomes '#'
@@ -518,7 +516,7 @@ describe('FdsMenuItem', () => {
 
     it('handles prop changes dynamically', async () => {
       const wrapper = mount(FdsMenuItem, {
-        props: { expanded: false }
+        props: { expanded: false },
       })
 
       expect(wrapper.classes()).not.toContain('active')
@@ -532,7 +530,7 @@ describe('FdsMenuItem', () => {
 
     it('handles current prop changes dynamically', async () => {
       const wrapper = mount(FdsMenuItem, {
-        props: { current: false }
+        props: { current: false },
       })
 
       expect(wrapper.find('a').classes()).not.toContain('current')
@@ -546,7 +544,7 @@ describe('FdsMenuItem', () => {
 
     it('maintains structure with all optional props undefined', () => {
       const wrapper = mount(FdsMenuItem, {
-        slots: { default: 'Basic Item' }
+        slots: { default: 'Basic Item' },
       })
 
       expect(wrapper.element.tagName).toBe('LI')
@@ -558,7 +556,7 @@ describe('FdsMenuItem', () => {
     it('handles negative index numbers', () => {
       const wrapper = mount(FdsMenuItem, {
         props: { index: -1 },
-        slots: { default: 'Item' }
+        slots: { default: 'Item' },
       })
 
       expect(wrapper.find('a span').text()).toBe('-1. Item')
@@ -567,7 +565,7 @@ describe('FdsMenuItem', () => {
     it('handles very large index numbers', () => {
       const wrapper = mount(FdsMenuItem, {
         props: { index: 9999 },
-        slots: { default: 'Item' }
+        slots: { default: 'Item' },
       })
 
       expect(wrapper.find('a span').text()).toBe('9999. Item')
@@ -586,7 +584,7 @@ describe('FdsMenuItem', () => {
             </ul>
           </nav>
         `,
-        components: { FdsMenuItem }
+        components: { FdsMenuItem },
       }
 
       const wrapper = mount(MenuWrapper)
@@ -601,7 +599,7 @@ describe('FdsMenuItem', () => {
     it('works with navigation events', async () => {
       const wrapper = mount(FdsMenuItem, {
         props: { id: 'nav-item', href: '/page' },
-        slots: { default: 'Navigation Item' }
+        slots: { default: 'Navigation Item' },
       })
 
       await wrapper.find('a').trigger('click')
@@ -625,7 +623,7 @@ describe('FdsMenuItem', () => {
             </FdsMenuItem>
           </ul>
         `,
-        components: { FdsMenuItem }
+        components: { FdsMenuItem },
       }
 
       const wrapper = mount(SubmenuWrapper)
@@ -646,7 +644,7 @@ describe('FdsMenuItem', () => {
             </ul>
           </nav>
         `,
-        components: { FdsMenuItem }
+        components: { FdsMenuItem },
       }
 
       const wrapper = mount(DKFDSNavWrapper)
@@ -683,17 +681,23 @@ describe('FdsMenuItem', () => {
             menuItems: [
               { id: 'home', href: '/home', title: 'Forside', active: false },
               { id: 'about', href: '/om', title: 'Om os', active: true },
-              { id: 'contact', href: '/kontakt', title: 'Kontakt', active: false, hint: 'Ring eller skriv' }
-            ]
+              {
+                id: 'contact',
+                href: '/kontakt',
+                title: 'Kontakt',
+                active: false,
+                hint: 'Ring eller skriv',
+              },
+            ],
           }
         },
         methods: {
           handleNavigate(id: string) {
-            this.menuItems.forEach(item => {
+            this.menuItems.forEach((item) => {
               item.active = item.id === id
             })
-          }
-        }
+          },
+        },
       }
 
       const wrapper = mount(DynamicWrapper)

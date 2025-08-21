@@ -28,7 +28,7 @@ describe('FdsMenu', () => {
 
     it('has correct DKFDS structure', () => {
       const wrapper = mount(FdsMenu)
-      
+
       expect(wrapper.element.tagName).toBe('NAV')
       expect(wrapper.find('ul').exists()).toBe(true)
       expect(wrapper.find('ul').classes()).toContain('sidemenu')
@@ -44,14 +44,14 @@ describe('FdsMenu', () => {
 
       it('applies sidemenu variant class', () => {
         const wrapper = mount(FdsMenu, {
-          props: { variant: 'sidemenu' }
+          props: { variant: 'sidemenu' },
         })
         expect(wrapper.find('ul').classes()).toContain('sidemenu')
       })
 
       it('applies submenu variant class', () => {
         const wrapper = mount(FdsMenu, {
-          props: { variant: 'submenu' }
+          props: { variant: 'submenu' },
         })
         // Submenu variant should not have any class
         expect(wrapper.find('ul').classes()).not.toContain('sidemenu')
@@ -60,7 +60,7 @@ describe('FdsMenu', () => {
 
       it('handles undefined variant', () => {
         const wrapper = mount(FdsMenu, {
-          props: { variant: undefined }
+          props: { variant: undefined },
         })
         expect(wrapper.find('ul').classes()).toContain('sidemenu')
       })
@@ -75,28 +75,28 @@ describe('FdsMenu', () => {
 
       it('accepts custom aria-label', () => {
         const wrapper = mount(FdsMenu, {
-          props: { ariaLabel: 'Main menu' }
+          props: { ariaLabel: 'Main menu' },
         })
         expect(wrapper.attributes('aria-label')).toBe('Main menu')
       })
 
       it('handles Danish text', () => {
         const wrapper = mount(FdsMenu, {
-          props: { ariaLabel: 'Hovedmenu' }
+          props: { ariaLabel: 'Hovedmenu' },
         })
         expect(wrapper.attributes('aria-label')).toBe('Hovedmenu')
       })
 
       it('handles empty string aria-label', () => {
         const wrapper = mount(FdsMenu, {
-          props: { ariaLabel: '' }
+          props: { ariaLabel: '' },
         })
         expect(wrapper.attributes('aria-label')).toBe('')
       })
 
       it('handles special characters in aria-label', () => {
         const wrapper = mount(FdsMenu, {
-          props: { ariaLabel: 'Navigation - Hovedmenu & sidemenu' }
+          props: { ariaLabel: 'Navigation - Hovedmenu & sidemenu' },
         })
         expect(wrapper.attributes('aria-label')).toBe('Navigation - Hovedmenu & sidemenu')
       })
@@ -107,10 +107,10 @@ describe('FdsMenu', () => {
         const wrapper = mount(FdsMenu, {
           props: {
             variant: 'submenu',
-            ariaLabel: 'Submenu navigation'
-          }
+            ariaLabel: 'Submenu navigation',
+          },
         })
-        
+
         // Submenu variant renders as ul without nav wrapper, so no aria-label on root
         expect(wrapper.element.tagName).toBe('UL')
         expect(wrapper.classes()).not.toContain('sidemenu')
@@ -122,8 +122,8 @@ describe('FdsMenu', () => {
     it('renders default slot content', () => {
       const wrapper = mount(FdsMenu, {
         slots: {
-          default: '<li>Menu Item 1</li><li>Menu Item 2</li>'
-        }
+          default: '<li>Menu Item 1</li><li>Menu Item 2</li>',
+        },
       })
 
       const ul = wrapper.find('ul')
@@ -138,8 +138,8 @@ describe('FdsMenu', () => {
             <li><a href="/home">Home</a></li>
             <li><a href="/about">About</a></li>
             <li><a href="/contact">Contact</a></li>
-          `
-        }
+          `,
+        },
       })
 
       const links = wrapper.findAll('a')
@@ -165,8 +165,8 @@ describe('FdsMenu', () => {
                 <li><a href="/child">Child Item</a></li>
               </ul>
             </li>
-          `
-        }
+          `,
+        },
       })
 
       expect(wrapper.find('a[href="/parent"]').exists()).toBe(true)
@@ -185,7 +185,7 @@ describe('FdsMenu', () => {
       `
 
       const wrapper = mount(FdsMenu, {
-        slots: { default: slotContent }
+        slots: { default: slotContent },
       })
 
       expect(wrapper.find('.menu-item.active').exists()).toBe(true)
@@ -196,7 +196,7 @@ describe('FdsMenu', () => {
   describe('Accessibility', () => {
     it('has nav element with aria-label', () => {
       const wrapper = mount(FdsMenu, {
-        props: { ariaLabel: 'Main navigation' }
+        props: { ariaLabel: 'Main navigation' },
       })
 
       expect(wrapper.element.tagName).toBe('NAV')
@@ -206,8 +206,8 @@ describe('FdsMenu', () => {
     it('provides semantic navigation structure', () => {
       const wrapper = mount(FdsMenu, {
         slots: {
-          default: '<li><a href="/page">Link</a></li>'
-        }
+          default: '<li><a href="/page">Link</a></li>',
+        },
       })
 
       // nav > ul > li > a structure
@@ -224,13 +224,13 @@ describe('FdsMenu', () => {
             <li><a href="/1">Item 1</a></li>
             <li><a href="/2">Item 2</a></li>
             <li><a href="/3">Item 3</a></li>
-          `
-        }
+          `,
+        },
       })
 
       const links = wrapper.findAll('a')
       // All links should be keyboard focusable
-      links.forEach(link => {
+      links.forEach((link) => {
         expect(link.element.tagName).toBe('A')
         expect(link.attributes('href')).toBeTruthy()
       })
@@ -242,8 +242,8 @@ describe('FdsMenu', () => {
           default: `
             <li><a href="/current" aria-current="page">Current</a></li>
             <li><a href="/other" aria-describedby="help">Other</a></li>
-          `
-        }
+          `,
+        },
       })
 
       expect(wrapper.find('[aria-current="page"]').exists()).toBe(true)
@@ -259,7 +259,7 @@ describe('FdsMenu', () => {
             <li><a href="/contact">Contact</a></li>
           </FdsMenu>
         `,
-        components: { FdsMenu }
+        components: { FdsMenu },
       }
 
       await testAccessibility(TestWrapper)
@@ -280,7 +280,7 @@ describe('FdsMenu', () => {
             </ul>
           </nav>
         `,
-        components: { FdsMenu }
+        components: { FdsMenu },
       }
 
       await testAccessibility(TestWrapper)
@@ -292,8 +292,8 @@ describe('FdsMenu', () => {
       const wrapper = mount(FdsMenu, {
         props: {
           variant: undefined,
-          ariaLabel: undefined
-        }
+          ariaLabel: undefined,
+        },
       })
 
       expect(wrapper.element.tagName).toBe('NAV')
@@ -305,8 +305,8 @@ describe('FdsMenu', () => {
       const wrapper = mount(FdsMenu, {
         props: {
           variant: null,
-          ariaLabel: null
-        }
+          ariaLabel: null,
+        },
       })
 
       // null variant doesn't match 'sidemenu', so renders as ul
@@ -316,7 +316,7 @@ describe('FdsMenu', () => {
 
     it('maintains structure with no slot content', () => {
       const wrapper = mount(FdsMenu)
-      
+
       expect(wrapper.element.tagName).toBe('NAV')
       expect(wrapper.find('ul').exists()).toBe(true)
       expect(wrapper.find('ul').classes()).toContain('sidemenu')
@@ -324,7 +324,7 @@ describe('FdsMenu', () => {
 
     it('handles prop changes dynamically', async () => {
       const wrapper = mount(FdsMenu, {
-        props: { ariaLabel: 'Initial label' }
+        props: { ariaLabel: 'Initial label' },
       })
 
       expect(wrapper.attributes('aria-label')).toBe('Initial label')
@@ -334,9 +334,10 @@ describe('FdsMenu', () => {
     })
 
     it('handles very long aria-label text', () => {
-      const longLabel = 'Very long navigation label that contains many words and should still work correctly without breaking the component functionality'
+      const longLabel =
+        'Very long navigation label that contains many words and should still work correctly without breaking the component functionality'
       const wrapper = mount(FdsMenu, {
-        props: { ariaLabel: longLabel }
+        props: { ariaLabel: longLabel },
       })
 
       expect(wrapper.attributes('aria-label')).toBe(longLabel)
@@ -345,7 +346,7 @@ describe('FdsMenu', () => {
     it('handles special characters in aria-label', () => {
       const specialLabel = 'Navigation <>&"\''
       const wrapper = mount(FdsMenu, {
-        props: { ariaLabel: specialLabel }
+        props: { ariaLabel: specialLabel },
       })
 
       expect(wrapper.attributes('aria-label')).toBe(specialLabel)
@@ -363,7 +364,7 @@ describe('FdsMenu', () => {
             <li><a href="/kontakt">Kontakt</a></li>
           </FdsMenu>
         `,
-        components: { FdsMenu }
+        components: { FdsMenu },
       }
 
       const wrapper = mount(MainNavWrapper)
@@ -385,7 +386,7 @@ describe('FdsMenu', () => {
             </FdsMenu>
           </div>
         `,
-        components: { FdsMenu }
+        components: { FdsMenu },
       }
 
       const wrapper = mount(SidebarWrapper)
@@ -408,7 +409,7 @@ describe('FdsMenu', () => {
             </li>
           </FdsMenu>
         `,
-        components: { FdsMenu }
+        components: { FdsMenu },
       }
 
       const wrapper = mount(NestedMenuWrapper)
@@ -439,11 +440,11 @@ describe('FdsMenu', () => {
             </li>
           </FdsMenu>
         `,
-        components: { FdsMenu }
+        components: { FdsMenu },
       }
 
       const wrapper = mount(DKFDSMenuWrapper)
-      
+
       // Verify DKFDS structure and conventions
       expect(wrapper.find('.active.current').exists()).toBe(true)
       expect(wrapper.find('[aria-current="page"]').exists()).toBe(true)
@@ -466,14 +467,14 @@ describe('FdsMenu', () => {
           return {
             menuItems: [
               { id: 1, href: '/home', title: 'Home', current: false },
-              { id: 2, href: '/about', title: 'About', current: true }
-            ]
+              { id: 2, href: '/about', title: 'About', current: true },
+            ],
           }
-        }
+        },
       }
 
       const wrapper = mount(DynamicMenuWrapper)
-      
+
       expect(wrapper.findAll('li')).toHaveLength(2)
       expect(wrapper.find('[aria-current="page"]').text()).toBe('About')
 
@@ -482,8 +483,8 @@ describe('FdsMenu', () => {
         menuItems: [
           { id: 1, href: '/home', title: 'Home', current: true },
           { id: 2, href: '/about', title: 'About', current: false },
-          { id: 3, href: '/contact', title: 'Contact', current: false }
-        ]
+          { id: 3, href: '/contact', title: 'Contact', current: false },
+        ],
       })
 
       expect(wrapper.findAll('li')).toHaveLength(3)

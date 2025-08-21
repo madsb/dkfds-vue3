@@ -42,7 +42,7 @@ const props = withDefaults(defineProps<Props>(), {
   active: false,
   current: false,
   expanded: false,
-  index: null
+  index: null,
 })
 
 const emit = defineEmits<{

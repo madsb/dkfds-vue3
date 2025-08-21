@@ -40,7 +40,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   href: '#',
   current: false,
-  disabled: false
+  disabled: false,
 })
 
 const emit = defineEmits<{

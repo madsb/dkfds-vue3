@@ -36,7 +36,7 @@ const ensureContainer = () => {
     container.setAttribute('aria-live', 'assertive')
     container.setAttribute('aria-atomic', 'false')
     container.setAttribute('aria-relevant', 'additions')
-    
+
     // Insert as first child of main, or body if no main
     const main = document.querySelector('main')
     if (main) {
@@ -52,54 +52,55 @@ const ensureContainer = () => {
 const showToast = async (options: ToastOptions): Promise<string> => {
   const container = ensureContainer()
   const id = generateId('toast').value
-  
+
   // Create toast element wrapper
   const toastWrapper = document.createElement('div')
   container.appendChild(toastWrapper)
-  
+
   // Create Vue app instance for the toast
   const app = createApp({
     setup() {
       const visible = ref(false)
-      
+
       const handleClose = () => {
         visible.value = false
         setTimeout(() => {
           removeToast(id)
         }, 300) // Wait for animation to complete
       }
-      
+
       const handleClick = (event: MouseEvent) => {
         if (options.onClick) {
           options.onClick(event)
         }
       }
-      
+
       // Show toast after mounting
       nextTick(() => {
         visible.value = true
       })
-      
-      return () => h(FdsToast, {
-        id,
-        type: options.type || 'info',
-        heading: options.heading,
-        message: options.message,
-        closable: options.closable !== false,
-        autoDismiss: options.autoDismiss || 0,
-        visible: visible.value,
-        'onUpdate:visible': (value: boolean) => {
-          visible.value = value
-        },
-        onClose: handleClose,
-        onClick: handleClick,
-      })
-    }
+
+      return () =>
+        h(FdsToast, {
+          id,
+          type: options.type || 'info',
+          heading: options.heading,
+          message: options.message,
+          closable: options.closable !== false,
+          autoDismiss: options.autoDismiss || 0,
+          visible: visible.value,
+          'onUpdate:visible': (value: boolean) => {
+            visible.value = value
+          },
+          onClose: handleClose,
+          onClick: handleClick,
+        })
+    },
   })
-  
+
   // Mount the toast
   const instance = app.mount(toastWrapper)
-  
+
   // Store toast reference
   const toast: Toast = {
     id,
@@ -107,18 +108,18 @@ const showToast = async (options: ToastOptions): Promise<string> => {
     element: toastWrapper,
     component: app,
   }
-  
+
   toasts.value.push(toast)
-  
+
   return id
 }
 
 // Remove a toast
 const removeToast = (id: string) => {
-  const index = toasts.value.findIndex(t => t.id === id)
+  const index = toasts.value.findIndex((t) => t.id === id)
   if (index > -1) {
     const toast = toasts.value[index]
-    
+
     // Unmount and remove the component
     if (toast.component) {
       toast.component.unmount()
@@ -126,7 +127,7 @@ const removeToast = (id: string) => {
     if (toast.element && toast.element.parentNode) {
       toast.element.parentNode.removeChild(toast.element)
     }
-    
+
     // Remove from store
     toasts.value.splice(index, 1)
   }
@@ -134,7 +135,7 @@ const removeToast = (id: string) => {
 
 // Remove all toasts
 const clearAllToasts = () => {
-  toasts.value.forEach(toast => {
+  toasts.value.forEach((toast) => {
     if (toast.component) {
       toast.component.unmount()
     }

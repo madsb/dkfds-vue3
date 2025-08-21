@@ -8,19 +8,21 @@
     </nav>
 
     <!-- Mobile view: Button to show step modal -->
-    <button 
+    <button
       type="button"
       class="step-indicator-button d-md-none"
       aria-haspopup="dialog"
       @click="openMobileModal"
     >
-      <span>Trin <strong>{{ currentStep }}</strong> af {{ totalSteps }}</span>
+      <span
+        >Trin <strong>{{ currentStep }}</strong> af {{ totalSteps }}</span
+      >
     </button>
-    
+
     <!-- Mobile modal using fds-modal component -->
     <fds-modal
-      ref="mobileModal"
       :id="`modal-${formid}`"
+      ref="mobileModal"
       :header="modalTitle"
       :closeable="true"
       @close="closeMobileModal"
@@ -34,11 +36,11 @@
           {{ closeButtonText }}
         </button>
       </template>
-      
+
       <ol class="step-indicator">
         <slot :current-step="currentStep" :mobile="true" />
       </ol>
-      
+
       <template #footer>
         <!-- No footer for step indicator modal -->
       </template>
@@ -53,16 +55,16 @@ import FdsModal from './fds-modal.vue'
 
 /**
  * Step indicator component following DKFDS v11 specifications
- * 
+ *
  * @component FdsTrinindikatorGroup
  * @example
- * <fds-trinindikator-group 
+ * <fds-trinindikator-group
  *   :current-step="2"
  *   :total-steps="4"
  *   aria-label="Application progress"
  * >
- *   <fds-trinindikator-step 
- *     v-for="step in steps" 
+ *   <fds-trinindikator-step
+ *     v-for="step in steps"
  *     :key="step.id"
  *     :step="step"
  *     :is-current="step.id === currentStep"
@@ -106,7 +108,7 @@ const props = withDefaults(defineProps<Props>(), {
   clickableSteps: false,
   modalTitle: 'Trin',
   modalAriaLabel: 'Trin modal',
-  closeButtonText: 'Luk'
+  closeButtonText: 'Luk',
 })
 
 const emit = defineEmits<{
@@ -123,7 +125,7 @@ const mobileModal = ref<InstanceType<typeof FdsModal> | null>(null)
 
 const stepIndicatorClasses = computed(() => ({
   'step-indicator--clickable': props.clickableSteps,
-  'step-indicator--with-info': props.showStepInfo
+  'step-indicator--with-info': props.showStepInfo,
 }))
 
 const openMobileModal = () => {
@@ -136,4 +138,3 @@ const closeMobileModal = () => {
   emit('modal-close')
 }
 </script>
-

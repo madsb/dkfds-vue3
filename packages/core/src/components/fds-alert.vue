@@ -23,9 +23,7 @@
           <slot />
         </p>
         <button v-if="closeable" type="button" class="alert-close" @click="onClose">
-          <slot name="button">
-            <fds-ikon icon="close" :decorative="true" />Luk
-          </slot>
+          <slot name="button"> <fds-ikon icon="close" :decorative="true" />Luk </slot>
         </button>
       </div>
     </div>

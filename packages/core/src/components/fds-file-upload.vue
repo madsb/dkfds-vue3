@@ -4,18 +4,18 @@
       {{ label }}
       <abbr v-if="required" :title="requiredText" class="form-label-required">*</abbr>
     </label>
-    
+
     <div v-if="hint" class="form-hint">
       <slot name="hint">
         {{ hint }}
       </slot>
     </div>
-    
+
     <div v-if="hasError && errorMessage" class="error-message" role="alert" :aria-live="ariaLive">
       <fds-ikon icon="report-problem" decorative />
       <span class="error-message-text">{{ errorMessage }}</span>
     </div>
-    
+
     <input
       :id="formid"
       type="file"
@@ -31,10 +31,19 @@
       @change="handleFileChange"
       @focus="handleFocus"
     />
-    
-    <div v-if="showFileList && selectedFiles.length > 0" class="file-list" role="region" :aria-label="fileListAriaLabel">
+
+    <div
+      v-if="showFileList && selectedFiles.length > 0"
+      class="file-list"
+      role="region"
+      :aria-label="fileListAriaLabel"
+    >
       <ul class="file-list-items">
-        <li v-for="(file, index) in selectedFiles" :key="`${file.name}-${index}`" class="file-list-item">
+        <li
+          v-for="(file, index) in selectedFiles"
+          :key="`${file.name}-${index}`"
+          class="file-list-item"
+        >
           <span class="file-name">{{ file.name }}</span>
           <span class="file-size">({{ formatFileSize(file.size) }})</span>
           <button
@@ -61,10 +70,10 @@ import FdsIkon from './fds-ikon.vue'
 
 /**
  * File upload component following DKFDS v11 specifications
- * 
+ *
  * @component FdsFileUpload
  * @example
- * <fds-file-upload 
+ * <fds-file-upload
  *   label="Upload your documents"
  *   accept=".pdf,.doc,.docx"
  *   :multiple="true"
@@ -134,7 +143,7 @@ const props = withDefaults(defineProps<Props>(), {
   requiredText: 'Obligatorisk felt',
   ariaLive: 'polite',
   fileListAriaLabel: 'Valgte filer',
-  removeFileText: 'Fjern fil'
+  removeFileText: 'Fjern fil',
 })
 
 const emit = defineEmits<{
@@ -155,8 +164,8 @@ const emit = defineEmits<{
 const { formid } = formId(props.id, true)
 const selectedFiles = ref<File[]>([])
 const isDirty = ref(false)
-const hintId = computed(() => props.hint ? `${formid.value}-hint` : undefined)
-const errorId = computed(() => hasError.value ? `${formid.value}-error` : undefined)
+const hintId = computed(() => (props.hint ? `${formid.value}-hint` : undefined))
+const errorId = computed(() => (hasError.value ? `${formid.value}-error` : undefined))
 
 const acceptedTypes = computed(() => props.accept.join(','))
 
@@ -166,7 +175,7 @@ const errorMessage = computed(() => props.error)
 
 const inputClasses = computed(() => ({
   'form-control': true,
-  'form-control--error': hasError.value
+  'form-control--error': hasError.value,
 }))
 
 const ariaDescribedBy = computed(() => {
@@ -196,34 +205,36 @@ const formatFileSize = (bytes: number): string => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
 }
 
-const validateFile = (file: File): { valid: boolean; error?: { type: string; message: string } } => {
+const validateFile = (
+  file: File,
+): { valid: boolean; error?: { type: string; message: string } } => {
   // Check file size
   if (file.size > props.maxFileSize) {
     return {
       valid: false,
       error: {
         type: 'size',
-        message: `Filen "${file.name}" er for stor. Maksimal størrelse er ${formatFileSize(props.maxFileSize)}.`
-      }
+        message: `Filen "${file.name}" er for stor. Maksimal størrelse er ${formatFileSize(props.maxFileSize)}.`,
+      },
     }
   }
 
   // Check file type if specified
   if (props.accept.length > 0) {
-    const isValidType = props.accept.some(acceptedType => {
+    const isValidType = props.accept.some((acceptedType) => {
       if (acceptedType.startsWith('.')) {
         return file.name.toLowerCase().endsWith(acceptedType.toLowerCase())
       }
       return file.type === acceptedType
     })
-    
+
     if (!isValidType) {
       return {
         valid: false,
         error: {
           type: 'type',
-          message: `Filen "${file.name}" har et ikke-understøttet format. Tilladte formater: ${props.accept.join(', ')}.`
-        }
+          message: `Filen "${file.name}" har et ikke-understøttet format. Tilladte formater: ${props.accept.join(', ')}.`,
+        },
       }
     }
   }
@@ -242,29 +253,29 @@ const removeFile = (index: number) => {
 const processFiles = async (files: File[]) => {
   const validFiles: File[] = []
   const fileModels: FdsFileInputModel[] = []
-  
+
   for (const file of files) {
     const validation = validateFile(file)
     if (!validation.valid && validation.error) {
       emit('error', {
         type: validation.error.type as 'size' | 'type' | 'count' | 'generic',
         message: validation.error.message,
-        file
+        file,
       })
       continue
     }
     validFiles.push(file)
   }
-  
+
   // Check total file count
   if (selectedFiles.value.length + validFiles.length > props.maxFiles) {
     emit('error', {
       type: 'count',
-      message: `Du kan maksimalt vælge ${props.maxFiles} filer.`
+      message: `Du kan maksimalt vælge ${props.maxFiles} filer.`,
     })
     return
   }
-  
+
   // Process valid files
   for (const file of validFiles) {
     try {
@@ -274,29 +285,27 @@ const processFiles = async (files: File[]) => {
         reader.onerror = () => reject(reader.error)
         reader.readAsDataURL(file)
       })
-      
-      const data = props.removeContentHeaders
-        ? removeBrowserFileContentHeaders(result)
-        : result
-      
+
+      const data = props.removeContentHeaders ? removeBrowserFileContentHeaders(result) : result
+
       const fileModel: FdsFileInputModel = {
         filename: file.name,
         type: file.type,
         size: file.size,
-        data
+        data,
       }
-      
+
       fileModels.push(fileModel)
       selectedFiles.value.push(file)
     } catch (error) {
       emit('error', {
         type: 'generic',
         message: `Fejl ved læsning af fil "${file.name}".`,
-        file
+        file,
       })
     }
   }
-  
+
   if (fileModels.length > 0) {
     emit('upload', fileModels)
   }
@@ -307,17 +316,17 @@ const handleFileChange = async (event: Event) => {
     isDirty.value = true
     emit('dirty', true)
   }
-  
+
   const target = event.target as HTMLInputElement
   const { files } = target
-  
+
   if (!files || files.length === 0) {
     return
   }
-  
+
   const fileArray = Array.from(files)
   await processFiles(fileArray)
-  
+
   // Clear the input value to allow selecting the same file again
   target.value = ''
 }
@@ -327,44 +336,44 @@ const handleFileChange = async (event: Event) => {
 .file-input {
   .file-list {
     margin-top: 0.5rem;
-    
+
     .file-list-items {
       list-style: none;
       padding: 0;
       margin: 0;
     }
-    
+
     .file-list-item {
       display: flex;
       align-items: center;
       padding: 0.5rem 0;
       border-bottom: 1px solid #e0e0e0;
-      
+
       &:last-child {
         border-bottom: none;
       }
     }
-    
+
     .file-name {
       flex: 1;
       font-weight: 500;
     }
-    
+
     .file-size {
       margin-left: 0.5rem;
       color: #666;
       font-size: 0.875rem;
     }
-    
+
     .file-remove-btn {
       margin-left: 0.5rem;
       padding: 0.25rem;
       color: #d32f2f;
-      
+
       &:hover {
         background-color: #f5f5f5;
       }
-      
+
       &:focus {
         outline: 2px solid #0077c8;
         outline-offset: 2px;

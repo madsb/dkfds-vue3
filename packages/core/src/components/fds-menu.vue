@@ -18,7 +18,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant: 'sidemenu'
+  variant: 'sidemenu',
 })
 
 const cssClass = computed(() => {

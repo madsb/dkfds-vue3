@@ -1,10 +1,10 @@
 <template>
-  <div 
-    :id="id" 
+  <div
+    :id="id"
     ref="toastElement"
-    class="toast hide" 
-    :class="[`toast-${type}`]" 
-    aria-atomic="true" 
+    class="toast hide"
+    :class="[`toast-${type}`]"
+    aria-atomic="true"
     @click="handleClick"
   >
     <div class="toast-icon"></div>
@@ -117,14 +117,17 @@ const handleClick = (event: MouseEvent) => {
 }
 
 // Watch for visibility changes
-watch(() => props.visible, async (newValue) => {
-  await nextTick()
-  if (newValue) {
-    show()
-  } else {
-    hide()
-  }
-})
+watch(
+  () => props.visible,
+  async (newValue) => {
+    await nextTick()
+    if (newValue) {
+      show()
+    } else {
+      hide()
+    }
+  },
+)
 
 // Lifecycle
 onMounted(async () => {

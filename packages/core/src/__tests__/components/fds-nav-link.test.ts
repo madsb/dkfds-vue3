@@ -21,7 +21,7 @@ describe('FdsNavLink', () => {
 
     it('renders as span element when disabled', () => {
       const wrapper = mount(FdsNavLink, {
-        props: { disabled: true }
+        props: { disabled: true },
       })
       expect(wrapper.element.tagName).toBe('SPAN')
     })
@@ -33,7 +33,7 @@ describe('FdsNavLink', () => {
 
     it('has nav-link-disabled class when disabled', () => {
       const wrapper = mount(FdsNavLink, {
-        props: { disabled: true }
+        props: { disabled: true },
       })
       expect(wrapper.classes()).toContain('nav-link-disabled')
     })
@@ -58,14 +58,14 @@ describe('FdsNavLink', () => {
 
       it('accepts custom href value', () => {
         const wrapper = mount(FdsNavLink, {
-          props: { href: '/dashboard' }
+          props: { href: '/dashboard' },
         })
         expect(wrapper.attributes('href')).toBe('/dashboard')
       })
 
       it('handles external URLs', () => {
         const wrapper = mount(FdsNavLink, {
-          props: { href: 'https://example.com' }
+          props: { href: 'https://example.com' },
         })
         expect(wrapper.attributes('href')).toBe('https://example.com')
       })
@@ -79,14 +79,14 @@ describe('FdsNavLink', () => {
 
       it('sets aria-current="page" when current is true', () => {
         const wrapper = mount(FdsNavLink, {
-          props: { current: true }
+          props: { current: true },
         })
         expect(wrapper.attributes('aria-current')).toBe('page')
       })
 
       it('removes aria-current when current is false', () => {
         const wrapper = mount(FdsNavLink, {
-          props: { current: false }
+          props: { current: false },
         })
         expect(wrapper.attributes('aria-current')).toBeUndefined()
       })
@@ -102,7 +102,7 @@ describe('FdsNavLink', () => {
 
       it('renders as span when disabled', () => {
         const wrapper = mount(FdsNavLink, {
-          props: { disabled: true }
+          props: { disabled: true },
         })
         expect(wrapper.element.tagName).toBe('SPAN')
         expect(wrapper.attributes('aria-disabled')).toBe('true')
@@ -110,7 +110,7 @@ describe('FdsNavLink', () => {
 
       it('sets aria-disabled on anchor when disabled is false', () => {
         const wrapper = mount(FdsNavLink, {
-          props: { disabled: false }
+          props: { disabled: false },
         })
         expect(wrapper.element.tagName).toBe('A')
         expect(wrapper.attributes('aria-disabled')).toBe('false')
@@ -120,7 +120,7 @@ describe('FdsNavLink', () => {
     describe('icon prop', () => {
       it('renders icon when provided', () => {
         const wrapper = mount(FdsNavLink, {
-          props: { icon: 'arrow-right' }
+          props: { icon: 'arrow-right' },
         })
         const svg = wrapper.find('svg.sidenav-icon')
         expect(svg.exists()).toBe(true)
@@ -136,10 +136,10 @@ describe('FdsNavLink', () => {
 
       it('renders icon in both enabled and disabled states', () => {
         const enabledWrapper = mount(FdsNavLink, {
-          props: { icon: 'check', disabled: false }
+          props: { icon: 'check', disabled: false },
         })
         const disabledWrapper = mount(FdsNavLink, {
-          props: { icon: 'check', disabled: true }
+          props: { icon: 'check', disabled: true },
         })
 
         expect(enabledWrapper.find('svg.sidenav-icon').exists()).toBe(true)
@@ -150,7 +150,7 @@ describe('FdsNavLink', () => {
     describe('hint prop', () => {
       it('renders hint when provided', () => {
         const wrapper = mount(FdsNavLink, {
-          props: { hint: 'Additional information' }
+          props: { hint: 'Additional information' },
         })
         const hintElement = wrapper.find('.sidenav-information')
         expect(hintElement.exists()).toBe(true)
@@ -164,10 +164,10 @@ describe('FdsNavLink', () => {
 
       it('renders hint in both enabled and disabled states', () => {
         const enabledWrapper = mount(FdsNavLink, {
-          props: { hint: 'Help text', disabled: false }
+          props: { hint: 'Help text', disabled: false },
         })
         const disabledWrapper = mount(FdsNavLink, {
-          props: { hint: 'Help text', disabled: true }
+          props: { hint: 'Help text', disabled: true },
         })
 
         expect(enabledWrapper.find('.sidenav-information').text()).toBe('Help text')
@@ -183,8 +183,8 @@ describe('FdsNavLink', () => {
             current: true,
             disabled: false,
             icon: 'arrow-right',
-            hint: 'Navigate to page'
-          }
+            hint: 'Navigate to page',
+          },
         })
 
         expect(wrapper.element.tagName).toBe('A')
@@ -202,8 +202,8 @@ describe('FdsNavLink', () => {
             current: true,
             disabled: true,
             icon: 'arrow-right',
-            hint: 'Navigate to page'
-          }
+            hint: 'Navigate to page',
+          },
         })
 
         expect(wrapper.element.tagName).toBe('SPAN')
@@ -218,7 +218,7 @@ describe('FdsNavLink', () => {
   describe('Events', () => {
     it('emits click event when clicked and not disabled', async () => {
       const wrapper = mount(FdsNavLink, {
-        props: { href: '/page' }
+        props: { href: '/page' },
       })
 
       await wrapper.trigger('click')
@@ -228,7 +228,7 @@ describe('FdsNavLink', () => {
 
     it('does not emit click event when disabled', async () => {
       const wrapper = mount(FdsNavLink, {
-        props: { disabled: true }
+        props: { disabled: true },
       })
 
       // Disabled renders as span, no click handler
@@ -238,7 +238,7 @@ describe('FdsNavLink', () => {
 
     it('prevents default when href is "#"', async () => {
       const wrapper = mount(FdsNavLink, {
-        props: { href: '#' }
+        props: { href: '#' },
       })
 
       const mockEvent = { preventDefault: vi.fn() }
@@ -250,7 +250,7 @@ describe('FdsNavLink', () => {
 
     it('does not prevent default when href is not "#"', async () => {
       const wrapper = mount(FdsNavLink, {
-        props: { href: '/page' }
+        props: { href: '/page' },
       })
 
       const mockEvent = { preventDefault: vi.fn() }
@@ -262,12 +262,12 @@ describe('FdsNavLink', () => {
 
     it('does not emit click when disabled prop is true', async () => {
       const wrapper = mount(FdsNavLink, {
-        props: { disabled: false }
+        props: { disabled: false },
       })
 
       // Change to disabled
       await wrapper.setProps({ disabled: true })
-      
+
       const mockEvent = { preventDefault: vi.fn() }
       await wrapper.vm.handleClick(mockEvent as any)
 
@@ -279,8 +279,8 @@ describe('FdsNavLink', () => {
     it('renders default slot content', () => {
       const wrapper = mount(FdsNavLink, {
         slots: {
-          default: 'Navigation Link Text'
-        }
+          default: 'Navigation Link Text',
+        },
       })
 
       expect(wrapper.text()).toContain('Navigation Link Text')
@@ -289,8 +289,8 @@ describe('FdsNavLink', () => {
     it('renders complex slot content', () => {
       const wrapper = mount(FdsNavLink, {
         slots: {
-          default: '<strong>Important</strong> Link'
-        }
+          default: '<strong>Important</strong> Link',
+        },
       })
 
       expect(wrapper.find('strong').text()).toBe('Important')
@@ -300,11 +300,11 @@ describe('FdsNavLink', () => {
     it('renders slot content in both enabled and disabled states', () => {
       const enabledWrapper = mount(FdsNavLink, {
         props: { disabled: false },
-        slots: { default: 'Link Text' }
+        slots: { default: 'Link Text' },
       })
       const disabledWrapper = mount(FdsNavLink, {
         props: { disabled: true },
-        slots: { default: 'Link Text' }
+        slots: { default: 'Link Text' },
       })
 
       expect(enabledWrapper.text()).toContain('Link Text')
@@ -322,8 +322,8 @@ describe('FdsNavLink', () => {
       const wrapper = mount(FdsNavLink, {
         props: {
           current: true,
-          disabled: false
-        }
+          disabled: false,
+        },
       })
 
       expect(wrapper.attributes('aria-current')).toBe('page')
@@ -333,8 +333,8 @@ describe('FdsNavLink', () => {
     it('has correct ARIA attributes for disabled link', () => {
       const wrapper = mount(FdsNavLink, {
         props: {
-          disabled: true
-        }
+          disabled: true,
+        },
       })
 
       expect(wrapper.attributes('aria-disabled')).toBe('true')
@@ -342,7 +342,7 @@ describe('FdsNavLink', () => {
 
     it('has proper icon accessibility attributes', () => {
       const wrapper = mount(FdsNavLink, {
-        props: { icon: 'arrow-right' }
+        props: { icon: 'arrow-right' },
       })
 
       const svg = wrapper.find('svg')
@@ -352,7 +352,7 @@ describe('FdsNavLink', () => {
 
     it('supports keyboard navigation when enabled', () => {
       const wrapper = mount(FdsNavLink, {
-        props: { disabled: false }
+        props: { disabled: false },
       })
 
       expect(wrapper.element.tagName).toBe('A')
@@ -361,7 +361,7 @@ describe('FdsNavLink', () => {
 
     it('is not keyboard focusable when disabled', () => {
       const wrapper = mount(FdsNavLink, {
-        props: { disabled: true }
+        props: { disabled: true },
       })
 
       expect(wrapper.element.tagName).toBe('SPAN')
@@ -377,7 +377,7 @@ describe('FdsNavLink', () => {
             <FdsNavLink disabled>Disabled Link</FdsNavLink>
           </nav>
         `,
-        components: { FdsNavLink }
+        components: { FdsNavLink },
       }
 
       await testAccessibility(TestWrapper)
@@ -392,8 +392,8 @@ describe('FdsNavLink', () => {
           current: undefined,
           disabled: undefined,
           icon: undefined,
-          hint: undefined
-        }
+          hint: undefined,
+        },
       })
 
       expect(wrapper.element.tagName).toBe('A')
@@ -406,8 +406,8 @@ describe('FdsNavLink', () => {
         props: {
           href: '',
           icon: '',
-          hint: ''
-        }
+          hint: '',
+        },
       })
 
       expect(wrapper.attributes('href')).toBe('')
@@ -417,7 +417,7 @@ describe('FdsNavLink', () => {
 
     it('handles prop changes dynamically', async () => {
       const wrapper = mount(FdsNavLink, {
-        props: { disabled: false }
+        props: { disabled: false },
       })
 
       expect(wrapper.element.tagName).toBe('A')
@@ -431,7 +431,7 @@ describe('FdsNavLink', () => {
 
     it('maintains structure with all optional props undefined', () => {
       const wrapper = mount(FdsNavLink, {
-        slots: { default: 'Basic Link' }
+        slots: { default: 'Basic Link' },
       })
 
       expect(wrapper.find('span').exists()).toBe(true) // Content wrapper
@@ -454,7 +454,7 @@ describe('FdsNavLink', () => {
             </ul>
           </nav>
         `,
-        components: { FdsNavLink }
+        components: { FdsNavLink },
       }
 
       const wrapper = mount(NavigationWrapper)
@@ -470,7 +470,7 @@ describe('FdsNavLink', () => {
     it('works with click handlers', async () => {
       const wrapper = mount(FdsNavLink, {
         props: { href: '#' },
-        slots: { default: 'Click me' }
+        slots: { default: 'Click me' },
       })
 
       await wrapper.trigger('click')
@@ -489,7 +489,7 @@ describe('FdsNavLink', () => {
             </ul>
           </nav>
         `,
-        components: { FdsNavLink }
+        components: { FdsNavLink },
       }
 
       const wrapper = mount(SidenavWrapper)

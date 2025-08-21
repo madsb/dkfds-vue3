@@ -26,7 +26,9 @@
       <fds-ikon icon="chevron-left" :decorative="true" />
       <span class="pagination-nav-link">Forrige</span>
     </a>
-    <span class="pagination-mobile" aria-live="polite">Side {{ currentPage }} af {{ lastPage }}</span>
+    <span class="pagination-mobile" aria-live="polite"
+      >Side {{ currentPage }} af {{ lastPage }}</span
+    >
     <ul class="pagination__items">
       <li
         v-for="page in generatePages()"
@@ -113,14 +115,14 @@ const props = withDefaults(defineProps<Props>(), {
   maxElements: 7,
   showFirstLast: true,
   id: () => generateId('pagination').value,
-  totalItems: 0
+  totalItems: 0,
 })
 
 const emit = defineEmits<{
   /** Emitted when page changes with filtered items */
-  'filteredPage': [items: any[]]
+  filteredPage: [items: any[]]
   /** Emitted when skip value changes */
-  'skip': [skip: number]
+  skip: [skip: number]
   /** Emitted when page changes */
   'page-change': [page: number]
 }>()
@@ -139,17 +141,20 @@ const lastPage = computed((): number => {
 })
 
 const emitList = (skipValue = 0) => {
-  emit('filteredPage', props.list.length > 0 ? props.list.slice(skipValue, skipValue + props.pageSize) : [])
+  emit(
+    'filteredPage',
+    props.list.length > 0 ? props.list.slice(skipValue, skipValue + props.pageSize) : [],
+  )
   emit('skip', props.skip > 0 ? props.skip : skipValue)
 }
 
 const handlePageChange = (event: Event, newPage: number) => {
   event.preventDefault()
-  
+
   if (newPage === currentPage.value || newPage < 1 || newPage > lastPage.value) {
     return
   }
-  
+
   const skipValue = props.pageSize * (newPage - 1)
   emitList(skipValue)
   currentPage.value = newPage
@@ -182,7 +187,7 @@ const generatePages = (): FdsPaging[] => {
   if (current <= 3) {
     end = Math.min(last - 1, 4)
   }
-  
+
   // Adjust range if current is near end
   if (current >= last - 2) {
     start = Math.max(2, last - 3)
@@ -219,7 +224,7 @@ watch(
     } else {
       currentPage.value = 1
     }
-    
+
     const totalItems = props.totalItems > 0 ? props.totalItems : props.list.length
     show.value = totalItems > props.pageSize
     emitList()
@@ -235,13 +240,13 @@ watch(
   () => {
     const totalItems = props.totalItems > 0 ? props.totalItems : props.list.length
     show.value = totalItems > props.pageSize
-    
+
     // Reset to page 1 if current page is beyond total pages
     if (currentPage.value > lastPage.value) {
       currentPage.value = 1
       emitList()
     }
-  }
+  },
 )
 </script>
 

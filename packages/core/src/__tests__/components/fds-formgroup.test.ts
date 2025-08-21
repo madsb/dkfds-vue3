@@ -205,7 +205,7 @@ describe('FdsFormgroup', () => {
 
       const formid = wrapper.vm.$.provides.formid.value
       expect(formid).toBe('consistent-key')
-      
+
       // The formid should remain consistent for the lifecycle of the component
       // This ensures proper form control associations
       const formidAgain = wrapper.vm.$.provides.formid.value

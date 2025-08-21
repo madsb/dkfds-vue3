@@ -159,7 +159,6 @@ describe('FdsToastContainer', () => {
     })
   })
 
-
   describe('Lifecycle', () => {
     it('mounts and unmounts without errors', () => {
       const wrapper = mount(FdsToastContainer)
@@ -186,8 +185,8 @@ describe('FdsToastContainer', () => {
             <div>Toast 1</div>
             <div>Toast 2</div>
             <div>Toast 3</div>
-          `
-        }
+          `,
+        },
       })
 
       expect(wrapper.find('.toast-container').exists()).toBe(true)
@@ -197,7 +196,7 @@ describe('FdsToastContainer', () => {
   describe('Integration', () => {
     it('works with actual DOM container', async () => {
       const containerId = 'integration-test-container'
-      
+
       const wrapper = mount(FdsToastContainer, {
         props: { id: containerId },
       })

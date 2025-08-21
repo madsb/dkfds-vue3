@@ -131,7 +131,7 @@ const validateEfternavn = () => {
 const efternavnValid = computed(() => {
   if (!efternavnDirty.value) return true
   const validations = [hasContent, charactersMinLength(10)]
-  return validations.every(v => !v(txtEfternavn.value))
+  return validations.every((v) => !v(txtEfternavn.value))
 })
 
 const efternavnError = computed(() => {

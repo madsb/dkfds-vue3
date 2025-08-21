@@ -10,11 +10,7 @@
             :class="{ active: language.active }"
             @click="handleLanguageChange(language, $event)"
           >
-            <fds-ikon
-              v-if="language.active"
-              icon="check"
-              :decorative="true"
-            />
+            <fds-ikon v-if="language.active" icon="check" :decorative="true" />
             {{ language.title }}
           </a>
         </li>
@@ -40,7 +36,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   autoSetLang: false,
-  preventDefault: true
+  preventDefault: true,
 })
 
 const emit = defineEmits<{
@@ -52,13 +48,13 @@ const emit = defineEmits<{
 // Sort languages with active language first
 const sortedLanguages = computed(() => {
   const languages = [...props.modelValue]
-  const activeIndex = languages.findIndex(lang => lang.active)
-  
+  const activeIndex = languages.findIndex((lang) => lang.active)
+
   if (activeIndex > 0) {
     const activeLanguage = languages.splice(activeIndex, 1)[0]
     languages.unshift(activeLanguage)
   }
-  
+
   return languages
 })
 
@@ -66,20 +62,20 @@ const handleLanguageChange = (language: ExtendedFdsLanguageItem, event: MouseEve
   if (props.preventDefault || !language.href) {
     event.preventDefault()
   }
-  
+
   if (language.active) {
     return // Don't change if already active
   }
-  
-  const updatedLanguages = props.modelValue.map(lang => ({
+
+  const updatedLanguages = props.modelValue.map((lang) => ({
     ...lang,
-    active: lang.lang === language.lang
+    active: lang.lang === language.lang,
   }))
-  
+
   if (props.autoSetLang) {
     document.documentElement.setAttribute('lang', language.lang)
   }
-  
+
   emit('update:modelValue', updatedLanguages)
   emit('language-change', language)
   emit('lang', language.lang)
@@ -89,12 +85,12 @@ const handleLanguageChange = (language: ExtendedFdsLanguageItem, event: MouseEve
 watch(
   () => props.modelValue,
   (newValue) => {
-    const activeLanguage = newValue.find(lang => lang.active)
+    const activeLanguage = newValue.find((lang) => lang.active)
     if (activeLanguage && props.autoSetLang) {
       document.documentElement.setAttribute('lang', activeLanguage.lang)
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
 </script>
 

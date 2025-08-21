@@ -44,7 +44,7 @@ const navigationItems: NavigationItem[] = [
   { key: 'forside', title: 'Forside' },
   { key: 'komponenter', title: 'Komponenter' },
   { key: 'anbefalinger', title: 'Anbefalinger' },
-  { key: 'about', title: 'Fællesskab' }
+  { key: 'about', title: 'Fællesskab' },
 ]
 
 // Use navigation composable
@@ -53,29 +53,29 @@ const nav = useNavigation(navigationItems)
 // Check if current route is part of a menu section
 const isPartOfMenu = (name: string): boolean => {
   if (!route) return false
-  
+
   // Direct match with current route name
   if (route.name === name) return true
-  
+
   // Check if the current route is a child of this menu item
   // For example, 'komponentaccordions' should match 'komponenter'
   const routeName = String(route.name || '')
-  
+
   // For 'komponenter', check if route starts with 'komponent'
   if (name === 'komponenter' && routeName.startsWith('komponent')) {
     return true
   }
-  
+
   // For 'anbefalinger', check if route starts with 'anbefalinger'
   if (name === 'anbefalinger' && routeName.startsWith('anbefalinger')) {
     return true
   }
-  
+
   // Check matched routes (for nested routes)
   if (route.matched && route.matched.length > 0) {
-    return route.matched.some(r => r.name === name)
+    return route.matched.some((r) => r.name === name)
   }
-  
+
   return false
 }
 </script>

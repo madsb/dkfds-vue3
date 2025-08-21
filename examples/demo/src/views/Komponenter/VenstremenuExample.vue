@@ -5,18 +5,12 @@
         <div class="row">
           <div class="col-4">
             <fds-menu aria-label="Eksempel på venstremenu">
-              <fds-menu-item id="side1" @navigate="oneLevel = $event">
-                Side 1
-              </fds-menu-item>
-              <fds-menu-item id="side2" @navigate="oneLevel = $event">
-                Side 2
-              </fds-menu-item>
+              <fds-menu-item id="side1" @navigate="oneLevel = $event"> Side 1 </fds-menu-item>
+              <fds-menu-item id="side2" @navigate="oneLevel = $event"> Side 2 </fds-menu-item>
               <fds-menu-item id="side3" current @navigate="oneLevel = $event">
                 Side 3
               </fds-menu-item>
-              <fds-menu-item id="side4" @navigate="oneLevel = $event">
-                Side 4
-              </fds-menu-item>
+              <fds-menu-item id="side4" @navigate="oneLevel = $event"> Side 4 </fds-menu-item>
             </fds-menu>
           </div>
           <div class="col">
@@ -35,9 +29,7 @@
         <div class="row">
           <div class="col-4">
             <fds-menu aria-label="Eksempel på venstremenu med to niveauer">
-              <fds-menu-item id="side1" @navigate="twoLevel = $event">
-                Side 1
-              </fds-menu-item>
+              <fds-menu-item id="side1" @navigate="twoLevel = $event"> Side 1 </fds-menu-item>
               <fds-menu-item id="side2" expanded @navigate="twoLevel = $event">
                 Side 2
                 <template #submenu>
@@ -54,12 +46,8 @@
                   </fds-menu>
                 </template>
               </fds-menu-item>
-              <fds-menu-item id="side3" @navigate="twoLevel = $event">
-                Side 3
-              </fds-menu-item>
-              <fds-menu-item id="side4" @navigate="twoLevel = $event">
-                Side 4
-              </fds-menu-item>
+              <fds-menu-item id="side3" @navigate="twoLevel = $event"> Side 3 </fds-menu-item>
+              <fds-menu-item id="side4" @navigate="twoLevel = $event"> Side 4 </fds-menu-item>
             </fds-menu>
           </div>
           <div class="col">
@@ -78,9 +66,7 @@
         <div class="row">
           <div class="col-4">
             <fds-menu aria-label="Eksempel på venstremenu med tre niveauer">
-              <fds-menu-item id="side1" @navigate="threeLevel = $event">
-                Side 1
-              </fds-menu-item>
+              <fds-menu-item id="side1" @navigate="threeLevel = $event"> Side 1 </fds-menu-item>
               <fds-menu-item id="side2" expanded @navigate="threeLevel = $event">
                 Side 2
                 <template #submenu>
@@ -107,9 +93,7 @@
                   </fds-menu>
                 </template>
               </fds-menu-item>
-              <fds-menu-item id="side3" @navigate="threeLevel = $event">
-                Side 3
-              </fds-menu-item>
+              <fds-menu-item id="side3" @navigate="threeLevel = $event"> Side 3 </fds-menu-item>
             </fds-menu>
           </div>
           <div class="col">
@@ -128,13 +112,26 @@
         <div class="row">
           <div class="col-4">
             <fds-menu aria-label="Venstremenu med ekstra information">
-              <fds-menu-item id="info1" hint="Informationstekst for side 1" @navigate="infoExample = $event">
+              <fds-menu-item
+                id="info1"
+                hint="Informationstekst for side 1"
+                @navigate="infoExample = $event"
+              >
                 Side 1
               </fds-menu-item>
-              <fds-menu-item id="info2" hint="Informationstekst for side 2" current @navigate="infoExample = $event">
+              <fds-menu-item
+                id="info2"
+                hint="Informationstekst for side 2"
+                current
+                @navigate="infoExample = $event"
+              >
                 Side 2
               </fds-menu-item>
-              <fds-menu-item id="info3" hint="Informationstekst for side 3" @navigate="infoExample = $event">
+              <fds-menu-item
+                id="info3"
+                hint="Informationstekst for side 3"
+                @navigate="infoExample = $event"
+              >
                 Side 3
               </fds-menu-item>
             </fds-menu>
@@ -149,7 +146,6 @@
         <pre v-text="code4"></pre>
       </fds-preview-code>
     </fds-preview>
-
   </section>
 </template>
 

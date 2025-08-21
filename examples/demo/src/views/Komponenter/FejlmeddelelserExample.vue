@@ -120,7 +120,7 @@ const emailValidations = [
 // Validation logic for email
 const emailValid = computed(() => {
   if (!emailDirty.value) return true
-  return emailValidations.every(v => !v(txtEmail.value))
+  return emailValidations.every((v) => !v(txtEmail.value))
 })
 
 const emailError = computed(() => {

@@ -7,14 +7,14 @@ import type { FdsLanguageItem } from 'dkfds-vue3-utils'
 // Mock document.documentElement.setAttribute
 const mockSetAttribute = vi.fn()
 Object.defineProperty(document.documentElement, 'setAttribute', {
-  value: mockSetAttribute
+  value: mockSetAttribute,
 })
 
 describe('FdsSprogvaelger', () => {
   const mockLanguages: FdsLanguageItem[] = [
     { title: 'Dansk', active: true, lang: 'da', ariaLabel: 'Valgt sprog: Dansk' },
     { title: 'English', active: false, lang: 'en', ariaLabel: 'Vælg sprog: English' },
-    { title: 'Deutsch', active: false, lang: 'de', ariaLabel: 'Vælg sprog: Deutsch' }
+    { title: 'Deutsch', active: false, lang: 'de', ariaLabel: 'Vælg sprog: Deutsch' },
   ]
 
   beforeEach(() => {
@@ -29,16 +29,16 @@ describe('FdsSprogvaelger', () => {
   describe('Rendering', () => {
     it('renders without errors', () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: mockLanguages }
+        props: { modelValue: mockLanguages },
       })
       expect(wrapper.exists()).toBe(true)
     })
 
     it('renders with correct DKFDS structure', () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: mockLanguages }
+        props: { modelValue: mockLanguages },
       })
-      
+
       expect(wrapper.find('.language-switcher').exists()).toBe(true)
       expect(wrapper.find('.container').exists()).toBe(true)
       expect(wrapper.find('ul').exists()).toBe(true)
@@ -47,12 +47,12 @@ describe('FdsSprogvaelger', () => {
 
     it('renders all language options', () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: mockLanguages }
+        props: { modelValue: mockLanguages },
       })
-      
+
       const items = wrapper.findAll('li')
       expect(items).toHaveLength(3)
-      
+
       const links = wrapper.findAll('a')
       expect(links).toHaveLength(3)
     })
@@ -61,13 +61,13 @@ describe('FdsSprogvaelger', () => {
       const unsortedLanguages = [
         { title: 'English', active: false, lang: 'en', ariaLabel: 'Vælg sprog: English' },
         { title: 'Dansk', active: true, lang: 'da', ariaLabel: 'Valgt sprog: Dansk' },
-        { title: 'Deutsch', active: false, lang: 'de', ariaLabel: 'Vælg sprog: Deutsch' }
+        { title: 'Deutsch', active: false, lang: 'de', ariaLabel: 'Vælg sprog: Deutsch' },
       ]
 
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: unsortedLanguages }
+        props: { modelValue: unsortedLanguages },
       })
-      
+
       const links = wrapper.findAll('a')
       expect(links[0].text()).toBe('Dansk') // Active language first
       expect(links[1].text()).toBe('English')
@@ -76,9 +76,9 @@ describe('FdsSprogvaelger', () => {
 
     it('renders check icon for active language', () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: mockLanguages }
+        props: { modelValue: mockLanguages },
       })
-      
+
       const activeLink = wrapper.find('a.active')
       const svg = activeLink.find('svg')
       expect(svg.exists()).toBe(true)
@@ -90,11 +90,11 @@ describe('FdsSprogvaelger', () => {
 
     it('does not render check icon for inactive languages', () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: mockLanguages }
+        props: { modelValue: mockLanguages },
       })
-      
-      const inactiveLinks = wrapper.findAll('a').filter(link => !link.classes('active'))
-      inactiveLinks.forEach(link => {
+
+      const inactiveLinks = wrapper.findAll('a').filter((link) => !link.classes('active'))
+      inactiveLinks.forEach((link) => {
         expect(link.find('svg').exists()).toBe(false)
       })
     })
@@ -104,41 +104,41 @@ describe('FdsSprogvaelger', () => {
     describe('modelValue prop', () => {
       it('accepts array of language items', () => {
         const wrapper = mount(FdsSprogvaelger, {
-          props: { modelValue: mockLanguages }
+          props: { modelValue: mockLanguages },
         })
-        
+
         expect(wrapper.findAll('a')).toHaveLength(3)
         expect(wrapper.find('a').text()).toBe('Dansk')
       })
 
       it('handles empty language array', () => {
         const wrapper = mount(FdsSprogvaelger, {
-          props: { modelValue: [] }
+          props: { modelValue: [] },
         })
-        
+
         expect(wrapper.findAll('li')).toHaveLength(0)
       })
 
       it('handles single language', () => {
         const singleLanguage = [mockLanguages[0]]
         const wrapper = mount(FdsSprogvaelger, {
-          props: { modelValue: singleLanguage }
+          props: { modelValue: singleLanguage },
         })
-        
+
         expect(wrapper.findAll('li')).toHaveLength(1)
         expect(wrapper.find('a').classes()).toContain('active')
       })
 
       it('handles languages with custom href', () => {
-        const languagesWithHref = mockLanguages.map(lang => ({
+        const languagesWithHref = mockLanguages.map((lang) => ({
           ...lang,
-          href: `/language/${lang.lang}`
+          href: `/language/${lang.lang}`,
         }))
 
         const wrapper = mount(FdsSprogvaelger, {
-          props: { modelValue: languagesWithHref }
+          props: { modelValue: languagesWithHref },
         })
-        
+
         const links = wrapper.findAll('a')
         expect(links[0].attributes('href')).toBe('/language/da')
         expect(links[1].attributes('href')).toBe('/language/en')
@@ -149,54 +149,54 @@ describe('FdsSprogvaelger', () => {
     describe('autoSetLang prop', () => {
       it('defaults to false', () => {
         const wrapper = mount(FdsSprogvaelger, {
-          props: { modelValue: mockLanguages }
+          props: { modelValue: mockLanguages },
         })
-        
+
         expect(wrapper.vm.$props.autoSetLang).toBe(false)
       })
 
       it('sets document lang attribute when true and language changes', async () => {
         const wrapper = mount(FdsSprogvaelger, {
-          props: { 
+          props: {
             modelValue: mockLanguages,
-            autoSetLang: true
-          }
+            autoSetLang: true,
+          },
         })
-        
+
         // Should set lang on mount for active language
         expect(mockSetAttribute).toHaveBeenCalledWith('lang', 'da')
-        
+
         // Change language
         const englishLink = wrapper.findAll('a')[1] // English
         await englishLink.trigger('click')
-        
+
         expect(mockSetAttribute).toHaveBeenCalledWith('lang', 'en')
       })
 
       it('does not set document lang when false', async () => {
         const wrapper = mount(FdsSprogvaelger, {
-          props: { 
+          props: {
             modelValue: mockLanguages,
-            autoSetLang: false
-          }
+            autoSetLang: false,
+          },
         })
-        
+
         // Change language
         const englishLink = wrapper.findAll('a')[1] // English
         await englishLink.trigger('click')
-        
+
         // Should not set lang attribute
         expect(mockSetAttribute).not.toHaveBeenCalledWith('lang', 'en')
       })
 
       it('sets lang on mount for active language when autoSetLang is true', () => {
         mount(FdsSprogvaelger, {
-          props: { 
+          props: {
             modelValue: mockLanguages,
-            autoSetLang: true
-          }
+            autoSetLang: true,
+          },
         })
-        
+
         expect(mockSetAttribute).toHaveBeenCalledWith('lang', 'da')
       })
     })
@@ -204,77 +204,77 @@ describe('FdsSprogvaelger', () => {
     describe('preventDefault prop', () => {
       it('defaults to true', () => {
         const wrapper = mount(FdsSprogvaelger, {
-          props: { modelValue: mockLanguages }
+          props: { modelValue: mockLanguages },
         })
-        
+
         expect(wrapper.vm.$props.preventDefault).toBe(true)
       })
 
       it('prevents default when true and no href', async () => {
         const wrapper = mount(FdsSprogvaelger, {
-          props: { 
+          props: {
             modelValue: mockLanguages,
-            preventDefault: true
-          }
+            preventDefault: true,
+          },
         })
-        
+
         const mockEvent = { preventDefault: vi.fn() }
         const englishLink = wrapper.findAll('a')[1]
-        
+
         await wrapper.vm.handleLanguageChange(mockLanguages[1], mockEvent as any)
-        
+
         expect(mockEvent.preventDefault).toHaveBeenCalled()
       })
 
       it('prevents default when true even with href', async () => {
-        const languagesWithHref = mockLanguages.map(lang => ({
+        const languagesWithHref = mockLanguages.map((lang) => ({
           ...lang,
-          href: `/lang/${lang.lang}`
+          href: `/lang/${lang.lang}`,
         }))
 
         const wrapper = mount(FdsSprogvaelger, {
-          props: { 
+          props: {
             modelValue: languagesWithHref,
-            preventDefault: true
-          }
+            preventDefault: true,
+          },
         })
-        
+
         const mockEvent = { preventDefault: vi.fn() }
         await wrapper.vm.handleLanguageChange(languagesWithHref[1], mockEvent as any)
-        
+
         expect(mockEvent.preventDefault).toHaveBeenCalled()
       })
 
       it('does not prevent default when false and href exists', async () => {
-        const languagesWithHref = mockLanguages.map(lang => ({
+        const languagesWithHref = mockLanguages.map((lang) => ({
           ...lang,
-          href: `/lang/${lang.lang}`
+          href: `/lang/${lang.lang}`,
         }))
 
         const wrapper = mount(FdsSprogvaelger, {
-          props: { 
+          props: {
             modelValue: languagesWithHref,
-            preventDefault: false
-          }
+            preventDefault: false,
+          },
         })
-        
+
         const mockEvent = { preventDefault: vi.fn() }
         await wrapper.vm.handleLanguageChange(languagesWithHref[1], mockEvent as any)
-        
+
         expect(mockEvent.preventDefault).not.toHaveBeenCalled()
       })
 
       it('prevents default when false but no href', async () => {
         const wrapper = mount(FdsSprogvaelger, {
-          props: { 
+          props: {
             modelValue: mockLanguages,
-            preventDefault: false
-          }
+            preventDefault: false,
+          },
         })
-        
+
         const mockEvent = { preventDefault: vi.fn() }
         await wrapper.vm.handleLanguageChange(mockLanguages[1], mockEvent as any)
-        
+
         expect(mockEvent.preventDefault).toHaveBeenCalled()
       })
     })
@@ -283,9 +283,9 @@ describe('FdsSprogvaelger', () => {
   describe('Language Attributes', () => {
     it('sets correct lang attribute for each language', () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: mockLanguages }
+        props: { modelValue: mockLanguages },
       })
-      
+
       const links = wrapper.findAll('a')
       expect(links[0].attributes('lang')).toBe('da')
       expect(links[1].attributes('lang')).toBe('en')
@@ -294,9 +294,9 @@ describe('FdsSprogvaelger', () => {
 
     it('sets correct aria-label for each language', () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: mockLanguages }
+        props: { modelValue: mockLanguages },
       })
-      
+
       const links = wrapper.findAll('a')
       expect(links[0].attributes('aria-label')).toBe('Valgt sprog: Dansk')
       expect(links[1].attributes('aria-label')).toBe('Vælg sprog: English')
@@ -305,9 +305,9 @@ describe('FdsSprogvaelger', () => {
 
     it('sets active class for active language', () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: mockLanguages }
+        props: { modelValue: mockLanguages },
       })
-      
+
       const links = wrapper.findAll('a')
       expect(links[0].classes()).toContain('active')
       expect(links[1].classes()).not.toContain('active')
@@ -316,9 +316,9 @@ describe('FdsSprogvaelger', () => {
 
     it('generates default href when not provided', () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: mockLanguages }
+        props: { modelValue: mockLanguages },
       })
-      
+
       const links = wrapper.findAll('a')
       expect(links[0].attributes('href')).toBe('?lang=da')
       expect(links[1].attributes('href')).toBe('?lang=en')
@@ -329,28 +329,28 @@ describe('FdsSprogvaelger', () => {
   describe('Events', () => {
     it('emits update:modelValue when language changes', async () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: mockLanguages }
+        props: { modelValue: mockLanguages },
       })
-      
+
       const englishLink = wrapper.findAll('a')[1]
       await englishLink.trigger('click')
-      
+
       expect(wrapper.emitted('update:modelValue')).toBeTruthy()
       const emittedValue = wrapper.emitted('update:modelValue')?.[0]?.[0] as FdsLanguageItem[]
-      
+
       expect(emittedValue[0].active).toBe(false) // Danish no longer active
-      expect(emittedValue[1].active).toBe(true)  // English now active
+      expect(emittedValue[1].active).toBe(true) // English now active
       expect(emittedValue[2].active).toBe(false) // German still inactive
     })
 
     it('emits language-change event', async () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: mockLanguages }
+        props: { modelValue: mockLanguages },
       })
-      
+
       const englishLink = wrapper.findAll('a')[1]
       await englishLink.trigger('click')
-      
+
       expect(wrapper.emitted('language-change')).toBeTruthy()
       const emittedLanguage = wrapper.emitted('language-change')?.[0]?.[0] as FdsLanguageItem
       expect(emittedLanguage.lang).toBe('en')
@@ -359,24 +359,24 @@ describe('FdsSprogvaelger', () => {
 
     it('emits lang event with language code', async () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: mockLanguages }
+        props: { modelValue: mockLanguages },
       })
-      
+
       const germanLink = wrapper.findAll('a')[2]
       await germanLink.trigger('click')
-      
+
       expect(wrapper.emitted('lang')).toBeTruthy()
       expect(wrapper.emitted('lang')?.[0]).toEqual(['de'])
     })
 
     it('does not emit events when clicking active language', async () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: mockLanguages }
+        props: { modelValue: mockLanguages },
       })
-      
+
       const activeLink = wrapper.find('a.active')
       await activeLink.trigger('click')
-      
+
       expect(wrapper.emitted('update:modelValue')).toBeFalsy()
       expect(wrapper.emitted('language-change')).toBeFalsy()
       expect(wrapper.emitted('lang')).toBeFalsy()
@@ -384,12 +384,12 @@ describe('FdsSprogvaelger', () => {
 
     it('emits all events when language changes', async () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: mockLanguages }
+        props: { modelValue: mockLanguages },
       })
-      
+
       const englishLink = wrapper.findAll('a')[1]
       await englishLink.trigger('click')
-      
+
       expect(wrapper.emitted('update:modelValue')).toBeTruthy()
       expect(wrapper.emitted('language-change')).toBeTruthy()
       expect(wrapper.emitted('lang')).toBeTruthy()
@@ -399,57 +399,57 @@ describe('FdsSprogvaelger', () => {
   describe('Watchers', () => {
     it('sets document lang when modelValue changes and autoSetLang is true', async () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { 
+        props: {
           modelValue: mockLanguages,
-          autoSetLang: true
-        }
+          autoSetLang: true,
+        },
       })
-      
+
       mockSetAttribute.mockClear()
-      
-      const newLanguages = mockLanguages.map(lang => ({
+
+      const newLanguages = mockLanguages.map((lang) => ({
         ...lang,
-        active: lang.lang === 'en' // Switch to English
+        active: lang.lang === 'en', // Switch to English
       }))
-      
+
       await wrapper.setProps({ modelValue: newLanguages })
-      
+
       expect(mockSetAttribute).toHaveBeenCalledWith('lang', 'en')
     })
 
     it('does not set document lang when autoSetLang is false', async () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { 
+        props: {
           modelValue: mockLanguages,
-          autoSetLang: false
-        }
+          autoSetLang: false,
+        },
       })
-      
+
       mockSetAttribute.mockClear()
-      
-      const newLanguages = mockLanguages.map(lang => ({
+
+      const newLanguages = mockLanguages.map((lang) => ({
         ...lang,
-        active: lang.lang === 'en'
+        active: lang.lang === 'en',
       }))
-      
+
       await wrapper.setProps({ modelValue: newLanguages })
-      
+
       expect(mockSetAttribute).not.toHaveBeenCalled()
     })
 
     it('handles modelValue with no active language', async () => {
-      const noActiveLanguages = mockLanguages.map(lang => ({
+      const noActiveLanguages = mockLanguages.map((lang) => ({
         ...lang,
-        active: false
+        active: false,
       }))
 
       const wrapper = mount(FdsSprogvaelger, {
-        props: { 
+        props: {
           modelValue: noActiveLanguages,
-          autoSetLang: true
-        }
+          autoSetLang: true,
+        },
       })
-      
+
       // Should not set lang when no active language
       expect(mockSetAttribute).not.toHaveBeenCalled()
     })
@@ -458,14 +458,14 @@ describe('FdsSprogvaelger', () => {
   describe('Accessibility', () => {
     it('has correct semantic structure', () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: mockLanguages }
+        props: { modelValue: mockLanguages },
       })
-      
+
       const ul = wrapper.find('ul')
       expect(ul.attributes('aria-label')).toBe('Vælg sprog fra listen')
-      
+
       const links = wrapper.findAll('a')
-      links.forEach(link => {
+      links.forEach((link) => {
         expect(link.attributes('lang')).toBeTruthy()
         expect(link.attributes('aria-label')).toBeTruthy()
       })
@@ -473,9 +473,9 @@ describe('FdsSprogvaelger', () => {
 
     it('provides clear language identification', () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: mockLanguages }
+        props: { modelValue: mockLanguages },
       })
-      
+
       const links = wrapper.findAll('a')
       expect(links[0].attributes('lang')).toBe('da')
       expect(links[0].attributes('aria-label')).toContain('Dansk')
@@ -485,23 +485,23 @@ describe('FdsSprogvaelger', () => {
 
     it('has proper icon accessibility attributes', () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: mockLanguages }
+        props: { modelValue: mockLanguages },
       })
-      
+
       const activeLink = wrapper.find('a.active')
       const svg = activeLink.find('svg')
-      
+
       expect(svg.attributes('focusable')).toBe('false')
       expect(svg.attributes('aria-hidden')).toBe('true')
     })
 
     it('supports keyboard navigation', () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: mockLanguages }
+        props: { modelValue: mockLanguages },
       })
-      
+
       const links = wrapper.findAll('a')
-      links.forEach(link => {
+      links.forEach((link) => {
         expect(link.element.tagName).toBe('A')
         // Anchor elements are naturally keyboard focusable
       })
@@ -517,9 +517,9 @@ describe('FdsSprogvaelger', () => {
   describe('Edge Cases', () => {
     it('handles empty modelValue array', () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: [] }
+        props: { modelValue: [] },
       })
-      
+
       expect(wrapper.findAll('li')).toHaveLength(0)
       expect(wrapper.find('ul').exists()).toBe(true) // Container still exists
     })
@@ -527,41 +527,41 @@ describe('FdsSprogvaelger', () => {
     it('handles languages with same lang code', () => {
       const duplicateLanguages = [
         { title: 'English (US)', active: true, lang: 'en', ariaLabel: 'Selected: English US' },
-        { title: 'English (UK)', active: false, lang: 'en', ariaLabel: 'Select: English UK' }
+        { title: 'English (UK)', active: false, lang: 'en', ariaLabel: 'Select: English UK' },
       ]
 
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: duplicateLanguages }
+        props: { modelValue: duplicateLanguages },
       })
-      
+
       expect(wrapper.findAll('a')).toHaveLength(2)
       expect(wrapper.findAll('a[lang="en"]')).toHaveLength(2)
     })
 
     it('handles languages without active flag', () => {
-      const noActiveLanguages = mockLanguages.map(lang => ({
+      const noActiveLanguages = mockLanguages.map((lang) => ({
         ...lang,
-        active: false
+        active: false,
       }))
 
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: noActiveLanguages }
+        props: { modelValue: noActiveLanguages },
       })
-      
+
       expect(wrapper.find('a.active').exists()).toBe(false)
       expect(wrapper.find('svg').exists()).toBe(false)
     })
 
     it('handles multiple active languages', () => {
-      const multipleActive = mockLanguages.map(lang => ({
+      const multipleActive = mockLanguages.map((lang) => ({
         ...lang,
-        active: true // All active
+        active: true, // All active
       }))
 
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: multipleActive }
+        props: { modelValue: multipleActive },
       })
-      
+
       const activeLinks = wrapper.findAll('a.active')
       expect(activeLinks).toHaveLength(3)
       expect(wrapper.findAll('svg')).toHaveLength(3) // All have check icons
@@ -569,17 +569,17 @@ describe('FdsSprogvaelger', () => {
 
     it('handles prop changes dynamically', async () => {
       const wrapper = mount(FdsSprogvaelger, {
-        props: { 
+        props: {
           modelValue: mockLanguages,
-          autoSetLang: false
-        }
+          autoSetLang: false,
+        },
       })
-      
+
       // Clear the call from initial mount
       mockSetAttribute.mockClear()
-      
+
       await wrapper.setProps({ autoSetLang: true })
-      
+
       // Should not automatically set lang when just changing autoSetLang prop
       // It only sets lang when modelValue changes or on initial mount with active language
       expect(mockSetAttribute).not.toHaveBeenCalled()
@@ -588,13 +588,13 @@ describe('FdsSprogvaelger', () => {
     it('handles undefined or null language properties', () => {
       const incompleteLanguages = [
         { title: 'Dansk', active: true, lang: 'da', ariaLabel: undefined as any },
-        { title: '', active: false, lang: '', ariaLabel: 'Empty language' }
+        { title: '', active: false, lang: '', ariaLabel: 'Empty language' },
       ]
 
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: incompleteLanguages }
+        props: { modelValue: incompleteLanguages },
       })
-      
+
       const links = wrapper.findAll('a')
       expect(links).toHaveLength(2)
       expect(links[1].text()).toBe('') // Empty title
@@ -604,13 +604,13 @@ describe('FdsSprogvaelger', () => {
       const noActiveLanguages = [
         { title: 'English', active: false, lang: 'en', ariaLabel: 'Select English' },
         { title: 'Dansk', active: false, lang: 'da', ariaLabel: 'Vælg Dansk' },
-        { title: 'Deutsch', active: false, lang: 'de', ariaLabel: 'Wählen Deutsch' }
+        { title: 'Deutsch', active: false, lang: 'de', ariaLabel: 'Wählen Deutsch' },
       ]
 
       const wrapper = mount(FdsSprogvaelger, {
-        props: { modelValue: noActiveLanguages }
+        props: { modelValue: noActiveLanguages },
       })
-      
+
       const links = wrapper.findAll('a')
       expect(links[0].text()).toBe('English') // Original order maintained
       expect(links[1].text()).toBe('Dansk')
@@ -631,12 +631,12 @@ describe('FdsSprogvaelger', () => {
         components: { FdsSprogvaelger },
         data() {
           return { languages: mockLanguages }
-        }
+        },
       }
 
       const wrapper = mount(HeaderWrapper)
       const sprogvaelger = wrapper.findComponent(FdsSprogvaelger)
-      
+
       expect(sprogvaelger.exists()).toBe(true)
       expect(sprogvaelger.find('.language-switcher').exists()).toBe(true)
     })
@@ -653,35 +653,37 @@ describe('FdsSprogvaelger', () => {
         `,
         components: { FdsSprogvaelger },
         data() {
-          return { 
-            languages: mockLanguages.map(lang => ({
+          return {
+            languages: mockLanguages.map((lang) => ({
               ...lang,
-              href: `/da/page` // Current page in Danish
-            }))
+              href: `/da/page`, // Current page in Danish
+            })),
           }
         },
         methods: {
           handleLanguageChange(language: FdsLanguageItem) {
             routingHandler(language)
             // Simulate route change
-            this.languages = this.languages.map(l => ({
+            this.languages = this.languages.map((l) => ({
               ...l,
               active: l.lang === language.lang,
-              href: `/${language.lang}/page` // Update href for current language
+              href: `/${language.lang}/page`, // Update href for current language
             }))
-          }
-        }
+          },
+        },
       }
 
       const wrapper = mount(RoutingWrapper)
-      
+
       const englishLink = wrapper.findAll('a')[1]
       await englishLink.trigger('click')
-      
-      expect(routingHandler).toHaveBeenCalledWith(expect.objectContaining({
-        lang: 'en',
-        title: 'English'
-      }))
+
+      expect(routingHandler).toHaveBeenCalledWith(
+        expect.objectContaining({
+          lang: 'en',
+          title: 'English',
+        }),
+      )
     })
 
     it('works with internationalization context', async () => {
@@ -702,15 +704,15 @@ describe('FdsSprogvaelger', () => {
           handleLangChange(langCode: string) {
             i18nHandler(langCode)
             // Simulate i18n locale change
-          }
-        }
+          },
+        },
       }
 
       const wrapper = mount(I18nWrapper)
-      
+
       const germanLink = wrapper.findAll('a')[2]
       await germanLink.trigger('click')
-      
+
       expect(i18nHandler).toHaveBeenCalledWith('de')
       expect(mockSetAttribute).toHaveBeenCalledWith('lang', 'de')
     })
@@ -727,15 +729,15 @@ describe('FdsSprogvaelger', () => {
           return {
             languages: [
               { title: 'Dansk', active: true, lang: 'da', ariaLabel: 'Valgt sprog: Dansk' },
-              { title: 'English', active: false, lang: 'en', ariaLabel: 'Vælg sprog: English' }
-            ]
+              { title: 'English', active: false, lang: 'en', ariaLabel: 'Vælg sprog: English' },
+            ],
           }
-        }
+        },
       }
 
       const wrapper = mount(DKFDSWrapper)
       const sprogvaelger = wrapper.findComponent(FdsSprogvaelger)
-      
+
       // Verify DKFDS structure and behavior
       expect(sprogvaelger.find('.language-switcher').exists()).toBe(true)
       expect(sprogvaelger.find('ul').attributes('aria-label')).toBe('Vælg sprog fra listen')
@@ -754,8 +756,8 @@ describe('FdsSprogvaelger', () => {
         data() {
           return {
             availableLanguages: [
-              { title: 'Dansk', active: true, lang: 'da', ariaLabel: 'Valgt sprog: Dansk' }
-            ]
+              { title: 'Dansk', active: true, lang: 'da', ariaLabel: 'Valgt sprog: Dansk' },
+            ],
           }
         },
         methods: {
@@ -763,28 +765,48 @@ describe('FdsSprogvaelger', () => {
             // Simulate adding more languages dynamically
             if (this.availableLanguages.length === 1) {
               this.availableLanguages = [
-                { title: 'Dansk', active: language.lang === 'da', lang: 'da', ariaLabel: 'Vælg sprog: Dansk' },
-                { title: 'English', active: language.lang === 'en', lang: 'en', ariaLabel: 'Vælg sprog: English' },
-                { title: 'Deutsch', active: language.lang === 'de', lang: 'de', ariaLabel: 'Vælg sprog: Deutsch' }
+                {
+                  title: 'Dansk',
+                  active: language.lang === 'da',
+                  lang: 'da',
+                  ariaLabel: 'Vælg sprog: Dansk',
+                },
+                {
+                  title: 'English',
+                  active: language.lang === 'en',
+                  lang: 'en',
+                  ariaLabel: 'Vælg sprog: English',
+                },
+                {
+                  title: 'Deutsch',
+                  active: language.lang === 'de',
+                  lang: 'de',
+                  ariaLabel: 'Vælg sprog: Deutsch',
+                },
               ]
             } else {
-              this.availableLanguages = this.availableLanguages.map(l => ({
+              this.availableLanguages = this.availableLanguages.map((l) => ({
                 ...l,
-                active: l.lang === language.lang
+                active: l.lang === language.lang,
               }))
             }
-          }
-        }
+          },
+        },
       }
 
       const wrapper = mount(DynamicWrapper)
-      
+
       expect(wrapper.findAll('a')).toHaveLength(1) // Initially one language
-      
+
       // Simulate language change that triggers loading more languages
-      wrapper.vm.handleLanguageChange({ title: 'English', active: false, lang: 'en', ariaLabel: 'Select English' })
+      wrapper.vm.handleLanguageChange({
+        title: 'English',
+        active: false,
+        lang: 'en',
+        ariaLabel: 'Select English',
+      })
       await wrapper.vm.$nextTick()
-      
+
       expect(wrapper.findAll('a')).toHaveLength(3) // Now three languages
     })
   })
