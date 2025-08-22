@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsAlert from '../../components/fds-alert.vue'
-import { testAccessibility } from '../../../../../test-shared/test-utils'
+import FdsAlert from "../../components/feedback/fds-alert.vue"
+import { testAccessibility } from '../../test-utils'
 
 describe('FdsAlert', () => {
   describe('Rendering', () => {

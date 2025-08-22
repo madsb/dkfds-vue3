@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsIkon from '../../components/fds-ikon.vue'
+import FdsIkon from "../../components/layout/fds-ikon.vue"
 
 describe('FdsIkon', () => {
   describe('rendering', () => {

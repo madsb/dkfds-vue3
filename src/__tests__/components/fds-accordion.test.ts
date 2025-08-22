@@ -1,8 +1,8 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { ref } from 'vue'
-import FdsAccordion from '../../components/fds-accordion.vue'
-import { testAccessibility } from '../../../../../test-shared/test-utils'
+import FdsAccordion from "../../components/data-display/fds-accordion.vue"
+import { testAccessibility } from '../../test-utils'
 
 describe('FdsAccordion', () => {
   describe('Rendering', () => {

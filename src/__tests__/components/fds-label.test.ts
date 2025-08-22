@@ -1,11 +1,11 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { ref } from 'vue'
-import FdsLabel from '../../components/fds-label.vue'
+import FdsLabel from "../../components/forms/fds-label.vue"
 
 // Mock the formId utility
-vi.mock('dkfds-vue3-utils', () => ({
-  formId: (id?: string | null) => ({
+vi.mock('../../composables/formId', () => ({
+  default: (id?: string | null, autogenId = false) => ({
     formid: ref(id || 'generated-form-id'),
   }),
 }))

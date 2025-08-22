@@ -1,18 +1,30 @@
-import { defineConfig, mergeConfig } from 'vitest/config'
+import { defineConfig } from 'vitest/config'
+import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
-import baseConfig from '../../vitest.config.base'
 
-export default mergeConfig(
-  baseConfig,
-  defineConfig({
-    test: {
-      setupFiles: [resolve(__dirname, '../../test-shared/setup-vue.ts')],
+export default defineConfig({
+  plugins: [vue()],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/test-setup.ts'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'html', 'json'],
+      exclude: [
+        'node_modules/',
+        'dist/',
+        '*.config.*',
+        '**/*.d.ts',
+        '**/__tests__/**',
+        '**/index.ts',
+        'src/assets/**',
+      ],
     },
-    resolve: {
-      alias: {
-        '@': resolve(__dirname, './src'),
-        'dkfds-vue3-utils': resolve(__dirname, '../utils/src'),
-      },
+  },
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src'),
     },
-  }),
-)
+  },
+})

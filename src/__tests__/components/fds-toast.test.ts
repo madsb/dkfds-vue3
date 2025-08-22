@@ -1,21 +1,21 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsToast from '../../components/fds-toast.vue'
-import { testAccessibility } from '../../../../../test-shared/test-utils'
+import FdsToast from "../../components/feedback/fds-toast.vue"
+import { testAccessibility } from '../../test-utils'
 
-// Mock the generateId function and Toast class
-vi.mock('dkfds-vue3-utils', async () => {
-  const actual = (await vi.importActual('dkfds-vue3-utils')) as any
-  return {
-    ...actual,
-    generateId: (prefix: string) => ({ value: `${prefix}-test-id` }),
-    toast: class MockToast {
-      show = vi.fn()
-      hide = vi.fn()
-      destroy = vi.fn()
-    },
-  }
-})
+// Mock the generateId function
+vi.mock('../../composables/generateId', () => ({
+  default: (prefix?: string) => `${prefix || 'fid'}-test-id`,
+}))
+
+// Mock the Toast class
+vi.mock('../../utils/scripts', () => ({
+  toast: class MockToast {
+    show = vi.fn()
+    hide = vi.fn()
+    destroy = vi.fn()
+  },
+}))
 
 describe('FdsToast', () => {
   beforeEach(() => {

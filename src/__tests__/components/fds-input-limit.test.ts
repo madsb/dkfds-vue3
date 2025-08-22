@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { ref, nextTick } from 'vue'
-import FdsInputLimit from '../../components/fds-input-limit.vue'
+import FdsInputLimit from "../../components/input/fds-input-limit.vue"
 
 describe('FdsInputLimit', () => {
   beforeEach(() => {

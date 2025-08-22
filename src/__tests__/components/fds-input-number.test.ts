@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { ref, nextTick } from 'vue'
-import FdsInputNumber from '../../components/fds-input-number.vue'
+import FdsInputNumber from "../../components/input/fds-input-number.vue"
 
 // Mock the formId utility
-vi.mock('dkfds-vue3-utils', () => ({
-  formId: (id?: string | null) => ({
+vi.mock('../../composables/formId', () => ({
+  default: (id?: string | null, autogenId = false) => ({
     formid: ref(id || 'fid_generated_id'),
   }),
 }))

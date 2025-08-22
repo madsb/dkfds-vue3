@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { ref } from 'vue'
-import FdsHint from '../../components/fds-hint.vue'
-import { testAccessibility } from '../../../../../test-shared/test-utils'
+import FdsHint from "../../components/forms/fds-hint.vue"
+import { testAccessibility } from '../../test-utils'
 
 describe('FdsHint', () => {
   beforeEach(() => {

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsFunktionslink from '../../components/fds-funktionslink.vue'
-import { testAccessibility } from '../../../../../test-shared/test-utils'
+import FdsFunktionslink from "../../components/layout/fds-funktionslink.vue"
+import { testAccessibility } from '../../test-utils'
 
 describe('FdsFunktionslink', () => {
   describe('Rendering', () => {

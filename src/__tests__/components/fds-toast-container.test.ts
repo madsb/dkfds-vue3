@@ -1,16 +1,12 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
-import FdsToastContainer from '../../components/fds-toast-container.vue'
-import { testAccessibility } from '../../../../../test-shared/test-utils'
+import FdsToastContainer from "../../components/feedback/fds-toast-container.vue"
+import { testAccessibility } from '../../test-utils'
 
-// Mock the generateId function to return a simple string
-vi.mock('dkfds-vue3-utils', async () => {
-  const actual = (await vi.importActual('dkfds-vue3-utils')) as any
-  return {
-    ...actual,
-    generateId: (prefix: string) => ({ value: `${prefix}-test-id` }),
-  }
-})
+// Mock the generateId function to return a ref-like object
+vi.mock('../../composables/generateId', () => ({
+  default: (prefix?: string) => ({ value: `${prefix || 'fid'}-test-id` }),
+}))
 
 // Mock DOM methods for animation testing
 const mockOffsetHeight = vi.fn(() => 100)

@@ -1,16 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsPaginering from '../../components/fds-paginering.vue'
-import { testAccessibility } from '../../../../../test-shared/test-utils'
+import FdsPaginering from "../../components/navigation/fds-paginering.vue"
+import { testAccessibility } from '../../test-utils'
 
 // Mock the generateId function to return a simple string
-vi.mock('dkfds-vue3-utils', async () => {
-  const actual = (await vi.importActual('dkfds-vue3-utils')) as any
-  return {
-    ...actual,
-    generateId: (prefix: string) => `${prefix}-${Math.random().toString(36).substr(2, 9)}`,
-  }
-})
+vi.mock('../../composables/generateId', () => ({
+  default: (prefix: string) => `${prefix}-${Math.random().toString(36).substr(2, 9)}`,
+}))
 
 describe('FdsPaginering', () => {
   beforeEach(() => {

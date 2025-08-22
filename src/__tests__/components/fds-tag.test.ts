@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsTag from '../../components/fds-tag.vue'
+import FdsTag from "../../components/data-display/fds-tag.vue"
 
 describe('FdsTag', () => {
   describe('Rendering', () => {

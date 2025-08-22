@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsFanebladePanel from '../../components/fds-faneblade-panel.vue'
-import { testAccessibility } from '../../../../../test-shared/test-utils'
+import FdsFanebladePanel from "../../components/navigation/fds-faneblade-panel.vue"
+import { testAccessibility } from '../../test-utils'
 
 describe('FdsFanebladePanel', () => {
   describe('Rendering', () => {

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsDropdown from '../../components/fds-dropdown.vue'
-import { testAccessibility } from '../../../../../test-shared/test-utils'
+import FdsDropdown from "../../components/input/fds-dropdown.vue"
+import { testAccessibility } from '../../test-utils'
 
 describe('FdsDropdown', () => {
   describe('Rendering', () => {

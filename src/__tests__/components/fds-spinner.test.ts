@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsSpinner from '../../components/fds-spinner.vue'
+import FdsSpinner from "../../components/feedback/fds-spinner.vue"
 
 describe('FdsSpinner', () => {
   describe('Rendering', () => {

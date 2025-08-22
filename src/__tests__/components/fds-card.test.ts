@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsCard from '../../components/fds-card.vue'
-import { testAccessibility } from '../../../../../test-shared/test-utils'
+import FdsCard from "../../components/data-display/fds-card.vue"
+import { testAccessibility } from '../../test-utils'
 
 describe('FdsCard', () => {
   describe('Rendering', () => {

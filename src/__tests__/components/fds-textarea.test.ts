@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsTextarea from '../../components/fds-textarea.vue'
+import FdsTextarea from "../../components/input/fds-textarea.vue"
 
 describe('FdsTextarea', () => {
   describe('Rendering', () => {

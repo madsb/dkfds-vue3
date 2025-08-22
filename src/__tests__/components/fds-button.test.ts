@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsButton from '../../components/fds-button.vue'
+import FdsButton from "../../components/layout/fds-button.vue"
 
 describe('FdsButton', () => {
   describe('Rendering', () => {

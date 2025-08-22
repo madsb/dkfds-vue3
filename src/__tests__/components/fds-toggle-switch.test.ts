@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { ref, nextTick } from 'vue'
-import FdsToggleSwitch from '../../components/fds-toggle-switch.vue'
+import FdsToggleSwitch from "../../components/input/fds-toggle-switch.vue"
 
 // Mock the formId utility
-vi.mock('dkfds-vue3-utils', () => ({
-  formId: (id?: string | null) => ({
+vi.mock('../../composables/formId', () => ({
+  default: (id?: string | null, autogenId = false) => ({
     formid: ref(id || 'fid_generated_id'),
   }),
 }))

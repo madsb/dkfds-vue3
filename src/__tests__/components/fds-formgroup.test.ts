@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsFormgroup from '../../components/fds-formgroup.vue'
+import FdsFormgroup from "../../components/forms/fds-formgroup.vue"
 
 describe('FdsFormgroup', () => {
   describe('Basic Rendering', () => {

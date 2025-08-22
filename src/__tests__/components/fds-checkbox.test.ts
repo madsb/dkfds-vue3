@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { nextTick } from 'vue'
-import FdsCheckbox from '../../components/fds-checkbox.vue'
-import { testAccessibility } from '../../../../../test-shared/test-utils'
+import FdsCheckbox from "../../components/input/fds-checkbox.vue"
+import { testAccessibility } from '../../test-utils'
 
 describe('FdsCheckbox', () => {
   describe('Rendering', () => {

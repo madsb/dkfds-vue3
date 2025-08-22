@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsNavLink from '../../components/fds-nav-link.vue'
-import { testAccessibility } from '../../../../../test-shared/test-utils'
+import FdsNavLink from "../../components/navigation/fds-nav-link.vue"
+import { testAccessibility } from '../../test-utils'
 
 describe('FdsNavLink', () => {
   beforeEach(() => {

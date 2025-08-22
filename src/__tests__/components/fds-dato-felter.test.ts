@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsDatoFelter from '../../components/fds-dato-felter.vue'
-import { testAccessibility } from '../../../../../test-shared/test-utils'
+import FdsDatoFelter from "../../components/input/fds-dato-felter.vue"
+import { testAccessibility } from '../../test-utils'
 
 describe('FdsDatoFelter', () => {
   describe('Rendering', () => {

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsTilTop from '../../components/fds-til-top.vue'
-import { testAccessibility } from '../../../../../test-shared/test-utils'
+import FdsTilTop from "../../components/navigation/fds-til-top.vue"
+import { testAccessibility } from '../../test-utils'
 
 // Store original values to restore after tests
 const originalInnerHeight = window.innerHeight
