@@ -4,7 +4,13 @@ dist/
 
 # Test coverage
 coverage/
+**/coverage/
 *.lcov
+.nyc_output/
+*.coverage
+*.cover
+htmlcov/
+.coverage.*
 
 # local env files
 .env.local
@@ -26,3 +32,39 @@ pnpm-debug.log*
 *.sw?
 /examples/demo/coverage
 /dist-packages
+
+# Build outputs
+dist/
+**/dist/
+dist-*
+build/
+out/
+.output/
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+.temp/
+tmp/
+temp/
+
+# Claude AI / MCP related
+.claude/
+.playwright-mcp/
+dokumentation/dkfds-v11-automation-system.md
+typecheck-strict.sh
+
+# Vitest
+.vitest-reports/
+vitest.config.*.timestamp-*
+
+# Package manager files
+.pnpm-debug.log*
+.yarn-integrity
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
