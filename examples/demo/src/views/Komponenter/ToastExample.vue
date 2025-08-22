@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useToast } from 'dkfds-vue3'
+import { useToast } from '@madsb/dkfds-vue3'
 
 const { showInfo, showSuccess, showWarning, showError, showToast, clearAllToasts } = useToast()
 
@@ -110,7 +110,7 @@ const codeExample = `<template>
 </template>
 
 <script setup>
-import { useToast } from 'dkfds-vue3'
+import { useToast } from '@madsb/dkfds-vue3'
 
 const { showInfo, showSuccess, showWarning, showError, showToast, clearAllToasts } = useToast()
 

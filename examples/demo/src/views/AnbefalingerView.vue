@@ -28,8 +28,8 @@
 </template>
 
 <script setup lang="ts">
-import { FdsMenu, FdsMenuItem } from 'dkfds-vue3'
-import { useNavigation, type NavigationItem } from 'dkfds-vue3/utils'
+import { FdsMenu, FdsMenuItem } from '@madsb/dkfds-vue3'
+import { useNavigation, type NavigationItem } from '@madsb/dkfds-vue3/utils'
 
 const navigationItems: NavigationItem[] = [
   {

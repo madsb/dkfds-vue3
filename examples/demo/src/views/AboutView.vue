@@ -1,57 +1,89 @@
 <template>
   <div class="about">
     <div class="container page-container">
-      <h1>Fællesskab</h1>
+      <h1>Om DKFDS-Vue3</h1>
       <p class="font-lead">
-        DKFDS Vue 3 er udviklet for at give et standardiseret og ensartet komponent bibliotek, der
-        overholder design principper og krav om tilgængelighed udstillet af "Det Fælles
-        Designsystem".
+        DKFDS-Vue3 er en Vue 3 implementation af Det Fælles Designsystem version 11, udviklet for at
+        sikre konsistent brugeroplevelse og tilgængelighed på tværs af danske digitale
+        selvbetjeningsløsninger.
       </p>
+
+      <fds-alert variant="info" class="mt-6 mb-6">
+        <template #heading>Open Source</template>
+        Dette bibliotek er open source og vedligeholdes af fællesskabet. Alle bidrag er velkomne -
+        fra fejlrapporter til nye funktioner.
+      </fds-alert>
+
+      <div class="row">
+        <div class="col-12 col-lg-6">
+          <fds-card class="h-100">
+            <template #header>
+              <h2 class="h4 mt-0">Bidrag til projektet</h2>
+            </template>
+            <template #content>
+              <p>
+                Har du fundet en fejl eller har du en idé til en forbedring? Vi værdsætter alle
+                former for feedback og bidrag.
+              </p>
+              <fds-button
+                variant="secondary"
+                href="https://github.com/madsb/dkfds-vue3/issues"
+                target="_blank"
+                class="mt-4"
+              >
+                <fds-ikon icon="open-in-new" size="sm" class="mr-2" />
+                Opret issue på GitHub
+              </fds-button>
+            </template>
+          </fds-card>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <fds-card class="h-100">
+            <template #header>
+              <h2 class="h4 mt-0">Udvikling</h2>
+            </template>
+            <template #content>
+              <p>
+                Vil du bidrage med kode? Fork repositoriet, lav dine ændringer og opret et pull
+                request. Vi gennemgår alle bidrag og giver feedback.
+              </p>
+              <fds-button
+                variant="secondary"
+                href="https://github.com/madsb/dkfds-vue3"
+                target="_blank"
+                class="mt-4"
+              >
+                <fds-ikon icon="open-in-new" size="sm" class="mr-2" />
+                Se koden på GitHub
+              </fds-button>
+            </template>
+          </fds-card>
+        </div>
+      </div>
+
+      <h2 class="mt-8">Teknisk information</h2>
+      <fds-list>
+        <fds-list-item> <strong>Framework:</strong> Vue 3 med Composition API </fds-list-item>
+        <fds-list-item>
+          <strong>TypeScript:</strong> Fuld type support for alle komponenter
+        </fds-list-item>
+        <fds-list-item> <strong>DKFDS Version:</strong> Version 11 (seneste) </fds-list-item>
+        <fds-list-item> <strong>Tilgængelighed:</strong> WCAG 2.1 AA standard </fds-list-item>
+        <fds-list-item>
+          <strong>Bundle størrelse:</strong> Tree-shakeable for optimal performance
+        </fds-list-item>
+      </fds-list>
+
+      <h2 class="mt-8">Licens</h2>
       <p>
-        Komponent bibliotek er udviklet af fællesskabet for fællesskabet og frit tilgængeligt.
-        Dertil er det også fællesskabet der vedligeholder det. Derfor er det også vigtigt at give
-        feedback om evt fejl eller ønske om forbedringer eller måske helt nye komponenter
+        DKFDS-Vue3 er udgivet under MIT licensen og kan frit bruges i både kommercielle og
+        ikke-kommercielle projekter.
       </p>
-
-      <h2>Fejl / Forbedringer</h2>
-      <p>Har du fundet en fejl eller har forslag til en feature eller et bug fix?</p>
-
-      <a href="https://github.com/whitewillow/dkfds-vue3/issues" target="github" class="icon-link">
-        Så opret gerne et issue på github<svg
-          class="icon-svg"
-          focusable="false"
-          aria-hidden="true"
-          tabindex="-1"
-        >
-          <use href="#open-in-new"></use></svg
-      ></a>
-
-      <h2>Udviklingsguide</h2>
-      <p>
-        Der er intet i vejen for at selv at udvikle en feature og lave et pull request. Så vil
-        "Collaborators" kigge det igennem og se om det passer ind i komponent biblioteket.
-      </p>
-
-      <a
-        href="https://github.com/whitewillow/dkfds-vue3/blob/main/dokumentation/UdviklingsGuide.md"
-        target="github"
-        class="icon-link"
-      >
-        Udviklingsguide<svg class="icon-svg" focusable="false" aria-hidden="true" tabindex="-1">
-          <use href="#open-in-new"></use></svg
-      ></a>
-
-      <h2>Roadmap</h2>
-      <p>Se Roadmap for kommende features</p>
-
-      <a
-        href="https://github.com/whitewillow/dkfds-vue3/blob/main/dokumentation/WIP.md"
-        target="github"
-        class="icon-link"
-      >
-        Roadmap<svg class="icon-svg" focusable="false" aria-hidden="true" tabindex="-1">
-          <use href="#open-in-new"></use></svg
-      ></a>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { FdsAlert, FdsButton, FdsCard, FdsList, FdsListItem, FdsIkon } from '@madsb/dkfds-vue3'
+</script>

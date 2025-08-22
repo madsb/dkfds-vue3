@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import dkfdsvue3 from 'dkfds-vue3'
+import dkfdsvue3 from '@madsb/dkfds-vue3'
 import App from './App.vue'
 import router from './router'
 import store from './store'
