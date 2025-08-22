@@ -2,7 +2,6 @@ import { createApp } from 'vue'
 import dkfdsvue3 from '@madsb/dkfds-vue3'
 import App from './App.vue'
 import router from './router'
-import store from './store'
 
 import FdsXtndNavItemRoute from './components/fds-xtnd-nav-item-route.vue'
 import InfoTable from './components/info-table.vue'
@@ -15,7 +14,6 @@ import CustomTooltip from './components/custom-tooltip.vue'
 const app = createApp(App)
 
 app
-  .use(store)
   .use(router)
   .use(dkfdsvue3 as any)
   .component('fds-xtnd-nav-item-route', FdsXtndNavItemRoute)

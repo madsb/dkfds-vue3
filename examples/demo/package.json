@@ -17,8 +17,7 @@
     "@madsb/dkfds-vue3": "workspace:*",
     "fast-sort": "^3.4.1",
     "vue": "^3.5.18",
-    "vue-router": "^4.5.1",
-    "vuex": "^4.1.0"
+    "vue-router": "^4.5.1"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",
