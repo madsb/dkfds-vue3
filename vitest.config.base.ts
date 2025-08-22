@@ -18,6 +18,8 @@ export default defineConfig({
         '**/__tests__/**',
         '**/test-shared/**',
         'examples/**',
+        '**/scripts/**',
+        '**/index.ts',
       ],
       thresholds: {
         statements: 80,

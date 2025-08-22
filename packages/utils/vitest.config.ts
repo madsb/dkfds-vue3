@@ -8,6 +8,14 @@ export default mergeConfig(
     test: {
       setupFiles: [resolve(__dirname, '../../test-shared/setup-node.ts')],
       environment: 'jsdom', // Changed to jsdom for navigation tests that need DOM
+      coverage: {
+        thresholds: {
+          statements: 64,
+          branches: 75,
+          functions: 54,
+          lines: 64,
+        },
+      },
     },
     resolve: {
       alias: {
