@@ -8,6 +8,7 @@ This is an updated fork of the original [dkfds-vue3](https://github.com/whitewil
 - **TypeScript improvements** with better type definitions
 - **Modern build system** with Vite optimizations
 - **All dependencies updated** to latest versions
+- **Simplified architecture** - Single package structure with organized components
 
 ## 📦 Installation
 
@@ -20,8 +21,12 @@ pnpm add @madsb/dkfds-vue3 dkfds@^11.0.0
 
 ### For local development
 ```bash
-# Install from local package
-npm install /path/to/dkfds-vue3/dist-packages/madsb-dkfds-vue3-0.9.0.tgz dkfds@^11.0.0
+# Link the package locally
+cd /path/to/dkfds-vue3
+pnpm link
+
+# In your project
+pnpm link @madsb/dkfds-vue3
 ```
 
 ## 🚀 Usage
@@ -44,11 +49,10 @@ import * as DkfdsVue3 from '@madsb/dkfds-vue3'
 # Install dependencies
 pnpm install
 
-# Build all packages
-pnpm -r build
+# Build the library
+pnpm run build
 
 # Run demo site
-cd examples/demo
 pnpm run dev
 ```
 
@@ -56,25 +60,35 @@ pnpm run dev
 ```bash
 # Development
 pnpm run dev              # Run demo site
-pnpm run build            # Build all packages
+pnpm run build            # Build library
 pnpm run test             # Run tests
 pnpm run typecheck        # Check TypeScript types
 pnpm run lint             # Lint code
 pnpm run format           # Format code
 
-# Package preparation for local use
-./prepare-package.sh      # Creates installable packages in dist-packages/
+# Testing
+pnpm run test:run         # Run tests once
+pnpm run test:coverage    # Run tests with coverage
+pnpm run test:ui          # Run tests with UI
 ```
 
 ### Project Structure
 ```
-packages/
-├── utils/          # Utility functions and composables
-├── core/           # Core DKFDS components (fds-*)
-└── dkfds-vue3/     # Main package that re-exports everything
+src/
+├── components/           # Vue components organized by category
+│   ├── forms/           # Form structure components
+│   ├── input/           # Input and form control components
+│   ├── navigation/      # Navigation and menu components
+│   ├── feedback/        # User feedback (alerts, toasts, modals)
+│   ├── data-display/    # Data presentation components
+│   └── layout/          # Layout and utility components
+├── composables/         # Vue composables
+├── utils/               # Utility functions
+├── types/               # TypeScript type definitions
+└── index.ts             # Main entry point
 
 examples/
-└── demo/           # Demo application showcasing components
+└── demo/                # Demo application showcasing components
 ```
 
 ## 📋 Features

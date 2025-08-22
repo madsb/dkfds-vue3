@@ -1,0 +1,6 @@
+export { default as FdsCookiemeddelelse } from './fds-cookiemeddelelse.vue'
+export { default as FdsSprogvaelger } from './fds-sprogvaelger.vue'
+export { default as FdsButton } from './fds-button.vue'
+export { default as FdsFunktionslink } from './fds-funktionslink.vue'
+export { default as FdsIkon } from './fds-ikon.vue'
+export { default as FdsIconCollection } from './fds-icon-collection.vue'

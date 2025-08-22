@@ -1,24 +1,25 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
     "target": "ES2022",
     "module": "ESNext",
     "strict": true,
+    "declaration": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "jsx": "preserve",
+    "outDir": "dist",
     "moduleResolution": "bundler",
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "useDefineForClassFields": true,
-    "sourceMap": true,
-    "baseUrl": ".",
-    "types": ["node"],
-    "paths": {
-      "@/*": ["src/*"]
-    },
-    "lib": ["ES2022", "DOM", "DOM.Iterable"]
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
-  "exclude": ["node_modules", "src/dev_components", "src/App.vue"]
+  "include": ["src/**/*.ts", "src/**/*.vue"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.js",
+    "src/**/*.test.ts",
+    "src/**/*.spec.ts",
+    "src/__tests__/**/*"
+  ]
 }
