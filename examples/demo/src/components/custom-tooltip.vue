@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { generateId } from 'dkfds-vue3/utils'
+import { generateId } from '@madsb/dkfds-vue3/utils'
 
 const props = defineProps({
   id: {

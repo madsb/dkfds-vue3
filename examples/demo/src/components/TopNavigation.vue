@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { useNavigation, type NavigationItem } from 'dkfds-vue3/utils'
+import { useNavigation, type NavigationItem } from '@madsb/dkfds-vue3/utils'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()

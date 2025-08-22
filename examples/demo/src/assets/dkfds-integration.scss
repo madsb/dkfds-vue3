@@ -3,7 +3,7 @@
   $image-path: '../../node_modules/dkfds/src/img/',
   $icons-folder-path: '../../node_modules/dkfds/src/img/svg-icons/'
 );
-@use '../../../../packages/core/src/assets/main' as core;
+@use '../../../../src/assets/main' as core;
 @use './main' as demo;
 
 // Generate background and color classes using DKFDS theme variables

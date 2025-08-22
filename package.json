@@ -25,11 +25,11 @@
       "types": "./dist/components/*.d.ts"
     },
     "./composables": {
-      "import": "./dist/composables/index.js",
+      "import": "./dist/dkfds-vue3.mjs",
       "types": "./dist/composables/index.d.ts"
     },
     "./utils": {
-      "import": "./dist/utils/index.js",
+      "import": "./dist/dkfds-vue3.mjs",
       "types": "./dist/utils/index.d.ts"
     },
     "./styles": "./dist/dkfds-vue3.css",

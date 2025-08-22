@@ -153,6 +153,12 @@ export default install
 export { useToast } from './composables/useToast'
 export type { ToastOptions } from './composables/useToast'
 
+// Export component types
+export type { BreadcrumbItem } from './components/navigation/fds-breadcrumb.vue'
+
+// Re-export utils (so /utils subpath works)
+export * from './utils'
+
 // Export all components individually
 export {
   // Forms

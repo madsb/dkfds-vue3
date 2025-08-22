@@ -20,6 +20,8 @@
     "**/*.js",
     "src/**/*.test.ts",
     "src/**/*.spec.ts",
-    "src/__tests__/**/*"
+    "src/__tests__/**/*",
+    "src/test-utils.ts",
+    "src/test-setup.ts"
   ]
 }
