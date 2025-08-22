@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { ref } from 'vue'
-import FdsLabel from "../../components/forms/fds-label.vue"
+import FdsLabel from '../../components/forms/fds-label.vue'
 
 // Mock the formId utility
 vi.mock('../../composables/formId', () => ({

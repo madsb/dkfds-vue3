@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { nextTick } from 'vue'
-import FdsTrinindikatorGroup from "../../components/navigation/fds-trinindikator-group.vue"
-import FdsTrinindikatorStep from "../../components/navigation/fds-trinindikator-step.vue"
+import FdsTrinindikatorGroup from '../../components/navigation/fds-trinindikator-group.vue'
+import FdsTrinindikatorStep from '../../components/navigation/fds-trinindikator-step.vue'
 import { testAccessibility } from '../../test-utils'
 
 // Mock window resize and screen size

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsToast from "../../components/feedback/fds-toast.vue"
+import FdsToast from '../../components/feedback/fds-toast.vue'
 import { testAccessibility } from '../../test-utils'
 
 // Mock the generateId function

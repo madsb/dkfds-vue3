@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsFaneblade from "../../components/navigation/fds-faneblade.vue"
+import FdsFaneblade from '../../components/navigation/fds-faneblade.vue'
 import { testAccessibility } from '../../test-utils'
 
 describe('FdsFaneblade', () => {

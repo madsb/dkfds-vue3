@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsRadioGroup from "../../components/input/fds-radio-group.vue"
-import FdsRadioItem from "../../components/input/fds-radio-item.vue"
+import FdsRadioGroup from '../../components/input/fds-radio-group.vue'
+import FdsRadioItem from '../../components/input/fds-radio-item.vue'
 
 describe('FdsRadioGroup', () => {
   describe('Rendering', () => {

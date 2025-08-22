@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsDetaljer from "../../components/data-display/fds-detaljer.vue"
+import FdsDetaljer from '../../components/data-display/fds-detaljer.vue'
 import { testAccessibility } from '../../test-utils'
 
 describe('FdsDetaljer', () => {

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
 import { nextTick } from 'vue'
-import FdsTooltip from "../../components/feedback/fds-tooltip.vue"
+import FdsTooltip from '../../components/feedback/fds-tooltip.vue'
 import { testAccessibility } from '../../test-utils'
 
 // Simple mock for tooltip utility - just what the component actually uses
@@ -73,7 +73,9 @@ describe('FdsTooltip', () => {
         },
       })
 
-      expect(wrapper.find('.tooltip-wrapper').attributes('data-tooltip')).toBe('Custom tooltip text')
+      expect(wrapper.find('.tooltip-wrapper').attributes('data-tooltip')).toBe(
+        'Custom tooltip text',
+      )
     })
 
     it('accepts trigger prop', () => {

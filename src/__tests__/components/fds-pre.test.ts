@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsPre from "../../components/data-display/fds-pre.vue"
+import FdsPre from '../../components/data-display/fds-pre.vue'
 
 describe('FdsPre', () => {
   describe('Rendering', () => {

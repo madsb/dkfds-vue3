@@ -33,13 +33,7 @@ interface Props {
   name?: string
 }
 
-const {
-  modelValue,
-  id,
-  label,
-  helpText = '',
-  name,
-} = defineProps<Props>()
+const { modelValue, id, label, helpText = '', name } = defineProps<Props>()
 
 const emit = defineEmits<{
   /** Emitted when selection changes */

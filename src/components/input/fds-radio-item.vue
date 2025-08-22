@@ -49,13 +49,7 @@ interface Props {
   name?: string
 }
 
-const {
-  value,
-  index,
-  id,
-  disabled = false,
-  name,
-} = defineProps<Props>()
+const { value, index, id, disabled = false, name } = defineProps<Props>()
 
 const emit = defineEmits<{
   /** Emitted when radio loses focus */

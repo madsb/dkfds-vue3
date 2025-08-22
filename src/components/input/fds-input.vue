@@ -42,14 +42,7 @@ interface Props {
   widthClass?: string
 }
 
-const {
-  id,
-  modelValue = '',
-  suffix,
-  prefix,
-  type = 'text',
-  widthClass = '',
-} = defineProps<Props>()
+const { id, modelValue = '', suffix, prefix, type = 'text', widthClass = '' } = defineProps<Props>()
 
 const emit = defineEmits<{
   /** Emitted when input value changes */

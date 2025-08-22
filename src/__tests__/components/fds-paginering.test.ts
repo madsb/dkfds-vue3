@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsPaginering from "../../components/navigation/fds-paginering.vue"
+import FdsPaginering from '../../components/navigation/fds-paginering.vue'
 import { testAccessibility } from '../../test-utils'
 
 // Mock the generateId function to return a simple string

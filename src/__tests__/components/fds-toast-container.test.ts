@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
-import FdsToastContainer from "../../components/feedback/fds-toast-container.vue"
+import FdsToastContainer from '../../components/feedback/fds-toast-container.vue'
 import { testAccessibility } from '../../test-utils'
 
 // Mock the generateId function to return a ref-like object

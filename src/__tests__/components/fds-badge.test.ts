@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsBadge from "../../components/data-display/fds-badge.vue"
+import FdsBadge from '../../components/data-display/fds-badge.vue'
 import { testAccessibility } from '../../test-utils'
 
 describe('FdsBadge', () => {

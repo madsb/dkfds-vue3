@@ -50,13 +50,7 @@ interface Props {
   disabled?: boolean
 }
 
-const {
-  id,
-  modelValue = false,
-  value = true,
-  name,
-  disabled = false,
-} = defineProps<Props>()
+const { id, modelValue = false, value = true, name, disabled = false } = defineProps<Props>()
 
 const emit = defineEmits<{
   /** Emitted when checkbox state changes */

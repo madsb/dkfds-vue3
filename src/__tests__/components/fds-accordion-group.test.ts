@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { nextTick, ref, inject, onMounted } from 'vue'
-import FdsAccordionGroup from "../../components/data-display/fds-accordion-group.vue"
-import FdsAccordion from "../../components/data-display/fds-accordion.vue"
+import FdsAccordionGroup from '../../components/data-display/fds-accordion-group.vue'
+import FdsAccordion from '../../components/data-display/fds-accordion.vue'
 import { testAccessibility } from '../../test-utils'
 
 describe('FdsAccordionGroup', () => {

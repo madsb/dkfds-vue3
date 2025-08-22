@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsOverflowMenu from "../../components/navigation/fds-overflow-menu.vue"
+import FdsOverflowMenu from '../../components/navigation/fds-overflow-menu.vue'
 import { testAccessibility } from '../../test-utils'
 
 describe('FdsOverflowMenu', () => {

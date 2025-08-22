@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsCookiemeddelelse from "../../components/layout/fds-cookiemeddelelse.vue"
+import FdsCookiemeddelelse from '../../components/layout/fds-cookiemeddelelse.vue'
 import { testAccessibility } from '../../test-utils'
 
 // Stub FdsButton component for testing

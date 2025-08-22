@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsModal from "../../components/feedback/fds-modal.vue"
+import FdsModal from '../../components/feedback/fds-modal.vue'
 
 describe('FdsModal', () => {
   beforeEach(() => {

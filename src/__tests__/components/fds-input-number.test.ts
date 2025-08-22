@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { ref, nextTick } from 'vue'
-import FdsInputNumber from "../../components/input/fds-input-number.vue"
+import FdsInputNumber from '../../components/input/fds-input-number.vue'
 
 // Mock the formId utility
 vi.mock('../../composables/formId', () => ({

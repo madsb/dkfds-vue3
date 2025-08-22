@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { inject } from 'vue'
-import FdsFejlopsummering from "../../components/feedback/fds-fejlopsummering.vue"
+import FdsFejlopsummering from '../../components/feedback/fds-fejlopsummering.vue'
 import { testAccessibility } from '../../test-utils'
 
 describe('FdsFejlopsummering', () => {

@@ -8,7 +8,8 @@
             <p class="font-lead">Vue 3 Komponent bibliotek til "Det Fælles Designsystem"</p>
             <fds-alert variant="info">
               <template #heading>DKFDS Version 11</template>
-              Dette bibliotek er bygget på den nyeste version 11 af Det Fælles Designsystem med fuld understøttelse af alle komponenter og designmønstre.
+              Dette bibliotek er bygget på den nyeste version 11 af Det Fælles Designsystem med fuld
+              understøttelse af alle komponenter og designmønstre.
             </fds-alert>
             <ul class="nobullet-list">
               <li>
@@ -83,14 +84,18 @@
             </template>
           </fds-card>
           <p class="mt-5">
-            <fds-button variant="secondary" href="https://github.com/madsb/dkfds-vue3" target="_blank">
+            <fds-button
+              variant="secondary"
+              href="https://github.com/madsb/dkfds-vue3"
+              target="_blank"
+            >
               <fds-ikon icon="open-in-new" size="sm" class="mr-2" />
               Se på GitHub
             </fds-button>
           </p>
         </div>
       </div>
-      
+
       <div class="row py-9 border-top">
         <div class="col-12">
           <h2>Hvorfor DKFDS-Vue3?</h2>
@@ -99,21 +104,30 @@
           <div class="mt-5">
             <fds-badge size="large" variant="success">v11</fds-badge>
             <h3 class="mt-3">Nyeste DKFDS Version</h3>
-            <p>Bygget på DKFDS version 11 med alle de nyeste komponenter, designmønstre og tilgængelighedsforbedringer.</p>
+            <p>
+              Bygget på DKFDS version 11 med alle de nyeste komponenter, designmønstre og
+              tilgængelighedsforbedringer.
+            </p>
           </div>
         </div>
         <div class="col-12 col-lg-4">
           <div class="mt-5">
             <fds-badge size="large" variant="info">Vue 3</fds-badge>
             <h3 class="mt-3">Moderne Vue</h3>
-            <p>Udnytter Vue 3's Composition API, bedre performance og TypeScript integration for optimal udvikleroplevelse.</p>
+            <p>
+              Udnytter Vue 3's Composition API, bedre performance og TypeScript integration for
+              optimal udvikleroplevelse.
+            </p>
           </div>
         </div>
         <div class="col-12 col-lg-4">
           <div class="mt-5">
             <fds-badge size="large" variant="warning">A11y</fds-badge>
             <h3 class="mt-3">Tilgængelig</h3>
-            <p>Alle komponenter følger WCAG 2.1 AA standarder og er testet for tilgængelighed med skærmlæsere.</p>
+            <p>
+              Alle komponenter følger WCAG 2.1 AA standarder og er testet for tilgængelighed med
+              skærmlæsere.
+            </p>
           </div>
         </div>
       </div>
@@ -122,15 +136,15 @@
 </template>
 
 <script setup lang="ts">
-import { 
-  FdsAlert, 
-  FdsButton, 
-  FdsCard, 
-  FdsBadge, 
-  FdsList, 
-  FdsListItem, 
+import {
+  FdsAlert,
+  FdsButton,
+  FdsCard,
+  FdsBadge,
+  FdsList,
+  FdsListItem,
   FdsPre,
-  FdsIkon 
+  FdsIkon,
 } from '@madsb/dkfds-vue3'
 </script>
 <style lang="scss" scoped></style>

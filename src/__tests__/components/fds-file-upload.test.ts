@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
 import { nextTick } from 'vue'
-import FdsFileUpload from "../../components/input/fds-file-upload.vue"
+import FdsFileUpload from '../../components/input/fds-file-upload.vue'
 import { testAccessibility } from '../../test-utils'
 
 describe('FdsFileUpload', () => {

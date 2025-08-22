@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsTrinindikatorStep from "../../components/navigation/fds-trinindikator-step.vue"
+import FdsTrinindikatorStep from '../../components/navigation/fds-trinindikator-step.vue'
 import { testAccessibility } from '../../test-utils'
 
 describe('FdsTrinindikatorStep', () => {

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { h } from 'vue'
-import FdsBreadcrumb from "../../components/navigation/fds-breadcrumb.vue"
+import FdsBreadcrumb from '../../components/navigation/fds-breadcrumb.vue'
 import { testAccessibility } from '../../test-utils'
 
 const mockItems = [

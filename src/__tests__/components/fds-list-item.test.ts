@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsListItem from "../../components/data-display/fds-list-item.vue"
+import FdsListItem from '../../components/data-display/fds-list-item.vue'
 
 describe('FdsListItem', () => {
   describe('Rendering', () => {

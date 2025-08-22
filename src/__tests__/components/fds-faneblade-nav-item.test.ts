@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsFanebladeNavItem from "../../components/navigation/fds-faneblade-nav-item.vue"
+import FdsFanebladeNavItem from '../../components/navigation/fds-faneblade-nav-item.vue'
 import { testAccessibility } from '../../test-utils'
 
 describe('FdsFanebladeNavItem', () => {

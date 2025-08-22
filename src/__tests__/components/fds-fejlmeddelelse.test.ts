@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { provide, ref, nextTick } from 'vue'
-import FdsFejlmeddelelse from "../../components/forms/fds-fejlmeddelelse.vue"
+import FdsFejlmeddelelse from '../../components/forms/fds-fejlmeddelelse.vue'
 import { testAccessibility } from '../../test-utils'
 
 describe('FdsFejlmeddelelse', () => {

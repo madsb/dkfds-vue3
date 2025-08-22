@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsSprogvaelger from "../../components/layout/fds-sprogvaelger.vue"
+import FdsSprogvaelger from '../../components/layout/fds-sprogvaelger.vue'
 import type { FdsLanguageItem } from '../../types'
 
 // Mock document.documentElement.setAttribute

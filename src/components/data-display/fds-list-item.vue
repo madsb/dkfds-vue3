@@ -37,12 +37,7 @@ interface Props {
   justifyBetween?: boolean
 }
 
-const {
-  variant,
-  role,
-  flex = false,
-  justifyBetween = false,
-} = defineProps<Props>()
+const { variant, role, flex = false, justifyBetween = false } = defineProps<Props>()
 
 const itemClasses = computed(() => {
   const classes: string[] = []

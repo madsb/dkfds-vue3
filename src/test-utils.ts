@@ -7,8 +7,8 @@ export async function testAccessibility(component: any, options?: MountingOption
   const { axe } = await import('vitest-axe')
   const wrapper = mount(component, options)
   const results = await axe(wrapper.element)
-  
+
   expect(results).toHaveNoViolations()
-  
+
   return wrapper
 }

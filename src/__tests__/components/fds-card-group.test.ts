@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FdsCardGroup from "../../components/data-display/fds-card-group.vue"
+import FdsCardGroup from '../../components/data-display/fds-card-group.vue'
 import { testAccessibility } from '../../test-utils'
 
 describe('FdsCardGroup', () => {
