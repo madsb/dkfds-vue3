@@ -5,7 +5,7 @@ import FdsToggleSwitch from '../../components/input/fds-toggle-switch.vue'
 
 // Mock the formId utility
 vi.mock('../../composables/formId', () => ({
-  default: (id?: string | null, autogenId = false) => ({
+  default: (id?: string | null, _autogenId = false) => ({
     formid: ref(id || 'fid_generated_id'),
   }),
 }))

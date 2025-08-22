@@ -5,7 +5,7 @@ import FdsLabel from '../../components/forms/fds-label.vue'
 
 // Mock the formId utility
 vi.mock('../../composables/formId', () => ({
-  default: (id?: string | null, autogenId = false) => ({
+  default: (id?: string | null, _autogenId = false) => ({
     formid: ref(id || 'generated-form-id'),
   }),
 }))

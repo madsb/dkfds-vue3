@@ -5,7 +5,7 @@ import FdsInputNumber from '../../components/input/fds-input-number.vue'
 
 // Mock the formId utility
 vi.mock('../../composables/formId', () => ({
-  default: (id?: string | null, autogenId = false) => ({
+  default: (id?: string | null, _autogenId = false) => ({
     formid: ref(id || 'fid_generated_id'),
   }),
 }))
@@ -159,12 +159,12 @@ describe('FdsInputNumber', () => {
       expect(input.attributes('step')).toBeUndefined()
     })
 
-    it('handles null props gracefully', () => {
+    it('handles undefined props gracefully', () => {
       const wrapper = mount(FdsInputNumber, {
         props: {
-          id: null,
-          prefix: null,
-          suffix: null,
+          id: undefined,
+          prefix: undefined,
+          suffix: undefined,
         },
       })
 

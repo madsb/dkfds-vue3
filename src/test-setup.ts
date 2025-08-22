@@ -49,10 +49,12 @@ Object.defineProperty(window, 'ResizeObserver', {
 
 // Mock HTMLDialogElement methods - not supported in jsdom
 if (typeof HTMLDialogElement !== 'undefined') {
+  // eslint-disable-next-line no-unused-vars
   HTMLDialogElement.prototype.showModal = vi.fn(function (this: HTMLDialogElement) {
     this.open = true
   })
 
+  // eslint-disable-next-line no-unused-vars
   HTMLDialogElement.prototype.close = vi.fn(function (this: HTMLDialogElement) {
     this.open = false
   })

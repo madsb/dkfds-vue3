@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
-import { nextTick } from 'vue'
 import FdsTooltip from '../../components/feedback/fds-tooltip.vue'
 import { testAccessibility } from '../../test-utils'
 

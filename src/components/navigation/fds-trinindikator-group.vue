@@ -102,12 +102,12 @@ const {
   currentStep = 1,
   totalSteps = 0,
   ariaLabel = 'Trinindikator',
-  responsive = true,
-  mobileBreakpoint = 768,
+  responsive: _responsive = true,
+  mobileBreakpoint: _mobileBreakpoint = 768,
   showStepInfo = false,
   clickableSteps = false,
   modalTitle = 'Trin',
-  modalAriaLabel = 'Trin modal',
+  modalAriaLabel: _modalAriaLabel = 'Trin modal',
   closeButtonText = 'Luk',
 } = defineProps<Props>()
 

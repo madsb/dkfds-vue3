@@ -1,4 +1,6 @@
 import { mount, type MountingOptions } from '@vue/test-utils'
+import { expect } from 'vitest'
+import 'vitest-axe/extend-expect'
 
 /**
  * Test component for accessibility violations using axe
