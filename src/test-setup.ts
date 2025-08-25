@@ -60,6 +60,27 @@ if (typeof HTMLDialogElement !== 'undefined') {
   })
 }
 
+// Mock JSDOM navigation to prevent warnings
+// JSDOM doesn't support full navigation, only hash changes
+// This prevents "Not implemented: navigation" warnings in tests
+Object.defineProperty(window, 'location', {
+  writable: true,
+  value: {
+    ...window.location,
+    assign: vi.fn(),
+    replace: vi.fn(),
+    reload: vi.fn(),
+    href: 'http://localhost:3000',
+  },
+})
+
+// Mock navigation methods that might be called during link clicks
+const mockNavigate = vi.fn()
+Object.defineProperty(window, 'navigate', {
+  writable: true,
+  value: mockNavigate,
+})
+
 // Configure Vue Test Utils global settings
 config.global.stubs = {
   // Stub out transitions for faster tests
