@@ -20,7 +20,7 @@
 import { computed, inject, isRef, type Ref } from 'vue'
 import { formId } from '../../composables'
 
-interface Props {
+export interface FdsToggleSwitchProps {
   /** Unique identifier for the toggle switch */
   id?: string
   /** The v-model boolean value */
@@ -42,7 +42,7 @@ const {
   offText = 'Fra',
   onText = 'Til',
   class: className = '',
-} = defineProps<Props>()
+} = defineProps<FdsToggleSwitchProps>()
 
 const emit = defineEmits<{
   /** Emitted when toggle state changes */

@@ -28,7 +28,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-interface Props {
+export interface FdsMenuItemProps {
   id?: string
   active?: boolean
   href?: string
@@ -38,7 +38,7 @@ interface Props {
   hint?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<FdsMenuItemProps>(), {
   active: false,
   current: false,
   expanded: false,

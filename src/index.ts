@@ -235,3 +235,11 @@ export * from './utils'
 
 // Export types
 export * from './types'
+
+// Export all component prop types
+export type * from './components/forms'
+export type * from './components/input'
+export type * from './components/navigation'
+export type * from './components/feedback'
+export type * from './components/data-display'
+export type * from './components/layout'

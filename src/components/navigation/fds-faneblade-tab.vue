@@ -18,7 +18,7 @@
 import { computed } from 'vue'
 import FdsIkon from '../layout/fds-ikon.vue'
 
-const props = defineProps<{
+export interface FdsFanebladeTabProps {
   /** Unique identifier for the tab */
   id: string
   /** Label text for the tab */
@@ -27,7 +27,9 @@ const props = defineProps<{
   active?: boolean
   /** Optional icon ID for the tab */
   icon?: string
-}>()
+}
+
+const props = defineProps<FdsFanebladeTabProps>()
 
 const emit = defineEmits<{
   /** Emitted when the tab is clicked */

@@ -73,6 +73,21 @@ import { ref, computed, inject, watch, onMounted, onUnmounted, type Ref } from '
 import { generateId } from '../../composables'
 import FdsIkon from '../layout/fds-ikon.vue'
 
+export interface FdsAccordionProps {
+  /** Accordion header text */
+  header?: string
+  /** Controlled expanded state */
+  modelValue?: boolean
+  /** Heading level */
+  headerTag?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  /** Variant type for icons */
+  variant?: 'success' | 'warning' | 'error' | null
+  /** Text to display with variant icon */
+  variantText?: string
+  /** Unique ID for the accordion */
+  id?: string
+}
+
 interface AccordionGroupApi {
   register: (_id: string, _expanded: Ref<boolean>) => void
   unregister: (_id: string) => void
@@ -80,20 +95,7 @@ interface AccordionGroupApi {
 }
 
 const props = withDefaults(
-  defineProps<{
-    /** Accordion header text */
-    header?: string
-    /** Controlled expanded state */
-    modelValue?: boolean
-    /** Heading level */
-    headerTag?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
-    /** Variant type for icons */
-    variant?: 'success' | 'warning' | 'error' | null
-    /** Text to display with variant icon */
-    variantText?: string
-    /** Unique ID for the accordion */
-    id?: string
-  }>(),
+  defineProps<FdsAccordionProps>(),
   {
     headerTag: 'h2',
     variant: null,

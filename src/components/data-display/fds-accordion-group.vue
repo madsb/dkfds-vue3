@@ -21,7 +21,7 @@
 <script setup lang="ts">
 import { computed, provide, reactive, type Ref } from 'vue'
 
-interface Props {
+export interface FdsAccordionGroupProps {
   /** Text for expand all button */
   expandedText?: string
   /** Text for collapse all button */
@@ -32,7 +32,7 @@ interface Props {
   modelValue?: boolean
 }
 
-withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<FdsAccordionGroupProps>(), {
   expandedText: 'Luk alle',
   collapsedText: 'Åbn alle',
   showBulkButton: true,

@@ -13,7 +13,7 @@
  */
 import { computed } from 'vue'
 
-interface Props {
+export interface FdsListItemProps {
   /**
    * Status af liste element
    * - 'current': Nuværende side/element
@@ -37,7 +37,7 @@ interface Props {
   justifyBetween?: boolean
 }
 
-const { variant, role, flex = false, justifyBetween = false } = defineProps<Props>()
+const { variant, role, flex = false, justifyBetween = false } = defineProps<FdsListItemProps>()
 
 const itemClasses = computed(() => {
   const classes: string[] = []

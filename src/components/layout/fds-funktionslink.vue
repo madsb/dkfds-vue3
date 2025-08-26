@@ -20,25 +20,27 @@
 import { computed } from 'vue'
 import FdsIkon from './fds-ikon.vue'
 
+export interface FdsFunktionslinkProps {
+  /** Icon identifier from DKFDS icon set */
+  icon?: string
+  /** Position icon on the right side of text */
+  iconRight?: boolean
+  /** URL for link navigation */
+  href?: string
+  /** Element type - auto-detected from href if not specified */
+  type?: 'link' | 'button'
+  /** Title attribute for accessibility */
+  title?: string
+  /** Disabled state (only for button type) */
+  disabled?: boolean
+  /** Target attribute for links */
+  target?: '_blank' | '_self' | '_parent' | '_top'
+  /** Rel attribute for links */
+  rel?: string
+}
+
 const props = withDefaults(
-  defineProps<{
-    /** Icon identifier from DKFDS icon set */
-    icon?: string
-    /** Position icon on the right side of text */
-    iconRight?: boolean
-    /** URL for link navigation */
-    href?: string
-    /** Element type - auto-detected from href if not specified */
-    type?: 'link' | 'button'
-    /** Title attribute for accessibility */
-    title?: string
-    /** Disabled state (only for button type) */
-    disabled?: boolean
-    /** Target attribute for links */
-    target?: '_blank' | '_self' | '_parent' | '_top'
-    /** Rel attribute for links */
-    rel?: string
-  }>(),
+  defineProps<FdsFunktionslinkProps>(),
   {
     type: undefined,
     iconRight: false,

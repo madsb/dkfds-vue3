@@ -4,6 +4,7 @@
     "module": "ESNext",
     "strict": true,
     "declaration": true,
+    "declarationDir": "dist",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "jsx": "preserve",
     "outDir": "dist",
@@ -11,7 +12,11 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "preserveValueImports": false,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": false
   },
   "include": ["src/**/*.ts", "src/**/*.vue"],
   "exclude": [

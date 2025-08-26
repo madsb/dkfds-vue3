@@ -22,12 +22,12 @@ import FdsIkon from '../layout/fds-ikon.vue'
  * https://designsystem.dk/komponenter/tilbage-link/
  */
 
-interface Props {
+export interface FdsTilbageLinkProps {
   /** Href for linket. Standard er javascript:void(0); for at undgå navigation */
   href?: string
 }
 
-const _props = withDefaults(defineProps<Props>(), {
+const _props = withDefaults(defineProps<FdsTilbageLinkProps>(), {
   href: 'javascript:void(0);',
 })
 

@@ -14,12 +14,14 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-const props = defineProps<{
+export interface FdsFanebladePanelProps {
   /** Unique identifier matching the tab id */
   id: string
   /** Whether this panel is currently visible */
   active?: boolean
-}>()
+}
+
+const props = defineProps<FdsFanebladePanelProps>()
 
 const tabId = computed(() => `tab-${props.id}`)
 const panelId = computed(() => `tabpanel-${props.id}`)

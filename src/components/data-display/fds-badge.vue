@@ -13,15 +13,19 @@
  */
 import { computed } from 'vue'
 
+export interface FdsBadgeProps {
+  /** HTML tag to use - 'strong' for emphasis, 'span' for regular badges */
+  tag?: 'span' | 'strong'
+  /** Visual variant for different statuses */
+  variant?: 'success' | 'info' | 'warning' | 'error' | null
+}
+
 const {
   /** HTML tag to use - 'strong' for emphasis, 'span' for regular badges */
   tag = 'span',
   /** Visual variant for different statuses */
   variant = null,
-} = defineProps<{
-  tag?: 'span' | 'strong'
-  variant?: 'success' | 'info' | 'warning' | 'error' | null
-}>()
+} = defineProps<FdsBadgeProps>()
 
 const getVariantClass = computed(() => (variant ? `badge-${variant}` : ''))
 </script>

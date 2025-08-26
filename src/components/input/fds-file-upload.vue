@@ -84,7 +84,7 @@ import FdsIkon from '../layout/fds-ikon.vue'
  * />
  */
 
-export interface Props {
+export interface FdsFileUploadProps {
   /** Unique identifier for the input */
   id?: string
   /** Input name attribute */
@@ -145,7 +145,7 @@ const {
   ariaLive = 'polite',
   fileListAriaLabel = 'Valgte filer',
   removeFileText = 'Fjern fil',
-} = defineProps<Props>()
+} = defineProps<FdsFileUploadProps>()
 
 const emit = defineEmits<{
   /** Emitted when input loses focus */

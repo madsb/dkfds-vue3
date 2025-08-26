@@ -50,7 +50,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { formId } from '../../composables'
 import FdsIkon from '../layout/fds-ikon.vue'
 
-interface Props {
+export interface FdsOverflowMenuProps {
   header?: string
   id?: string
   icon?: string
@@ -58,7 +58,7 @@ interface Props {
   position?: 'left' | 'right'
 }
 
-const { icon = 'more-vert', position = 'right', iconPosition = 'right', id } = defineProps<Props>()
+const { icon = 'more-vert', position = 'right', iconPosition = 'right', id } = defineProps<FdsOverflowMenuProps>()
 
 const emit = defineEmits<{
   open: []

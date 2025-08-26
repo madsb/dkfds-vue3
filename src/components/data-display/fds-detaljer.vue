@@ -11,10 +11,13 @@
   </details>
 </template>
 <script setup lang="ts">
+export interface FdsDetaljerProps {
+  /** Overskrift */
+  header?: string
+}
+
 const {
   /** Overskrift */
   header = 'Mere information',
-} = defineProps<{
-  header?: string
-}>()
+} = defineProps<FdsDetaljerProps>()
 </script>

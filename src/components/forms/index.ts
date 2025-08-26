@@ -1,4 +1,8 @@
 export { default as FdsFormgroup } from './fds-formgroup.vue'
+export type { FdsFormgroupProps } from './fds-formgroup.vue'
 export { default as FdsLabel } from './fds-label.vue'
+export type { FdsLabelProps } from './fds-label.vue'
 export { default as FdsHint } from './fds-hint.vue'
+export type { FdsHintProps } from './fds-hint.vue'
 export { default as FdsFejlmeddelelse } from './fds-fejlmeddelelse.vue'
+export type { FdsFejlmeddelelseProps } from './fds-fejlmeddelelse.vue'

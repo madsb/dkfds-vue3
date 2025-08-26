@@ -20,7 +20,7 @@
 import { provide, computed, useSlots } from 'vue'
 import { formId } from '../../composables'
 
-interface Props {
+export interface FdsRadioGroupProps {
   /** The v-model value */
   modelValue?: string | number | boolean | null
   /** Unique identifier */
@@ -33,7 +33,7 @@ interface Props {
   name?: string
 }
 
-const { modelValue, id, label, helpText = '', name } = defineProps<Props>()
+const { modelValue, id, label, helpText = '', name } = defineProps<FdsRadioGroupProps>()
 
 const emit = defineEmits<{
   /** Emitted when selection changes */

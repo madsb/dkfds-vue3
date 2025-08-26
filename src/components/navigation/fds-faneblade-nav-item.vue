@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import FdsIkon from '../layout/fds-ikon.vue'
 
-const _props = defineProps<{
+export interface FdsFanebladeNavItemProps {
   /** Link destination */
   href: string
   /** Label text for the navigation item */
@@ -26,7 +26,9 @@ const _props = defineProps<{
   active?: boolean
   /** Optional icon ID */
   icon?: string
-}>()
+}
+
+const _props = defineProps<FdsFanebladeNavItemProps>()
 
 const emit = defineEmits<{
   /** Emitted when the link is clicked */

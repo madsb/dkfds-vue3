@@ -37,7 +37,7 @@ import { formId } from '../../composables'
 const attrs = useAttrs()
 const slots = useSlots()
 
-interface Props {
+export interface FdsCheckboxProps {
   /** Unique identifier for the checkbox */
   id?: string
   /** The v-model value */
@@ -50,7 +50,7 @@ interface Props {
   disabled?: boolean
 }
 
-const { id, modelValue = false, value = true, name, disabled = false } = defineProps<Props>()
+const { id, modelValue = false, value = true, name, disabled = false } = defineProps<FdsCheckboxProps>()
 
 const emit = defineEmits<{
   /** Emitted when checkbox state changes */

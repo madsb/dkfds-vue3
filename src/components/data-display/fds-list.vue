@@ -16,7 +16,7 @@
  */
 import { computed } from 'vue'
 
-interface Props {
+export interface FdsListProps {
   /**
    * Type af liste variant
    * - 'bordered': Kantede lister med linjer mellem elementer
@@ -39,7 +39,7 @@ interface Props {
   noBottomMargin?: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<FdsListProps>(), {
   variant: null,
   ordered: false,
   noTopMargin: false,

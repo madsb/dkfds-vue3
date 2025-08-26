@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { computed, inject, isRef, type Ref } from 'vue'
 
-interface Props {
+export interface FdsHintProps {
   /**
    * Unique ID for the hint element.
    * If not provided, will use the injected hintId from fds-formgroup.
@@ -15,7 +15,7 @@ interface Props {
   id?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<FdsHintProps>(), {
   id: undefined,
 })
 

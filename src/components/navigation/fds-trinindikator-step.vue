@@ -51,7 +51,7 @@ import { computed } from 'vue'
  * />
  */
 
-export interface Props {
+export interface FdsTrinindikatorStepProps {
   /** Step number (1-based) */
   stepNumber: number
   /** Step title */
@@ -76,7 +76,7 @@ export interface Props {
   ariaLabel?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<FdsTrinindikatorStepProps>(), {
   stepInfo: '',
   isCurrent: false,
   isCompleted: false,

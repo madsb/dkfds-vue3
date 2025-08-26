@@ -11,15 +11,17 @@
   </div>
 </template>
 <script setup lang="ts">
+export interface FdsPreviewProps {
+  header?: string
+  href?: string
+  linkText?: string
+}
+
 const {
   header,
   href,
   linkText = 'Design System',
-} = defineProps<{
-  header?: string
-  href?: string
-  linkText?: string
-}>()
+} = defineProps<FdsPreviewProps>()
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

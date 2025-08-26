@@ -13,11 +13,14 @@
 import { ref } from 'vue'
 import { formId } from '../../composables'
 
-const { id, modelValue = '' } = defineProps<{
+export interface FdsDatoVaelgerProps {
+  /** Unique ID for the date picker */
   id?: string
-  /** JSON Date */
+  /** JSON Date value */
   modelValue?: string
-}>()
+}
+
+const { id, modelValue = '' } = defineProps<FdsDatoVaelgerProps>()
 
 const emit = defineEmits<{
   'update:modelValue': [value: string]

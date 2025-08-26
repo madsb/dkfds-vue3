@@ -27,7 +27,7 @@ import { formId } from '../../composables'
 
 const attrs = useAttrs()
 
-interface Props {
+export interface FdsInputProps {
   /** Unique identifier for the input */
   id?: string
   /** The v-model value */
@@ -42,7 +42,7 @@ interface Props {
   widthClass?: string
 }
 
-const { id, modelValue = '', suffix, prefix, type = 'text', widthClass = '' } = defineProps<Props>()
+const { id, modelValue = '', suffix, prefix, type = 'text', widthClass = '' } = defineProps<FdsInputProps>()
 
 const emit = defineEmits<{
   /** Emitted when input value changes */

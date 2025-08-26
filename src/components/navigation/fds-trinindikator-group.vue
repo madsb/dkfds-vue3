@@ -72,7 +72,7 @@ import FdsModal from '../feedback/fds-modal.vue'
  * </fds-trinindikator-group>
  */
 
-export interface Props {
+export interface FdsTrinindikatorGroupProps {
   /** Unique identifier */
   id?: string
   /** Current active step (1-based) */
@@ -109,7 +109,7 @@ const {
   modalTitle = 'Trin',
   modalAriaLabel: _modalAriaLabel = 'Trin modal',
   closeButtonText = 'Luk',
-} = defineProps<Props>()
+} = defineProps<FdsTrinindikatorGroupProps>()
 
 const emit = defineEmits<{
   /** Emitted when a step is clicked (if clickable) */

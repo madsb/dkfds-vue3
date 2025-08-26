@@ -36,7 +36,7 @@ import { formId, generateId } from '../../composables'
 
 const slots = useSlots()
 
-interface Props {
+export interface FdsRadioItemProps {
   /** Radio button value */
   value: string | number | boolean
   /** Index for unique ID generation */
@@ -49,7 +49,7 @@ interface Props {
   name?: string
 }
 
-const { value, index, id, disabled = false, name } = defineProps<Props>()
+const { value, index, id, disabled = false, name } = defineProps<FdsRadioItemProps>()
 
 const emit = defineEmits<{
   /** Emitted when radio loses focus */

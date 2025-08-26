@@ -40,6 +40,17 @@
 import { ref, computed } from 'vue'
 import FdsIkon from '../layout/fds-ikon.vue'
 
+export interface FdsAlertProps {
+  /** Overskrift */
+  header?: string | null
+  /** Type af besked */
+  variant?: 'success' | 'info' | 'warning' | 'error'
+  /** Vis venstrestillet ikon */
+  showIcon?: boolean
+  /** Klik for at lukke/fjerne besked */
+  closeable?: boolean
+}
+
 const {
   /** Overskrift */
   header = null,
@@ -49,12 +60,7 @@ const {
   showIcon = false,
   /** Klik for at lukke/fjerne besked */
   closeable = false,
-} = defineProps<{
-  header?: string | null
-  variant?: 'success' | 'info' | 'warning' | 'error'
-  showIcon?: boolean
-  closeable?: boolean
-}>()
+} = defineProps<FdsAlertProps>()
 
 const emit = defineEmits<{
   close: [closed: boolean]

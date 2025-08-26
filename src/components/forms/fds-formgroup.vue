@@ -13,7 +13,7 @@
 import { computed, inject, provide, ref } from 'vue'
 import { formId } from '../../composables'
 
-interface Props {
+export interface FdsFormgroupProps {
   /**
    * Unique identifier for the form group.
    * If not provided, a unique ID will be generated automatically.
@@ -26,7 +26,7 @@ interface Props {
   isValid?: boolean
 }
 
-const { id, isValid = true } = defineProps<Props>()
+const { id, isValid = true } = defineProps<FdsFormgroupProps>()
 
 /**
  * Form id der bruges i slots

@@ -28,13 +28,13 @@ interface ExtendedFdsLanguageItem extends FdsLanguageItem {
   href?: string
 }
 
-interface Props {
+export interface FdsSprogvaelgerProps {
   modelValue: ExtendedFdsLanguageItem[]
   autoSetLang?: boolean
   preventDefault?: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<FdsSprogvaelgerProps>(), {
   autoSetLang: false,
   preventDefault: true,
 })

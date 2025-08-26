@@ -17,14 +17,16 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+export interface FdsPreProps {
   /** JSON object to display formatted */
   json?: object | null
   /** Code string to display */
   code?: string | null
   /** Header text for the code block */
   header?: string
-}>()
+}
+
+defineProps<FdsPreProps>()
 
 /**
  * Format JSON with proper indentation

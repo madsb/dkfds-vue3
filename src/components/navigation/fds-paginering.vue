@@ -91,7 +91,7 @@ import type { FdsPaging } from '../../types'
 import { computed, ref, watch } from 'vue'
 import FdsIkon from '../layout/fds-ikon.vue'
 
-interface Props {
+export interface FdsPagineringProps {
   /** Array of items to paginate */
   list?: any[]
   /** Number of items to skip (for external pagination) */
@@ -108,7 +108,7 @@ interface Props {
   totalItems?: number
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<FdsPagineringProps>(), {
   list: () => [],
   skip: 0,
   pageSize: 10,

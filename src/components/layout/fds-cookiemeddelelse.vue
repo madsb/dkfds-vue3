@@ -47,12 +47,15 @@
  *
  * */
 
+export interface FdsCookiemeddelelseProps {
+  /** Overskrift */
+  header?: string
+}
+
 const {
   /** Overskrift */
   header = 'Fortæl os om du accepterer cookies',
-} = defineProps<{
-  header?: string
-}>()
+} = defineProps<FdsCookiemeddelelseProps>()
 
 defineEmits<{
   accept: [value: boolean]

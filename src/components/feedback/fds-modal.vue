@@ -50,19 +50,26 @@ import { generateId } from '../../composables'
 import { computed, ref, onMounted } from 'vue'
 import FdsIkon from '../layout/fds-ikon.vue'
 
+export interface FdsModalProps {
+  /** Modal header text */
+  header?: string
+  /** Unique ID for the modal */
+  id?: string
+  /** Whether the modal can be closed */
+  closeable?: boolean
+  /** Text for accept button */
+  acceptText?: string
+  /** Text for cancel button */
+  cancelText?: string
+}
+
 const {
   header,
   id,
   closeable = true,
   acceptText = 'Godkend',
   cancelText = 'Annuller',
-} = defineProps<{
-  header?: string
-  id?: string
-  closeable?: boolean
-  acceptText?: string
-  cancelText?: string
-}>()
+} = defineProps<FdsModalProps>()
 
 const emit = defineEmits<{
   close: []

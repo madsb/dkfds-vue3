@@ -50,7 +50,7 @@ export interface BreadcrumbItem {
   data?: any
 }
 
-interface Props {
+export interface FdsBreadcrumbProps {
   /** Array of breadcrumb items */
   items: BreadcrumbItem[]
   /** Aria label for the navigation element */
@@ -61,7 +61,7 @@ interface Props {
   useNativeLinks?: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<FdsBreadcrumbProps>(), {
   ariaLabel: 'Brødkrumme',
   container: false,
   useNativeLinks: false,

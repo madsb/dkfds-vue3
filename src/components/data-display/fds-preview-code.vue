@@ -8,7 +8,9 @@
 </template>
 
 <script setup lang="ts">
-const { header = null } = defineProps<{
+export interface FdsPreviewCodeProps {
   header?: string | null
-}>()
+}
+
+const { header = null } = defineProps<FdsPreviewCodeProps>()
 </script>

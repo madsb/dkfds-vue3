@@ -17,20 +17,21 @@
   ],
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/dkfds-vue3.mjs",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/dkfds-vue3.cjs"
     },
     "./components/*": {
-      "import": "./dist/components/*.js",
-      "types": "./dist/components/*.d.ts"
+      "types": "./dist/components/*.d.ts",
+      "import": "./dist/components/*.js"
     },
     "./composables": {
-      "import": "./dist/dkfds-vue3.mjs",
-      "types": "./dist/composables/index.d.ts"
+      "types": "./dist/composables/index.d.ts",
+      "import": "./dist/dkfds-vue3.mjs"
     },
     "./utils": {
-      "import": "./dist/dkfds-vue3.mjs",
-      "types": "./dist/utils/index.d.ts"
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/dkfds-vue3.mjs"
     },
     "./styles": "./dist/dkfds-vue3.css",
     "./package.json": "./package.json"

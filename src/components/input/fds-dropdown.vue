@@ -18,10 +18,14 @@ import { formId } from '../../composables'
 
 import { ref, computed } from 'vue'
 
-const { id, modelValue = '' } = defineProps<{
+export interface FdsDropdownProps {
+  /** Unique ID for the dropdown */
   id?: string
+  /** Selected value */
   modelValue?: string
-}>()
+}
+
+const { id, modelValue = '' } = defineProps<FdsDropdownProps>()
 
 const emit = defineEmits<{
   'update:modelValue': [value: string]

@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import FdsIkon from '../layout/fds-ikon.vue'
 
-interface Props {
+export interface FdsNavLinkProps {
   href?: string
   current?: boolean
   disabled?: boolean
@@ -37,7 +37,7 @@ interface Props {
   hint?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<FdsNavLinkProps>(), {
   href: '#',
   current: false,
   disabled: false,

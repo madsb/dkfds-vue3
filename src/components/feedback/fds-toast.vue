@@ -41,7 +41,7 @@ import { computed, onMounted, onUnmounted, ref, watch, nextTick } from 'vue'
 
 const Toast = ToastClass as any
 
-interface Props {
+export interface FdsToastProps {
   /** Type of toast */
   type?: 'info' | 'success' | 'warning' | 'error'
   /** Heading text */
@@ -58,7 +58,7 @@ interface Props {
   visible?: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<FdsToastProps>(), {
   type: 'info',
   message: '',
   closable: true,

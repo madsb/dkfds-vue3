@@ -12,12 +12,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-interface Props {
+export interface FdsMenuProps {
   variant?: 'sidemenu' | 'submenu'
   ariaLabel?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<FdsMenuProps>(), {
   variant: 'sidemenu',
 })
 

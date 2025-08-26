@@ -26,7 +26,7 @@ import { computed, inject, isRef, type Ref } from 'vue'
  * https://designsystem.dk/komponenter/inputfelter/#karakterbegraensning
  */
 
-interface Props {
+export interface FdsInputLimitProps {
   /** Current input value to count */
   modelValue?: string | null
   /** Maximum number of characters allowed */
@@ -44,7 +44,7 @@ interface Props {
   }
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<FdsInputLimitProps>(), {
   modelValue: null,
   id: undefined,
   warningThreshold: 0.8,

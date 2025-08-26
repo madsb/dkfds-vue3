@@ -11,7 +11,7 @@
 import { computed, inject, isRef, type Ref } from 'vue'
 import { formId } from '../../composables'
 
-interface Props {
+export interface FdsLabelProps {
   /** The ID of the form control this label is associated with */
   forId?: string
   /** Whether the associated field is required */
@@ -27,7 +27,7 @@ const {
   required = false,
   showRequired = true,
   requiredText = '(skal udfyldes)',
-} = defineProps<Props>()
+} = defineProps<FdsLabelProps>()
 
 // Try to get form ID from formgroup context first, then use prop, then generate
 const injectedFormId = inject<string | Ref<string> | undefined>('formid', undefined)

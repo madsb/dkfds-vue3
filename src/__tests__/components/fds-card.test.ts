@@ -3,6 +3,21 @@ import { mount } from '@vue/test-utils'
 import FdsCard from '../../components/data-display/fds-card.vue'
 import { testAccessibility } from '../../test-utils'
 
+// Mock RouterLink component for Vue Router tests
+import { h } from 'vue'
+
+const MockRouterLink = {
+  name: 'RouterLink',
+  props: ['to'],
+  inheritAttrs: false,
+  setup(props: any, { attrs, slots }: any) {
+    return () => h('a', {
+      ...attrs,
+      href: props.to,
+    }, slots.default ? slots.default() : [])
+  },
+}
+
 describe('FdsCard', () => {
   describe('Rendering', () => {
     it('renders as section element by default', () => {
@@ -13,9 +28,9 @@ describe('FdsCard', () => {
       expect(wrapper.find('a').exists()).toBe(false)
     })
 
-    it('renders as anchor element when href is provided', () => {
+    it('renders as anchor element when to is provided', () => {
       const wrapper = mount(FdsCard, {
-        props: { href: 'https://example.com' },
+        props: { to: 'https://example.com' },
       })
 
       expect(wrapper.find('a').exists()).toBe(true)
@@ -40,6 +55,70 @@ describe('FdsCard', () => {
   })
 
   describe('Props', () => {
+    it('applies default arrow-forward icon for internal navigation cards', () => {
+      const wrapper = mount(FdsCard, {
+        props: {
+          to: '/internal-page',
+          header: 'Internal Link',
+        },
+      })
+
+      const icon = wrapper.find('.card-icon')
+      expect(icon.exists()).toBe(true)
+      expect(icon.find('use').attributes('href')).toBe('#arrow-forward')
+    })
+
+    it('applies default open-in-new icon for external links', () => {
+      const wrapper = mount(FdsCard, {
+        props: {
+          to: 'https://example.com',
+          header: 'External Link',
+        },
+      })
+
+      const icon = wrapper.find('.card-icon')
+      expect(icon.exists()).toBe(true)
+      expect(icon.find('use').attributes('href')).toBe('#open-in-new')
+    })
+
+    it('applies open-in-new icon when external prop is true', () => {
+      const wrapper = mount(FdsCard, {
+        props: {
+          to: '/page',
+          external: true,
+          header: 'External Link',
+        },
+      })
+
+      const icon = wrapper.find('.card-icon')
+      expect(icon.exists()).toBe(true)
+      expect(icon.find('use').attributes('href')).toBe('#open-in-new')
+    })
+
+    it('allows icon prop to override default icons', () => {
+      const wrapper = mount(FdsCard, {
+        props: {
+          to: 'https://example.com',
+          icon: 'download',
+          header: 'Download Link',
+        },
+      })
+
+      const icon = wrapper.find('.card-icon')
+      expect(icon.exists()).toBe(true)
+      expect(icon.find('use').attributes('href')).toBe('#download')
+    })
+
+    it('shows no icon for regular cards without explicit icon prop', () => {
+      const wrapper = mount(FdsCard, {
+        props: {
+          header: 'Regular Card',
+        },
+      })
+
+      expect(wrapper.find('.card-icon').exists()).toBe(false)
+    })
+
     it('renders header with default h2 tag', () => {
       const wrapper = mount(FdsCard, {
         props: { header: 'Card Title' },
@@ -73,22 +152,22 @@ describe('FdsCard', () => {
       expect(subheading.text()).toBe('Card Subtitle')
     })
 
-    it('renders icon for navigation cards', () => {
+    it('renders explicit icon for navigation cards', () => {
       const wrapper = mount(FdsCard, {
         props: {
-          href: '/page',
-          icon: 'arrow-forward',
+          to: '/page',
+          icon: 'chevron-right',
         },
       })
 
       const icon = wrapper.find('.card-icon')
       expect(icon.exists()).toBe(true)
-      expect(icon.find('use').attributes('href')).toBe('#arrow-forward')
+      expect(icon.find('use').attributes('href')).toBe('#chevron-right')
       expect(icon.attributes('focusable')).toBe('false')
       expect(icon.attributes('aria-hidden')).toBe('true')
     })
 
-    it('does not render icon without href', () => {
+    it('ignores icon prop without to prop', () => {
       const wrapper = mount(FdsCard, {
         props: { icon: 'arrow-forward' },
       })
@@ -113,18 +192,6 @@ describe('FdsCard', () => {
   })
 
   describe('Slots', () => {
-    it('renders custom slot and replaces entire structure', () => {
-      const wrapper = mount(FdsCard, {
-        slots: {
-          custom: '<div class="custom-card">Custom content</div>',
-        },
-      })
-
-      expect(wrapper.find('.custom-card').exists()).toBe(true)
-      expect(wrapper.find('.card').exists()).toBe(false)
-      expect(wrapper.text()).toBe('Custom content')
-    })
-
     it('renders header slot', () => {
       const wrapper = mount(FdsCard, {
         slots: {
@@ -186,7 +253,7 @@ describe('FdsCard', () => {
 
       // Navigation card - should not render actions
       const navCard = mount(FdsCard, {
-        props: { href: '/page' },
+        props: { to: '/page' },
         slots: {
           actions: actionsSlot,
         },
@@ -232,7 +299,7 @@ describe('FdsCard', () => {
     it('maintains semantic structure for navigation cards', () => {
       const wrapper = mount(FdsCard, {
         props: {
-          href: '/page',
+          to: '/page',
           header: 'Link Card',
         },
       })
@@ -244,7 +311,7 @@ describe('FdsCard', () => {
     it('sets proper ARIA attributes on icons', () => {
       const wrapper = mount(FdsCard, {
         props: {
-          href: '/page',
+          to: '/page',
           icon: 'arrow-forward',
         },
       })
@@ -372,7 +439,7 @@ describe('FdsCard', () => {
       const wrapper = mount(FdsCard, {
         props: {
           header: 'Go to Dashboard',
-          href: '/dashboard',
+          to: '/dashboard',
           icon: 'arrow-forward',
         },
         slots: {
@@ -395,7 +462,7 @@ describe('FdsCard', () => {
               v-for="item in items" 
               :key="item.id"
               :header="item.title"
-              :href="item.link"
+              :to="item.link"
               icon="arrow-forward"
             >
               <template #content>
@@ -430,43 +497,11 @@ describe('FdsCard', () => {
       })
     })
 
-    it('works with custom card using custom slot', () => {
-      const CustomCard = {
-        template: `
-          <FdsCard>
-            <template #custom>
-              <article class="special-card">
-                <header>
-                  <h2>Custom Card Layout</h2>
-                  <time>2024-01-15</time>
-                </header>
-                <div class="content">
-                  <p>This is a completely custom card structure.</p>
-                </div>
-                <footer>
-                  <button>Custom Action</button>
-                </footer>
-              </article>
-            </template>
-          </FdsCard>
-        `,
-        components: { FdsCard },
-      }
-
-      const wrapper = mount(CustomCard)
-
-      expect(wrapper.find('.special-card').exists()).toBe(true)
-      expect(wrapper.find('.card').exists()).toBe(false) // Default structure replaced
-      expect(wrapper.find('article header h2').text()).toBe('Custom Card Layout')
-      expect(wrapper.find('time').text()).toBe('2024-01-15')
-      expect(wrapper.find('footer button').text()).toBe('Custom Action')
-    })
-
     it('supports external link with new tab icon', () => {
       const wrapper = mount(FdsCard, {
         props: {
           header: 'External Resource',
-          href: 'https://external-site.com',
+          to: 'https://external-site.com',
           icon: 'open-in-new',
         },
         attrs: {
@@ -502,7 +537,7 @@ describe('FdsCard', () => {
 
     it('passes link attributes for navigation cards', () => {
       const wrapper = mount(FdsCard, {
-        props: { href: '/page' },
+        props: { to: '/page' },
         attrs: {
           target: '_blank',
           download: true,
@@ -514,6 +549,423 @@ describe('FdsCard', () => {
       expect(link.attributes('target')).toBe('_blank')
       expect(link.attributes('download')).toBeDefined()
       expect(link.attributes('hreflang')).toBe('en')
+    })
+  })
+
+  describe('Vue Router Integration', () => {
+    it('uses RouterLink when Vue Router is available', () => {
+      const mockRouter = {
+        constructor: { RouterLink: MockRouterLink },
+      }
+      const mockRoute = { path: '/current' }
+
+      const wrapper = mount(FdsCard, {
+        props: {
+          to: '/dashboard',
+          header: 'Dashboard',
+        },
+        global: {
+          provide: {
+            $router: mockRouter,
+            $route: mockRoute,
+          },
+          stubs: {
+            RouterLink: MockRouterLink,
+          },
+        },
+      })
+
+      const routerLink = wrapper.findComponent(MockRouterLink)
+      expect(routerLink.exists()).toBe(true)
+      expect(routerLink.props('to')).toBe('/dashboard')
+    })
+
+    it('falls back to anchor tag when Vue Router is not available', () => {
+      const wrapper = mount(FdsCard, {
+        props: {
+          to: '/dashboard',
+          header: 'Dashboard',
+        },
+      })
+
+      expect(wrapper.find('a').exists()).toBe(true)
+      expect(wrapper.find('a').attributes('href')).toBe('/dashboard')
+      expect(wrapper.findComponent(MockRouterLink).exists()).toBe(false)
+    })
+
+    it('uses anchor tag when external prop is true even with Vue Router', () => {
+      const mockRouter = {
+        constructor: { RouterLink: MockRouterLink },
+      }
+      const mockRoute = { path: '/current' }
+
+      const wrapper = mount(FdsCard, {
+        props: {
+          to: 'https://external-site.com',
+          external: true,
+          header: 'External Link',
+        },
+        global: {
+          provide: {
+            $router: mockRouter,
+            $route: mockRoute,
+          },
+        },
+      })
+
+      expect(wrapper.find('a').exists()).toBe(true)
+      expect(wrapper.find('a').attributes('href')).toBe('https://external-site.com')
+      expect(wrapper.findComponent(MockRouterLink).exists()).toBe(false)
+    })
+
+    it('detects external URLs automatically', () => {
+      const mockRouter = {
+        constructor: { RouterLink: MockRouterLink },
+      }
+      const mockRoute = { path: '/current' }
+
+      // Test http:// URL
+      const httpWrapper = mount(FdsCard, {
+        props: {
+          to: 'http://example.com',
+          header: 'HTTP External',
+        },
+        global: {
+          provide: {
+            $router: mockRouter,
+            $route: mockRoute,
+          },
+        },
+      })
+      expect(httpWrapper.find('a').exists()).toBe(true)
+      expect(httpWrapper.find('a').attributes('href')).toBe('http://example.com')
+
+      // Test https:// URL
+      const httpsWrapper = mount(FdsCard, {
+        props: {
+          to: 'https://example.com',
+          header: 'HTTPS External',
+        },
+        global: {
+          provide: {
+            $router: mockRouter,
+            $route: mockRoute,
+          },
+        },
+      })
+      expect(httpsWrapper.find('a').exists()).toBe(true)
+      expect(httpsWrapper.find('a').attributes('href')).toBe('https://example.com')
+
+      // Test domain without protocol
+      const domainWrapper = mount(FdsCard, {
+        props: {
+          to: 'example.com',
+          header: 'Domain External',
+        },
+        global: {
+          provide: {
+            $router: mockRouter,
+            $route: mockRoute,
+          },
+        },
+      })
+      expect(domainWrapper.find('a').exists()).toBe(true)
+      expect(domainWrapper.find('a').attributes('href')).toBe('example.com')
+
+      // Test protocol-relative URL
+      const protocolRelativeWrapper = mount(FdsCard, {
+        props: {
+          to: '//example.com',
+          header: 'Protocol Relative',
+        },
+        global: {
+          provide: {
+            $router: mockRouter,
+            $route: mockRoute,
+          },
+        },
+      })
+      expect(protocolRelativeWrapper.find('a').exists()).toBe(true)
+      expect(protocolRelativeWrapper.find('a').attributes('href')).toBe('//example.com')
+
+      // Test mailto:
+      const mailtoWrapper = mount(FdsCard, {
+        props: {
+          to: 'mailto:test@example.com',
+          header: 'Email Link',
+        },
+        global: {
+          provide: {
+            $router: mockRouter,
+            $route: mockRoute,
+          },
+        },
+      })
+      expect(mailtoWrapper.find('a').exists()).toBe(true)
+      expect(mailtoWrapper.find('a').attributes('href')).toBe('mailto:test@example.com')
+    })
+
+    it('treats internal paths as router links when Vue Router is available', () => {
+      const mockRouter = {
+        constructor: { RouterLink: MockRouterLink },
+      }
+      const mockRoute = { path: '/current' }
+
+      // Test root-relative path
+      const rootRelativeWrapper = mount(FdsCard, {
+        props: {
+          to: '/page',
+          header: 'Internal Page',
+        },
+        global: {
+          provide: {
+            $router: mockRouter,
+            $route: mockRoute,
+          },
+        },
+      })
+      // Should use RouterLink for internal paths
+      expect(rootRelativeWrapper.find('a').exists()).toBe(true)
+      expect(rootRelativeWrapper.find('a').attributes('href')).toBe('/page')
+
+      // Test hash link
+      const hashWrapper = mount(FdsCard, {
+        props: {
+          to: '#section',
+          header: 'Hash Link',
+        },
+        global: {
+          provide: {
+            $router: mockRouter,
+            $route: mockRoute,
+          },
+        },
+      })
+      expect(hashWrapper.find('a').attributes('href')).toBe('#section')
+    })
+
+    it('handles router location objects with RouterLink', () => {
+      const mockRouter = {
+        constructor: { RouterLink: MockRouterLink },
+      }
+      const mockRoute = { path: '/current' }
+
+      const routerLocation = {
+        name: 'dashboard',
+        params: { id: '123' },
+      }
+
+      const wrapper = mount(FdsCard, {
+        props: {
+          to: routerLocation,
+          header: 'Dashboard',
+        },
+        global: {
+          provide: {
+            $router: mockRouter,
+            $route: mockRoute,
+          },
+          stubs: {
+            RouterLink: MockRouterLink,
+          },
+        },
+      })
+
+      const routerLink = wrapper.findComponent(MockRouterLink)
+      expect(routerLink.exists()).toBe(true)
+      expect(routerLink.props('to')).toEqual(routerLocation)
+    })
+
+    it('handles partial router injection (missing $route)', () => {
+      const mockRouter = {
+        constructor: { RouterLink: MockRouterLink },
+      }
+
+      const wrapper = mount(FdsCard, {
+        props: {
+          to: '/page',
+          header: 'Page',
+        },
+        global: {
+          provide: {
+            $router: mockRouter,
+          },
+        },
+      })
+
+      // Should fallback to anchor when $route is missing
+      expect(wrapper.find('a').exists()).toBe(true)
+      expect(wrapper.find('a').attributes('href')).toBe('/page')
+    })
+
+    it('handles router without RouterLink component', () => {
+      const mockRouter = {}
+      const mockRoute = { path: '/current' }
+
+      const wrapper = mount(FdsCard, {
+        props: {
+          to: '/page',
+          header: 'Page',
+        },
+        global: {
+          provide: {
+            $router: mockRouter,
+            $route: mockRoute,
+          },
+        },
+      })
+
+      // Should fallback to anchor when RouterLink is not available
+      expect(wrapper.find('a').exists()).toBe(true)
+      expect(wrapper.find('a').attributes('href')).toBe('/page')
+    })
+
+    it('preserves all card functionality with router integration', () => {
+      const mockRouter = {
+        constructor: { RouterLink: MockRouterLink },
+      }
+      const mockRoute = { path: '/current' }
+
+      const wrapper = mount(FdsCard, {
+        props: {
+          to: '/dashboard',
+          header: 'Dashboard Card',
+          subheader: 'Subtitle',
+          icon: 'arrow-forward',
+          variant: 'long',
+        },
+        slots: {
+          image: '<img src="test.jpg" alt="Test" />',
+          content: '<p>Card content</p>',
+        },
+        global: {
+          provide: {
+            $router: mockRouter,
+            $route: mockRoute,
+          },
+          stubs: {
+            RouterLink: MockRouterLink,
+          },
+        },
+      })
+
+      // Card structure should remain intact
+      expect(wrapper.find('.card').classes()).toContain('long')
+      expect(wrapper.find('.card-image').exists()).toBe(true)
+      expect(wrapper.find('.card-heading').text()).toBe('Dashboard Card')
+      expect(wrapper.find('.card-subheading').text()).toBe('Subtitle')
+      expect(wrapper.find('p').text()).toBe('Card content')
+      expect(wrapper.find('.card-icon').exists()).toBe(true)
+    })
+  })
+
+  describe('Smart Icon Default Behavior', () => {
+    it('provides arrow-forward icon for internal links by default', () => {
+      const wrapper = mount(FdsCard, {
+        props: {
+          to: '/internal-page',
+          header: 'Internal Link',
+        },
+      })
+      
+      expect(wrapper.find('.card-icon').exists()).toBe(true)
+      expect(wrapper.find('use').attributes('href')).toBe('#arrow-forward')
+    })
+
+    it('provides open-in-new icon for external links by default', () => {
+      const wrapper = mount(FdsCard, {
+        props: {
+          to: 'https://external-site.com',
+          header: 'External Link',
+        },
+      })
+      
+      expect(wrapper.find('.card-icon').exists()).toBe(true)
+      expect(wrapper.find('use').attributes('href')).toBe('#open-in-new')
+    })
+
+    it('detects and uses open-in-new icon for domain URLs without protocol', () => {
+      const wrapper = mount(FdsCard, {
+        props: {
+          to: 'example.com',
+          header: 'Domain URL',
+        },
+      })
+      
+      expect(wrapper.find('.card-icon').exists()).toBe(true)
+      expect(wrapper.find('use').attributes('href')).toBe('#open-in-new')
+    })
+
+    it('detects and uses open-in-new icon for protocol-relative URLs', () => {
+      const wrapper = mount(FdsCard, {
+        props: {
+          to: '//example.com',
+          header: 'Protocol Relative',
+        },
+      })
+      
+      expect(wrapper.find('.card-icon').exists()).toBe(true)
+      expect(wrapper.find('use').attributes('href')).toBe('#open-in-new')
+    })
+
+    it('detects and uses open-in-new icon for mailto links', () => {
+      const wrapper = mount(FdsCard, {
+        props: {
+          to: 'mailto:test@example.com',
+          header: 'Email Link',
+        },
+      })
+      
+      expect(wrapper.find('.card-icon').exists()).toBe(true)
+      expect(wrapper.find('use').attributes('href')).toBe('#open-in-new')
+    })
+
+    it('allows manual override of icon for internal links', () => {
+      const wrapper = mount(FdsCard, {
+        props: {
+          to: '/internal-page',
+          header: 'Internal Link',
+          icon: 'open-in-new',
+        },
+      })
+      
+      expect(wrapper.find('.card-icon').exists()).toBe(true)
+      expect(wrapper.find('use').attributes('href')).toBe('#open-in-new')
+    })
+
+    it('allows manual override of icon for external links', () => {
+      const wrapper = mount(FdsCard, {
+        props: {
+          to: 'https://external-site.com',
+          header: 'External Link',
+          icon: 'arrow-forward',
+        },
+      })
+      
+      expect(wrapper.find('.card-icon').exists()).toBe(true)
+      expect(wrapper.find('use').attributes('href')).toBe('#arrow-forward')
+    })
+
+    it('shows no icon when to prop is not provided', () => {
+      const wrapper = mount(FdsCard, {
+        props: {
+          header: 'No Link Card',
+        },
+      })
+      
+      expect(wrapper.find('.card-icon').exists()).toBe(false)
+    })
+
+    it('respects explicitly setting icon to empty string', () => {
+      const wrapper = mount(FdsCard, {
+        props: {
+          to: '/page',
+          header: 'Link without icon',
+          icon: '',
+        },
+      })
+      
+      expect(wrapper.find('.card-icon').exists()).toBe(false)
     })
   })
 })

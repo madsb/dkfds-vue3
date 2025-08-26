@@ -7,10 +7,12 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+export interface FdsFanebladeNavProps {
   /** ARIA label for the navigation */
   ariaLabel?: string
-}>()
+}
+
+defineProps<FdsFanebladeNavProps>()
 </script>
 
 <style scoped lang="scss"></style>

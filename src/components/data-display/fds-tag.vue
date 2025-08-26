@@ -22,7 +22,7 @@ import { formId } from '../../composables'
 import { computed, useSlots } from 'vue'
 import FdsIkon from '../layout/fds-ikon.vue'
 
-interface Props {
+export interface FdsTagProps {
   /**
    * Optional icon to display (typically 'close' or 'highlight-off')
    * When provided, adds a tag-icon class and displays the icon
@@ -35,7 +35,7 @@ interface Props {
   id?: string
 }
 
-const { icon, id } = defineProps<Props>()
+const { icon, id } = defineProps<FdsTagProps>()
 
 const slots = useSlots()
 

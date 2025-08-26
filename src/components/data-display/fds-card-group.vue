@@ -13,9 +13,12 @@
  * */
 import { computed } from 'vue'
 
-const { type = null } = defineProps<{
+export interface FdsCardGroupProps {
+  /** Card layout type */
   type?: 'deck' | 'columns' | null
-}>()
+}
+
+const { type = null } = defineProps<FdsCardGroupProps>()
 
 const getClass = computed(() => type ?? 'normal')
 </script>

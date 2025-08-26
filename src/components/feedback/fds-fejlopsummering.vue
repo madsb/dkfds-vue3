@@ -32,6 +32,17 @@ export interface ErrorItem {
   element?: HTMLElement
 }
 
+export interface FdsFejlopsummeringProps {
+  /** Overskrift for fejlopsummering */
+  header?: string
+  /** ID for accessibility aria-labelledby */
+  id?: string
+  /** Manuel liste af fejl */
+  errors?: ErrorItem[]
+  /** Om komponenten automatisk skal indsamle fejl fra formfelter */
+  autoCollect?: boolean
+}
+
 const {
   /** Overskrift for fejlopsummering */
   header = 'Der er problemer',
@@ -41,12 +52,7 @@ const {
   errors = [],
   /** Om komponenten automatisk skal indsamle fejl fra formfelter */
   autoCollect = true,
-} = defineProps<{
-  header?: string
-  id?: string
-  errors?: ErrorItem[]
-  autoCollect?: boolean
-}>()
+} = defineProps<FdsFejlopsummeringProps>()
 
 const emit = defineEmits<{
   'error-clicked': [id: string]

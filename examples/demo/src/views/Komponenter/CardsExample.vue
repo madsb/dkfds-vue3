@@ -45,7 +45,7 @@
     <fds-preview header="Navigations cards">
       <fds-preview-item>
         <fds-card-group>
-          <fds-card href="#" header="Borger.dk" subheader="For borgere" icon="arrow-forward">
+          <fds-card to="#" header="Borger.dk" subheader="For borgere" icon="arrow-forward">
             <template #image>
               <img
                 src="https://placehold.co/400x225/1D8649/ffffff?text=Borger.dk"
@@ -55,14 +55,14 @@
             <p>Find information og selvbetjeningsløsninger for borgere</p>
           </fds-card>
 
-          <fds-card href="#" header="Virk.dk" subheader="For virksomheder" icon="arrow-forward">
+          <fds-card to="#" header="Virk.dk" subheader="For virksomheder" icon="arrow-forward">
             <template #image>
               <img src="https://placehold.co/400x225/7B2D8A/ffffff?text=Virk.dk" alt="Virk.dk" />
             </template>
             <p>Alt hvad din virksomhed har brug for på ét sted</p>
           </fds-card>
 
-          <fds-card href="#" header="Sundhed.dk" subheader="Sundhed" icon="arrow-forward">
+          <fds-card to="#" header="Sundhed.dk" subheader="Sundhed" icon="arrow-forward">
             <template #image>
               <img
                 src="https://placehold.co/400x225/C0392B/ffffff?text=Sundhed.dk"
@@ -241,7 +241,7 @@
     <fds-preview header="Lange cards (horisontale)">
       <fds-preview-item>
         <fds-card
-          href="#"
+          to="#"
           variant="long"
           header="Book tid til borgerservice"
           subheader="Personlig betjening"
@@ -260,7 +260,7 @@
         </fds-card>
 
         <fds-card
-          href="#"
+          to="#"
           variant="long"
           header="Akut hjælp og kontakt"
           subheader="Nødsituation"
@@ -300,7 +300,7 @@
             <tr>
               <td><code>header</code></td>
               <td><code>string</code></td>
-              <td><code>null</code></td>
+              <td><code>undefined</code></td>
               <td>Card overskrift (bruger h2 som standard)</td>
             </tr>
             <tr>
@@ -312,25 +312,31 @@
             <tr>
               <td><code>subheader</code></td>
               <td><code>string</code></td>
-              <td><code>null</code></td>
+              <td><code>undefined</code></td>
               <td>Understøttende tekst under overskrift</td>
             </tr>
             <tr>
-              <td><code>href</code></td>
-              <td><code>string</code></td>
-              <td><code>null</code></td>
-              <td>Link URL (gør card til navigation card)</td>
+              <td><code>to</code></td>
+              <td><code>string | object</code></td>
+              <td><code>undefined</code></td>
+              <td>Link URL eller Vue Router location (gør card til navigation card)</td>
+            </tr>
+            <tr>
+              <td><code>external</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Tvinger brug af standard anchor tag. Eksterne links detekteres automatisk baseret på URL-format</td>
             </tr>
             <tr>
               <td><code>icon</code></td>
               <td><code>string</code></td>
-              <td><code>null</code></td>
-              <td>Ikon for navigation card (f.eks. 'arrow-forward')</td>
+              <td><code>undefined</code></td>
+              <td>Ikon for navigation card. Automatisk: 'arrow-forward' for interne links, 'open-in-new' for eksterne</td>
             </tr>
             <tr>
               <td><code>variant</code></td>
-              <td><code>'long' | null</code></td>
-              <td><code>null</code></td>
+              <td><code>'long'</code></td>
+              <td><code>undefined</code></td>
               <td>Card variant (long for horisontal layout)</td>
             </tr>
           </tbody>
@@ -363,11 +369,7 @@
             </tr>
             <tr>
               <td><code>actions</code></td>
-              <td>Knapper og links</td>
-            </tr>
-            <tr>
-              <td><code>custom</code></td>
-              <td>Fuldstændig tilpasset card indhold</td>
+              <td>Knapper og links (kun for regular cards, ikke navigation cards)</td>
             </tr>
           </tbody>
         </table>
@@ -420,7 +422,7 @@ const imageCardCode = `<fds-card header="Digital Post" subheader="Kommunikation"
 
 const navigationCardsCode = `<fds-card-group>
   <fds-card
-    href="#"
+    to="#"
     header="Borger.dk"
     subheader="For borgere"
     icon="arrow-forward">
@@ -479,7 +481,7 @@ const columnLayoutCode = `<fds-card-group type="columns">
 </fds-card-group>`
 
 const longCardsCode = `<fds-card
-  href="#"
+  to="#"
   variant="long"
   header="Book tid til borgerservice"
   subheader="Personlig betjening"

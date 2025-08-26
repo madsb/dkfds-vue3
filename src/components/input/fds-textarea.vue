@@ -19,7 +19,7 @@ import { formId } from '../../composables'
 
 const attrs = useAttrs()
 
-interface Props {
+export interface FdsTextareaProps {
   /** The v-model value */
   modelValue: string
   /** Unique identifier for the textarea */
@@ -44,7 +44,7 @@ const {
   rowlength = 80,
   maxlength,
   widthClass = '',
-} = defineProps<Props>()
+} = defineProps<FdsTextareaProps>()
 
 const emit = defineEmits<{
   /** Emitted when textarea value changes */

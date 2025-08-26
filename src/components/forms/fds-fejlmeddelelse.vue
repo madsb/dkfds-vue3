@@ -10,10 +10,14 @@
 <script setup lang="ts">
 import { computed, inject, useSlots, isRef, type Ref, watch, onUnmounted } from 'vue'
 
-const { auto = true, id } = defineProps<{
+export interface FdsFejlmeddelelseProps {
+  /** Automatically display error message from context */
   auto?: boolean
+  /** Custom ID for error message */
   id?: string
-}>()
+}
+
+const { auto = true, id } = defineProps<FdsFejlmeddelelseProps>()
 
 const slots = useSlots()
 

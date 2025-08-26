@@ -67,14 +67,18 @@ const day = ref<HTMLInputElement | null>(null)
 const month = ref<HTMLInputElement | null>(null)
 const year = ref<HTMLInputElement | null>(null)
 
+export interface FdsDatoFelterProps {
+  /** Unique ID for the date fields */
+  id?: string
+  /** JSON Date value */
+  modelValue?: string
+}
+
 const {
   id,
   /** JSON Date */
   modelValue = '',
-} = defineProps<{
-  id?: string
-  modelValue?: string
-}>()
+} = defineProps<FdsDatoFelterProps>()
 
 const emit = defineEmits<{
   'update:modelValue': [value: string]

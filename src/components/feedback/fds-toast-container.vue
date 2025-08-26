@@ -17,12 +17,12 @@
  */
 import { generateId } from '../../composables'
 
-interface Props {
+export interface FdsToastContainerProps {
   /** Unique identifier for the container */
   id?: string
 }
 
-withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<FdsToastContainerProps>(), {
   id: () => generateId('toast-container').value,
 })
 </script>
