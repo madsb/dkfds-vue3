@@ -20,20 +20,18 @@
               </li>
               <li class="current">
                 <fds-overflow-menu header="Overflow menu eks">
-                  <ul class="overflow-list">
-                    <li class="active">
-                      <a href="#"> Subsektion med en meget lang titel som går i flere linier </a>
-                    </li>
-                    <li>
-                      <a href="#"> Subsektion title </a>
-                    </li>
-                    <li>
-                      <a href="#"> Subsektion title </a>
-                    </li>
-                    <li>
-                      <a href="#"> Subsektion title som også er forholdsvis lang </a>
-                    </li>
-                  </ul>
+                  <li class="active">
+                    <a href="#"> Subsektion med en meget lang titel som går i flere linier </a>
+                  </li>
+                  <li>
+                    <a href="#"> Subsektion title </a>
+                  </li>
+                  <li>
+                    <a href="#"> Subsektion title </a>
+                  </li>
+                  <li>
+                    <a href="#"> Subsektion title som også er forholdsvis lang </a>
+                  </li>
                 </fds-overflow-menu>
               </li>
             </ul>
@@ -64,20 +62,18 @@ new navigation().init();
     </li>
     <li class="current">
       <fds-overflow-menu header="Overflow menu eks">
-        <ul class="overflow-list">
-          <li class="active">
-            <a href="#"> Subsektion med en meget lang titel som går i flere linier </a>
-          </li>
-          <li>
-            <a href="#"> Subsektion title </a>
-          </li>
-          <li>
-            <a href="#"> Subsektion title </a>
-          </li>
-          <li>
-            <a href="#"> Subsektion title som også er forholdsvis lang </a>
-          </li>
-        </ul>
+        <li class="active">
+          <a href="#"> Subsektion med en meget lang titel som går i flere linier </a>
+        </li>
+        <li>
+          <a href="#"> Subsektion title </a>
+        </li>
+        <li>
+          <a href="#"> Subsektion title </a>
+        </li>
+        <li>
+          <a href="#"> Subsektion title som også er forholdsvis lang </a>
+        </li>
       </fds-overflow-menu>
     </li>
   </ul>

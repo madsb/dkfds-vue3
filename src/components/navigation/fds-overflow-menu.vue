@@ -11,10 +11,26 @@
       @click="toggle"
       @keydown="handleKeydown"
     >
-      <span>
+      <slot name="icon-left">
+        <fds-ikon
+          v-if="iconPosition === 'left'"
+          :icon="icon"
+          :decorative="true"
+          class="mr-2"
+          style="pointer-events: none"
+        />
+      </slot>
+      <slot name="header">
         {{ header || 'Overflow menu' }}
-        <fds-ikon :icon="icon" :decorative="true" />
-      </span>
+      </slot>
+      <slot name="icon-right">
+        <fds-ikon
+          v-if="iconPosition === 'right'"
+          :icon="icon"
+          :decorative="true"
+          style="pointer-events: none"
+        />
+      </slot>
     </button>
     <div
       :id="menuId"
@@ -38,13 +54,11 @@ interface Props {
   header?: string
   id?: string
   icon?: string
+  iconPosition?: 'left' | 'right'
   position?: 'left' | 'right'
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  icon: 'more-vert',
-  position: 'right',
-})
+const { icon = 'more-vert', position = 'right', iconPosition = 'right', id } = defineProps<Props>()
 
 const emit = defineEmits<{
   open: []
@@ -52,7 +66,7 @@ const emit = defineEmits<{
   toggle: [isOpen: boolean]
 }>()
 
-const { formid } = formId(props.id, true)
+const { formid } = formId(id, true)
 
 const buttonRef = ref<HTMLButtonElement>()
 const menuRef = ref<HTMLDivElement>()
@@ -61,7 +75,7 @@ const isOpen = ref(false)
 const buttonId = computed(() => `button_${formid.value}`)
 const menuId = computed(() => formid.value)
 const positionClass = computed(() => {
-  return props.position === 'left' ? 'overflow-menu--open-left' : 'overflow-menu--open-right'
+  return position === 'left' ? 'overflow-menu--open-left' : 'overflow-menu--open-right'
 })
 
 const open = () => {
