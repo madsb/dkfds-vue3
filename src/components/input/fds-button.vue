@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import FdsIkon from './fds-ikon.vue'
+import FdsIkon from '../layout/fds-ikon.vue'
 
 /**
  * Button component implementing DKFDS v11 specifications.
