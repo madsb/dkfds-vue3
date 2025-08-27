@@ -14,14 +14,72 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+/**
+ * Icon component implementing DKFDS v11 icon specifications.
+ * 
+ * Renders SVG icons from the DKFDS Material Design icon set with proper
+ * accessibility attributes. Supports both decorative and meaningful icons,
+ * inline sizing, and screen reader integration. Uses SVG symbol references
+ * for optimal performance and consistency across the application.
+ * 
+ * @component
+ * @example Basic decorative icon
+ * ```vue
+ * <fds-ikon icon="home" />
+ * ```
+ * 
+ * @example Meaningful icon with ARIA label
+ * ```vue
+ * <fds-ikon 
+ *   icon="warning" 
+ *   :decorative="false"
+ *   aria-label="Warning: This action cannot be undone"
+ * />
+ * ```
+ * 
+ * @example Inline icon with text
+ * ```vue
+ * <p>
+ *   <fds-ikon icon="check" :inline="true" />
+ *   Task completed successfully
+ * </p>
+ * ```
+ * 
+ * @example Icon in button context
+ * ```vue
+ * <fds-button>
+ *   <fds-ikon icon="download" :decorative="true" />
+ *   Download File
+ * </fds-button>
+ * ```
+ * 
+ * @see {@link https://designsystem.dk/komponenter/ikoner/} DKFDS Icon Documentation
+ */
+
 export interface FdsIkonProps {
-  /** Ikon navn (Material Design icon ID) */
+  /** 
+   * Icon name from DKFDS Material Design icon set
+   * Corresponds to the symbol ID in the icon collection.
+   * @default 'home'
+   */
   icon?: string
-  /** Om ikonet skal justeres til teksthøjde (inline) */
+  /** 
+   * Adjust icon to text height (inline display)
+   * When true, icon scales with surrounding text size.
+   * @default false
+   */
   inline?: boolean
-  /** Aria label for screen readers (hvis ikonet formidler mening) */
+  /** 
+   * ARIA label for screen readers
+   * Required when decorative is false. Describes the icon's meaning.
+   */
   ariaLabel?: string
-  /** Om ikonet er dekorativt (standard: true) */
+  /** 
+   * Whether the icon is decorative
+   * Decorative icons are hidden from screen readers (aria-hidden="true").
+   * Set to false for icons that convey important information.
+   * @default true
+   */
   decorative?: boolean
 }
 

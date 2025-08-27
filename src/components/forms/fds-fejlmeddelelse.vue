@@ -10,10 +10,57 @@
 <script setup lang="ts">
 import { computed, inject, useSlots, isRef, type Ref, watch, onUnmounted } from 'vue'
 
+/**
+ * Error message component implementing DKFDS v11 error display specifications.
+ * 
+ * Displays validation error messages with proper accessibility attributes,
+ * automatic error summary registration, and integration with form validation
+ * state. Supports both manual error content through slots and automatic
+ * error display from form validation context following DKFDS error patterns.
+ * 
+ * @component
+ * @example Basic error message
+ * ```vue
+ * <FdsFejlmeddelelse>
+ *   Please enter a valid email address
+ * </FdsFejlmeddelelse>
+ * ```
+ * 
+ * @example Automatic error from validation context
+ * ```vue
+ * <FdsFormgroup :isValid="false">
+ *   <template #default="{ formid, ariaDescribedby }">
+ *     <FdsLabel>Email</FdsLabel>
+ *     <FdsInput :id="formid" :aria-describedby="ariaDescribedby" />
+ *     <FdsFejlmeddelelse /> <!-- Automatically shows context error -->
+ *   </template>
+ * </FdsFormgroup>
+ * ```
+ * 
+ * @example Custom error with manual control
+ * ```vue
+ * <FdsFejlmeddelelse :auto="false" id="custom-error">
+ *   {{ validationError }}
+ * </FdsFejlmeddelelse>
+ * ```
+ * 
+ * @see {@link https://designsystem.dk/komponenter/inputfelter/} DKFDS Input Fields Documentation
+ */
+
 export interface FdsFejlmeddelelseProps {
-  /** Automatically display error message from context */
+  /** 
+   * Automatically display error message from validation context.
+   * When true, shows error message from injected validation state.
+   * When false, only displays content provided through slot.
+   * @default true
+   */
   auto?: boolean
-  /** Custom ID for error message */
+  /** 
+   * Custom ID for the error message element.
+   * If not provided, uses the errorId from parent FdsFormgroup.
+   * Used for aria-describedby relationships with form controls.
+   * @default undefined (uses injected errorId)
+   */
   id?: string
 }
 

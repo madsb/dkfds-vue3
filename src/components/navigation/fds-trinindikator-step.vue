@@ -36,43 +36,115 @@
 import { computed } from 'vue'
 
 /**
- * Individual step component for use within fds-trinindikator-group
- *
- * @component FdsTrinindikatorStep
- * @example
+ * Individual step component implementing DKFDS v11 step indicator specifications.
+ * 
+ * Renders a single step within a step indicator group with support for different
+ * states (current, completed, error), visual icons, and interactive behavior.
+ * Automatically handles ARIA labeling, keyboard navigation, and accessibility
+ * features. Must be used within fds-trinindikator-group component.
+ * 
+ * @component
+ * @example Basic step
+ * ```vue
  * <fds-trinindikator-step
  *   :step-number="1"
  *   title="Personlige oplysninger"
- *   step-info="Indtast dine grundlæggende oplysninger"
  *   :is-current="currentStep === 1"
  *   :is-completed="currentStep > 1"
- *   :clickable="true"
- *   @click="goToStep(1)"
  * />
+ * ```
+ * 
+ * @example Interactive step with additional info
+ * ```vue
+ * <fds-trinindikator-step
+ *   :step-number="2"
+ *   title="Dokument upload"
+ *   step-info="Upload påkrævede dokumenter"
+ *   :is-current="currentStep === 2"
+ *   :is-completed="currentStep > 2"
+ *   :clickable="true"
+ *   @click="navigateToStep"
+ * />
+ * ```
+ * 
+ * @example Error state step
+ * ```vue
+ * <fds-trinindikator-step
+ *   :step-number="3"
+ *   title="Validering"
+ *   :has-error="validationFailed"
+ *   :is-current="currentStep === 3"
+ *   :clickable="!validationFailed"
+ *   :disabled="validationFailed"
+ *   error-icon-label="Valideringsfejl"
+ * />
+ * ```
+ * 
+ * @see {@link https://designsystem.dk/komponenter/trinindikatorer/} DKFDS Step Indicator Documentation
  */
 
 export interface FdsTrinindikatorStepProps {
-  /** Step number (1-based) */
+  /** 
+   * Step number (1-based)
+   * The numeric position of this step in the process sequence.
+   */
   stepNumber: number
-  /** Step title */
+  /** 
+   * Step title
+   * The main title/name of this step displayed to users.
+   */
   title: string
-  /** Additional step information */
+  /** 
+   * Additional step information
+   * Optional descriptive text providing more details about the step.
+   */
   stepInfo?: string
-  /** Whether this is the current step */
+  /** 
+   * Whether this is the current step
+   * Applies current step styling and ARIA attributes.
+   * @default false
+   */
   isCurrent?: boolean
-  /** Whether this step is completed */
+  /** 
+   * Whether this step is completed
+   * Shows checkmark icon and completed styling (ignored if isCurrent is true).
+   * @default false
+   */
   isCompleted?: boolean
-  /** Whether the step has an error */
+  /** 
+   * Whether the step has an error
+   * Shows error icon and error styling. Takes precedence over completed state.
+   * @default false
+   */
   hasError?: boolean
-  /** Whether the step is disabled */
+  /** 
+   * Whether the step is disabled
+   * Prevents interaction and applies disabled styling.
+   * @default false
+   */
   disabled?: boolean
-  /** Whether the step is clickable */
+  /** 
+   * Whether the step is clickable
+   * Enables click interaction (disabled steps cannot be clicked regardless).
+   * @default false
+   */
   clickable?: boolean
-  /** ARIA label for error icon */
+  /** 
+   * ARIA label for error icon
+   * Screen reader text for the error state icon.
+   * @default 'Fejl'
+   */
   errorIconLabel?: string
-  /** ARIA label for completed icon */
+  /** 
+   * ARIA label for completed icon
+   * Screen reader text for the completed state checkmark icon.
+   * @default 'Færdig'
+   */
   completedIconLabel?: string
-  /** Custom ARIA label for the step */
+  /** 
+   * Custom ARIA label for the step
+   * Override the auto-generated accessibility label for the entire step.
+   */
   ariaLabel?: string
 }
 
@@ -89,7 +161,14 @@ const props = withDefaults(defineProps<FdsTrinindikatorStepProps>(), {
 })
 
 const emit = defineEmits<{
-  /** Emitted when step is clicked */
+  /**
+   * Emitted when step is clicked
+   * Only fired if step is clickable and not disabled. Allows parent component
+   * to handle navigation or validation before step changes.
+   * 
+   * @param stepNumber - The number of the clicked step (1-based)
+   * @param event - The original mouse click event
+   */
   click: [stepNumber: number, event: MouseEvent]
 }>()
 

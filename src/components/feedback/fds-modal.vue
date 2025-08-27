@@ -33,31 +33,103 @@
 
 <script setup lang="ts">
 /**
+ * Modal component implementing DKFDS v11 dialog specifications.
+ * 
+ * Accessible modal dialog using native HTML dialog element with focus management.
+ * Supports customizable actions, closeable behavior, and proper ARIA attributes.
  *
- * Komponent for Modal
- * https://designsystem.dk/komponenter/modal/
+ * @component
+ * @example Basic modal with actions
+ * ```vue
+ * <FdsModal 
+ *   ref="modalRef"
+ *   header="Confirm Action"
+ *   accept-text="Confirm"
+ *   cancel-text="Cancel"
+ *   @accept="handleConfirm"
+ *   @cancel="handleCancel"
+ * >
+ *   Are you sure you want to proceed with this action?
+ * </FdsModal>
+ * 
+ * <!-- Open modal from button -->
+ * <FdsButton @click="modalRef.showModal()">Open Modal</FdsButton>
+ * ```
+ * 
+ * @example Non-closeable modal
+ * ```vue
+ * <FdsModal 
+ *   ref="termsModal"
+ *   header="Terms and Conditions"
+ *   :closeable="false"
+ *   accept-text="I Agree"
+ *   :show-cancel="false"
+ *   @accept="acceptTerms"
+ * >
+ *   <p>You must accept the terms to continue...</p>
+ * </FdsModal>
+ * ```
+ * 
+ * @example Custom footer actions
+ * ```vue
+ * <FdsModal header="Custom Actions">
+ *   <template #default>
+ *     Modal content here
+ *   </template>
+ *   <template #footer>
+ *     <FdsButton variant="primary" @click="save">Save</FdsButton>
+ *     <FdsButton variant="secondary" @click="saveAndClose">Save & Close</FdsButton>
+ *     <FdsButton variant="tertiary" @click="cancel">Cancel</FdsButton>
+ *   </template>
+ * </FdsModal>
+ * ```
+ * 
+ * @example Custom header
+ * ```vue
+ * <FdsModal>
+ *   <template #header>
+ *     <div class="custom-header">
+ *       <h2>Custom Modal Title</h2>
+ *       <span class="modal-subtitle">Additional information</span>
+ *     </div>
+ *   </template>
+ *   <template #default>
+ *     Modal body content
+ *   </template>
+ * </FdsModal>
+ * ```
  *
- * OMSKREVET til at bruge https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog
- *
- * Måske kigge på https://css-tricks.com/replace-javascript-dialogs-html-dialog-element/
- * */
-
-// måske backdrop clik
-
-// https://stackoverflow.com/questions/25864259/how-to-close-the-new-html-dialog-tag-by-clicking-on-its-backdrop
+ * @see {@link https://designsystem.dk/komponenter/modal/} DKFDS Modal Documentation
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog} HTML Dialog Element
+ */
 
 import { generateId } from '../../composables'
 import { computed, ref, onMounted } from 'vue'
 import FdsIkon from '../layout/fds-ikon.vue'
 
 export interface FdsModalProps {
-  /** Modal header text */
+  /** 
+   * Modal header text
+   * Displayed as the dialog title
+   */
   header?: string
-  /** Unique ID for the modal */
+  
+  /** 
+   * Unique identifier for the modal dialog
+   * Auto-generated if not provided
+   */
   id?: string
-  /** Whether the modal can be closed */
+  
+  /** 
+   * Allow modal to be closed with X button or ESC key
+   * @default true
+   */
   closeable?: boolean
-  /** Text for accept button */
+  
+  /** 
+   * Text for the primary action button
+   * @default 'OK'
+   */
   acceptText?: string
   /** Text for cancel button */
   cancelText?: string

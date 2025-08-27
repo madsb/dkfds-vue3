@@ -739,5 +739,42 @@
   </div>
 </template>
 <script lang="ts">
+/**
+ * Icon collection component providing DKFDS v11 Material Design icon definitions.
+ *
+ * Contains all SVG symbol definitions for the DKFDS icon set. This component should
+ * be included once in your application root to make icons available to fds-ikon
+ * components throughout the app. The icons are defined as SVG symbols that can be
+ * referenced by ID, providing optimal performance and consistency.
+ *
+ * @component
+ * @example App root integration
+ * ```vue
+ * <template>
+ *   <div id="app">
+ *     <fds-icon-collection />
+ *     <!-- Rest of your app -->
+ *     <main>
+ *       <fds-ikon icon="home" />
+ *       <fds-ikon icon="settings" />
+ *     </main>
+ *   </div>
+ * </template>
+ * ```
+ *
+ * @example Available icons usage
+ * ```vue
+ * <!-- Examples of commonly used icons -->
+ * <fds-ikon icon="home" />
+ * <fds-ikon icon="account" />
+ * <fds-ikon icon="settings" />
+ * <fds-ikon icon="chevron-right" />
+ * <fds-ikon icon="check" />
+ * <fds-ikon icon="close" />
+ * <fds-ikon icon="warning" />
+ * ```
+ *
+ * @see {@link https://designsystem.dk/komponenter/ikoner/} DKFDS Icon Documentation
+ */
 export default {}
 </script>

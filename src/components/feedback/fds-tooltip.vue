@@ -25,29 +25,114 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * Tooltip component implementing DKFDS v11 tooltip specifications.
+ * 
+ * Provides contextual help information through an accessible tooltip interface with click or hover triggers.
+ * Features proper ARIA labeling, keyboard navigation support, and flexible positioning. Designed primarily
+ * for help icons but can be adapted for other contextual information needs.
+ * 
+ * @component
+ * @example Basic help tooltip with click trigger
+ * ```vue
+ * <FdsTooltip 
+ *   content="This field is required for processing your application"
+ *   trigger="click"
+ *   position="above"
+ * />
+ * ```
+ * 
+ * @example Custom icon tooltip with hover trigger
+ * ```vue
+ * <FdsTooltip 
+ *   content="Additional information about this feature"
+ *   trigger="hover"
+ *   icon="info"
+ *   position="below"
+ *   aria-label="Feature information"
+ * />
+ * ```
+ * 
+ * @example Tooltip used as accessible label for icon-only button
+ * ```vue
+ * <FdsTooltip 
+ *   content="Edit profile settings"
+ *   :is-label="true"
+ *   icon="edit"
+ *   trigger="hover"
+ * />
+ * ```
+ * 
+ * @example Disabled tooltip for conditional help
+ * ```vue
+ * <FdsTooltip 
+ *   content="Help is not available in this context"
+ *   :disabled="!helpAvailable"
+ *   :force-visible="false"
+ * />
+ * ```
+ * 
+ * @see {@link https://designsystem.dk/komponenter/tooltip/} DKFDS Tooltip Documentation
+ */
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { generateId } from '../../composables'
 import { tooltip as TooltipUtil } from '../../utils/scripts'
 import FdsIkon from '../layout/fds-ikon.vue'
 
 export interface FdsTooltipProps {
-  /** Tooltip text content (required) */
+  /** 
+   * Tooltip text content to display (required)
+   * Should be concise yet informative help text
+   * Essential for user understanding and accessibility
+   */
   content: string
-  /** Position of tooltip relative to trigger */
+  /** 
+   * Position of tooltip relative to the trigger button
+   * Choose based on available screen space and UI layout
+   * @values 'above', 'below'
+   * @default 'above'
+   */
   position?: 'above' | 'below'
-  /** Trigger type - click is more accessible */
+  /** 
+   * Interaction method to trigger tooltip display
+   * 'click' is more accessible and mobile-friendly than 'hover'
+   * @values 'hover', 'click'
+   * @default 'click'
+   */
   trigger?: 'hover' | 'click'
-  /** Icon to display in button */
+  /** 
+   * Icon name to display in the tooltip button
+   * Should be semantic and recognizable to users
+   * @default 'help'
+   */
   icon?: string
-  /** Disable tooltip interaction */
+  /** 
+   * Disable tooltip interaction completely
+   * Useful for conditional help availability
+   * @default false
+   */
   disabled?: boolean
-  /** Force tooltip to be visible (for complex layouts) */
+  /** 
+   * Force tooltip to remain visible regardless of trigger
+   * Useful for complex layouts or debugging purposes
+   * @default false
+   */
   forceVisible?: boolean
-  /** Use aria-labelledby instead of aria-describedby (for icon-only buttons) */
+  /** 
+   * Use tooltip content as aria-label instead of aria-describedby
+   * Appropriate when tooltip serves as the primary label for icon-only buttons
+   * @default false
+   */
   isLabel?: boolean
-  /** Custom ID for tooltip */
+  /** 
+   * Custom ID for the tooltip element
+   * Auto-generated if not provided for accessibility purposes
+   */
   id?: string
-  /** Custom aria-label for button */
+  /** 
+   * Custom aria-label text for the tooltip trigger button
+   * Overrides default accessibility text when provided
+   */
   ariaLabel?: string
 }
 
@@ -61,11 +146,20 @@ const props = withDefaults(defineProps<FdsTooltipProps>(), {
 })
 
 const emit = defineEmits<{
-  /** Emitted when tooltip is shown */
+  /** 
+   * Emitted when tooltip becomes visible
+   * Useful for analytics or coordinating with other UI elements
+   */
   show: []
-  /** Emitted when tooltip is hidden */
+  /** 
+   * Emitted when tooltip is hidden/dismissed
+   * Can trigger cleanup or follow-up actions
+   */
   hide: []
-  /** Emitted when tooltip visibility changes */
+  /** 
+   * Emitted whenever tooltip visibility state changes
+   * Provides boolean indicating current visibility for state management
+   */
   toggle: [isVisible: boolean]
 }>()
 

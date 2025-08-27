@@ -28,24 +28,108 @@
 import { computed, useAttrs, inject, isRef, type Ref } from 'vue'
 import { formId } from '../../composables'
 
+/**
+ * Number input component implementing DKFDS v11 input field specifications.
+ * 
+ * Provides a numeric input with validation, prefix/suffix support, and proper
+ * accessibility attributes. Supports min/max constraints, step values, and
+ * automatic focus selection for easy value replacement. Integrates with
+ * form groups for coordinated validation and accessibility.
+ * 
+ * @component
+ * @example Basic number input
+ * ```vue
+ * <FdsInputNumber 
+ *   v-model="age" 
+ *   :min="0" 
+ *   :max="120" 
+ *   suffix="år"
+ * />
+ * ```
+ * 
+ * @example Price input with prefix
+ * ```vue
+ * <FdsInputNumber 
+ *   v-model="price" 
+ *   prefix="kr." 
+ *   :step="0.01" 
+ *   :min="0"
+ *   widthClass="input--width-m"
+ * />
+ * ```
+ * 
+ * @example In form group with validation
+ * ```vue
+ * <FdsFormgroup :isValid="ageValid">
+ *   <template #default="{ formid, ariaDescribedby }">
+ *     <FdsLabel :required="true">Age</FdsLabel>
+ *     <FdsHint>Enter your age in years</FdsHint>
+ *     <FdsInputNumber 
+ *       v-model="age" 
+ *       :id="formid" 
+ *       :min="18" 
+ *       :max="100" 
+ *       suffix="years"
+ *       @dirty="validateAge"
+ *     />
+ *     <FdsFejlmeddelelse v-if="!ageValid">Age must be between 18 and 100</FdsFejlmeddelelse>
+ *   </template>
+ * </FdsFormgroup>
+ * ```
+ * 
+ * @see {@link https://designsystem.dk/komponenter/inputfelter/} DKFDS Input Fields Documentation
+ */
+
 const attrs = useAttrs()
 
 export interface FdsInputNumberProps {
-  /** Unique identifier for the input */
+  /** 
+   * Unique identifier for the input.
+   * If not provided, will be auto-generated.
+   * @default undefined (auto-generated)
+   */
   id?: string
-  /** The v-model value */
+  /** 
+   * The v-model value for two-way data binding.
+   * Accepts both number and string types for flexible handling.
+   * @default ''
+   */
   modelValue?: number | string
-  /** Suffix text displayed after the input */
+  /** 
+   * Suffix text displayed after the input.
+   * Useful for units like 'kr.', 'kg', '%', etc.
+   * @default undefined
+   */
   suffix?: string
-  /** Prefix text displayed before the input */
+  /** 
+   * Prefix text displayed before the input.
+   * Useful for currency symbols, labels, etc.
+   * @default undefined
+   */
   prefix?: string
-  /** Minimum value allowed */
+  /** 
+   * Minimum value allowed for the input.
+   * Sets the HTML min attribute for validation.
+   * @default undefined
+   */
   min?: number
-  /** Maximum value allowed */
+  /** 
+   * Maximum value allowed for the input.
+   * Sets the HTML max attribute for validation.
+   * @default undefined
+   */
   max?: number
-  /** Step value for increment/decrement */
+  /** 
+   * Step value for increment/decrement operations.
+   * Determines precision for decimal values.
+   * @default undefined
+   */
   step?: number | string
-  /** Width class for input sizing */
+  /** 
+   * CSS class for input width sizing.
+   * @values 'input--width-xs', 'input--width-s', 'input--width-m', 'input--width-l', 'input--width-xl'
+   * @default ''
+   */
   widthClass?: string
 }
 
@@ -61,11 +145,20 @@ const {
 } = defineProps<FdsInputNumberProps>()
 
 const emit = defineEmits<{
-  /** Emitted when input value changes */
+  /** 
+   * Emitted when input value changes.
+   * Used for v-model two-way data binding.
+   */
   'update:modelValue': [value: number | string]
-  /** Emitted when input loses focus */
+  /** 
+   * Emitted when input loses focus.
+   * Useful for triggering validation after user interaction.
+   */
   dirty: [isDirty: boolean]
-  /** Emitted on input event */
+  /** 
+   * Emitted on input event.
+   * Provides access to the raw DOM input event.
+   */
   input: [event: Event]
 }>()
 

@@ -11,19 +11,44 @@
 import FdsIkon from '../layout/fds-ikon.vue'
 
 /**
- * Tilbage-link komponent
- *
- * Tilbage-linket lader brugeren gå tilbage til forrige trin eller side i en selvbetjeningsløsning.
- * Brug tilbage-linket i flertrinsselvbetjeningsløsninger eller i løsninger med sammenhængende sider.
- *
- * Placering: Øverst til venstre umiddelbart under headeren.
- * Brug ikke samtidig med brødkrummer.
- *
- * https://designsystem.dk/komponenter/tilbage-link/
+ * Back link component implementing DKFDS v11 tilbage-link specifications.
+ * 
+ * Provides a consistent back navigation pattern for multi-step processes and
+ * connected page sequences. Features a chevron icon and customizable text.
+ * Should be positioned at the top left, immediately under the header.
+ * Do not use together with breadcrumbs as they serve similar purposes.
+ * 
+ * @component
+ * @example Basic back link
+ * ```vue
+ * <fds-tilbage-link @click="goBack">
+ *   Tilbage til oversigt
+ * </fds-tilbage-link>
+ * ```
+ * 
+ * @example Back link with custom href
+ * ```vue
+ * <fds-tilbage-link 
+ *   href="/previous-step" 
+ *   @click="handleBackNavigation"
+ * >
+ *   Tilbage til forrige trin
+ * </fds-tilbage-link>
+ * ```
+ * 
+ * @example Browser history integration
+ * ```vue\n * <fds-tilbage-link @click="$router.go(-1)">\n *   Tilbage\n * </fds-tilbage-link>\n * ```
+ * 
+ * @see {@link https://designsystem.dk/komponenter/tilbage-link/} DKFDS Back Link Documentation
  */
 
 export interface FdsTilbageLinkProps {
-  /** Href for linket. Standard er javascript:void(0); for at undgå navigation */
+  /** 
+   * Link destination URL
+   * By default uses javascript:void(0); to prevent navigation, allowing
+   * the click handler to control the back navigation behavior.
+   * @default 'javascript:void(0);'
+   */
   href?: string
 }
 
@@ -31,9 +56,14 @@ const _props = withDefaults(defineProps<FdsTilbageLinkProps>(), {
   href: 'javascript:void(0);',
 })
 
-// Define emits for better TypeScript support
 const emit = defineEmits<{
-  /** Emitted when the link is clicked */
+  /**
+   * Emitted when the back link is clicked
+   * Use this to implement custom back navigation logic, such as
+   * router.go(-1), programmatic navigation, or state management.
+   * 
+   * @param event - The original mouse click event
+   */
   click: [event: MouseEvent]
 }>()
 

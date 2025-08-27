@@ -69,14 +69,81 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * Accordion component implementing DKFDS v11 collapsible content specifications.
+ * 
+ * Expandable/collapsible content panels with proper keyboard navigation and ARIA attributes.
+ * Can be used standalone or within FdsAccordionGroup for coordinated behavior.
+ * 
+ * @component
+ * @example Standalone accordion
+ * ```vue
+ * <FdsAccordion header="Show more information">
+ *   Detailed content that can be expanded or collapsed.
+ * </FdsAccordion>
+ * ```
+ * 
+ * @example Accordion with custom header
+ * ```vue
+ * <FdsAccordion>
+ *   <template #header>
+ *     <span>Custom Header with <strong>formatting</strong></span>
+ *   </template>
+ *   <template #default>
+ *     Accordion content goes here
+ *   </template>
+ * </FdsAccordion>
+ * ```
+ * 
+ * @example Controlled accordion (v-model)
+ * ```vue
+ * <FdsAccordion 
+ *   v-model="isExpanded"
+ *   header="Controlled Accordion"
+ *   @update:modelValue="handleToggle"
+ * >
+ *   Content visibility controlled by isExpanded ref
+ * </FdsAccordion>
+ * ```
+ * 
+ * @example Accordion with status variants
+ * ```vue
+ * <FdsAccordion 
+ *   header="Warning Section"
+ *   variant="warning"
+ *   variant-text="2 issues"
+ * >
+ *   Content with warning status indicator
+ * </FdsAccordion>
+ * ```
+ * 
+ * @example Within accordion group
+ * ```vue
+ * <FdsAccordionGroup :allow-multiple="false">
+ *   <FdsAccordion header="Section 1">Content 1</FdsAccordion>
+ *   <FdsAccordion header="Section 2">Content 2</FdsAccordion>
+ *   <FdsAccordion header="Section 3">Content 3</FdsAccordion>
+ * </FdsAccordionGroup>
+ * ```
+ * 
+ * @see {@link https://designsystem.dk/komponenter/accordions/} DKFDS Accordion Documentation
+ */
+
 import { ref, computed, inject, watch, onMounted, onUnmounted, type Ref } from 'vue'
 import { generateId } from '../../composables'
 import FdsIkon from '../layout/fds-ikon.vue'
 
 export interface FdsAccordionProps {
-  /** Accordion header text */
+  /** 
+   * Accordion header text
+   * Displayed as the clickable toggle button content
+   */
   header?: string
-  /** Controlled expanded state */
+  
+  /** 
+   * Controlled expanded state
+   * Use with v-model for two-way binding
+   */
   modelValue?: boolean
   /** Heading level */
   headerTag?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'

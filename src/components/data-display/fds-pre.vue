@@ -17,12 +17,66 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * Pre-formatted text component implementing DKFDS v11 code display specifications.
+ * 
+ * Displays formatted code, JSON, or pre-formatted text with proper syntax highlighting support.
+ * Features automatic JSON formatting, scrollable containers for long content, and optional
+ * headers for context. Designed for technical documentation and data display.
+ * 
+ * @component
+ * @example Basic code display
+ * ```vue
+ * <FdsPre code="const hello = 'world';" header="JavaScript Example" />
+ * ```
+ * 
+ * @example JSON object formatting
+ * ```vue
+ * <FdsPre 
+ *   :json="{ name: 'John', age: 30, city: 'Copenhagen' }" 
+ *   header="User Data"
+ * />
+ * ```
+ * 
+ * @example Slot content for complex formatting
+ * ```vue
+ * <FdsPre header="Configuration File">
+ *   server:
+ *     host: localhost
+ *     port: 3000
+ *   database:
+ *     type: postgresql
+ *     url: postgres://localhost/mydb
+ * </FdsPre>
+ * ```
+ * 
+ * @example Large JSON with overflow warning
+ * ```vue
+ * <FdsPre 
+ *   :json="largeDataObject" 
+ *   header="API Response"
+ * />
+ * <!-- Shows warning if content exceeds 65,535 characters -->
+ * ```
+ * 
+ * @see {@link https://designsystem.dk/komponenter/} DKFDS Documentation (Pre/Code components)
+ */
 export interface FdsPreProps {
-  /** JSON object to display formatted */
+  /** 
+   * JavaScript object to display as formatted JSON
+   * Automatically stringified with proper indentation
+   * Takes precedence over code prop when both are provided
+   */
   json?: object | null
-  /** Code string to display */
+  /** 
+   * Raw code string to display with monospace formatting
+   * Used when json prop is not provided
+   */
   code?: string | null
-  /** Header text for the code block */
+  /** 
+   * Optional header text displayed above the code block
+   * Useful for providing context or identifying the content type
+   */
   header?: string
 }
 

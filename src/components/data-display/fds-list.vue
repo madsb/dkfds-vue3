@@ -9,32 +9,87 @@
 
 <script setup lang="ts">
 /**
- * DKFDS List Component
- *
- * Komponent til generel brug af lister følger DKFDS v11 specifikationer
- * Understøtter både ordnede (ol) og uordnede (ul) lister
+ * List component implementing DKFDS v11 list specifications.
+ * 
+ * Flexible list container supporting both ordered and unordered lists with multiple 
+ * visual variants for different design contexts. Provides semantic HTML structure
+ * with accessible styling options for content organization and display.
+ * 
+ * @component
+ * @example Basic unordered list
+ * ```vue
+ * <FdsList>
+ *   <FdsListItem>First item</FdsListItem>
+ *   <FdsListItem>Second item</FdsListItem>
+ *   <FdsListItem>Third item</FdsListItem>
+ * </FdsList>
+ * ```
+ * 
+ * @example Ordered list with numbering
+ * ```vue
+ * <FdsList :ordered="true">
+ *   <FdsListItem>Step one</FdsListItem>
+ *   <FdsListItem>Step two</FdsListItem>
+ *   <FdsListItem>Step three</FdsListItem>
+ * </FdsList>
+ * ```
+ * 
+ * @example Bordered list for structured content
+ * ```vue
+ * <FdsList variant="bordered">
+ *   <FdsListItem>Item with border</FdsListItem>
+ *   <FdsListItem>Another bordered item</FdsListItem>
+ *   <FdsListItem>Final bordered item</FdsListItem>
+ * </FdsList>
+ * ```
+ * 
+ * @example Unstyled list for custom designs
+ * ```vue
+ * <FdsList variant="unstyled" :no-top-margin="true">
+ *   <FdsListItem>Custom styled item</FdsListItem>
+ *   <FdsListItem>Another custom item</FdsListItem>
+ * </FdsList>
+ * ```
+ * 
+ * @example No-bullet list for clean layouts
+ * ```vue
+ * <FdsList variant="nobullet">
+ *   <FdsListItem>Item without bullet</FdsListItem>
+ *   <FdsListItem>Clean list item</FdsListItem>
+ * </FdsList>
+ * ```
+ * 
+ * @see {@link https://designsystem.dk/komponenter/lister/} DKFDS List Documentation
  */
 import { computed } from 'vue'
 
 export interface FdsListProps {
   /**
-   * Type af liste variant
-   * - 'bordered': Kantede lister med linjer mellem elementer
-   * - 'unstyled': Lister uden standard styling
-   * - 'nobullet': Lister uden punkttegn eller numre
-   * - 'overflow': Lister til overflow menuer
+   * Visual variant controlling list appearance and behavior
+   * - 'bordered': Adds borders between list items for structured content
+   * - 'unstyled': Removes default list styling for custom designs
+   * - 'nobullet': Removes bullets/numbers while maintaining list semantics
+   * - 'overflow': Optimized for dropdown and overflow menu contexts
+   * @values 'bordered', 'unstyled', 'nobullet', 'overflow', null
+   * @default null
    */
   variant?: 'bordered' | 'unstyled' | 'nobullet' | 'overflow' | null
   /**
-   * Om listen skal være ordnet (ol) eller uordnet (ul)
+   * Whether to render as ordered list (ol) with numbering or unordered list (ul)
+   * Use ordered lists for sequential content, unordered for general items
+   * @default false
    */
   ordered?: boolean
   /**
-   * Tilføj margin top 0 klasse
+   * Remove top margin for tight layouts or custom spacing control
+   * Useful when list is first element in container
+   * @default false
    */
   noTopMargin?: boolean
   /**
-   * Tilføj margin bottom 0 klasse
+   * Remove bottom margin for tight layouts or custom spacing control
+   * Useful when list is last element in container
+   * @default false
    */
   noBottomMargin?: boolean
 }

@@ -21,25 +21,89 @@
 import { computed, inject, isRef, type Ref } from 'vue'
 
 /**
- * Character limit component for form inputs
- * Based on DKFDS v11 character limit functionality
- * https://designsystem.dk/komponenter/inputfelter/#karakterbegraensning
+ * Character limit indicator component implementing DKFDS v11 character constraint specifications.
+ * 
+ * Provides real-time character count feedback with warning and error states.
+ * Automatically integrates with form controls to display remaining characters,
+ * warn when approaching limits, and indicate when limits are exceeded.
+ * Supports customizable thresholds and messaging following DKFDS patterns.
+ * 
+ * @component
+ * @example Basic character limit
+ * ```vue
+ * <FdsTextarea v-model="description" maxlength="200" />
+ * <FdsInputLimit v-model="description" :limit="200" />
+ * ```
+ * 
+ * @example With custom warning threshold
+ * ```vue
+ * <FdsInput v-model="title" />
+ * <FdsInputLimit 
+ *   v-model="title" 
+ *   :limit="50" 
+ *   :warningThreshold="0.9"
+ * />
+ * ```
+ * 
+ * @example In form group with custom messages
+ * ```vue
+ * <FdsFormgroup>
+ *   <template #default="{ formid }">
+ *     <FdsLabel>Comment</FdsLabel>
+ *     <FdsTextarea v-model="comment" :id="formid" />
+ *     <FdsInputLimit 
+ *       v-model="comment" 
+ *       :limit="300"
+ *       :messages="{
+ *         initial: 'Maximum {limit} characters allowed',
+ *         remaining: '{remaining} characters remaining',
+ *         exceeded: '{exceeded} characters over limit'
+ *       }"
+ *     />
+ *   </template>
+ * </FdsFormgroup>
+ * ```
+ * 
+ * @see {@link https://designsystem.dk/komponenter/inputfelter/#karakterbegraensning} DKFDS Character Limit Documentation
  */
 
 export interface FdsInputLimitProps {
-  /** Current input value to count */
+  /** 
+   * Current input value to count characters for.
+   * Should be bound to the same v-model as the associated input/textarea.
+   * @default null
+   */
   modelValue?: string | null
-  /** Maximum number of characters allowed */
+  /** 
+   * Maximum number of characters allowed.
+   * Used to calculate remaining characters and exceeded state.
+   */
   limit: number
-  /** Custom ID for the limit message element */
+  /** 
+   * Custom ID for the limit message element.
+   * If not provided, uses injected hintId from form group.
+   * @default undefined (uses injected hintId + '-limit')
+   */
   id?: string
-  /** Warning threshold (percentage of limit) */
+  /** 
+   * Warning threshold as percentage of limit (0-1).
+   * When reached, displays warning styling and message.
+   * @default 0.8 (80% of limit)
+   */
   warningThreshold?: number
-  /** Custom messages */
+  /** 
+   * Custom messages for different states.
+   * Supports template variables {limit}, {remaining}, {exceeded}.
+   * @default Danish language messages
+   */
   messages?: {
+    /** Initial message shown to screen readers */
     initial?: string
+    /** Message when characters remain */
     remaining?: string
+    /** Message when in warning state */
     warning?: string
+    /** Message when limit exceeded */
     exceeded?: string
   }
 }

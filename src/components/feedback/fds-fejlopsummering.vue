@@ -22,24 +22,95 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * Error summary component implementing DKFDS v11 fejlopsummering specifications.
+ * 
+ * Provides a centralized display of form validation errors with direct navigation to error fields.
+ * Features automatic error collection from child form components, manual error management, 
+ * and proper ARIA navigation structure. Essential for accessible form validation workflows.
+ * 
+ * @component
+ * @example Basic error summary with manual errors
+ * ```vue
+ * <FdsFejlopsummering 
+ *   :errors="[
+ *     { id: 'email', message: 'Email is required' },
+ *     { id: 'password', message: 'Password must be at least 8 characters' }
+ *   ]"
+ * />
+ * ```
+ * 
+ * @example Auto-collecting errors from form fields
+ * ```vue
+ * <FdsFejlopsummering :auto-collect="true">
+ *   <FdsFormGroup id="username" :error="usernameError">
+ *     <FdsInput v-model="username" />
+ *   </FdsFormGroup>
+ *   <FdsFormGroup id="email" :error="emailError">
+ *     <FdsInput v-model="email" type="email" />
+ *   </FdsFormGroup>
+ * </FdsFejlopsummering>
+ * ```
+ * 
+ * @example Custom header with error click handling
+ * ```vue
+ * <FdsFejlopsummering 
+ *   header="Please fix the following issues"
+ *   :errors="formErrors"
+ *   @error-clicked="handleErrorClick"
+ * >
+ *   <template #header>
+ *     <strong>Validation Errors ({{ errorCount }})</strong>
+ *   </template>
+ * </FdsFejlopsummering>
+ * ```
+ * 
+ * @example Disabled auto-collect with manual error management
+ * ```vue
+ * <FdsFejlopsummering 
+ *   :auto-collect="false"
+ *   :errors="manualErrors"
+ * />
+ * ```
+ * 
+ * @see {@link https://designsystem.dk/komponenter/fejlopsummering/} DKFDS Error Summary Documentation
+ */
 import { computed, provide, ref, onMounted, onUnmounted, toValue } from 'vue'
 import { generateId } from '../../composables'
 import FdsIkon from '../layout/fds-ikon.vue'
 
 export interface ErrorItem {
+  /** Unique identifier matching the form field ID */
   id: string
+  /** Human-readable error message to display */
   message: string
+  /** Optional reference to the associated form element */
   element?: HTMLElement
 }
 
 export interface FdsFejlopsummeringProps {
-  /** Overskrift for fejlopsummering */
+  /** 
+   * Main heading text for the error summary section
+   * Should clearly indicate this is an error summary for users
+   * @default 'Der er problemer'
+   */
   header?: string
-  /** ID for accessibility aria-labelledby */
+  /** 
+   * Unique identifier for the error summary container
+   * Auto-generated if not provided for proper ARIA labeling
+   */
   id?: string
-  /** Manuel liste af fejl */
+  /** 
+   * Manual list of error items to display
+   * Each error should have an id matching a form field and descriptive message
+   * @default []
+   */
   errors?: ErrorItem[]
-  /** Om komponenten automatisk skal indsamle fejl fra formfelter */
+  /** 
+   * Whether to automatically collect errors from child form components
+   * When enabled, form fields can register errors automatically
+   * @default true
+   */
   autoCollect?: boolean
 }
 
@@ -55,6 +126,10 @@ const {
 } = defineProps<FdsFejlopsummeringProps>()
 
 const emit = defineEmits<{
+  /** 
+   * Emitted when a user clicks on an error link in the summary
+   * Provides the field ID for custom handling or analytics tracking
+   */
   'error-clicked': [id: string]
 }>()
 

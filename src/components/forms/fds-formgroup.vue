@@ -13,15 +13,59 @@
 import { computed, inject, provide, ref } from 'vue'
 import { formId } from '../../composables'
 
+/**
+ * Form group component implementing DKFDS v11 form structure specifications.
+ * 
+ * Provides semantic grouping for form controls with integrated validation state management,
+ * accessibility features, and context for child components. Automatically handles
+ * aria-describedby relationships, validation styling, and ID management following
+ * DKFDS accessibility patterns.
+ * 
+ * @component
+ * @example Basic form group with input
+ * ```vue
+ * <FdsFormgroup :isValid="isValid">
+ *   <template #default="{ formid, ariaDescribedby, isValid }">
+ *     <FdsLabel :forId="formid">Email</FdsLabel>
+ *     <FdsHint>Enter your email address</FdsHint>
+ *     <FdsInput 
+ *       :id="formid" 
+ *       :aria-describedby="ariaDescribedby" 
+ *       :isValid="isValid" 
+ *     />
+ *     <FdsFejlmeddelelse v-if="!isValid">Please enter a valid email</FdsFejlmeddelelse>
+ *   </template>
+ * </FdsFormgroup>
+ * ```
+ * 
+ * @example Form group with validation
+ * ```vue
+ * <FdsFormgroup :id="'user-email'" :isValid="emailValid">
+ *   <template #default="{ formid, ariaDescribedby }">
+ *     <FdsLabel :forId="formid" :required="true">Email Address</FdsLabel>
+ *     <FdsHint>We'll use this to send you updates</FdsHint>
+ *     <FdsInput v-model="email" :id="formid" :aria-describedby="ariaDescribedby" />
+ *     <FdsFejlmeddelelse>Please enter a valid email address</FdsFejlmeddelelse>
+ *   </template>
+ * </FdsFormgroup>
+ * ```
+ * 
+ * @see {@link https://designsystem.dk/komponenter/inputfelter/} DKFDS Input Fields Documentation
+ */
+
 export interface FdsFormgroupProps {
   /**
    * Unique identifier for the form group.
    * If not provided, a unique ID will be generated automatically.
+   * Used as the base for generating hint and error element IDs.
+   * @default undefined (auto-generated)
    */
   id?: string
   /**
    * Validation state of the form group.
-   * When false, the form-error class is applied and aria-invalid is set.
+   * When false, applies 'form-error' class and sets aria-invalid="true".
+   * Affects styling and accessibility attributes for child form controls.
+   * @default true
    */
   isValid?: boolean
 }
