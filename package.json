@@ -48,6 +48,9 @@
     "lint": "eslint src examples",
     "lint:fix": "eslint src examples --fix",
     "format": "prettier --write src examples",
+    "docs:dev": "pnpm -C docs-site run dev",
+    "docs:build": "pnpm -C docs-site run build",
+    "docs:preview": "pnpm -C docs-site run preview",
     "prepublishOnly": "pnpm run build"
   },
   "peerDependencies": {

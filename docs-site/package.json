@@ -1,0 +1,20 @@
+{
+  "name": "dkfds-vue3-docs",
+  "version": "1.0.0",
+  "description": "Documentation site for DKFDS Vue 3 component library",
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "preview": "vitepress preview docs"
+  },
+  "dependencies": {
+    "@madsb/dkfds-vue3": "workspace:*",
+    "dkfds": "^11.0.1"
+  },
+  "devDependencies": {
+    "vitepress": "2.0.0-alpha.12",
+    "vue": "^3.5.18",
+    "sass": "^1.89.2"
+  }
+}
