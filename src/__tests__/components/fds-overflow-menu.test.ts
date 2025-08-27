@@ -32,7 +32,7 @@ describe('FdsOverflowMenu', () => {
     it('renders button with default header text', () => {
       const wrapper = mount(FdsOverflowMenu)
       const button = wrapper.find('button')
-      expect(button.find('span').text()).toContain('Overflow menu')
+      expect(button.text()).toContain('Overflow menu')
     })
 
     it('renders with default icon', () => {
@@ -67,14 +67,14 @@ describe('FdsOverflowMenu', () => {
     describe('header prop', () => {
       it('uses default header text', () => {
         const wrapper = mount(FdsOverflowMenu)
-        expect(wrapper.find('button span').text()).toContain('Overflow menu')
+        expect(wrapper.find('button').text()).toContain('Overflow menu')
       })
 
       it('accepts custom header text', () => {
         const wrapper = mount(FdsOverflowMenu, {
           props: { header: 'Custom Menu' },
         })
-        expect(wrapper.find('button span').text()).toContain('Custom Menu')
+        expect(wrapper.find('button').text()).toContain('Custom Menu')
       })
 
       it('handles empty header', () => {
@@ -82,14 +82,14 @@ describe('FdsOverflowMenu', () => {
           props: { header: '' },
         })
         // When header is empty, it falls back to default text due to template logic
-        expect(wrapper.find('button span').text()).toContain('Overflow menu')
+        expect(wrapper.find('button').text()).toContain('Overflow menu')
       })
 
       it('handles Danish text', () => {
         const wrapper = mount(FdsOverflowMenu, {
           props: { header: 'Flere muligheder' },
         })
-        expect(wrapper.find('button span').text()).toContain('Flere muligheder')
+        expect(wrapper.find('button').text()).toContain('Flere muligheder')
       })
     })
 
@@ -167,6 +167,57 @@ describe('FdsOverflowMenu', () => {
           props: { position: 'left' },
         })
         expect(wrapper.find('.overflow-menu').classes()).toContain('overflow-menu--open-left')
+      })
+    })
+
+    describe('iconPosition', () => {
+      it('defaults to right position', () => {
+        const wrapper = mount(FdsOverflowMenu)
+        const button = wrapper.find('button')
+        const icons = button.findAll('svg')
+        
+        // Should have one icon
+        expect(icons).toHaveLength(1)
+        
+        // Icon should be after the text (right position)
+        const buttonHTML = button.html()
+        const iconIndex = buttonHTML.indexOf('<svg')
+        const textIndex = buttonHTML.indexOf('Overflow menu')
+        expect(iconIndex).toBeGreaterThan(textIndex)
+      })
+
+      it('positions icon on the left when specified', () => {
+        const wrapper = mount(FdsOverflowMenu, {
+          props: { iconPosition: 'left' },
+        })
+        const button = wrapper.find('button')
+        const icons = button.findAll('svg')
+        
+        // Should have one icon
+        expect(icons).toHaveLength(1)
+        
+        // Icon should be before the text (left position)
+        const buttonHTML = button.html()
+        const iconIndex = buttonHTML.indexOf('<svg')
+        const textIndex = buttonHTML.indexOf('Overflow menu')
+        expect(iconIndex).toBeLessThan(textIndex)
+      })
+
+      it('positions icon on the right when explicitly set', () => {
+        const wrapper = mount(FdsOverflowMenu, {
+          props: { iconPosition: 'right' },
+        })
+        const button = wrapper.find('button')
+        const icons = button.findAll('svg')
+        
+        // Should have one icon
+        expect(icons).toHaveLength(1)
+        
+        // Icon should be after the text (right position)
+        const buttonHTML = button.html()
+        const iconIndex = buttonHTML.indexOf('<svg')
+        const textIndex = buttonHTML.indexOf('Overflow menu')
+        expect(iconIndex).toBeGreaterThan(textIndex)
       })
     })
   })
@@ -455,7 +506,7 @@ describe('FdsOverflowMenu', () => {
       })
       const button = wrapper.find('button')
 
-      expect(button.find('span').text()).toContain('Actions menu')
+      expect(button.text()).toContain('Actions menu')
     })
 
     it('has proper icon accessibility', () => {
@@ -508,7 +559,7 @@ describe('FdsOverflowMenu', () => {
         },
       })
 
-      expect(wrapper.find('button span').text()).toContain('Overflow menu')
+      expect(wrapper.find('button').text()).toContain('Overflow menu')
       expect(wrapper.find('use').attributes('href')).toBe('#more-vert')
       expect(wrapper.find('.overflow-menu').classes()).toContain('overflow-menu--open-right')
     })
@@ -672,7 +723,7 @@ describe('FdsOverflowMenu', () => {
       const wrapper = mount(DKFDSWrapper)
       const menu = wrapper.findComponent(FdsOverflowMenu)
 
-      expect(menu.find('button span').text()).toContain('Flere handlinger')
+      expect(menu.find('button').text()).toContain('Flere handlinger')
       expect(menu.find('.overflow-menu').classes()).toContain('overflow-menu--open-right')
       expect(menu.find('a.text-error').text()).toBe('Slet')
     })
