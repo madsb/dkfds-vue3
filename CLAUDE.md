@@ -53,6 +53,19 @@ pnpm test:coverage
 pnpm test:ui
 ```
 
+### Documentation
+
+```bash
+# Run VitePress documentation site in development mode
+pnpm docs:dev
+
+# Build VitePress documentation for production
+pnpm docs:build
+
+# Preview built documentation locally
+pnpm docs:preview
+```
+
 ## Architecture
 
 ### Project Structure
@@ -72,6 +85,14 @@ src/
 ├── types/               # TypeScript type definitions
 ├── assets/              # SCSS styles
 └── index.ts             # Main entry point with exports
+
+docs-site/
+├── docs/                # VitePress documentation
+│   ├── .vitepress/      # VitePress configuration
+│   ├── guide/           # Getting started guides
+│   ├── components/      # Component documentation
+│   └── api/             # API reference
+└── package.json         # Documentation site dependencies
 
 examples/
 └── demo/                # Demo application showcasing all components
@@ -121,11 +142,13 @@ import type { FdsLanguageItem } from '@madsb/dkfds-vue3'
 
 1. Make changes to components in `src/components/[category]/`
 2. Update tests in `src/__tests__/`
-3. Run `pnpm run format` to format code
-4. Run `pnpm run lint:fix` to fix linting issues
-5. Run `pnpm test:run` to ensure tests pass
-6. Run `pnpm run build` to build the library
-7. Test in demo app with `pnpm run dev`
+3. Update component documentation in `docs-site/docs/components/[category]/`
+4. Run `pnpm run format` to format code
+5. Run `pnpm run lint:fix` to fix linting issues
+6. Run `pnpm test:run` to ensure tests pass
+7. Run `pnpm run build` to build the library
+8. Test in demo app with `pnpm run dev`
+9. Preview documentation with `pnpm docs:dev`
 
 ### Publishing Preparation
 
@@ -133,18 +156,37 @@ import type { FdsLanguageItem } from '@madsb/dkfds-vue3'
 # Build the library
 pnpm run build
 
+# Build documentation
+pnpm docs:build
+
 # Run all quality checks
 pnpm run lint
 pnpm run typecheck
 pnpm test:run
 
 # The built files will be in dist/
-# Ready for npm publish
+# The built documentation will be in docs-site/docs/.vitepress/dist/
+# Ready for npm publish and documentation deployment
 ```
+
+### Documentation Architecture
+
+The project uses VitePress for comprehensive documentation:
+
+- **VitePress Configuration**: `docs-site/docs/.vitepress/config.ts` contains navigation and site configuration
+- **Component Documentation**: Each component has its own markdown file in `docs-site/docs/components/[category]/`
+- **Documentation Structure**: 
+  - Guide section for installation and getting started
+  - Components section organized by the same categories as the source code
+  - API reference for technical details
+- **Live Examples**: Documentation includes interactive component examples
+- **Theme Integration**: Documentation site uses DKFDS styling and supports both VirkDK and BorgerDK themes
 
 ## Important Notes
 
 - This is a single-package library (no monorepo complexity)
 - All components are in `src/components/` organized by category
 - The demo app uses the workspace protocol to link to the local package
+- Documentation is in `docs-site/` and uses VitePress for static site generation
 - Always run format and lint after major edits: `pnpm run format && pnpm run lint:fix`
+- Keep component documentation in sync with component changes

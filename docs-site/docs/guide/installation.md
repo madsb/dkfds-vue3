@@ -30,18 +30,90 @@ yarn add @madsb/dkfds-vue3 dkfds@^11.0.0
 
 ## Global Registration
 
-Register all components globally (easiest setup):
+Register all components globally:
 
 ```typescript
 // main.ts
 import { createApp } from 'vue'
 import dkfdsVue3 from '@madsb/dkfds-vue3'
-import '@madsb/dkfds-vue3/styles'
 import App from './App.vue'
 
 const app = createApp(App)
 app.use(dkfdsVue3)
 app.mount('#app')
+```
+
+## Style Integration
+
+Choose **one** of these approaches:
+
+### Option A: Pre-built CSS (Easiest)
+
+```typescript
+// main.ts
+import '@madsb/dkfds-vue3/dist/dkfds-vue3.css'
+```
+
+### Option B: SCSS Integration with DKFDS Theme (Recommended)
+
+Choose your DKFDS theme and configure the components:
+
+**Virkdk Theme (Government):**
+
+```scss
+// main.scss
+@use 'node_modules/dkfds/src/stylesheets/dkfds-virkdk' as dkfds with (
+  $font-path: 'node_modules/dkfds/src/fonts/IBMPlexSans/',
+  $image-path: 'node_modules/dkfds/src/img/',
+  $icons-folder-path: 'node_modules/dkfds/src/img/svg-icons/'
+);
+@use '@madsb/dkfds-vue3/scss' as vue3;
+
+// Configure Vue3 components with DKFDS colors
+@include vue3.configure-with-dkfds-resolved(
+  dkfds.color(dkfds.$theme-color-primary),
+  dkfds.color(dkfds.$theme-color-primary-dark),
+  dkfds.color(dkfds.$theme-color-primary-darker),
+  dkfds.color(dkfds.$theme-focus-color),
+  dkfds.color(dkfds.$theme-color-success),
+  dkfds.color(dkfds.$theme-color-success-light),
+  dkfds.color(dkfds.$theme-color-info),
+  dkfds.color(dkfds.$theme-color-warning),
+  dkfds.color(dkfds.$theme-color-error)
+);
+```
+
+**Borgerdk Theme (Citizen Portal):**
+
+```scss
+// main.scss
+@use 'node_modules/dkfds/src/stylesheets/dkfds-borgerdk' as dkfds with (
+  $font-path: 'node_modules/dkfds/src/fonts/IBMPlexSans/',
+  $image-path: 'node_modules/dkfds/src/img/',
+  $icons-folder-path: 'node_modules/dkfds/src/img/svg-icons/'
+);
+@use '@madsb/dkfds-vue3/scss' as vue3;
+
+// Same configuration works with any DKFDS theme!
+@include vue3.configure-with-dkfds-resolved(
+  dkfds.color(dkfds.$theme-color-primary),
+  dkfds.color(dkfds.$theme-color-primary-dark),
+  dkfds.color(dkfds.$theme-color-primary-darker),
+  dkfds.color(dkfds.$theme-focus-color),
+  dkfds.color(dkfds.$theme-color-success),
+  dkfds.color(dkfds.$theme-color-success-light),
+  dkfds.color(dkfds.$theme-color-info),
+  dkfds.color(dkfds.$theme-color-warning),
+  dkfds.color(dkfds.$theme-color-error)
+);
+```
+
+### Option C: Default Colors (No DKFDS Theme)
+
+```scss
+// main.scss - Uses built-in default colors
+@use '@madsb/dkfds-vue3/scss' as vue3;
+// No additional configuration needed
 ```
 
 Now use components anywhere without imports:
@@ -82,11 +154,6 @@ const submit = () => {
   console.log('Name:', name.value)
 }
 </script>
-
-<style>
-/* Import styles once in your main file or here */
-@import '@madsb/dkfds-vue3/styles';
-</style>
 ```
 
 ## TypeScript Support
@@ -143,7 +210,7 @@ For Nuxt 3 projects:
 ```typescript
 // nuxt.config.ts
 export default defineNuxtConfig({
-  css: ['@madsb/dkfds-vue3/styles'],
+  css: ['@madsb/dkfds-vue3/dist/dkfds-vue3.css'], // Or use your SCSS setup
   build: {
     transpile: ['@madsb/dkfds-vue3']
   }
@@ -242,9 +309,16 @@ Update your `tsconfig.json`:
 
 ### Styling issues
 
-Make sure to import styles:
+Make sure to import styles using one of the approaches above:
 ```typescript
-import '@madsb/dkfds-vue3/styles'
+// Option A: Pre-built CSS
+import '@madsb/dkfds-vue3/dist/dkfds-vue3.css'
+
+// Option B: SCSS with theme integration
+// See SCSS Integration section above
+
+// Option C: Default SCSS
+@use '@madsb/dkfds-vue3/scss' as vue3;
 ```
 
 ### Build errors

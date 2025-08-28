@@ -2,6 +2,10 @@
 
 This guide will help you build your first form using DKFDS Vue 3 components in just a few minutes.
 
+::: tip Prerequisites
+Make sure you've completed the [Installation →](./installation) guide including style integration. Choose between pre-built CSS or SCSS with theme integration for the best experience.
+:::
+
 ## Basic Form
 
 Let's create a contact form with validation:
