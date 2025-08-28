@@ -4,8 +4,8 @@
   "description": "Vue 3 implementation of Det Fælles Designsystem (DKFDS) v11 - Danish Common Design System",
   "author": "Mads Bjerre",
   "license": "MIT",
-  "module": "./dist/dkfds-vue3.mjs",
-  "main": "./dist/dkfds-vue3.umd.js",
+  "type": "module",
+  "module": "./dist/index.mjs",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
@@ -13,13 +13,13 @@
   },
   "homepage": "https://github.com/madsb/dkfds-vue3#readme",
   "files": [
-    "dist/*"
+    "dist/*",
+    "src/assets/*.scss"
   ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/dkfds-vue3.mjs",
-      "require": "./dist/dkfds-vue3.cjs"
+      "import": "./dist/index.mjs"
     },
     "./components/*": {
       "types": "./dist/components/*.d.ts",
@@ -27,13 +27,18 @@
     },
     "./composables": {
       "types": "./dist/composables/index.d.ts",
-      "import": "./dist/dkfds-vue3.mjs"
+      "import": "./dist/index.mjs"
     },
     "./utils": {
       "types": "./dist/utils/index.d.ts",
-      "import": "./dist/dkfds-vue3.mjs"
+      "import": "./dist/index.mjs"
     },
-    "./styles": "./dist/dkfds-vue3.css",
+    "./styles": {
+      "import": "./dist/styles.mjs"
+    },
+    "./dist/dkfds-vue3.css": "./dist/dkfds-vue3.css",
+    "./scss": "./src/assets/_index.scss",
+    "./scss/*": "./src/assets/_*.scss",
     "./package.json": "./package.json"
   },
   "scripts": {

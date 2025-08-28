@@ -8,10 +8,13 @@ export default defineConfig({
   plugins: [vue()],
   build: {
     lib: {
-      entry: resolve(__dirname, './src/index.ts'),
+      entry: {
+        index: resolve(__dirname, './src/index.ts'),
+        styles: resolve(__dirname, './src/styles.ts'),
+      },
       name: 'MadsbDkfdsVue3',
-      formats: ['es', 'cjs', 'umd'],
-      fileName: (format) => `dkfds-vue3.${format === 'es' ? 'mjs' : format === 'cjs' ? 'cjs' : 'umd.js'}`,
+      formats: ['es'],
+      fileName: (format, entryName) => `${entryName}.mjs`,
     },
     minify: 'terser',
     terserOptions: {

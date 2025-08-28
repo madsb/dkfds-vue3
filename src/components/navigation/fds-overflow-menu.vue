@@ -52,12 +52,12 @@ import FdsIkon from '../layout/fds-ikon.vue'
 
 /**
  * Overflow menu component implementing DKFDS v11 overflow menu specifications.
- * 
+ *
  * Provides a collapsible menu for additional actions or options when space is limited.
  * Features keyboard navigation, click-outside-to-close behavior, proper ARIA attributes,
  * and customizable positioning. Commonly used for action menus, settings, or additional
  * navigation options that don't fit in the main interface.
- * 
+ *
  * @component
  * @example Basic overflow menu
  * ```vue
@@ -67,10 +67,10 @@ import FdsIkon from '../layout/fds-ikon.vue'
  *   <li><a href="/share">Share</a></li>
  * </fds-overflow-menu>
  * ```
- * 
+ *
  * @example Custom icon and positioning
  * ```vue
- * <fds-overflow-menu 
+ * <fds-overflow-menu
  *   header="More options"
  *   icon="more-horiz"
  *   icon-position="left"
@@ -81,7 +81,7 @@ import FdsIkon from '../layout/fds-ikon.vue'
  *   <li><button @click="anotherAction">Another Action</button></li>
  * </fds-overflow-menu>
  * ```
- * 
+ *
  * @example With custom icon content
  * ```vue
  * <fds-overflow-menu position="right">
@@ -95,36 +95,36 @@ import FdsIkon from '../layout/fds-ikon.vue'
  *   <li><a href="/option2">Option 2</a></li>
  * </fds-overflow-menu>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/navigation/} DKFDS Navigation Documentation
  */
 
 export interface FdsOverflowMenuProps {
-  /** 
+  /**
    * Header text for the menu button
    * Visible text displayed on the menu trigger button.
    * @default 'Overflow menu'
    */
   header?: string
-  /** 
+  /**
    * Unique identifier for the menu
    * Auto-generated if not provided. Used for ARIA relationships.
    */
   id?: string
-  /** 
+  /**
    * Icon identifier for the menu button
    * DKFDS icon to display on the menu button.
    * @default 'more-vert'
    */
   icon?: string
-  /** 
+  /**
    * Position of the icon relative to header text
    * Controls whether icon appears before or after the header text.
    * @values 'left', 'right'
    * @default 'right'
    */
   iconPosition?: 'left' | 'right'
-  /** 
+  /**
    * Menu dropdown positioning
    * Controls which side of the button the menu appears on.
    * @values 'left', 'right'
@@ -133,7 +133,12 @@ export interface FdsOverflowMenuProps {
   position?: 'left' | 'right'
 }
 
-const { icon = 'more-vert', position = 'right', iconPosition = 'right', id } = defineProps<FdsOverflowMenuProps>()
+const {
+  icon = 'more-vert',
+  position = 'right',
+  iconPosition = 'right',
+  id,
+} = defineProps<FdsOverflowMenuProps>()
 
 const emit = defineEmits<{
   /**
@@ -149,7 +154,7 @@ const emit = defineEmits<{
   /**
    * Emitted when menu state toggles
    * Provides the new open/closed state for external state management.
-   * 
+   *
    * @param isOpen - Whether the menu is now open (true) or closed (false)
    */
   toggle: [isOpen: boolean]
@@ -214,3 +219,39 @@ onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
 })
 </script>
+
+<style scoped>
+/* Navigation-specific overflow menu styles */
+.nav-primary .overflow-menu .icon-svg {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .nav-primary .overflow-menu .icon-svg {
+    display: inline-block;
+  }
+
+  .nav-primary .overflow-menu .button-overflow-menu[aria-expanded='false'] {
+    background-image: none;
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+  }
+
+  .nav-primary .overflow-menu .button-overflow-menu[aria-expanded='true'] {
+    color: white;
+
+    .icon-svg {
+      fill: white;
+    }
+  }
+
+  .nav-primary .overflow-menu .button-overflow-menu[aria-expanded='true'] {
+    background-image: none;
+    background-color: white;
+  }
+
+  .nav-primary .overflow-menu .button-overflow-menu span {
+    padding-right: 0px;
+  }
+}
+</style>
