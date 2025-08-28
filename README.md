@@ -5,7 +5,8 @@ Vue 3 component library implementing [Det Fælles Designsystem](https://designsy
 ✨ **40+ accessible Vue 3 components** following Danish government design standards  
 🎯 **WCAG 2.1 AA compliant** with comprehensive accessibility support  
 📦 **Modern ESM-only package** with full TypeScript support  
-🌲 **Tree-shakeable** - Import only what you need
+🌲 **Tree-shakeable** - Import only what you need  
+🎨 **Theme-agnostic** - Works with any DKFDS theme (Virkdk, Borgerdk, or default)
 
 ## 📦 Installation
 
@@ -37,12 +38,18 @@ app.mount('#app')
 Choose **one** of these approaches:
 
 #### Option A: Pre-built CSS (Easiest)
+
 ```typescript
 // main.ts
 import '@madsb/dkfds-vue3/dist/dkfds-vue3.css'
 ```
 
-#### Option B: SCSS Integration (Customizable)
+#### Option B: SCSS Integration with DKFDS Theme (Recommended)
+
+Choose your DKFDS theme and configure the components:
+
+**Virkdk Theme (Government):**
+
 ```scss
 // main.scss
 @use 'node_modules/dkfds/src/stylesheets/dkfds-virkdk' as dkfds with (
@@ -50,9 +57,53 @@ import '@madsb/dkfds-vue3/dist/dkfds-vue3.css'
   $image-path: 'node_modules/dkfds/src/img/',
   $icons-folder-path: 'node_modules/dkfds/src/img/svg-icons/'
 );
-
-// Import Vue3 component utilities
 @use '@madsb/dkfds-vue3/scss' as vue3;
+
+// Configure Vue3 components with DKFDS colors
+@include vue3.configure-with-dkfds-resolved(
+  dkfds.color(dkfds.$theme-color-primary),
+  dkfds.color(dkfds.$theme-color-primary-dark),
+  dkfds.color(dkfds.$theme-color-primary-darker),
+  dkfds.color(dkfds.$theme-focus-color),
+  dkfds.color(dkfds.$theme-color-success),
+  dkfds.color(dkfds.$theme-color-success-light),
+  dkfds.color(dkfds.$theme-color-info),
+  dkfds.color(dkfds.$theme-color-warning),
+  dkfds.color(dkfds.$theme-color-error)
+);
+```
+
+**Borgerdk Theme (Citizen Portal):**
+
+```scss
+// main.scss
+@use 'node_modules/dkfds/src/stylesheets/dkfds-borgerdk' as dkfds with (
+  $font-path: 'node_modules/dkfds/src/fonts/IBMPlexSans/',
+  $image-path: 'node_modules/dkfds/src/img/',
+  $icons-folder-path: 'node_modules/dkfds/src/img/svg-icons/'
+);
+@use '@madsb/dkfds-vue3/scss' as vue3;
+
+// Same configuration works with any DKFDS theme!
+@include vue3.configure-with-dkfds-resolved(
+  dkfds.color(dkfds.$theme-color-primary),
+  dkfds.color(dkfds.$theme-color-primary-dark),
+  dkfds.color(dkfds.$theme-color-primary-darker),
+  dkfds.color(dkfds.$theme-focus-color),
+  dkfds.color(dkfds.$theme-color-success),
+  dkfds.color(dkfds.$theme-color-success-light),
+  dkfds.color(dkfds.$theme-color-info),
+  dkfds.color(dkfds.$theme-color-warning),
+  dkfds.color(dkfds.$theme-color-error)
+);
+```
+
+#### Option C: Default Colors (No DKFDS Theme)
+
+```scss
+// main.scss - Uses built-in default colors
+@use '@madsb/dkfds-vue3/scss' as vue3;
+// No additional configuration needed
 ```
 
 ### 3. Use Components
@@ -75,6 +126,36 @@ import { FdsButton, FdsAlert, FdsInput } from '@madsb/dkfds-vue3'
 // Import composables and utilities
 import { useToast, formId } from '@madsb/dkfds-vue3/composables'
 import { generateId, navigation } from '@madsb/dkfds-vue3/utils'
+```
+
+## 🎨 Theme Configuration
+
+This library is **theme-agnostic** and works with any DKFDS theme:
+
+### Available Themes
+
+| Theme        | Description                           | Use Case                                |
+| ------------ | ------------------------------------- | --------------------------------------- |
+| **Virkdk**   | Government theme with official colors | Government websites and applications    |
+| **Borgerdk** | Citizen portal theme                  | Public-facing citizen services          |
+| **Default**  | Built-in fallback colors              | Development, testing, or custom styling |
+
+### Theme Benefits
+
+- ✅ **Consistent colors** - Automatically synced with DKFDS theme updates
+- ✅ **Easy switching** - Change themes by updating one import
+- ✅ **Backward compatible** - Existing projects continue to work
+- ✅ **Flexible** - Use without DKFDS or with custom colors
+
+### Custom Color Override
+
+You can also override specific colors manually:
+
+```scss
+@use '@madsb/dkfds-vue3/scss' as vue3 with (
+  $color-primary: #custom-color,
+  $color-success: #another-custom-color
+);
 ```
 
 ## 🛠️ Development
@@ -132,6 +213,7 @@ examples/
 ## 🎯 Available Components
 
 **40+ components** organized by category:
+
 - **Forms**: `FdsFormgroup`, `FdsLabel`, `FdsHint`, `FdsFejlmeddelelse`
 - **Input**: `FdsInput`, `FdsCheckbox`, `FdsDropdown`, `FdsFileUpload`
 - **Navigation**: `FdsBreadcrumb`, `FdsMenu`, `FdsPaginering`, `FdsTrinindikator`

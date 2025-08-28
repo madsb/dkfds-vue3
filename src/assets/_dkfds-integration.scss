@@ -1,0 +1,53 @@
+// Mixin to configure the library with DKFDS colors from any theme
+// The color values should be resolved hex colors, not color names
+@mixin configure-with-dkfds-colors(
+  $primary,
+  $primary-medium,
+  $primary-dark,
+  $focus,
+  $success,
+  $success-light,
+  $info,
+  $warning,
+  $error
+) {
+  // Override the default variables with resolved DKFDS colors using !global flag
+  $color-primary: $primary !global;
+  $color-primary-medium: $primary-medium !global;
+  $color-primary-dark: $primary-dark !global;
+
+  $color-focus: $focus !global;
+  $color-gray-600: #454545 !global; // Keep legacy value or pass as parameter if needed
+
+  $color-success: $success !global;
+  $color-success-light: $success-light !global;
+  $color-info: $info !global;
+  $color-warning: $warning !global;
+  $color-error: $error !global;
+}
+
+// Simplified mixin that accepts resolved DKFDS colors
+// Usage: @include configure-with-dkfds-auto(dkfds.color(dkfds.$theme-color-primary), ...)
+@mixin configure-with-dkfds-resolved(
+  $primary,
+  $primary-dark,
+  $primary-darker,
+  $focus,
+  $success,
+  $success-light,
+  $info,
+  $warning,
+  $error
+) {
+  @include configure-with-dkfds-colors(
+    $primary,
+    $primary-dark,
+    $primary-darker,
+    $focus,
+    $success,
+    $success-light,
+    $info,
+    $warning,
+    $error
+  );
+}

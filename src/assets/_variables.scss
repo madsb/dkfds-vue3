@@ -1,18 +1,18 @@
-//    COLORS
-$color-primary: #0059b3;
-$color-primary-medium: #004993;
-$color-primary-dark: #003972;
+//    COLORS - Default values that can be overridden by implementing projects
+$color-primary: #0059b3 !default;
+$color-primary-medium: #004993 !default;
+$color-primary-dark: #003972 !default;
 
-$color-white: #ffffff;
+$color-white: #ffffff !default;
 
-$color-focus: #757575;
+$color-focus: #757575 !default;
 
 // Gray colors (legacy support for DKFDS v8-10)
-// $color-gray-600: #454545;
+$color-gray-600: #454545 !default;
 
 // INFO
-$color-success: #358000;
-$color-success-light: #eeffe2;
-$color-info: #1b86c3;
-$color-warning: #febb30;
-$color-error: #cc0000;
+$color-success: #358000 !default;
+$color-success-light: #eeffe2 !default;
+$color-info: #1b86c3 !default;
+$color-warning: #febb30 !default;
+$color-error: #cc0000 !default;

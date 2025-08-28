@@ -6,6 +6,19 @@
 @use '../../../../src/assets/main' as core;
 @use './main' as demo;
 
+// Configure Vue3 components with DKFDS colors (resolve colors first)
+@include core.configure-with-dkfds-resolved(
+  dkfds.color(dkfds.$theme-color-primary),
+  dkfds.color(dkfds.$theme-color-primary-dark),
+  dkfds.color(dkfds.$theme-color-primary-darker),
+  dkfds.color(dkfds.$theme-focus-color),
+  dkfds.color(dkfds.$theme-color-success),
+  dkfds.color(dkfds.$theme-color-success-light),
+  dkfds.color(dkfds.$theme-color-info),
+  dkfds.color(dkfds.$theme-color-warning),
+  dkfds.color(dkfds.$theme-color-error)
+);
+
 // Generate background and color classes using DKFDS theme variables
 @include core.generate-background-and-color-classes(
   dkfds.$theme-color-primary,
