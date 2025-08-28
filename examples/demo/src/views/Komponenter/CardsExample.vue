@@ -325,13 +325,19 @@
               <td><code>external</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Tvinger brug af standard anchor tag. Eksterne links detekteres automatisk baseret på URL-format</td>
+              <td>
+                Tvinger brug af standard anchor tag. Eksterne links detekteres automatisk baseret på
+                URL-format
+              </td>
             </tr>
             <tr>
               <td><code>icon</code></td>
               <td><code>string</code></td>
               <td><code>undefined</code></td>
-              <td>Ikon for navigation card. Automatisk: 'arrow-forward' for interne links, 'open-in-new' for eksterne</td>
+              <td>
+                Ikon for navigation card. Automatisk: 'arrow-forward' for interne links,
+                'open-in-new' for eksterne
+              </td>
             </tr>
             <tr>
               <td><code>variant</code></td>

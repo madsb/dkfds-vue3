@@ -14,12 +14,12 @@ import { computed } from 'vue'
 
 /**
  * Menu container component implementing DKFDS v11 navigation menu specifications.
- * 
+ *
  * Provides semantic structure for navigation menus with support for sidebar menus
  * and submenus. Automatically applies appropriate ARIA roles and CSS classes
  * based on the variant. Sidebar menus include proper navigation landmarks,
  * while submenus provide nested navigation structure.
- * 
+ *
  * @component
  * @example Basic sidebar menu
  * ```vue
@@ -32,7 +32,7 @@ import { computed } from 'vue'
  *   </fds-menu-item>
  * </fds-menu>
  * ```
- * 
+ *
  * @example Submenu structure
  * ```vue
  * <fds-menu-item href="/settings" :expanded="showSubmenu">
@@ -45,7 +45,7 @@ import { computed } from 'vue'
  *   </template>
  * </fds-menu-item>
  * ```
- * 
+ *
  * @example Numbered menu items
  * ```vue
  * <fds-menu aria-label="Process steps">
@@ -57,12 +57,12 @@ import { computed } from 'vue'
  *   </fds-menu-item>
  * </fds-menu>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/navigation/} DKFDS Navigation Documentation
  */
 
 export interface FdsMenuProps {
-  /** 
+  /**
    * Menu variant type
    * Controls semantic structure and styling. Sidemenu creates nav element
    * with proper ARIA landmarks, submenu creates simple list structure.
@@ -70,7 +70,7 @@ export interface FdsMenuProps {
    * @default 'sidemenu'
    */
   variant?: 'sidemenu' | 'submenu'
-  /** 
+  /**
    * ARIA label for navigation
    * Required for sidemenu variant to provide accessible navigation context.
    * Should describe the purpose of the navigation menu.

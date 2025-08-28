@@ -16,34 +16,34 @@ import { formId } from '../../composables'
 
 /**
  * Date picker component implementing DKFDS v11 date selection specifications.
- * 
+ *
  * Provides a native HTML date input with validation, proper formatting, and
  * accessibility support. Validates date values and emits validation state
  * changes to coordinate with form validation systems following DKFDS patterns.
- * 
+ *
  * @component
  * @example Basic date picker
  * ```vue
  * <FdsDatoVaelger v-model="birthDate" />
  * ```
- * 
+ *
  * @example Date picker with validation handling
  * ```vue
- * <FdsDatoVaelger 
- *   v-model="eventDate" 
+ * <FdsDatoVaelger
+ *   v-model="eventDate"
  *   @valid="handleValidation"
  *   @dirty="markDirty"
  * />
  * ```
- * 
+ *
  * @example In form group with label and validation
  * ```vue
  * <FdsFormgroup :isValid="dateValid">
  *   <template #default="{ formid, ariaDescribedby }">
  *     <FdsLabel :forId="formid" :required="true">Event Date</FdsLabel>
  *     <FdsHint>Select the date for your event</FdsHint>
- *     <FdsDatoVaelger 
- *       v-model="eventDate" 
+ *     <FdsDatoVaelger
+ *       v-model="eventDate"
  *       :id="formid"
  *       @valid="isDateValid => { dateValid = isDateValid }"
  *       @dirty="validateDate"
@@ -52,18 +52,18 @@ import { formId } from '../../composables'
  *   </template>
  * </FdsFormgroup>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/datovælger/} DKFDS Date Picker Documentation
  */
 
 export interface FdsDatoVaelgerProps {
-  /** 
+  /**
    * Unique identifier for the date picker.
    * If not provided, will be auto-generated.
    * @default undefined (auto-generated)
    */
   id?: string
-  /** 
+  /**
    * The v-model value in ISO date format (YYYY-MM-DD).
    * Represents the selected date value.
    * @default ''
@@ -74,17 +74,17 @@ export interface FdsDatoVaelgerProps {
 const { id, modelValue = '' } = defineProps<FdsDatoVaelgerProps>()
 
 const emit = defineEmits<{
-  /** 
+  /**
    * Emitted when date value changes.
    * Used for v-model two-way data binding.
    */
   'update:modelValue': [value: string]
-  /** 
+  /**
    * Emitted when date picker loses focus.
    * Useful for triggering validation after user interaction.
    */
   dirty: [value: boolean]
-  /** 
+  /**
    * Emitted when date validation state changes.
    * Provides real-time validation feedback.
    */

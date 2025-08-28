@@ -66,35 +66,35 @@ import { formId } from '../../composables'
 
 /**
  * Date fields component implementing DKFDS v11 separate date input specifications.
- * 
+ *
  * Provides three separate input fields for day, month, and year with automatic
  * tab progression, validation, and proper formatting. Offers an alternative to
  * native date pickers with enhanced user control and accessibility support
  * following DKFDS date input patterns.
- * 
+ *
  * @component
  * @example Basic date fields
  * ```vue
  * <FdsDatoFelter v-model="birthDate" />
  * ```
- * 
+ *
  * @example Date fields with validation handling
  * ```vue
- * <FdsDatoFelter 
- *   v-model="registrationDate" 
+ * <FdsDatoFelter
+ *   v-model="registrationDate"
  *   @valid="handleDateValidation"
  *   @dirty="markFieldDirty"
  * />
  * ```
- * 
+ *
  * @example In form group with label and validation
  * ```vue
  * <FdsFormgroup :isValid="dateValid">
  *   <template #default="{ formid }">
  *     <FdsLabel :required="true">Birth Date</FdsLabel>
  *     <FdsHint>Enter your date of birth using the fields below</FdsHint>
- *     <FdsDatoFelter 
- *       v-model="birthDate" 
+ *     <FdsDatoFelter
+ *       v-model="birthDate"
  *       :id="formid"
  *       @valid="isValid => { dateValid = isValid }"
  *       @dirty="validateBirthDate"
@@ -103,7 +103,7 @@ import { formId } from '../../composables'
  *   </template>
  * </FdsFormgroup>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/datovælger/} DKFDS Date Picker Documentation
  */
 
@@ -112,13 +112,13 @@ const month = ref<HTMLInputElement | null>(null)
 const year = ref<HTMLInputElement | null>(null)
 
 export interface FdsDatoFelterProps {
-  /** 
+  /**
    * Unique identifier for the date fields group.
    * Used as base for generating individual field IDs.
    * @default undefined (auto-generated)
    */
   id?: string
-  /** 
+  /**
    * The v-model value in ISO date format (YYYY-MM-DD).
    * Represents the combined date value from the three fields.
    * @default ''
@@ -133,17 +133,17 @@ const {
 } = defineProps<FdsDatoFelterProps>()
 
 const emit = defineEmits<{
-  /** 
+  /**
    * Emitted when date value changes from any field.
    * Used for v-model two-way data binding with combined ISO date string.
    */
   'update:modelValue': [value: string]
-  /** 
+  /**
    * Emitted when any date field loses focus.
    * Useful for triggering validation after user interaction.
    */
   dirty: [value: boolean]
-  /** 
+  /**
    * Emitted when combined date validation state changes.
    * Provides real-time validation feedback for the complete date.
    */

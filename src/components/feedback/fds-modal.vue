@@ -34,14 +34,14 @@
 <script setup lang="ts">
 /**
  * Modal component implementing DKFDS v11 dialog specifications.
- * 
+ *
  * Accessible modal dialog using native HTML dialog element with focus management.
  * Supports customizable actions, closeable behavior, and proper ARIA attributes.
  *
  * @component
  * @example Basic modal with actions
  * ```vue
- * <FdsModal 
+ * <FdsModal
  *   ref="modalRef"
  *   header="Confirm Action"
  *   accept-text="Confirm"
@@ -51,14 +51,14 @@
  * >
  *   Are you sure you want to proceed with this action?
  * </FdsModal>
- * 
+ *
  * <!-- Open modal from button -->
  * <FdsButton @click="modalRef.showModal()">Open Modal</FdsButton>
  * ```
- * 
+ *
  * @example Non-closeable modal
  * ```vue
- * <FdsModal 
+ * <FdsModal
  *   ref="termsModal"
  *   header="Terms and Conditions"
  *   :closeable="false"
@@ -69,7 +69,7 @@
  *   <p>You must accept the terms to continue...</p>
  * </FdsModal>
  * ```
- * 
+ *
  * @example Custom footer actions
  * ```vue
  * <FdsModal header="Custom Actions">
@@ -83,7 +83,7 @@
  *   </template>
  * </FdsModal>
  * ```
- * 
+ *
  * @example Custom header
  * ```vue
  * <FdsModal>
@@ -108,25 +108,25 @@ import { computed, ref, onMounted } from 'vue'
 import FdsIkon from '../layout/fds-ikon.vue'
 
 export interface FdsModalProps {
-  /** 
+  /**
    * Modal header text
    * Displayed as the dialog title
    */
   header?: string
-  
-  /** 
+
+  /**
    * Unique identifier for the modal dialog
    * Auto-generated if not provided
    */
   id?: string
-  
-  /** 
+
+  /**
    * Allow modal to be closed with X button or ESC key
    * @default true
    */
   closeable?: boolean
-  
-  /** 
+
+  /**
    * Text for the primary action button
    * @default 'OK'
    */

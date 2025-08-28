@@ -36,12 +36,12 @@ import { formId, generateId } from '../../composables'
 
 /**
  * Radio item component implementing DKFDS v11 individual radio button specifications.
- * 
+ *
  * Represents a single radio button option within a radio group with support
  * for conditional content display, accessibility attributes, and coordinated
  * state management. Automatically integrates with parent FdsRadioGroup for
  * shared naming and selection state following DKFDS radio patterns.
- * 
+ *
  * @component
  * @example Basic radio item (used within FdsRadioGroup)
  * ```vue
@@ -50,7 +50,7 @@ import { formId, generateId } from '../../composables'
  *   <FdsRadioItem value="option2">Second Option</FdsRadioItem>
  * </FdsRadioGroup>
  * ```
- * 
+ *
  * @example Radio item with conditional content
  * ```vue
  * <FdsRadioGroup v-model="travelMethod" label="How will you travel?">
@@ -63,48 +63,48 @@ import { formId, generateId } from '../../composables'
  *   </FdsRadioItem>
  * </FdsRadioGroup>
  * ```
- * 
+ *
  * @example Radio item with custom index
  * ```vue
- * <FdsRadioItem 
- *   value="custom" 
+ * <FdsRadioItem
+ *   value="custom"
  *   index="custom-option"
  *   :disabled="isDisabled"
  * >
  *   Custom Option
  * </FdsRadioItem>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/radioknap/} DKFDS Radio Button Documentation
  */
 
 const slots = useSlots()
 
 export interface FdsRadioItemProps {
-  /** 
+  /**
    * Radio button value for selection.
    * When selected, this value is emitted to the parent radio group.
    */
   value: string | number | boolean
-  /** 
+  /**
    * Index identifier for unique ID generation.
    * Used to create unique radio IDs when multiple items exist.
    * @default undefined (auto-generated)
    */
   index?: string
-  /** 
+  /**
    * Unique identifier for the radio item.
    * If not provided, will be auto-generated.
    * @default undefined (auto-generated)
    */
   id?: string
-  /** 
+  /**
    * Whether the radio button is disabled.
    * Prevents user interaction and applies disabled styling.
    * @default false
    */
   disabled?: boolean
-  /** 
+  /**
    * Name attribute for the radio input.
    * Usually injected from parent FdsRadioGroup.
    * @default undefined (uses injected group name)
@@ -115,12 +115,12 @@ export interface FdsRadioItemProps {
 const { value, index, id, disabled = false, name } = defineProps<FdsRadioItemProps>()
 
 const emit = defineEmits<{
-  /** 
+  /**
    * Emitted when radio button loses focus.
    * Useful for triggering validation after user interaction.
    */
   dirty: [value: boolean]
-  /** 
+  /**
    * Emitted on change event.
    * Provides access to the raw DOM change event.
    */

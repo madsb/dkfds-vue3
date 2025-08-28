@@ -7,11 +7,11 @@
 <script setup lang="ts">
 /**
  * Card group container implementing DKFDS v11 card group specifications.
- * 
+ *
  * Layout container for organizing multiple cards with responsive grid behavior.
  * Provides different layout types for various design needs and automatically
  * handles card spacing and alignment. Essential for dashboard and content listing interfaces.
- * 
+ *
  * @component
  * @example Basic card group with default layout
  * ```vue
@@ -21,7 +21,7 @@
  *   <FdsCard header="Card 3">Content for third card</FdsCard>
  * </FdsCardGroup>
  * ```
- * 
+ *
  * @example Deck layout for uniform card heights
  * ```vue
  * <FdsCardGroup type="deck">
@@ -33,7 +33,7 @@
  *   <FdsCard header="Medium Content">Moderate amount of content</FdsCard>
  * </FdsCardGroup>
  * ```
- * 
+ *
  * @example Columns layout for masonry-style arrangement
  * ```vue
  * <FdsCardGroup type="columns">
@@ -48,7 +48,7 @@
  *   </FdsCard>
  * </FdsCardGroup>
  * ```
- * 
+ *
  * @example Navigation cards in group
  * ```vue
  * <FdsCardGroup type="deck">
@@ -63,13 +63,13 @@
  *   </FdsCard>
  * </FdsCardGroup>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/cards/} DKFDS Card Documentation
  */
 import { computed } from 'vue'
 
 export interface FdsCardGroupProps {
-  /** 
+  /**
    * Layout type controlling card arrangement and behavior
    * - 'deck': Cards maintain equal heights in each row
    * - 'columns': Masonry-style layout with natural content flow

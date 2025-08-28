@@ -22,12 +22,12 @@ import { formId } from '../../composables'
 
 /**
  * Radio group component implementing DKFDS v11 radio button specifications.
- * 
+ *
  * Provides a semantic fieldset for grouping related radio button options with
  * proper accessibility attributes, label management, and coordinated selection
  * state. Manages the shared name attribute and value synchronization for
  * child radio items following DKFDS radio group patterns.
- * 
+ *
  * @component
  * @example Basic radio group
  * ```vue
@@ -37,11 +37,11 @@ import { formId } from '../../composables'
  *   <FdsRadioItem value="option3">Option 3</FdsRadioItem>
  * </FdsRadioGroup>
  * ```
- * 
+ *
  * @example Radio group with help text
  * ```vue
- * <FdsRadioGroup 
- *   v-model="paymentMethod" 
+ * <FdsRadioGroup
+ *   v-model="paymentMethod"
  *   label="Payment Method"
  *   helpText="Select your preferred payment option"
  * >
@@ -50,7 +50,7 @@ import { formId } from '../../composables'
  *   <FdsRadioItem value="cash">Cash</FdsRadioItem>
  * </FdsRadioGroup>
  * ```
- * 
+ *
  * @example Radio group with conditional content
  * ```vue
  * <FdsRadioGroup v-model="contactMethod" label="How should we contact you?">
@@ -63,35 +63,35 @@ import { formId } from '../../composables'
  *   </FdsRadioItem>
  * </FdsRadioGroup>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/radioknap/} DKFDS Radio Button Documentation
  */
 
 export interface FdsRadioGroupProps {
-  /** 
+  /**
    * The v-model value for two-way data binding.
    * Represents the currently selected radio option value.
    * @default null
    */
   modelValue?: string | number | boolean | null
-  /** 
+  /**
    * Unique identifier for the radio group.
    * If not provided, will be auto-generated.
    * @default undefined (auto-generated)
    */
   id?: string
-  /** 
+  /**
    * Label for the radio group displayed in the legend.
    * Required for accessibility and user clarity.
    */
   label: string
-  /** 
+  /**
    * Help text providing additional context for the radio group.
    * Displayed below the legend and linked via aria-describedby.
    * @default ''
    */
   helpText?: string
-  /** 
+  /**
    * Name attribute for all radio buttons in the group.
    * If not provided, uses the generated form ID.
    * @default undefined (uses 'radio-{formid}')
@@ -102,12 +102,12 @@ export interface FdsRadioGroupProps {
 const { modelValue, id, label, helpText = '', name } = defineProps<FdsRadioGroupProps>()
 
 const emit = defineEmits<{
-  /** 
+  /**
    * Emitted when radio selection changes.
    * Used for v-model two-way data binding.
    */
   'update:modelValue': [value: string | number | boolean]
-  /** 
+  /**
    * Emitted when any radio button in the group loses focus.
    * Useful for triggering validation after user interaction.
    */

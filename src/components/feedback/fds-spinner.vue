@@ -18,43 +18,43 @@
 <script setup lang="ts">
 /**
  * Loading spinner component implementing DKFDS v11 loading indicator specifications.
- * 
+ *
  * Provides visual feedback for loading states with accessibility support and multiple size variants.
- * Includes proper ARIA live regions for screen readers and supports both standalone spinners 
+ * Includes proper ARIA live regions for screen readers and supports both standalone spinners
  * and spinners with accompanying status text. Designed for various contexts from buttons to full-page loading.
- * 
+ *
  * @component
  * @example Basic spinner
  * ```vue
  * <FdsSpinner sr-only-text="Loading content..." />
  * ```
- * 
+ *
  * @example Small spinner with status text
  * ```vue
  * <FdsSpinner size="small" aria-live="polite">
  *   Saving your changes...
  * </FdsSpinner>
  * ```
- * 
+ *
  * @example Centered large spinner for full-page loading
  * ```vue
- * <FdsSpinner 
- *   size="large" 
+ * <FdsSpinner
+ *   size="large"
  *   :centered="true"
  *   aria-live="assertive"
  * >
  *   Loading application data, please wait...
  * </FdsSpinner>
  * ```
- * 
+ *
  * @example Light variant for dark backgrounds
  * ```vue
- * <FdsSpinner 
- *   variant="light" 
+ * <FdsSpinner
+ *   variant="light"
  *   sr-only-text="Processing request..."
  * />
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/loading/} DKFDS Loading Documentation
  */
 import { useAttrs, computed, useSlots } from 'vue'

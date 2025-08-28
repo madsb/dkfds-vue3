@@ -84,27 +84,27 @@
 <script setup lang="ts">
 /**
  * Pagination navigation component implementing DKFDS v11 specifications.
- * 
+ *
  * Provides accessible pagination controls with support for large datasets,
  * smart ellipsis handling, and keyboard navigation. Supports both array-based
  * pagination (internal) and external pagination with total counts. Features
  * responsive design with mobile-friendly "Side X af Y" display and first/last
  * navigation buttons.
- * 
+ *
  * @component
  * @example Basic array pagination
  * ```vue
- * <fds-paginering 
+ * <fds-paginering
  *   :list="items"
  *   :page-size="10"
  *   @filtered-page="handlePageData"
  *   @page-change="handlePageChange"
  * />
  * ```
- * 
+ *
  * @example External pagination with total count
  * ```vue
- * <fds-paginering 
+ * <fds-paginering
  *   :total-items="totalCount"
  *   :skip="currentSkip"
  *   :page-size="20"
@@ -113,10 +113,10 @@
  *   @skip="handleSkipChange"
  * />
  * ```
- * 
+ *
  * @example Large dataset with custom configuration
  * ```vue
- * <fds-paginering 
+ * <fds-paginering
  *   :total-items="10000"
  *   :skip="skip"
  *   :page-size="50"
@@ -125,7 +125,7 @@
  *   @page-change="loadPage"
  * />
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/paginering/} DKFDS Pagination Documentation
  */
 import { generateId } from '../../composables'
@@ -134,44 +134,44 @@ import { computed, ref, watch } from 'vue'
 import FdsIkon from '../layout/fds-ikon.vue'
 
 export interface FdsPagineringProps {
-  /** 
+  /**
    * Array of items to paginate
    * For internal pagination mode. Items will be sliced based on current page.
    * Leave empty when using external pagination with totalItems.
    * @default []
    */
   list?: any[]
-  /** 
+  /**
    * Number of items to skip (for external pagination)
    * Used with external APIs. Automatically calculated for internal pagination.
    * @default 0
    */
   skip?: number
-  /** 
+  /**
    * Number of items per page
    * Controls how many items are shown per page for both internal and external pagination.
    * @default 10
    */
   pageSize?: number
-  /** 
+  /**
    * Maximum number of visible page elements (includes ellipsis)
    * Controls pagination complexity. Includes numbered pages and ellipsis (...) in count.
    * Recommended: 5-9 for optimal UX.
    * @default 7
    */
   maxElements?: number
-  /** 
+  /**
    * Show first/last navigation buttons
    * Adds "First" and "Last" buttons for quick navigation in large datasets.
    * @default true
    */
   showFirstLast?: boolean
-  /** 
+  /**
    * Unique identifier for the pagination component
    * Auto-generated if not provided. Used for ARIA labeling.
    */
   id?: string
-  /** 
+  /**
    * Total number of items (for external pagination)
    * Required for external pagination. Ignored when list prop has items.
    * @default 0
@@ -193,21 +193,21 @@ const emit = defineEmits<{
   /**
    * Emitted when page changes with filtered items
    * For internal pagination mode. Contains the items for the current page.
-   * 
+   *
    * @param items - Array of items for the current page
    */
   filteredPage: [items: any[]]
   /**
    * Emitted when skip value changes
    * Useful for external pagination APIs. Indicates how many items to skip.
-   * 
+   *
    * @param skip - Number of items to skip (0-based)
    */
   skip: [skip: number]
   /**
    * Emitted when page changes
    * Fired whenever the user navigates to a different page (1-based).
-   * 
+   *
    * @param page - The new current page number (1-based)
    */
   'page-change': [page: number]

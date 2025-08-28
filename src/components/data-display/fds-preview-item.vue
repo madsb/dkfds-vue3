@@ -7,11 +7,11 @@
 <script setup lang="ts">
 /**
  * Preview description item component implementing DKFDS v11 component description specifications.
- * 
+ *
  * Container for descriptive text and documentation content within component previews.
  * Provides semantic wrapper for explanatory content, usage notes, and component
  * descriptions. Works within FdsPreview layouts for comprehensive documentation.
- * 
+ *
  * @component
  * @example Basic description item
  * ```vue
@@ -24,7 +24,7 @@
  *   </FdsPreviewExample>
  * </FdsPreview>
  * ```
- * 
+ *
  * @example Detailed component documentation
  * ```vue
  * <FdsPreview header="Form Input">
@@ -44,7 +44,7 @@
  *   </FdsPreviewExample>
  * </FdsPreview>
  * ```
- * 
+ *
  * @example Multiple description sections
  * ```vue
  * <FdsPreview header="Button Component">
@@ -62,7 +62,7 @@
  *   </FdsPreviewExample>
  * </FdsPreview>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/} DKFDS Documentation
  */
 </script>

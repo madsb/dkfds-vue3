@@ -71,21 +71,21 @@ import FdsIkon from '../layout/fds-ikon.vue'
 
 /**
  * File upload component implementing DKFDS v11 file input specifications.
- * 
+ *
  * Provides comprehensive file upload functionality with validation, progress
  * tracking, file list management, and accessibility support. Features include
  * file type/size validation, multiple file support, drag-and-drop capability,
  * and proper error handling following DKFDS file upload patterns.
- * 
+ *
  * @component
  * @example Basic file upload
  * ```vue
- * <FdsFileUpload 
- *   label="Upload your documents" 
+ * <FdsFileUpload
+ *   label="Upload your documents"
  *   :accept="['.pdf', '.doc', '.docx']"
  * />
  * ```
- * 
+ *
  * @example Multiple files with size limits
  * ```vue
  * <FdsFileUpload
@@ -98,7 +98,7 @@ import FdsIkon from '../layout/fds-ikon.vue'
  *   @error="handleUploadError"
  * />
  * ```
- * 
+ *
  * @example In form group with validation
  * ```vue
  * <FdsFormgroup :isValid="filesValid">
@@ -119,7 +119,7 @@ import FdsIkon from '../layout/fds-ikon.vue'
  *   </template>
  * </FdsFormgroup>
  * ```
- * 
+ *
  * @example Custom file list with removal
  * ```vue
  * <FdsFileUpload
@@ -133,117 +133,117 @@ import FdsIkon from '../layout/fds-ikon.vue'
  *   @remove-file="handleFileRemoval"
  * />
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/fil-upload/} DKFDS File Upload Documentation
  */
 
 export interface FdsFileUploadProps {
-  /** 
+  /**
    * Unique identifier for the file input.
    * If not provided, will be auto-generated.
    * @default undefined (auto-generated)
    */
   id?: string
-  /** 
+  /**
    * Input name attribute for form submission.
    * If not provided, uses the generated form ID.
    * @default ''
    */
   name?: string
-  /** 
+  /**
    * Label text displayed above the file input.
    * @default 'Vælg fil' (Danish for 'Choose file')
    */
   label?: string
-  /** 
+  /**
    * Whether to show the label element.
    * Set to false when using custom labeling.
    * @default true
    */
   showLabel?: boolean
-  /** 
+  /**
    * Hint text to provide guidance to users.
    * Displayed below the label and linked via aria-describedby.
    * @default ''
    */
   hint?: string
-  /** 
+  /**
    * Array of accepted file types (MIME types or extensions).
    * Examples: ['image/png', '.pdf', '.doc', 'text/plain']
    * @default ['image/png', 'image/jpg', 'image/jpeg', '.pdf', '.doc', '.docx', '.odt']
    */
   accept?: string[]
-  /** 
+  /**
    * Enable selection of multiple files.
    * When true, users can select multiple files at once.
    * @default false
    */
   multiple?: boolean
-  /** 
+  /**
    * Maximum file size allowed in bytes.
    * Files exceeding this size will be rejected with error.
    * @default 5242880 (5MB)
    */
   maxFileSize?: number
-  /** 
+  /**
    * Maximum number of files that can be selected.
    * Only applies when multiple is true.
    * @default 10
    */
   maxFiles?: number
-  /** 
+  /**
    * Whether the file input is disabled.
    * Prevents user interaction when true.
    * @default false
    */
   disabled?: boolean
-  /** 
+  /**
    * Whether the file input is required.
    * Adds validation requirement and visual indicator.
    * @default false
    */
   required?: boolean
-  /** 
+  /**
    * Error message to display.
    * When provided, shows error state and message.
    * @default ''
    */
   error?: string
-  /** 
+  /**
    * Remove content headers from base64 data.
    * Strips MIME type headers from file data for cleaner output.
    * @default false
    */
   removeContentHeaders?: boolean
-  /** 
+  /**
    * Display list of selected files.
    * Shows file names and sizes below the input.
    * @default true
    */
   showFileList?: boolean
-  /** 
+  /**
    * Allow users to remove selected files.
    * Adds remove buttons to the file list.
    * @default true
    */
   removable?: boolean
-  /** 
+  /**
    * Text for the required field indicator.
    * @default 'Obligatorisk felt' (Danish for 'Required field')
    */
   requiredText?: string
-  /** 
+  /**
    * ARIA live region politeness for error announcements.
    * @values 'polite', 'assertive'
    * @default 'polite'
    */
   ariaLive?: 'polite' | 'assertive'
-  /** 
+  /**
    * ARIA label for the selected files list.
    * @default 'Valgte filer' (Danish for 'Selected files')
    */
   fileListAriaLabel?: string
-  /** 
+  /**
    * Text for the remove file button accessible label.
    * @default 'Fjern fil' (Danish for 'Remove file')
    */
@@ -273,32 +273,32 @@ const {
 } = defineProps<FdsFileUploadProps>()
 
 const emit = defineEmits<{
-  /** 
+  /**
    * Emitted when file input loses focus.
    * Provides the focus event for handling blur states.
    */
   blur: [event: FocusEvent]
-  /** 
+  /**
    * Emitted when file input gains focus.
    * Provides the focus event for handling focus states.
    */
   focus: [event: FocusEvent]
-  /** 
+  /**
    * Emitted when files are successfully processed and uploaded.
    * Provides array of file models with base64 data and metadata.
    */
   upload: [files: FdsFileInputModel[]]
-  /** 
+  /**
    * Emitted when a file validation or processing error occurs.
    * Provides detailed error information including type and message.
    */
   error: [error: { type: 'size' | 'type' | 'count' | 'generic'; message: string; file?: File }]
-  /** 
+  /**
    * Emitted when input becomes dirty (user has interacted).
    * Useful for triggering validation after user interaction.
    */
   dirty: [value: boolean]
-  /** 
+  /**
    * Emitted when a file is removed from the selected files list.
    * Provides the index and file object that was removed.
    */

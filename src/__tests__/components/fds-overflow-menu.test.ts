@@ -175,10 +175,10 @@ describe('FdsOverflowMenu', () => {
         const wrapper = mount(FdsOverflowMenu)
         const button = wrapper.find('button')
         const icons = button.findAll('svg')
-        
+
         // Should have one icon
         expect(icons).toHaveLength(1)
-        
+
         // Icon should be after the text (right position)
         const buttonHTML = button.html()
         const iconIndex = buttonHTML.indexOf('<svg')
@@ -192,10 +192,10 @@ describe('FdsOverflowMenu', () => {
         })
         const button = wrapper.find('button')
         const icons = button.findAll('svg')
-        
+
         // Should have one icon
         expect(icons).toHaveLength(1)
-        
+
         // Icon should be before the text (left position)
         const buttonHTML = button.html()
         const iconIndex = buttonHTML.indexOf('<svg')
@@ -209,10 +209,10 @@ describe('FdsOverflowMenu', () => {
         })
         const button = wrapper.find('button')
         const icons = button.findAll('svg')
-        
+
         // Should have one icon
         expect(icons).toHaveLength(1)
-        
+
         // Icon should be after the text (right position)
         const buttonHTML = button.html()
         const iconIndex = buttonHTML.indexOf('<svg')

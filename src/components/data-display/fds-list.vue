@@ -10,11 +10,11 @@
 <script setup lang="ts">
 /**
  * List component implementing DKFDS v11 list specifications.
- * 
- * Flexible list container supporting both ordered and unordered lists with multiple 
+ *
+ * Flexible list container supporting both ordered and unordered lists with multiple
  * visual variants for different design contexts. Provides semantic HTML structure
  * with accessible styling options for content organization and display.
- * 
+ *
  * @component
  * @example Basic unordered list
  * ```vue
@@ -24,7 +24,7 @@
  *   <FdsListItem>Third item</FdsListItem>
  * </FdsList>
  * ```
- * 
+ *
  * @example Ordered list with numbering
  * ```vue
  * <FdsList :ordered="true">
@@ -33,7 +33,7 @@
  *   <FdsListItem>Step three</FdsListItem>
  * </FdsList>
  * ```
- * 
+ *
  * @example Bordered list for structured content
  * ```vue
  * <FdsList variant="bordered">
@@ -42,7 +42,7 @@
  *   <FdsListItem>Final bordered item</FdsListItem>
  * </FdsList>
  * ```
- * 
+ *
  * @example Unstyled list for custom designs
  * ```vue
  * <FdsList variant="unstyled" :no-top-margin="true">
@@ -50,7 +50,7 @@
  *   <FdsListItem>Another custom item</FdsListItem>
  * </FdsList>
  * ```
- * 
+ *
  * @example No-bullet list for clean layouts
  * ```vue
  * <FdsList variant="nobullet">
@@ -58,7 +58,7 @@
  *   <FdsListItem>Clean list item</FdsListItem>
  * </FdsList>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/lister/} DKFDS List Documentation
  */
 import { computed } from 'vue'

@@ -64,42 +64,42 @@ import type { Component } from 'vue'
 import FdsIkon from '../layout/fds-ikon.vue'
 
 export interface FdsCardProps {
-  /** 
+  /**
    * Main heading text for the card
    * Displayed prominently in the card header area
    */
   header?: string
-  /** 
+  /**
    * HTML heading tag level for semantic structure
    * Choose appropriate level based on document hierarchy
    * @values 'h2', 'h3', 'h4', 'h5', 'h6'
    * @default 'h2'
    */
   headerTag?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
-  /** 
+  /**
    * Secondary text displayed above the main header
    * Useful for categories, dates, or supplementary information
    */
   subheader?: string
-  /** 
+  /**
    * Navigation destination for clickable cards
    * Supports string URLs for external links or Vue Router location objects
    * When provided, the entire card becomes a clickable link
    */
   to?: string | Record<string, any>
-  /** 
+  /**
    * Force external link behavior even when Vue Router is available
    * Useful for absolute URLs that should not use client-side routing
    * @default false
    */
   external?: boolean
-  /** 
+  /**
    * Icon displayed for navigation cards
    * Defaults to 'arrow-forward' for internal links, 'open-in-new' for external
    * Set to empty string or null to hide icon
    */
   icon?: string
-  /** 
+  /**
    * Visual variant affecting card layout and styling
    * Long variant provides extended layout for detailed content
    * @values 'long'
@@ -109,16 +109,16 @@ export interface FdsCardProps {
 
 /**
  * Card component implementing DKFDS v11 card specifications.
- * 
+ *
  * Versatile content container supporting both static content display and navigation functionality.
  * Features intelligent link handling for Vue Router integration, automatic external link detection,
  * and flexible content organization with image, header, content, and action slots.
- * 
+ *
  * @component
  * @example Basic content card
  * ```vue
- * <FdsCard 
- *   header="Card Title" 
+ * <FdsCard
+ *   header="Card Title"
  *   subheader="Category"
  * >
  *   <p>This is the main content of the card.</p>
@@ -127,10 +127,10 @@ export interface FdsCardProps {
  *   </template>
  * </FdsCard>
  * ```
- * 
+ *
  * @example Navigation card with Vue Router
  * ```vue
- * <FdsCard 
+ * <FdsCard
  *   header="Article Title"
  *   subheader="News"
  *   :to="{ name: 'article', params: { id: 123 } }"
@@ -142,10 +142,10 @@ export interface FdsCardProps {
  *   Brief description of the article content...
  * </FdsCard>
  * ```
- * 
+ *
  * @example External link card
  * ```vue
- * <FdsCard 
+ * <FdsCard
  *   header="External Resource"
  *   to="https://example.com/resource"
  *   icon="open-in-new"
@@ -153,10 +153,10 @@ export interface FdsCardProps {
  *   This card links to an external website.
  * </FdsCard>
  * ```
- * 
+ *
  * @example Long variant card with custom header tag
  * ```vue
- * <FdsCard 
+ * <FdsCard
  *   variant="long"
  *   header="Detailed Information"
  *   header-tag="h3"
@@ -168,7 +168,7 @@ export interface FdsCardProps {
  *   Extended content that benefits from the long card layout...
  * </FdsCard>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/cards/} DKFDS Card Documentation
  */
 const {
@@ -200,27 +200,28 @@ const hasRouter = computed(() => {
 const isExternalLink = computed(() => {
   // If explicitly set as external, respect that
   if (external) return true
-  
+
   // If not a string, it's a router location object (internal)
   if (typeof to !== 'string') return false
-  
+
   // Check for various external URL patterns
   const url = to as string
-  
+
   // Common protocol patterns for external links
   if (url.startsWith('http://') || url.startsWith('https://')) return true
   if (url.startsWith('ftp://') || url.startsWith('ftps://')) return true
   if (url.startsWith('mailto:') || url.startsWith('tel:')) return true
   if (url.startsWith('//')) return true // Protocol-relative URLs
-  
+
   // Check if it looks like a domain (contains dot and doesn't start with /)
   // This catches cases like "example.com" or "subdomain.example.com"
   if (!url.startsWith('/') && !url.startsWith('#') && url.includes('.')) {
     // Basic check for domain-like pattern
-    const domainPattern = /^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+/
+    const domainPattern =
+      /^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+/
     if (domainPattern.test(url)) return true
   }
-  
+
   // Default to internal
   return false
 })
@@ -250,7 +251,7 @@ const getLinkComponent = (): Component | string => {
 // Get the appropriate props for the link component
 const getLinkProps = () => {
   const isAnchor = getLinkComponent() === 'a'
-  
+
   if (isAnchor) {
     return { href: to }
   } else {
@@ -264,7 +265,7 @@ const getIcon = computed(() => {
   if (icon !== undefined) {
     return icon
   }
-  
+
   // If there's a link, provide smart defaults
   if (to) {
     // External links get open-in-new icon by default
@@ -274,7 +275,7 @@ const getIcon = computed(() => {
     // Internal navigation gets arrow-forward by default
     return 'arrow-forward'
   }
-  
+
   // No link, no icon
   return undefined
 })

@@ -37,12 +37,12 @@ import { computed } from 'vue'
 
 /**
  * Individual step component implementing DKFDS v11 step indicator specifications.
- * 
+ *
  * Renders a single step within a step indicator group with support for different
  * states (current, completed, error), visual icons, and interactive behavior.
  * Automatically handles ARIA labeling, keyboard navigation, and accessibility
  * features. Must be used within fds-trinindikator-group component.
- * 
+ *
  * @component
  * @example Basic step
  * ```vue
@@ -53,7 +53,7 @@ import { computed } from 'vue'
  *   :is-completed="currentStep > 1"
  * />
  * ```
- * 
+ *
  * @example Interactive step with additional info
  * ```vue
  * <fds-trinindikator-step
@@ -66,7 +66,7 @@ import { computed } from 'vue'
  *   @click="navigateToStep"
  * />
  * ```
- * 
+ *
  * @example Error state step
  * ```vue
  * <fds-trinindikator-step
@@ -79,69 +79,69 @@ import { computed } from 'vue'
  *   error-icon-label="Valideringsfejl"
  * />
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/trinindikatorer/} DKFDS Step Indicator Documentation
  */
 
 export interface FdsTrinindikatorStepProps {
-  /** 
+  /**
    * Step number (1-based)
    * The numeric position of this step in the process sequence.
    */
   stepNumber: number
-  /** 
+  /**
    * Step title
    * The main title/name of this step displayed to users.
    */
   title: string
-  /** 
+  /**
    * Additional step information
    * Optional descriptive text providing more details about the step.
    */
   stepInfo?: string
-  /** 
+  /**
    * Whether this is the current step
    * Applies current step styling and ARIA attributes.
    * @default false
    */
   isCurrent?: boolean
-  /** 
+  /**
    * Whether this step is completed
    * Shows checkmark icon and completed styling (ignored if isCurrent is true).
    * @default false
    */
   isCompleted?: boolean
-  /** 
+  /**
    * Whether the step has an error
    * Shows error icon and error styling. Takes precedence over completed state.
    * @default false
    */
   hasError?: boolean
-  /** 
+  /**
    * Whether the step is disabled
    * Prevents interaction and applies disabled styling.
    * @default false
    */
   disabled?: boolean
-  /** 
+  /**
    * Whether the step is clickable
    * Enables click interaction (disabled steps cannot be clicked regardless).
    * @default false
    */
   clickable?: boolean
-  /** 
+  /**
    * ARIA label for error icon
    * Screen reader text for the error state icon.
    * @default 'Fejl'
    */
   errorIconLabel?: string
-  /** 
+  /**
    * ARIA label for completed icon
    * Screen reader text for the completed state checkmark icon.
    * @default 'Færdig'
    */
   completedIconLabel?: string
-  /** 
+  /**
    * Custom ARIA label for the step
    * Override the auto-generated accessibility label for the entire step.
    */
@@ -165,7 +165,7 @@ const emit = defineEmits<{
    * Emitted when step is clicked
    * Only fired if step is clickable and not disabled. Allows parent component
    * to handle navigation or validation before step changes.
-   * 
+   *
    * @param stepNumber - The number of the clicked step (1-based)
    * @param event - The original mouse click event
    */

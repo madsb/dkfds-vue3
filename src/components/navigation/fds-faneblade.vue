@@ -10,12 +10,12 @@
 <script setup lang="ts">
 /**
  * Tab container component implementing DKFDS v11 tab specifications.
- * 
+ *
  * Provides a container structure for tab navigation with proper ARIA roles and
  * semantic organization. Uses slot-based architecture where tabs go in the "tabs"
  * slot and corresponding panels go in the "panels" slot. This ensures proper
  * DKFDS v11 structure with tabs and panels as sibling elements.
- * 
+ *
  * @component
  * @example Basic tab structure
  * ```vue
@@ -34,26 +34,26 @@
  *   </template>
  * </fds-faneblade>
  * ```
- * 
+ *
  * @example With icons and dynamic content
  * ```vue
  * <fds-faneblade>
  *   <template #tabs>
- *     <fds-faneblade-tab 
- *       v-for="tab in tabs" 
+ *     <fds-faneblade-tab
+ *       v-for="tab in tabs"
  *       :key="tab.id"
- *       :id="tab.id" 
- *       :label="tab.label" 
+ *       :id="tab.id"
+ *       :label="tab.label"
  *       :icon="tab.icon"
  *       :active="activeTab === tab.id"
- *       @click="setActiveTab" 
+ *       @click="setActiveTab"
  *     />
  *   </template>
  *   <template #panels>
- *     <fds-faneblade-panel 
- *       v-for="tab in tabs" 
+ *     <fds-faneblade-panel
+ *       v-for="tab in tabs"
  *       :key="tab.id"
- *       :id="tab.id" 
+ *       :id="tab.id"
  *       :active="activeTab === tab.id"
  *     >
  *       <component :is="tab.component" />
@@ -61,7 +61,7 @@
  *   </template>
  * </fds-faneblade>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/faneblade/} DKFDS Tab Documentation
  */
 // This component uses slot-based architecture for DKFDS v11 compliance

@@ -10,11 +10,11 @@
 <script setup lang="ts">
 /**
  * Preview code section component implementing DKFDS v11 code documentation specifications.
- * 
+ *
  * Container for displaying code examples within component documentation. Designed to work
  * with FdsPreview parent component to create comprehensive component documentation with
  * live examples and corresponding code.
- * 
+ *
  * @component
  * @example Basic code section
  * ```vue
@@ -27,7 +27,7 @@
  *   </FdsPreviewCode>
  * </FdsPreview>
  * ```
- * 
+ *
  * @example Multiple code sections
  * ```vue
  * <FdsPreview header="Form Example">
@@ -42,18 +42,18 @@
  *   </FdsPreviewCode>
  * </FdsPreview>
  * ```
- * 
+ *
  * @example Code section without header
  * ```vue
  * <FdsPreviewCode>
  *   <FdsPre :json="{ type: 'success', message: 'Operation completed' }" />
  * </FdsPreviewCode>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/} DKFDS Documentation
  */
 export interface FdsPreviewCodeProps {
-  /** 
+  /**
    * Optional header text for the code section
    * Useful for distinguishing between different code examples (HTML, CSS, JS)
    * @default null

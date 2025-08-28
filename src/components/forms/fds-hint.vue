@@ -9,19 +9,19 @@ import { computed, inject, isRef, type Ref } from 'vue'
 
 /**
  * Form hint component implementing DKFDS v11 hint text specifications.
- * 
+ *
  * Provides supplementary information for form controls with proper accessibility
  * attributes and ID management. Automatically integrates with form groups to
  * ensure proper aria-describedby relationships for screen readers and assistive
  * technologies following DKFDS accessibility patterns.
- * 
+ *
  * @component
  * @example Basic hint usage
  * ```vue
  * <FdsHint id="email-hint">Enter a valid email address</FdsHint>
  * <FdsInput aria-describedby="email-hint" />
  * ```
- * 
+ *
  * @example Within form group (automatic integration)
  * ```vue
  * <FdsFormgroup>
@@ -32,14 +32,14 @@ import { computed, inject, isRef, type Ref } from 'vue'
  *   </template>
  * </FdsFormgroup>
  * ```
- * 
+ *
  * @example Custom hint with specific ID
  * ```vue
  * <FdsHint id="password-requirements">
  *   Password must be at least 8 characters with one number
  * </FdsHint>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/inputfelter/} DKFDS Input Fields Documentation
  */
 

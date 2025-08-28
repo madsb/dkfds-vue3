@@ -16,28 +16,28 @@ import { computed } from 'vue'
 
 /**
  * Tab panel component implementing DKFDS v11 tab panel specifications.
- * 
+ *
  * Provides content container for tab panels with proper ARIA attributes and
  * keyboard navigation support. Each panel should have a corresponding tab with
  * the same ID. Content is hidden when not active and receives focus when activated.
  * Must be used within fds-faneblade component.
- * 
+ *
  * @component
  * @example Basic tab panel
  * ```vue
- * <fds-faneblade-panel 
- *   id="personal-info" 
+ * <fds-faneblade-panel
+ *   id="personal-info"
  *   :active="currentTab === 'personal-info'"
  * >
  *   <h2>Personal Information</h2>
  *   <p>Enter your personal details here...</p>
  * </fds-faneblade-panel>
  * ```
- * 
+ *
  * @example Panel with form content
  * ```vue
- * <fds-faneblade-panel 
- *   id="contact" 
+ * <fds-faneblade-panel
+ *   id="contact"
  *   :active="currentTab === 'contact'"
  * >
  *   <fds-form-group>
@@ -46,11 +46,11 @@ import { computed } from 'vue'
  *   </fds-form-group>
  * </fds-faneblade-panel>
  * ```
- * 
+ *
  * @example Dynamic content panel
  * ```vue
- * <fds-faneblade-panel 
- *   id="results" 
+ * <fds-faneblade-panel
+ *   id="results"
  *   :active="currentTab === 'results'"
  * >
  *   <template v-if="loading">
@@ -61,18 +61,18 @@ import { computed } from 'vue'
  *   </template>
  * </fds-faneblade-panel>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/faneblade/} DKFDS Tab Documentation
  */
 
 export interface FdsFanebladePanelProps {
-  /** 
+  /**
    * Unique identifier matching the tab id
    * Must correspond to the id of an associated fds-faneblade-tab component
    * for proper ARIA linkage and accessibility.
    */
   id: string
-  /** 
+  /**
    * Whether this panel is currently visible
    * Controls visibility and keyboard navigation. Active panels are focusable.
    * @default false

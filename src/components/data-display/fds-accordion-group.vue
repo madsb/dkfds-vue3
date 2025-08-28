@@ -21,11 +21,11 @@
 <script setup lang="ts">
 /**
  * Accordion group container implementing DKFDS v11 accordion specifications.
- * 
+ *
  * Manages multiple accordion items with coordinated expand/collapse functionality and bulk controls.
  * Provides centralized state management for child accordion components with optional bulk expand/collapse
  * button for improved user experience with large sets of accordions.
- * 
+ *
  * @component
  * @example Basic accordion group with bulk controls
  * ```vue
@@ -34,11 +34,11 @@
  *     Content for first accordion section
  *   </FdsAccordion>
  *   <FdsAccordion title="Second Section">
- *     Content for second accordion section  
+ *     Content for second accordion section
  *   </FdsAccordion>
  * </FdsAccordionGroup>
  * ```
- * 
+ *
  * @example Accordion group without bulk button
  * ```vue
  * <FdsAccordionGroup :show-bulk-button="false">
@@ -50,10 +50,10 @@
  *   </FdsAccordion>
  * </FdsAccordionGroup>
  * ```
- * 
+ *
  * @example Custom bulk button text and state management
  * ```vue
- * <FdsAccordionGroup 
+ * <FdsAccordionGroup
  *   expanded-text="Fold alle sammen"
  *   collapsed-text="Udvid alle"
  *   v-model="allExpanded"
@@ -62,7 +62,7 @@
  *   <FdsAccordion v-for="item in accordionData" :key="item.id" v-bind="item" />
  * </FdsAccordionGroup>
  * ```
- * 
+ *
  * @example Custom bulk button header
  * ```vue
  * <FdsAccordionGroup>
@@ -75,31 +75,31 @@
  *   <FdsAccordion title="Section 2">Content 2</FdsAccordion>
  * </FdsAccordionGroup>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/accordions/} DKFDS Accordion Documentation
  */
 import { computed, provide, reactive, type Ref } from 'vue'
 
 export interface FdsAccordionGroupProps {
-  /** 
+  /**
    * Text displayed on bulk button when all accordions are expanded
    * Indicates the action to collapse all accordions
    * @default 'Luk alle'
    */
   expandedText?: string
-  /** 
+  /**
    * Text displayed on bulk button when some/all accordions are collapsed
    * Indicates the action to expand all accordions
    * @default 'Åbn alle'
    */
   collapsedText?: string
-  /** 
+  /**
    * Whether to display the bulk expand/collapse button
    * Useful for groups with many accordions or when bulk control is desired
    * @default true
    */
   showBulkButton?: boolean
-  /** 
+  /**
    * v-model binding for controlling all accordions expanded state
    * When true, all accordions will be expanded; when false, all collapsed
    */
@@ -113,12 +113,12 @@ withDefaults(defineProps<FdsAccordionGroupProps>(), {
 })
 
 const emit = defineEmits<{
-  /** 
+  /**
    * Emitted when the bulk expanded state changes for v-model support
    * Provides the new boolean state indicating if all should be expanded
    */
   'update:modelValue': [value: boolean]
-  /** 
+  /**
    * Emitted when the bulk toggle button is clicked
    * Provides the new expanded state that will be applied to all accordions
    */

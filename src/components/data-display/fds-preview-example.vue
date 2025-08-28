@@ -7,11 +7,11 @@
 <script setup lang="ts">
 /**
  * Preview example section component implementing DKFDS v11 component example specifications.
- * 
+ *
  * Container for displaying live component examples within documentation previews. Provides
  * proper semantic markup and accessibility labeling for interactive examples. Designed to
  * work with FdsPreview and FdsPreviewCode for complete documentation layouts.
- * 
+ *
  * @component
  * @example Basic example section
  * ```vue
@@ -23,7 +23,7 @@
  *   </FdsPreviewExample>
  * </FdsPreview>
  * ```
- * 
+ *
  * @example Interactive form example
  * ```vue
  * <FdsPreview header="Form Components">
@@ -39,7 +39,7 @@
  *   </FdsPreviewCode>
  * </FdsPreview>
  * ```
- * 
+ *
  * @example Complex layout example
  * ```vue
  * <FdsPreview header="Card Layout">
@@ -52,7 +52,7 @@
  *   </FdsPreviewExample>
  * </FdsPreview>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/} DKFDS Documentation
  */
 </script>

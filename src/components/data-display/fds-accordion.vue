@@ -71,10 +71,10 @@
 <script setup lang="ts">
 /**
  * Accordion component implementing DKFDS v11 collapsible content specifications.
- * 
+ *
  * Expandable/collapsible content panels with proper keyboard navigation and ARIA attributes.
  * Can be used standalone or within FdsAccordionGroup for coordinated behavior.
- * 
+ *
  * @component
  * @example Standalone accordion
  * ```vue
@@ -82,7 +82,7 @@
  *   Detailed content that can be expanded or collapsed.
  * </FdsAccordion>
  * ```
- * 
+ *
  * @example Accordion with custom header
  * ```vue
  * <FdsAccordion>
@@ -94,10 +94,10 @@
  *   </template>
  * </FdsAccordion>
  * ```
- * 
+ *
  * @example Controlled accordion (v-model)
  * ```vue
- * <FdsAccordion 
+ * <FdsAccordion
  *   v-model="isExpanded"
  *   header="Controlled Accordion"
  *   @update:modelValue="handleToggle"
@@ -105,10 +105,10 @@
  *   Content visibility controlled by isExpanded ref
  * </FdsAccordion>
  * ```
- * 
+ *
  * @example Accordion with status variants
  * ```vue
- * <FdsAccordion 
+ * <FdsAccordion
  *   header="Warning Section"
  *   variant="warning"
  *   variant-text="2 issues"
@@ -116,7 +116,7 @@
  *   Content with warning status indicator
  * </FdsAccordion>
  * ```
- * 
+ *
  * @example Within accordion group
  * ```vue
  * <FdsAccordionGroup :allow-multiple="false">
@@ -125,7 +125,7 @@
  *   <FdsAccordion header="Section 3">Content 3</FdsAccordion>
  * </FdsAccordionGroup>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/accordions/} DKFDS Accordion Documentation
  */
 
@@ -134,13 +134,13 @@ import { generateId } from '../../composables'
 import FdsIkon from '../layout/fds-ikon.vue'
 
 export interface FdsAccordionProps {
-  /** 
+  /**
    * Accordion header text
    * Displayed as the clickable toggle button content
    */
   header?: string
-  
-  /** 
+
+  /**
    * Controlled expanded state
    * Use with v-model for two-way binding
    */
@@ -161,13 +161,10 @@ interface AccordionGroupApi {
   getState: (_id: string) => boolean
 }
 
-const props = withDefaults(
-  defineProps<FdsAccordionProps>(),
-  {
-    headerTag: 'h2',
-    variant: null,
-  },
-)
+const props = withDefaults(defineProps<FdsAccordionProps>(), {
+  headerTag: 'h2',
+  variant: null,
+})
 
 const emit = defineEmits<{
   'update:modelValue': [value: boolean]

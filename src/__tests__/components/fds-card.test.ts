@@ -11,10 +11,15 @@ const MockRouterLink = {
   props: ['to'],
   inheritAttrs: false,
   setup(props: any, { attrs, slots }: any) {
-    return () => h('a', {
-      ...attrs,
-      href: props.to,
-    }, slots.default ? slots.default() : [])
+    return () =>
+      h(
+        'a',
+        {
+          ...attrs,
+          href: props.to,
+        },
+        slots.default ? slots.default() : [],
+      )
   },
 }
 
@@ -867,7 +872,7 @@ describe('FdsCard', () => {
           header: 'Internal Link',
         },
       })
-      
+
       expect(wrapper.find('.card-icon').exists()).toBe(true)
       expect(wrapper.find('use').attributes('href')).toBe('#arrow-forward')
     })
@@ -879,7 +884,7 @@ describe('FdsCard', () => {
           header: 'External Link',
         },
       })
-      
+
       expect(wrapper.find('.card-icon').exists()).toBe(true)
       expect(wrapper.find('use').attributes('href')).toBe('#open-in-new')
     })
@@ -891,7 +896,7 @@ describe('FdsCard', () => {
           header: 'Domain URL',
         },
       })
-      
+
       expect(wrapper.find('.card-icon').exists()).toBe(true)
       expect(wrapper.find('use').attributes('href')).toBe('#open-in-new')
     })
@@ -903,7 +908,7 @@ describe('FdsCard', () => {
           header: 'Protocol Relative',
         },
       })
-      
+
       expect(wrapper.find('.card-icon').exists()).toBe(true)
       expect(wrapper.find('use').attributes('href')).toBe('#open-in-new')
     })
@@ -915,7 +920,7 @@ describe('FdsCard', () => {
           header: 'Email Link',
         },
       })
-      
+
       expect(wrapper.find('.card-icon').exists()).toBe(true)
       expect(wrapper.find('use').attributes('href')).toBe('#open-in-new')
     })
@@ -928,7 +933,7 @@ describe('FdsCard', () => {
           icon: 'open-in-new',
         },
       })
-      
+
       expect(wrapper.find('.card-icon').exists()).toBe(true)
       expect(wrapper.find('use').attributes('href')).toBe('#open-in-new')
     })
@@ -941,7 +946,7 @@ describe('FdsCard', () => {
           icon: 'arrow-forward',
         },
       })
-      
+
       expect(wrapper.find('.card-icon').exists()).toBe(true)
       expect(wrapper.find('use').attributes('href')).toBe('#arrow-forward')
     })
@@ -952,7 +957,7 @@ describe('FdsCard', () => {
           header: 'No Link Card',
         },
       })
-      
+
       expect(wrapper.find('.card-icon').exists()).toBe(false)
     })
 
@@ -964,7 +969,7 @@ describe('FdsCard', () => {
           icon: '',
         },
       })
-      
+
       expect(wrapper.find('.card-icon').exists()).toBe(false)
     })
   })

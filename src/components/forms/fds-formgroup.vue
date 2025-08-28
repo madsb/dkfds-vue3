@@ -15,12 +15,12 @@ import { formId } from '../../composables'
 
 /**
  * Form group component implementing DKFDS v11 form structure specifications.
- * 
+ *
  * Provides semantic grouping for form controls with integrated validation state management,
  * accessibility features, and context for child components. Automatically handles
  * aria-describedby relationships, validation styling, and ID management following
  * DKFDS accessibility patterns.
- * 
+ *
  * @component
  * @example Basic form group with input
  * ```vue
@@ -28,16 +28,16 @@ import { formId } from '../../composables'
  *   <template #default="{ formid, ariaDescribedby, isValid }">
  *     <FdsLabel :forId="formid">Email</FdsLabel>
  *     <FdsHint>Enter your email address</FdsHint>
- *     <FdsInput 
- *       :id="formid" 
- *       :aria-describedby="ariaDescribedby" 
- *       :isValid="isValid" 
+ *     <FdsInput
+ *       :id="formid"
+ *       :aria-describedby="ariaDescribedby"
+ *       :isValid="isValid"
  *     />
  *     <FdsFejlmeddelelse v-if="!isValid">Please enter a valid email</FdsFejlmeddelelse>
  *   </template>
  * </FdsFormgroup>
  * ```
- * 
+ *
  * @example Form group with validation
  * ```vue
  * <FdsFormgroup :id="'user-email'" :isValid="emailValid">
@@ -49,7 +49,7 @@ import { formId } from '../../composables'
  *   </template>
  * </FdsFormgroup>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/inputfelter/} DKFDS Input Fields Documentation
  */
 

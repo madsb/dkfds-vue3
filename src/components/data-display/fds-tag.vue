@@ -10,22 +10,22 @@
 <script setup lang="ts">
 /**
  * Tag component implementing DKFDS v11 tag specifications.
- * 
+ *
  * Interactive labels for categorization, filtering, and content organization.
  * Unlike badges, tags are typically user-interactive elements supporting selection,
  * removal, and filtering operations. Designed for content management interfaces.
- * 
+ *
  * @component
  * @example Basic tags
  * ```vue
  * <FdsTag @click="handleTagClick">Category</FdsTag>
  * <FdsTag @click="handleTagClick">Topic</FdsTag>
  * ```
- * 
+ *
  * @example Removable tags with close icon
  * ```vue
- * <FdsTag 
- *   v-for="tag in tags" 
+ * <FdsTag
+ *   v-for="tag in tags"
  *   :key="tag.id"
  *   icon="close"
  *   @click="removeTag(tag.id)"
@@ -33,7 +33,7 @@
  *   {{ tag.name }}
  * </FdsTag>
  * ```
- * 
+ *
  * @example Tags with custom icons
  * ```vue
  * <FdsTag icon="star" @click="toggleFavorite">
@@ -43,12 +43,12 @@
  *   Bookmark
  * </FdsTag>
  * ```
- * 
+ *
  * @example Tag filtering interface
  * ```vue
  * <div class="tag-filter">
- *   <FdsTag 
- *     v-for="filter in availableFilters" 
+ *   <FdsTag
+ *     v-for="filter in availableFilters"
  *     :key="filter.id"
  *     :class="{ active: activeFilters.includes(filter.id) }"
  *     @click="toggleFilter(filter.id)"
@@ -57,7 +57,7 @@
  *   </FdsTag>
  * </div>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/tags/} DKFDS Tag Documentation
  */
 

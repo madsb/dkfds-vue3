@@ -33,7 +33,7 @@
 <script setup lang="ts">
 /**
  * Alert component implementing DKFDS v11 message/notification specifications.
- * 
+ *
  * Displays important messages to users with different severity levels (info, success, warning, error).
  * Supports both dismissible and persistent alerts with proper ARIA attributes for accessibility.
  *
@@ -44,28 +44,28 @@
  *   Your information has been saved successfully.
  * </FdsAlert>
  * ```
- * 
+ *
  * @example Success alert with header
  * ```vue
  * <FdsAlert variant="success" header="Payment completed">
  *   Your payment has been processed and a receipt has been sent to your email.
  * </FdsAlert>
  * ```
- * 
+ *
  * @example Dismissible warning alert
  * ```vue
  * <FdsAlert variant="warning" closeable @close="handleClose">
  *   Please review your information before submitting.
  * </FdsAlert>
  * ```
- * 
+ *
  * @example Error alert without icon
  * ```vue
  * <FdsAlert variant="error" :show-icon="false">
  *   An error occurred while processing your request. Please try again.
  * </FdsAlert>
  * ```
- * 
+ *
  * @example Using slots for custom content
  * ```vue
  * <FdsAlert variant="info">
@@ -87,27 +87,27 @@ import { ref, computed } from 'vue'
 import FdsIkon from '../layout/fds-ikon.vue'
 
 export interface FdsAlertProps {
-  /** 
+  /**
    * Optional header text for the alert
    * Displayed as a prominent heading above the alert content
    */
   header?: string | null
-  
-  /** 
+
+  /**
    * Alert variant determining visual style and semantic meaning
    * @values 'info', 'success', 'warning', 'error'
    * @default 'info'
    */
   variant?: 'success' | 'info' | 'warning' | 'error'
-  
-  /** 
+
+  /**
    * Show icon matching the alert variant
    * Icons provide visual reinforcement of the alert type
    * @default false
    */
   showIcon?: boolean
-  
-  /** 
+
+  /**
    * Allow users to dismiss the alert
    * Adds a close button and enables dismissal functionality
    * @default false

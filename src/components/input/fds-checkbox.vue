@@ -36,12 +36,12 @@ import { formId } from '../../composables'
 
 /**
  * Checkbox component implementing DKFDS v11 checkbox specifications.
- * 
+ *
  * Provides single and multiple selection checkboxes with conditional content
  * display, accessibility support, and proper form integration. Supports
  * boolean, string, and array models for flexible data binding patterns
  * following DKFDS checkbox behavior.
- * 
+ *
  * @component
  * @example Basic checkbox (boolean model)
  * ```vue
@@ -49,14 +49,14 @@ import { formId } from '../../composables'
  *   I accept the terms and conditions
  * </FdsCheckbox>
  * ```
- * 
+ *
  * @example Checkbox group (array model)
  * ```vue
  * <FdsCheckbox v-model="interests" value="sports">Sports</FdsCheckbox>
  * <FdsCheckbox v-model="interests" value="music">Music</FdsCheckbox>
  * <FdsCheckbox v-model="interests" value="travel">Travel</FdsCheckbox>
  * ```
- * 
+ *
  * @example Checkbox with conditional content
  * ```vue
  * <FdsCheckbox v-model="hasAllergies" value="yes">
@@ -67,7 +67,7 @@ import { formId } from '../../composables'
  *   </template>
  * </FdsCheckbox>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/tjekboks/} DKFDS Checkbox Documentation
  */
 
@@ -75,13 +75,13 @@ const attrs = useAttrs()
 const slots = useSlots()
 
 export interface FdsCheckboxProps {
-  /** 
+  /**
    * Unique identifier for the checkbox.
    * If not provided, will be auto-generated.
    * @default undefined (auto-generated)
    */
   id?: string
-  /** 
+  /**
    * The v-model value for two-way data binding.
    * - boolean: for single checkbox (true/false)
    * - string: for single checkbox with specific value
@@ -89,19 +89,19 @@ export interface FdsCheckboxProps {
    * @default false
    */
   modelValue?: boolean | string | string[]
-  /** 
+  /**
    * Checkbox value for form submission and array models.
    * When modelValue is an array, this value is added/removed.
    * @default true
    */
   value?: string | number | boolean
-  /** 
+  /**
    * Name attribute for form submission.
    * If not provided, uses the generated form ID.
    * @default undefined (uses formid)
    */
   name?: string
-  /** 
+  /**
    * Whether the checkbox is disabled.
    * Prevents user interaction and applies disabled styling.
    * @default false
@@ -109,20 +109,26 @@ export interface FdsCheckboxProps {
   disabled?: boolean
 }
 
-const { id, modelValue = false, value = true, name, disabled = false } = defineProps<FdsCheckboxProps>()
+const {
+  id,
+  modelValue = false,
+  value = true,
+  name,
+  disabled = false,
+} = defineProps<FdsCheckboxProps>()
 
 const emit = defineEmits<{
-  /** 
+  /**
    * Emitted when checkbox state changes.
    * Used for v-model two-way data binding.
    */
   'update:modelValue': [value: boolean | string | string[]]
-  /** 
+  /**
    * Emitted when checkbox loses focus.
    * Useful for triggering validation after user interaction.
    */
   dirty: [isDirty: boolean]
-  /** 
+  /**
    * Emitted on change event.
    * Provides access to the raw DOM change event.
    */

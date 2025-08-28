@@ -27,10 +27,10 @@ import { formId } from '../../composables'
 
 /**
  * Input component implementing DKFDS v11 text input specifications.
- * 
+ *
  * Standard text input field with support for prefixes, suffixes, and various input types.
  * Integrates with FdsFormgroup for validation and error handling.
- * 
+ *
  * @component
  * @example Basic text input
  * ```vue
@@ -39,13 +39,13 @@ import { formId } from '../../composables'
  *   <FdsInput id="name" v-model="formData.name" />
  * </FdsFormgroup>
  * ```
- * 
+ *
  * @example With prefix and suffix
  * ```vue
  * <FdsFormgroup>
  *   <FdsLabel for="price">Price</FdsLabel>
- *   <FdsInput 
- *     id="price" 
+ *   <FdsInput
+ *     id="price"
  *     v-model="formData.price"
  *     prefix="DKK"
  *     suffix=",00"
@@ -53,21 +53,21 @@ import { formId } from '../../composables'
  *   />
  * </FdsFormgroup>
  * ```
- * 
+ *
  * @example Email input with custom width
  * ```vue
  * <FdsFormgroup>
  *   <FdsLabel for="email">Email</FdsLabel>
  *   <FdsHint id="email-hint">We'll never share your email</FdsHint>
- *   <FdsInput 
- *     id="email" 
+ *   <FdsInput
+ *     id="email"
  *     v-model="formData.email"
  *     type="email"
  *     width-class="form-input-width-m"
  *   />
  * </FdsFormgroup>
  * ```
- * 
+ *
  * @example With validation error
  * ```vue
  * <FdsFormgroup :error="emailError">
@@ -76,47 +76,47 @@ import { formId } from '../../composables'
  *   <FdsInput id="email" v-model="email" type="email" />
  * </FdsFormgroup>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/inputfelter/} DKFDS Input Documentation
  */
 
 const attrs = useAttrs()
 
 export interface FdsInputProps {
-  /** 
+  /**
    * Unique identifier for the input element
    * Used for label association and accessibility
    */
   id?: string
-  
-  /** 
+
+  /**
    * The v-model binding value
    * Supports two-way data binding with v-model
    */
   modelValue?: string
-  
-  /** 
+
+  /**
    * Suffix text displayed after the input field
    * Commonly used for units or additional context
    * @example "kr", "km", "%"
    */
   suffix?: string
-  
-  /** 
+
+  /**
    * Prefix text displayed before the input field
    * Commonly used for currency symbols or labels
    * @example "DKK", "$", "+"
    */
   prefix?: string
-  
-  /** 
+
+  /**
    * HTML input type attribute
    * @values 'text', 'email', 'tel', 'url', 'password', 'number', 'search'
    * @default 'text'
    */
   type?: string
-  
-  /** 
+
+  /**
    * Width class for controlling input field size
    * Uses DKFDS width utility classes
    * @values 'form-input-width-xs', 'form-input-width-s', 'form-input-width-m', 'form-input-width-l', 'form-input-width-xl'
@@ -125,22 +125,29 @@ export interface FdsInputProps {
   widthClass?: string
 }
 
-const { id, modelValue = '', suffix, prefix, type = 'text', widthClass = '' } = defineProps<FdsInputProps>()
+const {
+  id,
+  modelValue = '',
+  suffix,
+  prefix,
+  type = 'text',
+  widthClass = '',
+} = defineProps<FdsInputProps>()
 
 const emit = defineEmits<{
-  /** 
+  /**
    * Emitted when input value changes
    * Used for v-model binding
    */
   'update:modelValue': [value: string]
-  
-  /** 
+
+  /**
    * Emitted when input loses focus
    * Indicates if field has been touched (dirty state)
    */
   dirty: [isDirty: boolean]
-  
-  /** 
+
+  /**
    * Native input event pass-through
    * Provides access to raw input event
    */

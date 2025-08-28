@@ -7,11 +7,11 @@
 <script setup lang="ts">
 /**
  * List item component implementing DKFDS v11 list item specifications.
- * 
+ *
  * Individual list item element designed to work with FdsList parent component.
  * Provides semantic markup with flexible styling options for different states
  * and layout configurations. Supports accessibility roles and visual variants.
- * 
+ *
  * @component
  * @example Basic list items
  * ```vue
@@ -21,7 +21,7 @@
  *   <FdsListItem variant="disabled">Disabled item</FdsListItem>
  * </FdsList>
  * ```
- * 
+ *
  * @example Current page navigation item
  * ```vue
  * <FdsList variant="nobullet">
@@ -36,7 +36,7 @@
  *   </FdsListItem>
  * </FdsList>
  * ```
- * 
+ *
  * @example Flex layout for complex content
  * ```vue
  * <FdsList variant="bordered">
@@ -50,7 +50,7 @@
  *   </FdsListItem>
  * </FdsList>
  * ```
- * 
+ *
  * @example Accessibility role for custom layouts
  * ```vue
  * <FdsList variant="unstyled">
@@ -59,7 +59,7 @@
  *   </FdsListItem>
  * </FdsList>
  * ```
- * 
+ *
  * @see {@link https://designsystem.dk/komponenter/lister/} DKFDS List Documentation
  */
 import { computed } from 'vue'
