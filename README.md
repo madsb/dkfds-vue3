@@ -44,66 +44,50 @@ Choose **one** of these approaches:
 import '@madsb/dkfds-vue3/dist/dkfds-vue3.css'
 ```
 
-#### Option B: SCSS Integration with DKFDS Theme (Recommended)
+#### Option B: Theme-based SCSS (Recommended)
 
-Choose your DKFDS theme and configure the components:
+**Simple two-step integration:**
 
-**Virkdk Theme (Government):**
-
+**Default Theme (Generic DKFDS):**
 ```scss
 // main.scss
-@use 'node_modules/dkfds/src/stylesheets/dkfds-virkdk' as dkfds with (
-  $font-path: 'node_modules/dkfds/src/fonts/IBMPlexSans/',
-  $image-path: 'node_modules/dkfds/src/img/',
-  $icons-folder-path: 'node_modules/dkfds/src/img/svg-icons/'
+// 1. Import DKFDS base styles with default theme
+@use '../../node_modules/dkfds/src/stylesheets/dkfds' as dkfds with (
+  $font-path: '../../node_modules/dkfds/src/fonts/IBMPlexSans/',
+  $image-path: '../../node_modules/dkfds/src/img/',
+  $icons-folder-path: '../../node_modules/dkfds/src/img/svg-icons/'
 );
-@use '@madsb/dkfds-vue3/scss' as vue3;
 
-// Configure Vue3 components with DKFDS colors
-@include vue3.configure-with-dkfds-resolved(
-  dkfds.color(dkfds.$theme-color-primary),
-  dkfds.color(dkfds.$theme-color-primary-dark),
-  dkfds.color(dkfds.$theme-color-primary-darker),
-  dkfds.color(dkfds.$theme-focus-color),
-  dkfds.color(dkfds.$theme-color-success),
-  dkfds.color(dkfds.$theme-color-success-light),
-  dkfds.color(dkfds.$theme-color-info),
-  dkfds.color(dkfds.$theme-color-warning),
-  dkfds.color(dkfds.$theme-color-error)
-);
+// 2. Import Vue3 components - one simple import!
+@use '@madsb/dkfds-vue3/styles';
 ```
 
-**Borgerdk Theme (Citizen Portal):**
-
+**Virk Theme (for virk.dk solutions):**
 ```scss
 // main.scss
-@use 'node_modules/dkfds/src/stylesheets/dkfds-borgerdk' as dkfds with (
-  $font-path: 'node_modules/dkfds/src/fonts/IBMPlexSans/',
-  $image-path: 'node_modules/dkfds/src/img/',
-  $icons-folder-path: 'node_modules/dkfds/src/img/svg-icons/'
+// 1. Import DKFDS base styles with Virk theme
+@use '../../node_modules/dkfds/src/stylesheets/dkfds-virkdk' as dkfds with (
+  $font-path: '../../node_modules/dkfds/src/fonts/IBMPlexSans/',
+  $image-path: '../../node_modules/dkfds/src/img/',
+  $icons-folder-path: '../../node_modules/dkfds/src/img/svg-icons/'
 );
-@use '@madsb/dkfds-vue3/scss' as vue3;
 
-// Same configuration works with any DKFDS theme!
-@include vue3.configure-with-dkfds-resolved(
-  dkfds.color(dkfds.$theme-color-primary),
-  dkfds.color(dkfds.$theme-color-primary-dark),
-  dkfds.color(dkfds.$theme-color-primary-darker),
-  dkfds.color(dkfds.$theme-focus-color),
-  dkfds.color(dkfds.$theme-color-success),
-  dkfds.color(dkfds.$theme-color-success-light),
-  dkfds.color(dkfds.$theme-color-info),
-  dkfds.color(dkfds.$theme-color-warning),
-  dkfds.color(dkfds.$theme-color-error)
-);
+// 2. Import Vue3 components - one simple import!
+@use '@madsb/dkfds-vue3/styles';
 ```
 
-#### Option C: Default Colors (No DKFDS Theme)
-
+**Borger Theme (for borger.dk solutions):**
 ```scss
-// main.scss - Uses built-in default colors
-@use '@madsb/dkfds-vue3/scss' as vue3;
-// No additional configuration needed
+// main.scss
+// 1. Import DKFDS base styles with Borger theme
+@use '../../node_modules/dkfds/src/stylesheets/dkfds-borgerdk' as dkfds with (
+  $font-path: '../../node_modules/dkfds/src/fonts/IBMPlexSans/',
+  $image-path: '../../node_modules/dkfds/src/img/',
+  $icons-folder-path: '../../node_modules/dkfds/src/img/svg-icons/'
+);
+
+// 2. Import Vue3 components - one simple import!
+@use '@madsb/dkfds-vue3/styles';
 ```
 
 ### 3. Use Components
@@ -130,32 +114,37 @@ import { generateId, navigation } from '@madsb/dkfds-vue3/utils'
 
 ## 🎨 Theme Configuration
 
-This library is **theme-agnostic** and works with any DKFDS theme:
+This library provides **simple DKFDS integration** that works with any official theme:
 
 ### Available Themes
 
-| Theme        | Description                           | Use Case                                |
-| ------------ | ------------------------------------- | --------------------------------------- |
-| **Virkdk**   | Government theme with official colors | Government websites and applications    |
-| **Borgerdk** | Citizen portal theme                  | Public-facing citizen services          |
-| **Default**  | Built-in fallback colors              | Development, testing, or custom styling |
+| Theme        | DKFDS Stylesheet                         | Colors                    | Use Case                               |
+| ------------ | ---------------------------------------- | ------------------------- | -------------------------------------- |
+| **Default**  | `dkfds`                                  | Generic DKFDS blue        | Development, testing, generic use      |
+| **Virk**     | `dkfds-virkdk`                           | Virk.dk blue              | Government websites and applications   |
+| **Borger**   | `dkfds-borgerdk`                         | Borger.dk green           | Public-facing citizen services         |
 
 ### Theme Benefits
 
-- ✅ **Consistent colors** - Automatically synced with DKFDS theme updates
-- ✅ **Easy switching** - Change themes by updating one import
-- ✅ **Backward compatible** - Existing projects continue to work
-- ✅ **Flexible** - Use without DKFDS or with custom colors
+- ✅ **Dead simple** - Two imports: DKFDS base + Vue3 components
+- ✅ **Official colors** - DKFDS handles all theme colors
+- ✅ **Modern SCSS** - Uses latest Sass module system (`@use`/`@forward`)
+- ✅ **Theme-agnostic** - Works with any DKFDS theme
+- ✅ **No deprecation warnings** - Dart Sass 2.0+ compatible
 
-### Custom Color Override
+### Switching Themes
 
-You can also override specific colors manually:
+Change themes by updating your DKFDS stylesheet import:
 
 ```scss
-@use '@madsb/dkfds-vue3/scss' as vue3 with (
-  $color-primary: #custom-color,
-  $color-success: #another-custom-color
-);
+// From this:
+@use '../../node_modules/dkfds/src/stylesheets/dkfds-virkdk' with (...);
+
+// To this:
+@use '../../node_modules/dkfds/src/stylesheets/dkfds-borgerdk' with (...);
+
+// Vue3 import stays the same
+@use '@madsb/dkfds-vue3/styles';
 ```
 
 ## 🛠️ Development

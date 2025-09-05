@@ -1,6 +1,5 @@
 // Forward all partials to make them available when main.scss is imported
-@forward 'variables';
-@forward 'dkfds-integration'; // DKFDS theme integration mixins
+// Note: variables is configured at the theme level, not forwarded here
 @forward 'animations';
 @forward 'accordion';
 @forward 'bgs'; // Forward the mixin
@@ -11,7 +10,6 @@
 @forward 'knapper';
 @forward 'forms';
 @forward 'range';
-@forward 'progress';
 
 body {
   display: flex;

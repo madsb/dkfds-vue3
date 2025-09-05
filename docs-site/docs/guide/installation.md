@@ -54,67 +54,52 @@ Choose **one** of these approaches:
 import '@madsb/dkfds-vue3/dist/dkfds-vue3.css'
 ```
 
-### Option B: SCSS Integration with DKFDS Theme (Recommended)
+### Option B: Theme-based SCSS (Recommended)
 
-Choose your DKFDS theme and configure the components:
+**Simple two-step integration:**
 
-**Virkdk Theme (Government):**
-
+**Default Theme (Generic DKFDS):**
 ```scss
 // main.scss
-@use 'node_modules/dkfds/src/stylesheets/dkfds-virkdk' as dkfds with (
-  $font-path: 'node_modules/dkfds/src/fonts/IBMPlexSans/',
-  $image-path: 'node_modules/dkfds/src/img/',
-  $icons-folder-path: 'node_modules/dkfds/src/img/svg-icons/'
+// 1. Import DKFDS base styles with default theme
+@use '../../node_modules/dkfds/src/stylesheets/dkfds' as dkfds with (
+  $font-path: '../../node_modules/dkfds/src/fonts/IBMPlexSans/',
+  $image-path: '../../node_modules/dkfds/src/img/',
+  $icons-folder-path: '../../node_modules/dkfds/src/img/svg-icons/'
 );
-@use '@madsb/dkfds-vue3/scss' as vue3;
 
-// Configure Vue3 components with DKFDS colors
-@include vue3.configure-with-dkfds-resolved(
-  dkfds.color(dkfds.$theme-color-primary),
-  dkfds.color(dkfds.$theme-color-primary-dark),
-  dkfds.color(dkfds.$theme-color-primary-darker),
-  dkfds.color(dkfds.$theme-focus-color),
-  dkfds.color(dkfds.$theme-color-success),
-  dkfds.color(dkfds.$theme-color-success-light),
-  dkfds.color(dkfds.$theme-color-info),
-  dkfds.color(dkfds.$theme-color-warning),
-  dkfds.color(dkfds.$theme-color-error)
-);
+// 2. Import Vue3 components - one simple import!
+@use '@madsb/dkfds-vue3/styles';
 ```
 
-**Borgerdk Theme (Citizen Portal):**
-
+**Virk Theme (for virk.dk solutions):**
 ```scss
 // main.scss
-@use 'node_modules/dkfds/src/stylesheets/dkfds-borgerdk' as dkfds with (
-  $font-path: 'node_modules/dkfds/src/fonts/IBMPlexSans/',
-  $image-path: 'node_modules/dkfds/src/img/',
-  $icons-folder-path: 'node_modules/dkfds/src/img/svg-icons/'
+// 1. Import DKFDS base styles with Virk theme
+@use '../../node_modules/dkfds/src/stylesheets/dkfds-virkdk' as dkfds with (
+  $font-path: '../../node_modules/dkfds/src/fonts/IBMPlexSans/',
+  $image-path: '../../node_modules/dkfds/src/img/',
+  $icons-folder-path: '../../node_modules/dkfds/src/img/svg-icons/'
 );
-@use '@madsb/dkfds-vue3/scss' as vue3;
 
-// Same configuration works with any DKFDS theme!
-@include vue3.configure-with-dkfds-resolved(
-  dkfds.color(dkfds.$theme-color-primary),
-  dkfds.color(dkfds.$theme-color-primary-dark),
-  dkfds.color(dkfds.$theme-color-primary-darker),
-  dkfds.color(dkfds.$theme-focus-color),
-  dkfds.color(dkfds.$theme-color-success),
-  dkfds.color(dkfds.$theme-color-success-light),
-  dkfds.color(dkfds.$theme-color-info),
-  dkfds.color(dkfds.$theme-color-warning),
-  dkfds.color(dkfds.$theme-color-error)
-);
+// 2. Import Vue3 components - one simple import!
+@use '@madsb/dkfds-vue3/styles';
 ```
 
-### Option C: Default Colors (No DKFDS Theme)
-
+**Borger Theme (for borger.dk solutions):**
 ```scss
-// main.scss - Uses built-in default colors
-@use '@madsb/dkfds-vue3/scss' as vue3;
-// No additional configuration needed
+// main.scss
+// 1. Import DKFDS base styles with Borger theme
+@use '../../node_modules/dkfds/src/stylesheets/dkfds-borgerdk' as dkfds with (
+  $font-path: '../../node_modules/dkfds/src/fonts/IBMPlexSans/',
+  $image-path: '../../node_modules/dkfds/src/img/',
+  $icons-folder-path: '../../node_modules/dkfds/src/img/svg-icons/'
+);
+
+// 2. Import Vue3 components - one simple import!
+@use '@madsb/dkfds-vue3/styles';
 ```
+
 
 Now use components anywhere without imports:
 
@@ -310,15 +295,15 @@ Update your `tsconfig.json`:
 ### Styling issues
 
 Make sure to import styles using one of the approaches above:
-```typescript
+```scss
 // Option A: Pre-built CSS
 import '@madsb/dkfds-vue3/dist/dkfds-vue3.css'
 
-// Option B: SCSS with theme integration
-// See SCSS Integration section above
-
-// Option C: Default SCSS
-@use '@madsb/dkfds-vue3/scss' as vue3;
+// Option B: Theme-based SCSS (requires BOTH imports)
+// 1. DKFDS base styles (choose your theme)
+@use '../../node_modules/dkfds/src/stylesheets/dkfds-virkdk' with (...);
+// 2. Vue3 component integration
+@use '@madsb/dkfds-vue3/styles';
 ```
 
 ### Build errors
