@@ -41,6 +41,11 @@ build/
 out/
 .output/
 
+# Vite/VitePress caches
+.vite/
+**/.vite/
+**/.vitepress/cache/
+
 # Temporary files
 *.tmp
 *.temp
@@ -54,6 +59,7 @@ temp/
 .playwright-mcp/
 dokumentation/dkfds-v11-automation-system.md
 typecheck-strict.sh
+.serena/
 
 # Vitest
 .vitest-reports/
