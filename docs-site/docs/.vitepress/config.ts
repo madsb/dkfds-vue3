@@ -278,7 +278,8 @@ export default defineConfig({
     resolve: {
       alias: [
         { find: '@', replacement: '../../src' },
-        { find: 'vue', replacement: 'vue/dist/vue.esm-bundler.js' },
+        // Only alias the exact 'vue' import, not subpaths like 'vue/server-renderer'
+        { find: /^vue$/, replacement: 'vue/dist/vue.esm-bundler.js' },
         // Expose DKFDS CSS files directly so we can import them with ?url in the theme preview component
         {
           find: /^dkfds\/dist\/css\/dkfds-virkdk\.min\.css(\?url)?$/,
@@ -301,16 +302,18 @@ export default defineConfig({
     },
     define: {
       // Resolve DKFDS real install path to avoid symlink issues
-      __DKFDS_VIRK_ABS__: (() => {
-        const pkg = require.resolve('dkfds/package.json')
-        const cssDir = pathResolve(dirname(pkg), 'dist/css')
-        return JSON.stringify(pathResolve(cssDir, 'dkfds-virkdk.min.css'))
-      })(),
-      __DKFDS_BORGER_ABS__: (() => {
-        const pkg = require.resolve('dkfds/package.json')
-        const cssDir = pathResolve(dirname(pkg), 'dist/css')
-        return JSON.stringify(pathResolve(cssDir, 'dkfds-borgerdk.min.css'))
-      })(),
+      __DKFDS_VIRK_ABS__: JSON.stringify(
+        pathResolve(
+          fileURLToPath(new URL('../../', import.meta.url)),
+          'node_modules/dkfds/dist/css/dkfds-virkdk.min.css'
+        )
+      ),
+      __DKFDS_BORGER_ABS__: JSON.stringify(
+        pathResolve(
+          fileURLToPath(new URL('../../', import.meta.url)),
+          'node_modules/dkfds/dist/css/dkfds-borgerdk.min.css'
+        )
+      ),
     },
   },
 })
