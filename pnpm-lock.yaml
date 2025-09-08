@@ -112,6 +112,9 @@ importers:
         specifier: ^11.0.1
         version: 11.0.1
     devDependencies:
+      '@vue/compiler-dom':
+        specifier: ^3.5.18
+        version: 3.5.20
       sass:
         specifier: ^1.89.2
         version: 1.90.0

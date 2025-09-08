@@ -11,6 +11,12 @@ tags: [button, action, interactive, icon, responsive, form]
 
 Action button component implementing DKFDS v11 specifications. Provides primary action buttons with support for various styles, icons, and responsive behavior. Follows WCAG accessibility guidelines and DKFDS design patterns.
 
+## Live Preview
+
+::: preview theme=virk scheme=light
+<FdsButton variant="primary">Click me</FdsButton>
+:::
+
 ## Installation
 
 The FdsButton component is part of the DKFDS Vue 3 library and is available when you install the package:

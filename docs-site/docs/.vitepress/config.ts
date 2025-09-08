@@ -1,4 +1,9 @@
 import { defineConfig } from 'vitepress'
+import { fileURLToPath } from 'node:url'
+import { resolve as pathResolve, dirname } from 'node:path'
+import { createRequire } from 'node:module'
+const require = createRequire(import.meta.url)
+import { Buffer } from 'node:buffer'
 
 export default defineConfig({
   title: 'DKFDS Vue 3',
@@ -170,16 +175,142 @@ export default defineConfig({
       dark: 'github-dark',
     },
     lineNumbers: true,
+    config(md) {
+      // Custom ::: preview container without external deps
+      const escapeHtmlAttr = (s: string) =>
+        s
+          .replace(/&/g, '&amp;')
+          .replace(/"/g, '&quot;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+
+      // Block rule for ::: preview ... :::
+      md.block.ruler.before('fence', 'preview_container', (state, startLine, endLine, silent) => {
+        const start = state.bMarks[startLine] + state.tShift[startLine]
+        const max = state.eMarks[startLine]
+        const line = state.src.slice(start, max).trim()
+        if (!line.startsWith(':::')) return false
+        const params = line.slice(3).trim()
+        if (!params.startsWith('preview')) return false
+        if (silent) return true
+
+        // Parse options: preview theme=virk scheme=light showSource
+        let theme: 'virk' | 'borger' | undefined
+        let scheme: 'light' | 'dark' | undefined
+        let showSource = false
+        const parts = params.split(/\s+/).slice(1)
+        for (const p of parts) {
+          if (p === 'showSource') showSource = true
+          const [k, v] = p.split('=')
+          if (k === 'theme' && (v === 'virk' || v === 'borger')) theme = v
+          if ((k === 'scheme' || k === 'colorScheme') && (v === 'light' || v === 'dark')) scheme = v as any
+        }
+
+        // Find the end :::
+        let nextLine = startLine + 1
+        let found = false
+        for (; nextLine < endLine; nextLine++) {
+          const s = state.bMarks[nextLine] + state.tShift[nextLine]
+          const e = state.eMarks[nextLine]
+          const l = state.src.slice(s, e).trim()
+          if (l === ':::') {
+            found = true
+            break
+          }
+        }
+        if (!found) return false
+
+        const content = state.getLines(startLine + 1, nextLine, state.tShift[startLine + 1], false)
+        const b64 = Buffer.from(content).toString('base64')
+
+        const token = state.push('preview_block', 'div', 0)
+        token.block = true
+        token.map = [startLine, nextLine]
+        token.meta = { b64, theme, scheme, showSource }
+
+        state.line = nextLine + 1
+        return true
+      })
+
+      md.renderer.rules.preview_block = (tokens: any, idx: number) => {
+        const meta = tokens[idx].meta || {}
+        const attrs: string[] = [`code=\"${escapeHtmlAttr(meta.b64 || '')}\"`]
+        if (meta.theme) attrs.push(`theme=\"${meta.theme}\"`)
+        if (meta.scheme) attrs.push(`scheme=\"${meta.scheme}\"`)
+        if (meta.showSource) attrs.push(`showSource`)
+        return `<ComponentPreview ${attrs.join(' ')} />`
+      }
+
+      // Code fence ```preview blocks
+      const defaultFence = md.renderer.rules.fence?.bind(md.renderer.rules) || ((...args: any[]) => {
+        // @ts-ignore fallback to default renderer
+        return (md as any).renderer.renderToken(...args)
+      })
+
+      md.renderer.rules.fence = (tokens, idx, options, env, slf) => {
+        const token = tokens[idx]
+        const info = (token.info || '').trim()
+        if (info === 'preview' || info.startsWith('preview ')) {
+          // Parse options: preview theme=... scheme=... showSource
+          const parts = info.split(/\s+/).slice(1)
+          let theme: 'virk' | 'borger' | undefined
+          let scheme: 'light' | 'dark' | undefined
+          let showSource = false
+          for (const p of parts) {
+            if (p === 'showSource') showSource = true
+            const [k, v] = p.split('=')
+            if (k === 'theme' && (v === 'virk' || v === 'borger')) theme = v
+            if ((k === 'scheme' || k === 'colorScheme') && (v === 'light' || v === 'dark')) scheme = v as any
+          }
+          const b64 = Buffer.from(token.content).toString('base64')
+          const attrs: string[] = [`code=\"${b64}\"`]
+          if (theme) attrs.push(`theme=\"${theme}\"`)
+          if (scheme) attrs.push(`scheme=\"${scheme}\"`)
+          if (showSource) attrs.push('showSource')
+          return `<ComponentPreview ${attrs.join(' ')} />`
+        }
+        return defaultFence(tokens as any, idx, options, env, slf)
+      }
+    },
   },
 
   vite: {
     resolve: {
-      alias: {
-        '@': '../../src',
-      },
+      alias: [
+        { find: '@', replacement: '../../src' },
+        { find: 'vue', replacement: 'vue/dist/vue.esm-bundler.js' },
+        // Expose DKFDS CSS files directly so we can import them with ?url in the theme preview component
+        {
+          find: /^dkfds\/dist\/css\/dkfds-virkdk\.min\.css(\?url)?$/,
+          replacement: pathResolve(
+            fileURLToPath(new URL('../../', import.meta.url)),
+            'node_modules/dkfds/dist/css/dkfds-virkdk.min.css'
+          ),
+        },
+        {
+          find: /^dkfds\/dist\/css\/dkfds-borgerdk\.min\.css(\?url)?$/,
+          replacement: pathResolve(
+            fileURLToPath(new URL('../../', import.meta.url)),
+            'node_modules/dkfds/dist/css/dkfds-borgerdk.min.css'
+          ),
+        },
+      ],
     },
     ssr: {
       noExternal: ['@madsb/dkfds-vue3', 'dkfds'],
+    },
+    define: {
+      // Resolve DKFDS real install path to avoid symlink issues
+      __DKFDS_VIRK_ABS__: (() => {
+        const pkg = require.resolve('dkfds/package.json')
+        const cssDir = pathResolve(dirname(pkg), 'dist/css')
+        return JSON.stringify(pathResolve(cssDir, 'dkfds-virkdk.min.css'))
+      })(),
+      __DKFDS_BORGER_ABS__: (() => {
+        const pkg = require.resolve('dkfds/package.json')
+        const cssDir = pathResolve(dirname(pkg), 'dist/css')
+        return JSON.stringify(pathResolve(cssDir, 'dkfds-borgerdk.min.css'))
+      })(),
     },
   },
 })
