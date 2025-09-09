@@ -100,7 +100,7 @@
           navigation når den er tilgængelig. Du kan bruge både <code>href</code> og
           <code>to</code> props.
         </p>
-        <fds-breadcrumb :items="routerBreadcrumbs" container @item-click="handleRouterClick" />
+        <fds-breadcrumb :items="routerBreadcrumbs" container />
 
         <h3 style="margin-top: 24px">Native links (tvunget)</h3>
         <p style="margin-bottom: 16px">
@@ -252,9 +252,9 @@ const accessibilityBreadcrumbs = ref<BreadcrumbItem[]>([
 
 // Vue Router integration examples
 const routerBreadcrumbs = ref<BreadcrumbItem[]>([
-  { text: 'Forside', href: '/', to: '/' },
-  { text: 'Komponenter', href: '/komponenter', to: { name: 'komponenter' } },
-  { text: 'Brødkrumme', href: '/komponenter/broedkrumme', to: '/komponenter/broedkrumme' },
+  { text: 'Forside', to: '/' },
+  { text: 'Komponenter', to: { name: 'komponenter' } },
+  { text: 'Brødkrumme', to: '/komponenter/broedkrumme' },
   { text: 'Vue Router' },
 ])
 

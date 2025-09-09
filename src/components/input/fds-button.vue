@@ -1,8 +1,12 @@
 <template>
   <button class="button" :class="buttonClasses" v-bind="$attrs">
-    <fds-ikon v-if="icon && !iconRight" :icon="icon" :decorative="true" />
+    <slot name="prefix-icon">
+      <fds-ikon v-if="icon && !iconRight" :icon="icon" :decorative="true" />
+    </slot>
     <slot />
-    <fds-ikon v-if="icon && iconRight" :icon="icon" :decorative="true" />
+    <slot name="suffix-icon">
+      <fds-ikon v-if="icon && iconRight" :icon="icon" :decorative="true" />
+    </slot>
   </button>
 </template>
 

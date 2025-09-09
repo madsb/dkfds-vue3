@@ -10,19 +10,29 @@
         <!-- Show separator icon for all items except the first -->
         <fds-ikon v-if="index > 0" icon="chevron-right" :decorative="true" />
 
-        <!-- Render link for navigable items using router-link if available -->
-        <component
-          :is="getLinkComponent(item)"
-          v-if="item.href && !isCurrentPage(index)"
+        <!-- Vue Router link when item has 'to' property and not forced native -->
+        <router-link
+          v-if="item.to && !item.external && !props.useNativeLinks && !isCurrentPage(index)"
           class="breadcrumbs__link"
-          :href="getLinkComponent(item) === 'a' ? item.href : undefined"
-          :to="getLinkComponent(item) !== 'a' && !item.external ? item.to || item.href : undefined"
+          :to="item.to"
           @click="handleItemClick($event, item, index)"
         >
           {{ item.text }}
-        </component>
+        </router-link>
 
-        <!-- Render text for current page -->
+        <!-- Regular anchor tag for all other navigable items -->
+        <a
+          v-else-if="(item.href || item.to) && !isCurrentPage(index)"
+          class="breadcrumbs__link"
+          :href="item.href || (typeof item.to === 'string' ? item.to : '#')"
+          :target="item.external ? '_blank' : undefined"
+          :rel="item.external ? 'noopener noreferrer' : undefined"
+          @click="handleItemClick($event, item, index)"
+        >
+          {{ item.text }}
+        </a>
+
+        <!-- Current page (no link) -->
         <span v-else>
           {{ item.text }}
         </span>
@@ -32,8 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject } from 'vue'
-import type { Component } from 'vue'
+// No Vue imports needed for this simple approach
 // Vue imports needed for component
 import FdsIkon from '../layout/fds-ikon.vue'
 
@@ -144,36 +153,7 @@ const emit = defineEmits<{
   'item-click': [event: MouseEvent, item: BreadcrumbItem, index: number]
 }>()
 
-// Check if Vue Router is available
-const $router = inject<any>('$router', null)
-const $route = inject<any>('$route', null)
-
-// Determine if we have Vue Router available and should use it
-const hasRouter = computed(() => {
-  return !props.useNativeLinks && $router !== null && $route !== null
-})
-
-// Get the appropriate link component (router-link or 'a' tag)
-const getLinkComponent = (item: BreadcrumbItem): Component | string => {
-  // Use standard anchor for external links or when router is not available
-  if (item.external || !hasRouter.value) {
-    return 'a'
-  }
-
-  // Try to get RouterLink component from Vue Router
-  try {
-    // Vue Router 4 (Vue 3)
-    const RouterLink = $router?.options?.linkComponent || $router?.constructor?.RouterLink
-    if (RouterLink) {
-      return RouterLink as Component
-    }
-  } catch {
-    // Fallback if we can't access RouterLink
-  }
-
-  // Fallback to anchor tag
-  return 'a'
-}
+// No need for complex router detection - let Vue handle router-link resolution
 
 /**
  * Check if the item at the given index is the current page
@@ -184,9 +164,10 @@ const isCurrentPage = (index: number): boolean => {
 }
 
 /**
- * Handle click on breadcrumb item
+ * Simple click handler that just emits the event
+ * Router-link and anchor tags handle their own navigation
  */
-const handleItemClick = (event: MouseEvent, item: BreadcrumbItem, index: number) => {
+const handleItemClick = (event: MouseEvent, item: BreadcrumbItem, index: number): void => {
   emit('item-click', event, item, index)
 }
 </script>

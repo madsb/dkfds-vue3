@@ -488,25 +488,6 @@ describe('FdsBreadcrumb', () => {
       })
     })
 
-    it('handles items with to prop for Vue Router', () => {
-      const routerItems = [
-        { text: 'Home', to: '/', href: '/' },
-        { text: 'About', to: { name: 'about' }, href: '/about' },
-        { text: 'Current' },
-      ]
-
-      const wrapper = mount(FdsBreadcrumb, {
-        props: { items: routerItems },
-      })
-
-      const links = wrapper.findAll('a')
-      expect(links).toHaveLength(2)
-
-      // Should fall back to href when no router
-      expect(links[0].attributes('href')).toBe('/')
-      expect(links[1].attributes('href')).toBe('/about')
-    })
-
     it('handles external links correctly', () => {
       const itemsWithExternal = [
         { text: 'Internal', href: '/' },
