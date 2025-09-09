@@ -280,16 +280,30 @@ export default defineConfig({
         { find: '@', replacement: '../../src' },
         // Only alias the exact 'vue' import, not subpaths like 'vue/server-renderer'
         { find: /^vue$/, replacement: 'vue/dist/vue.esm-bundler.js' },
-        // Expose DKFDS CSS files directly so we can import them with ?url in the theme preview component
+        // Map DKFDS CSS to absolute file paths, preserving ?url for asset URL generation
         {
-          find: /^dkfds\/dist\/css\/dkfds-virkdk\.min\.css(\?url)?$/,
+          find: 'dkfds/dist/css/dkfds-virkdk.min.css?url',
+          replacement: pathResolve(
+            fileURLToPath(new URL('../../', import.meta.url)),
+            'node_modules/dkfds/dist/css/dkfds-virkdk.min.css?url'
+          ),
+        },
+        {
+          find: 'dkfds/dist/css/dkfds-virkdk.min.css',
           replacement: pathResolve(
             fileURLToPath(new URL('../../', import.meta.url)),
             'node_modules/dkfds/dist/css/dkfds-virkdk.min.css'
           ),
         },
         {
-          find: /^dkfds\/dist\/css\/dkfds-borgerdk\.min\.css(\?url)?$/,
+          find: 'dkfds/dist/css/dkfds-borgerdk.min.css?url',
+          replacement: pathResolve(
+            fileURLToPath(new URL('../../', import.meta.url)),
+            'node_modules/dkfds/dist/css/dkfds-borgerdk.min.css?url'
+          ),
+        },
+        {
+          find: 'dkfds/dist/css/dkfds-borgerdk.min.css',
           replacement: pathResolve(
             fileURLToPath(new URL('../../', import.meta.url)),
             'node_modules/dkfds/dist/css/dkfds-borgerdk.min.css'

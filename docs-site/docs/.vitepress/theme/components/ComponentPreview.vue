@@ -7,7 +7,14 @@ import dkfdsVue3 from '@madsb/dkfds-vue3'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore - vite '?raw' import
 import dkfdsVue3Css from '@madsb/dkfds-vue3/dist/dkfds-vue3.css?raw'
-// DKFDS CSS absolute file paths are injected via Vite define in config.ts
+// Import DKFDS CSS as URLs so Vite copies them to the build output
+// and returns hashed, base-aware URLs that work on GitHub Pages
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore - vite '?url' import returns a string
+import dkfdsVirkUrl from 'dkfds/dist/css/dkfds-virkdk.min.css?url'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore - vite '?url' import returns a string
+import dkfdsBorgerUrl from 'dkfds/dist/css/dkfds-borgerdk.min.css?url'
 
 type ThemeName = 'virk' | 'borger'
 type ColorScheme = 'light' | 'dark'
@@ -70,14 +77,8 @@ function mountIntoIframe() {
   doc.body.style.padding = '12px'
 
   // Inject DKFDS theme stylesheet via <link>
-  // Use Vite /@fs to serve DKFDS CSS directly from node_modules
-  // eslint-disable-next-line no-undef
-  const virkAbs = (typeof __DKFDS_VIRK_ABS__ !== 'undefined' ? __DKFDS_VIRK_ABS__ : '') as string
-  // eslint-disable-next-line no-undef
-  const borgerAbs = (typeof __DKFDS_BORGER_ABS__ !== 'undefined' ? __DKFDS_BORGER_ABS__ : '') as string
-  const themeAbs = activeTheme.value === 'borger' ? borgerAbs : virkAbs
-  const base = (import.meta as any).env?.BASE_URL || '/'
-  const themeHref = themeAbs ? `${base}@fs${themeAbs}` : ''
+  // Use Vite-resolved asset URLs that are valid in static builds
+  const themeHref = activeTheme.value === 'borger' ? (dkfdsBorgerUrl as string) : (dkfdsVirkUrl as string)
   const dkfdsLink = doc.createElement('link')
   dkfdsLink.rel = 'stylesheet'
   dkfdsLink.href = themeHref
